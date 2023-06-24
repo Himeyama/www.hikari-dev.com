@@ -1,0 +1,18 @@
+<div class="footer">
+    <p>
+        {{ site.copyright }}
+    </p>
+    <p>
+        {{ site.title }}の著作権は{{ site:author }}に属します。
+    </p>
+    <script>
+        let postedDates = document.getElementsByClassName("posted-date");
+        for(let i = 0; i < postedDates.length; i++){
+            let date = postedDates[i].innerText
+            if(date != ""){
+                let warekiDate = Wareki.date(date)
+                postedDates[i].innerText = warekiDate;
+            }
+        }
+    </script>
+</div>

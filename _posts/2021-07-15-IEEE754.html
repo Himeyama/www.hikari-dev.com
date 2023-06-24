@@ -1,0 +1,66 @@
+---
+layout: default
+date: 2021-07-15
+title: 浮動小数点数シミュレーター
+description: 浮動小数点数シミュレーター
+---
+
+<script src="https://unpkg.com/react@17/umd/react.development.js"></script>
+<script src="https://unpkg.com/react-dom@17/umd/react-dom.development.js"></script>
+<script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+<script src="/assets/js/ieee754.js"></script>
+
+<div id="content"></div>
+
+<script type="text/babel">
+class IEEE754InputDec extends React.Component {
+    render(){
+        return(
+            <input value={this.props.value} />
+        )
+    }
+}
+
+    class IEEE754 extends React.Component {
+        constructor(props) {
+            super(props);
+            this.state = { dec: "" };
+        }
+
+        render() {
+            // if (this.state.liked) {
+            //     return 'You liked this.';
+            // }
+
+            return (
+                <div>
+                    <p>
+                        <input onChange={(e) => this.setState({dec: e.target.value})} />
+                    </p>
+                    <h2>浮動小数点数</h2>
+                    <h3>ビッグエンディアン</h3>
+                    <p>{float2BigEndian(parseFloat(this.state.dec))}, 0x{float2BigEndianHex(parseFloat(this.state.dec))}</p>
+                    <h3>リトルエンディアン</h3>
+                    <p>{float2LittleEndian(parseFloat(this.state.dec))}, 0x{float2LittleEndianHex(parseFloat(this.state.dec))}</p>
+                    <h2>倍精度浮動小数点数</h2>
+                    <h3>ビッグエンディアン</h3>
+                    <p>{double2BigEndian(parseFloat(this.state.dec))}, 0x{double2BigEndianHex(parseFloat(this.state.dec))}</p>
+                    <h3>リトルエンディアン</h3>
+                    <p>{double2LittleEndian(parseFloat(this.state.dec))}, 0x{double2LittleEndianHex(parseFloat(this.state.dec))}</p>
+                    <h2>バイナリ作成スクリプト (サンプル)</h2>
+                    <pre>
+                        echo -ne "{float2LittleEndianSh(parseFloat(this.state.dec))}" > tmp.bin<br />
+                        od -t tmp.bin
+                    </pre>
+
+                    <pre>
+                        echo -ne "{double2LittleEndianSh(parseFloat(this.state.dec))}" > tmp.bin<br />
+                        od -t fD tmp.bin
+                    </pre>
+                </div>
+            );
+        }
+    }
+    ReactDOM.render(<IEEE754 name="world" />,
+        document.getElementById("content"));
+</script>

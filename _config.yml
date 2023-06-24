@@ -1,0 +1,18 @@
+title: ひかりの研究室
+copyright: © ひかり 2023
+author: ひかり
+
+jekyll-archives:
+  enabled: all
+  layout: archive
+  permalinks:
+    year: '/:year/'
+    month: '/:year/:month/'
+    day: '/:year/:month/:day/'
+    tag: '/tag/:name/'
+    archives: '/archives'
+    category: '/category/:name/'
+
+plugins:
+  - jekyll-coffeescript
+  - jekyll-archives
