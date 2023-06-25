@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ImageMagick のインストール方法 (Ubuntu)｜ひかりの研究室</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@500;700&display=swap" rel="stylesheet"> 
+<link rel="stylesheet" href="/assets/css/styles.css">
+<script src="/assets/js/wareki.js"></script>
+
+</head>
+
+<body>
+    <div class="contents">
+        <div class="left sidemenu">
+    <a class="home-link" href="/">ひかりの研究室</a>
+    <div class="sub-menu-area">
+        <nav class="basic-menu">
+            <a href="/">ホーム</a>
+        </nav>
+        <nav class="sub-menu">
+            <p class="description">
+                メニュー
+            </p>
+            <ul>
+                <li><a href="/docs">ドキュメント</a></li>
+                <li><a href="/archives">アーカイブ</a></li>
+                <li><a href="/tags">タグ別</a></li>
+            </ul>
+        </nav>
+        <nav class="sub-menu">
+            <p class="description">
+                詳細
+            </p>
+            <ul>
+                <li><a href="/about">ひかりの研究室について</a></li>
+            </ul>
+        </nav>
+    </div>
+</div>
+        <div class="main-area">
+            <section class="main-contents">
+                <h1 class="page-title">ImageMagick のインストール方法 (Ubuntu)</h1>
+<time class="posted-date">2021-06-13</time>
+                <article class="article">
+                    <h1 id="ソースのダウンロード">ソースのダウンロード</h1>
+
+<div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code>wget https://download.imagemagick.org/ImageMagick/download/ImageMagick-7.0.11-14.tar.xz
+</code></pre></div></div>
+
+<h1 id="展開">展開</h1>
+
+<div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">tar </span>xf ImageMagick-7.0.11-14.tar.xz
+</code></pre></div></div>
+
+<h1 id="make">make</h1>
+
+<div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">sudo </span>apt update
+<span class="nb">cd </span>ImageMagick-7.0.11-14.tar.xz
+./configure
+make <span class="nt">-j</span>
+<span class="nb">sudo </span>make <span class="nb">install
+sudo </span>ldconfig /usr/local/lib
+</code></pre></div></div>
+
+                </article>
+            </section>
+        </div>
+        
+            <a class="prev primary" href="/2021/06/13/gcd.html"><button class="primary">Bash でユークリッド互除法</button></a>
+        
+        
+            <a class="next primary" href="/2021/06/15/tiv.html"><button class="primary">ターミナル上で画像を表示するコマンド</button></a>
+        
+    </div>
+    
+    <footer>
+        <div class="footer">
+    <p>
+        © ひかり 2023
+    </p>
+    <p>
+        ひかりの研究室の著作権はひかりに属します。
+    </p>
+    <script>
+        let postedDates = document.getElementsByClassName("posted-date");
+        for(let i = 0; i < postedDates.length; i++){
+            let date = postedDates[i].innerText
+            if(date != ""){
+                let warekiDate = Wareki.date(date)
+                postedDates[i].innerText = warekiDate;
+            }
+        }
+    </script>
+    <script src="/assets/js/code.js"></script>
+</div>
+    </footer>
+</body>
+
+</html>

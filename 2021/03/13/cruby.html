@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ruby の作り方｜ひかりの研究室</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@500;700&display=swap" rel="stylesheet"> 
+<link rel="stylesheet" href="/assets/css/styles.css">
+<script src="/assets/js/wareki.js"></script>
+
+</head>
+
+<body>
+    <div class="contents">
+        <div class="left sidemenu">
+    <a class="home-link" href="/">ひかりの研究室</a>
+    <div class="sub-menu-area">
+        <nav class="basic-menu">
+            <a href="/">ホーム</a>
+        </nav>
+        <nav class="sub-menu">
+            <p class="description">
+                メニュー
+            </p>
+            <ul>
+                <li><a href="/docs">ドキュメント</a></li>
+                <li><a href="/archives">アーカイブ</a></li>
+                <li><a href="/tags">タグ別</a></li>
+            </ul>
+        </nav>
+        <nav class="sub-menu">
+            <p class="description">
+                詳細
+            </p>
+            <ul>
+                <li><a href="/about">ひかりの研究室について</a></li>
+            </ul>
+        </nav>
+    </div>
+</div>
+        <div class="main-area">
+            <section class="main-contents">
+                <h1 class="page-title">Ruby の作り方</h1>
+<time class="posted-date">2021-03-13</time>
+                <article class="article">
+                    <p>例として3を返すプログラムを作る。</p>
+
+<p>まず、C でソースコードを書く。</p>
+
+<div class="language-c highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// three.c</span>
+<span class="cp">#include</span> <span class="cpf">&lt;ruby.h&gt;</span><span class="cp">
+</span>
+<span class="k">static</span> <span class="n">VALUE</span> <span class="nf">int_three</span><span class="p">(</span><span class="kt">void</span><span class="p">){</span>
+    <span class="k">return</span> <span class="n">INT2NUM</span><span class="p">(</span><span class="mi">3</span><span class="p">);</span>
+<span class="p">}</span>
+
+<span class="kt">void</span> <span class="nf">Init_three</span><span class="p">(</span><span class="kt">void</span><span class="p">){</span>
+    <span class="n">rb_define_singleton_method</span><span class="p">(</span><span class="n">rb_cInteger</span><span class="p">,</span> <span class="s">"three"</span><span class="p">,</span> <span class="n">int_three</span><span class="p">,</span> <span class="mi">0</span><span class="p">);</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<p>Makefile を作成するための
+スクリプトを作成。</p>
+
+<div class="language-c highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="cp"># extconf.rb
+</span><span class="n">require</span> <span class="err">'</span><span class="n">mkmf</span><span class="err">'</span>
+<span class="n">create_makefile</span> <span class="s">"three"</span>
+</code></pre></div></div>
+
+<p>Make</p>
+
+<div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span>make
+</code></pre></div></div>
+
+<p>作成したプログラムを呼び出す Ruby スクリプトを書く。</p>
+
+<div class="language-rb highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># main.rb</span>
+<span class="nb">require</span> <span class="s2">"./three"</span>
+<span class="nb">p</span> <span class="no">Integer</span><span class="p">.</span><span class="nf">three</span>
+</code></pre></div></div>
+
+<p>実行</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>$ ruby main.rb
+3
+</code></pre></div></div>
+
+                </article>
+            </section>
+        </div>
+        
+            <a class="prev primary" href="/2021/03/13/chartjs.html"><button class="primary">Chart.js の使い方メモ</button></a>
+        
+        
+            <a class="next primary" href="/2021/03/13/dllc.html"><button class="primary">DLL の作成と C のコンパイル</button></a>
+        
+    </div>
+    
+    <footer>
+        <div class="footer">
+    <p>
+        © ひかり 2023
+    </p>
+    <p>
+        ひかりの研究室の著作権はひかりに属します。
+    </p>
+    <script>
+        let postedDates = document.getElementsByClassName("posted-date");
+        for(let i = 0; i < postedDates.length; i++){
+            let date = postedDates[i].innerText
+            if(date != ""){
+                let warekiDate = Wareki.date(date)
+                postedDates[i].innerText = warekiDate;
+            }
+        }
+    </script>
+    <script src="/assets/js/code.js"></script>
+</div>
+    </footer>
+</body>
+
+</html>

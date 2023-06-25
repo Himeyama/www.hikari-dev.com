@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Windows の OpenSSH で Permission denied が出る原因｜ひかりの研究室</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@500;700&display=swap" rel="stylesheet"> 
+<link rel="stylesheet" href="/assets/css/styles.css">
+<script src="/assets/js/wareki.js"></script>
+
+</head>
+
+<body>
+    <div class="contents">
+        <div class="left sidemenu">
+    <a class="home-link" href="/">ひかりの研究室</a>
+    <div class="sub-menu-area">
+        <nav class="basic-menu">
+            <a href="/">ホーム</a>
+        </nav>
+        <nav class="sub-menu">
+            <p class="description">
+                メニュー
+            </p>
+            <ul>
+                <li><a href="/docs">ドキュメント</a></li>
+                <li><a href="/archives">アーカイブ</a></li>
+                <li><a href="/tags">タグ別</a></li>
+            </ul>
+        </nav>
+        <nav class="sub-menu">
+            <p class="description">
+                詳細
+            </p>
+            <ul>
+                <li><a href="/about">ひかりの研究室について</a></li>
+            </ul>
+        </nav>
+    </div>
+</div>
+        <div class="main-area">
+            <section class="main-contents">
+                <h1 class="page-title">Windows の OpenSSH で Permission denied が出る原因</h1>
+<time class="posted-date">2021-10-06</time>
+                <article class="article">
+                    <h1 id="状況">状況</h1>
+<ul>
+  <li>パスワードでのログインは可能 (ただし、設定で無効化している)</li>
+  <li>公開鍵認証で <code class="language-plaintext highlighter-rouge">Permission denied</code> が出る</li>
+</ul>
+
+<p>実際に <code class="language-plaintext highlighter-rouge">localhost:22</code> に接続すると、</p>
+
+<pre><code class="language-ps1">hikari@localhost: Permission denied (publickey,keyboard-interactive).
+</code></pre>
+
+<p>とエラーが出る。</p>
+
+<p><img src="https://user-images.githubusercontent.com/39254183/136111516-3059460f-1c9c-4168-9650-204017ed8419.png" alt="image" /></p>
+
+<h1 id="原因">原因</h1>
+<p><code class="language-plaintext highlighter-rouge">Administrators</code> グループ、つまり「管理者ユーザー」はデフォルトで、<code class="language-plaintext highlighter-rouge">C:\ProgramData\ssh\administrators_authorized_keys</code> の公開鍵を
+参照して認証しているようだ。</p>
+
+<p>これを、<code class="language-plaintext highlighter-rouge">$env:userprofile\.ssh\authorized_keys</code> に変更する。</p>
+
+<h1 id="解決法">解決法</h1>
+
+<p>管理者権限で <code class="language-plaintext highlighter-rouge">C:\ProgramData\ssh\sshd_config</code> を開き、以下のように下の二行をコメントする。</p>
+
+<p><img src="https://user-images.githubusercontent.com/39254183/136111494-f63c3a56-5b5a-4c21-a7b5-a0a4b7e6249d.png" alt="image" /></p>
+
+<div class="language-diff highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="gd">- Match Group administrators
+-        AuthorizedKeysFile __PROGRAMDATA__/ssh/administrators_authorized_keys
+</span><span class="gi">+ #Match Group administrators
++ #       AuthorizedKeysFile __PROGRAMDATA__/ssh/administrators_authorized_keys
+</span></code></pre></div></div>
+
+<p>保存が終わったら、サービスを再起動する。</p>
+
+<pre><code class="language-ps1">Restart-Service sshd
+</code></pre>
+
+                </article>
+            </section>
+        </div>
+        
+            <a class="prev primary" href="/2021/09/29/powerline-termux.html"><button class="primary">termux に powerline をインストールする</button></a>
+        
+        
+            <a class="next primary" href="/2021/10/07/nokogiri-build-error.html"><button class="primary">brew 環境下で nokogiri をインストールできないとき</button></a>
+        
+    </div>
+    
+    <footer>
+        <div class="footer">
+    <p>
+        © ひかり 2023
+    </p>
+    <p>
+        ひかりの研究室の著作権はひかりに属します。
+    </p>
+    <script>
+        let postedDates = document.getElementsByClassName("posted-date");
+        for(let i = 0; i < postedDates.length; i++){
+            let date = postedDates[i].innerText
+            if(date != ""){
+                let warekiDate = Wareki.date(date)
+                postedDates[i].innerText = warekiDate;
+            }
+        }
+    </script>
+    <script src="/assets/js/code.js"></script>
+</div>
+    </footer>
+</body>
+
+</html>

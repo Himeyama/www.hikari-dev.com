@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>string (文字列) から MD5 (文字列) を返す関数 (C#)｜ひかりの研究室</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@500;700&display=swap" rel="stylesheet"> 
+<link rel="stylesheet" href="/assets/css/styles.css">
+<script src="/assets/js/wareki.js"></script>
+
+</head>
+
+<body>
+    <div class="contents">
+        <div class="left sidemenu">
+    <a class="home-link" href="/">ひかりの研究室</a>
+    <div class="sub-menu-area">
+        <nav class="basic-menu">
+            <a href="/">ホーム</a>
+        </nav>
+        <nav class="sub-menu">
+            <p class="description">
+                メニュー
+            </p>
+            <ul>
+                <li><a href="/docs">ドキュメント</a></li>
+                <li><a href="/archives">アーカイブ</a></li>
+                <li><a href="/tags">タグ別</a></li>
+            </ul>
+        </nav>
+        <nav class="sub-menu">
+            <p class="description">
+                詳細
+            </p>
+            <ul>
+                <li><a href="/about">ひかりの研究室について</a></li>
+            </ul>
+        </nav>
+    </div>
+</div>
+        <div class="main-area">
+            <section class="main-contents">
+                <h1 class="page-title">string (文字列) から MD5 (文字列) を返す関数 (C#)</h1>
+<time class="posted-date">2023-05-14</time>
+                <article class="article">
+                    <h2 id="使用する関数">使用する関数</h2>
+<ul>
+  <li><code class="language-plaintext highlighter-rouge">byte[] Encoding.UTF8.GetBytes(string)</code><br />
+string から byte[] に変換</li>
+  <li><code class="language-plaintext highlighter-rouge">MD5 MD5.create()</code><br />
+MD5 インスタンスを生成</li>
+  <li><code class="language-plaintext highlighter-rouge">byte[] md5.ComputeHash(byte[])</code><br />
+byte[] から MD5 ハッシュを生成</li>
+</ul>
+
+<h2 id="例">例</h2>
+<div class="language-cs highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kt">string</span> <span class="nf">str2MD5</span><span class="p">(</span><span class="kt">string</span> <span class="n">src</span><span class="p">)</span>
+<span class="p">{</span>
+    <span class="kt">byte</span><span class="p">[]</span> <span class="n">srcBytes</span> <span class="p">=</span> <span class="n">Encoding</span><span class="p">.</span><span class="n">UTF8</span><span class="p">.</span><span class="nf">GetBytes</span><span class="p">(</span><span class="n">src</span><span class="p">);</span>
+    <span class="kt">string</span> <span class="n">MD5src</span><span class="p">;</span>
+    <span class="k">using</span> <span class="p">(</span><span class="n">MD5</span> <span class="n">md5</span> <span class="p">=</span> <span class="n">MD5</span><span class="p">.</span><span class="nf">Create</span><span class="p">())</span>
+    <span class="p">{</span>
+        <span class="kt">byte</span><span class="p">[]</span> <span class="n">MD5srcBytes</span> <span class="p">=</span> <span class="n">md5</span><span class="p">.</span><span class="nf">ComputeHash</span><span class="p">(</span><span class="n">srcBytes</span><span class="p">);</span>
+        <span class="n">StringBuilder</span> <span class="n">sb</span> <span class="p">=</span> <span class="k">new</span><span class="p">();</span>
+        <span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">i</span> <span class="p">=</span> <span class="m">0</span><span class="p">;</span> <span class="n">i</span> <span class="p">&lt;</span> <span class="n">MD5srcBytes</span><span class="p">.</span><span class="n">Length</span><span class="p">;</span> <span class="n">i</span><span class="p">++)</span>
+            <span class="n">sb</span><span class="p">.</span><span class="nf">Append</span><span class="p">(</span><span class="n">MD5srcBytes</span><span class="p">[</span><span class="n">i</span><span class="p">].</span><span class="nf">ToString</span><span class="p">(</span><span class="s">"x2"</span><span class="p">));</span>
+        <span class="n">MD5src</span> <span class="p">=</span> <span class="n">sb</span><span class="p">.</span><span class="nf">ToString</span><span class="p">();</span>
+    <span class="p">}</span>
+    <span class="k">return</span> <span class="n">MD5src</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+                </article>
+            </section>
+        </div>
+        
+            <a class="prev primary" href="/2022/12/17/cuda-grid.html"><button class="primary">CUDA のグリッド数やブロック数やスレッド数の決め方とメモ</button></a>
+        
+        
+            <a class="next primary" href="/2023/06/10/winui0xc000027b.html"><button class="primary">C# アプリを実行すると 0xc000027b がでて終了する件</button></a>
+        
+    </div>
+    
+    <footer>
+        <div class="footer">
+    <p>
+        © ひかり 2023
+    </p>
+    <p>
+        ひかりの研究室の著作権はひかりに属します。
+    </p>
+    <script>
+        let postedDates = document.getElementsByClassName("posted-date");
+        for(let i = 0; i < postedDates.length; i++){
+            let date = postedDates[i].innerText
+            if(date != ""){
+                let warekiDate = Wareki.date(date)
+                postedDates[i].innerText = warekiDate;
+            }
+        }
+    </script>
+    <script src="/assets/js/code.js"></script>
+</div>
+    </footer>
+</body>
+
+</html>

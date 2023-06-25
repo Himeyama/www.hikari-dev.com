@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>brew 環境下で nokogiri をインストールできないとき｜ひかりの研究室</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@500;700&display=swap" rel="stylesheet"> 
+<link rel="stylesheet" href="/assets/css/styles.css">
+<script src="/assets/js/wareki.js"></script>
+
+</head>
+
+<body>
+    <div class="contents">
+        <div class="left sidemenu">
+    <a class="home-link" href="/">ひかりの研究室</a>
+    <div class="sub-menu-area">
+        <nav class="basic-menu">
+            <a href="/">ホーム</a>
+        </nav>
+        <nav class="sub-menu">
+            <p class="description">
+                メニュー
+            </p>
+            <ul>
+                <li><a href="/docs">ドキュメント</a></li>
+                <li><a href="/archives">アーカイブ</a></li>
+                <li><a href="/tags">タグ別</a></li>
+            </ul>
+        </nav>
+        <nav class="sub-menu">
+            <p class="description">
+                詳細
+            </p>
+            <ul>
+                <li><a href="/about">ひかりの研究室について</a></li>
+            </ul>
+        </nav>
+    </div>
+</div>
+        <div class="main-area">
+            <section class="main-contents">
+                <h1 class="page-title">brew 環境下で nokogiri をインストールできないとき</h1>
+<time class="posted-date">2021-10-07</time>
+                <article class="article">
+                    <h1 id="問題">問題</h1>
+<p>以下の二つのエラーが出た。</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>zlib is missing; necessary for building libxml2
+</code></pre></div></div>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>xslt is missing. Please locate mkmf.log to investigate how it is failing.
+</code></pre></div></div>
+
+<h1 id="解決法">解決法</h1>
+<ul>
+  <li>libxslt, libxml2 をインストール</li>
+  <li>brew でインストールされている libxml2 のパスを指定</li>
+</ul>
+
+<div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code>brew <span class="nb">install </span>libxslt libxml2
+bundle config build.nokogiri <span class="nt">--use-system-libraries</span> <span class="nt">--with-xml2-include</span><span class="o">=</span><span class="si">$(</span>brew <span class="nt">--prefix</span> libxml2<span class="si">)</span>/include/libxml2
+</code></pre></div></div>
+
+<h1 id="参考サイト">参考サイト</h1>
+<ul>
+  <li><a href="https://qiita.com/dskst/items/b1f073fcffeca3bc9fc6">nokogiri を嫌いにならないで 〜インストール時のエラーを乗り越えろ〜</a></li>
+  <li><a href="https://qiita.com/ywindish/items/5cb01ee974f8a7f403ba">nokogiri が macOS でインストールできない</a></li>
+</ul>
+
+                </article>
+            </section>
+        </div>
+        
+            <a class="prev primary" href="/2021/10/06/win-ssh-permission-denied.html"><button class="primary">Windows の OpenSSH で Permission denied が出る原因</button></a>
+        
+        
+            <a class="next primary" href="/2021/10/07/wsl-dns.html"><button class="primary">WSL2 で DNS サーバーを設定する</button></a>
+        
+    </div>
+    
+    <footer>
+        <div class="footer">
+    <p>
+        © ひかり 2023
+    </p>
+    <p>
+        ひかりの研究室の著作権はひかりに属します。
+    </p>
+    <script>
+        let postedDates = document.getElementsByClassName("posted-date");
+        for(let i = 0; i < postedDates.length; i++){
+            let date = postedDates[i].innerText
+            if(date != ""){
+                let warekiDate = Wareki.date(date)
+                postedDates[i].innerText = warekiDate;
+            }
+        }
+    </script>
+    <script src="/assets/js/code.js"></script>
+</div>
+    </footer>
+</body>
+
+</html>

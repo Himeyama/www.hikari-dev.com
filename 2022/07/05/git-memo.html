@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>git のメモ｜ひかりの研究室</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@500;700&display=swap" rel="stylesheet"> 
+<link rel="stylesheet" href="/assets/css/styles.css">
+<script src="/assets/js/wareki.js"></script>
+
+</head>
+
+<body>
+    <div class="contents">
+        <div class="left sidemenu">
+    <a class="home-link" href="/">ひかりの研究室</a>
+    <div class="sub-menu-area">
+        <nav class="basic-menu">
+            <a href="/">ホーム</a>
+        </nav>
+        <nav class="sub-menu">
+            <p class="description">
+                メニュー
+            </p>
+            <ul>
+                <li><a href="/docs">ドキュメント</a></li>
+                <li><a href="/archives">アーカイブ</a></li>
+                <li><a href="/tags">タグ別</a></li>
+            </ul>
+        </nav>
+        <nav class="sub-menu">
+            <p class="description">
+                詳細
+            </p>
+            <ul>
+                <li><a href="/about">ひかりの研究室について</a></li>
+            </ul>
+        </nav>
+    </div>
+</div>
+        <div class="main-area">
+            <section class="main-contents">
+                <h1 class="page-title">git のメモ</h1>
+<time class="posted-date">2022-07-05</time>
+                <article class="article">
+                    <h2 id="ブランチ-git-branch--git-checkout">ブランチ (git branch / git checkout)</h2>
+<h3 id="ブランチの切り替え">ブランチの切り替え</h3>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>git checkout &lt;ブランチ名&gt;
+</code></pre></div></div>
+
+<h3 id="ブランチの削除">ブランチの削除</h3>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>git branch <span class="nt">-d</span> &lt;ブランチ名&gt;
+</code></pre></div></div>
+
+<h3 id="空のブランチ作成">空のブランチ作成</h3>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>git checkout <span class="nt">--orphan</span><span class="o">=</span>&lt;ブランチ名&gt;
+git reset <span class="nt">--hard</span>
+</code></pre></div></div>
+
+<h2 id="ログ">ログ</h2>
+<h3 id="ログを表示">ログを表示</h3>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>git log <span class="nt">--decorate</span><span class="o">=</span>full <span class="nt">--graph</span> <span class="nt">--all</span>
+</code></pre></div></div>
+
+<p>:::note
+vscode を使えるのならば、拡張機能 <code class="language-plaintext highlighter-rouge">Git Graph</code> をインストールするとよい。
+:::</p>
+
+<h2 id="過去に戻る">過去に戻る</h2>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c"># コミット ID を調べる</span>
+git log
+
+git checkout &lt;コミット ID&gt;
+</code></pre></div></div>
+
+<p>:::note
+コミット ID は 4 文字で省略可
+:::</p>
+
+<h3 id="過去から戻る">過去から戻る</h3>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>git checkout &lt;ブランチ名&gt;
+</code></pre></div></div>
+
+<h2 id="コミットを取り消す-git-reset">コミットを取り消す (git reset)</h2>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>git reset <span class="nt">--soft</span> @^
+</code></pre></div></div>
+
+<p>:::note
+@ は HEAD と同じ。直前のものは ^ で表す。
+:::</p>
+
+
+                </article>
+            </section>
+        </div>
+        
+            <a class="prev primary" href="/2022/06/27/js.html"><button class="primary">JavaScript のメモ</button></a>
+        
+        
+            <a class="next primary" href="/2022/07/13/itp.html"><button class="primary">IT パスポートのアルファベットまとめ</button></a>
+        
+    </div>
+    
+    <footer>
+        <div class="footer">
+    <p>
+        © ひかり 2023
+    </p>
+    <p>
+        ひかりの研究室の著作権はひかりに属します。
+    </p>
+    <script>
+        let postedDates = document.getElementsByClassName("posted-date");
+        for(let i = 0; i < postedDates.length; i++){
+            let date = postedDates[i].innerText
+            if(date != ""){
+                let warekiDate = Wareki.date(date)
+                postedDates[i].innerText = warekiDate;
+            }
+        }
+    </script>
+    <script src="/assets/js/code.js"></script>
+</div>
+    </footer>
+</body>
+
+</html>

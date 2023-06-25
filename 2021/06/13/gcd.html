@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Bash でユークリッド互除法｜ひかりの研究室</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@500;700&display=swap" rel="stylesheet"> 
+<link rel="stylesheet" href="/assets/css/styles.css">
+<script src="/assets/js/wareki.js"></script>
+
+</head>
+
+<body>
+    <div class="contents">
+        <div class="left sidemenu">
+    <a class="home-link" href="/">ひかりの研究室</a>
+    <div class="sub-menu-area">
+        <nav class="basic-menu">
+            <a href="/">ホーム</a>
+        </nav>
+        <nav class="sub-menu">
+            <p class="description">
+                メニュー
+            </p>
+            <ul>
+                <li><a href="/docs">ドキュメント</a></li>
+                <li><a href="/archives">アーカイブ</a></li>
+                <li><a href="/tags">タグ別</a></li>
+            </ul>
+        </nav>
+        <nav class="sub-menu">
+            <p class="description">
+                詳細
+            </p>
+            <ul>
+                <li><a href="/about">ひかりの研究室について</a></li>
+            </ul>
+        </nav>
+    </div>
+</div>
+        <div class="main-area">
+            <section class="main-contents">
+                <h1 class="page-title">Bash でユークリッド互除法</h1>
+<time class="posted-date">2021-06-13</time>
+                <article class="article">
+                    <h1 id="ユークリッド互除法のアルゴリズム">ユークリッド互除法のアルゴリズム</h1>
+
+<ol>
+  <li>A と B の余り C</li>
+  <li>B と C の余り D</li>
+  <li>
+    <p>C と D の余り E</p>
+
+    <p>…</p>
+  </li>
+  <li>
+    <p>X と Y の余り 0</p>
+
+    <p>となったときの Y の値が最大公約数。</p>
+  </li>
+</ol>
+
+<h1 id="bash-のスクリプト">Bash のスクリプト</h1>
+<div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c">#!/usr/bin/env bash</span>
+
+<span class="k">function </span>gcd<span class="o">(){</span>
+    <span class="nb">test</span> <span class="nv">$2</span> <span class="nt">-eq</span> 0 <span class="o">&amp;&amp;</span> <span class="nb">echo</span> <span class="nv">$1</span> <span class="o">||</span> gcd <span class="nv">$2</span> <span class="k">$((</span><span class="nv">$1</span> <span class="o">%</span> <span class="nv">$2</span><span class="k">))</span>
+<span class="o">}</span>
+
+gcd 1071 1029
+<span class="c"># 21</span>
+</code></pre></div></div>
+
+                </article>
+            </section>
+        </div>
+        
+            <a class="prev primary" href="/2021/06/13/bilateral-filter.html"><button class="primary">ImageMagick でバイラテラルフィルター</button></a>
+        
+        
+            <a class="next primary" href="/2021/06/13/install-magick.html"><button class="primary">ImageMagick のインストール方法 (Ubuntu)</button></a>
+        
+    </div>
+    
+    <footer>
+        <div class="footer">
+    <p>
+        © ひかり 2023
+    </p>
+    <p>
+        ひかりの研究室の著作権はひかりに属します。
+    </p>
+    <script>
+        let postedDates = document.getElementsByClassName("posted-date");
+        for(let i = 0; i < postedDates.length; i++){
+            let date = postedDates[i].innerText
+            if(date != ""){
+                let warekiDate = Wareki.date(date)
+                postedDates[i].innerText = warekiDate;
+            }
+        }
+    </script>
+    <script src="/assets/js/code.js"></script>
+</div>
+    </footer>
+</body>
+
+</html>

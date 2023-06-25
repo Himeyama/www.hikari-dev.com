@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ImageMagick でバイラテラルフィルター｜ひかりの研究室</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@500;700&display=swap" rel="stylesheet"> 
+<link rel="stylesheet" href="/assets/css/styles.css">
+<script src="/assets/js/wareki.js"></script>
+
+</head>
+
+<body>
+    <div class="contents">
+        <div class="left sidemenu">
+    <a class="home-link" href="/">ひかりの研究室</a>
+    <div class="sub-menu-area">
+        <nav class="basic-menu">
+            <a href="/">ホーム</a>
+        </nav>
+        <nav class="sub-menu">
+            <p class="description">
+                メニュー
+            </p>
+            <ul>
+                <li><a href="/docs">ドキュメント</a></li>
+                <li><a href="/archives">アーカイブ</a></li>
+                <li><a href="/tags">タグ別</a></li>
+            </ul>
+        </nav>
+        <nav class="sub-menu">
+            <p class="description">
+                詳細
+            </p>
+            <ul>
+                <li><a href="/about">ひかりの研究室について</a></li>
+            </ul>
+        </nav>
+    </div>
+</div>
+        <div class="main-area">
+            <section class="main-contents">
+                <h1 class="page-title">ImageMagick でバイラテラルフィルター</h1>
+<time class="posted-date">2021-06-13</time>
+                <article class="article">
+                    <p>ImageMagick でバイラテラルフィルターをかける試み。
+ImageMagick のインストール方法は <a href="install-magick.html">install-magick.html</a></p>
+
+<h1 id="コマンド例">コマンド例</h1>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>magick convert Parrots.jpg -bilateral-blur 10x10 output.png
+</code></pre></div></div>
+
+<h1 id="結果">結果</h1>
+<ul>
+  <li>
+    <p>入力画像</p>
+
+    <p><img src="/assets/img/magick-bilateral/Parrots.jpg" alt="Parrots" /></p>
+  </li>
+  <li>
+    <p>出力画像</p>
+
+    <p><img src="/assets/img/magick-bilateral/output.png" alt="Parrots" /></p>
+  </li>
+</ul>
+
+
+                </article>
+            </section>
+        </div>
+        
+            <a class="prev primary" href="/2021/06/10/pyenv.html"><button class="primary">Pyenv のインストールと設定</button></a>
+        
+        
+            <a class="next primary" href="/2021/06/13/gcd.html"><button class="primary">Bash でユークリッド互除法</button></a>
+        
+    </div>
+    
+    <footer>
+        <div class="footer">
+    <p>
+        © ひかり 2023
+    </p>
+    <p>
+        ひかりの研究室の著作権はひかりに属します。
+    </p>
+    <script>
+        let postedDates = document.getElementsByClassName("posted-date");
+        for(let i = 0; i < postedDates.length; i++){
+            let date = postedDates[i].innerText
+            if(date != ""){
+                let warekiDate = Wareki.date(date)
+                postedDates[i].innerText = warekiDate;
+            }
+        }
+    </script>
+    <script src="/assets/js/code.js"></script>
+</div>
+    </footer>
+</body>
+
+</html>

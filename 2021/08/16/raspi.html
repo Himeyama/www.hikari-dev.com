@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>モニター無しで Raspberry Pi のセットアップ｜ひかりの研究室</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@500;700&display=swap" rel="stylesheet"> 
+<link rel="stylesheet" href="/assets/css/styles.css">
+<script src="/assets/js/wareki.js"></script>
+
+</head>
+
+<body>
+    <div class="contents">
+        <div class="left sidemenu">
+    <a class="home-link" href="/">ひかりの研究室</a>
+    <div class="sub-menu-area">
+        <nav class="basic-menu">
+            <a href="/">ホーム</a>
+        </nav>
+        <nav class="sub-menu">
+            <p class="description">
+                メニュー
+            </p>
+            <ul>
+                <li><a href="/docs">ドキュメント</a></li>
+                <li><a href="/archives">アーカイブ</a></li>
+                <li><a href="/tags">タグ別</a></li>
+            </ul>
+        </nav>
+        <nav class="sub-menu">
+            <p class="description">
+                詳細
+            </p>
+            <ul>
+                <li><a href="/about">ひかりの研究室について</a></li>
+            </ul>
+        </nav>
+    </div>
+</div>
+        <div class="main-area">
+            <section class="main-contents">
+                <h1 class="page-title">モニター無しで Raspberry Pi のセットアップ</h1>
+<time class="posted-date">2021-08-16</time>
+                <article class="article">
+                    <p>モニター不要で Raspberry Pi のセットアップ方法の説明。</p>
+
+<ul>
+  <li>有線での接続が必要なため、LAN ケーブルを接続できる Raspberry Pi 端末であること</li>
+  <li>Raspberry Pi を操作するためのパソコンが必要</li>
+</ul>
+
+<h1 id="インストール">インストール</h1>
+<p>Raspberry Pi Imager をインストールし、OS を選択。書き込み先の micro SD を選択し、WRITE で書き込む。</p>
+
+<p><img src="/assets/img/raspi/imager.png" alt="Raspberry Pi Imager" /></p>
+
+<h1 id="設定">設定</h1>
+<h2 id="ssh-の有効化">SSH の有効化</h2>
+<p>SSH を有効にすることで外部から
+Raspberry Pi の操作が可能</p>
+
+<p>micro SD カードを挿し直し、直下に ssh という名前でテキストファイルを作成。拡張子は不要。</p>
+
+<p><img src="/assets/img/raspi/ssh.png" alt="Raspberry Pi enable SSH" /></p>
+
+<h2 id="vnc-の有効化">VNC の有効化</h2>
+<p>config.txt を開き、</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>framebuffer_width=1280
+framebuffer_height=720
+</code></pre></div></div>
+<p>のコメントを外し上書き保存。</p>
+
+<p><img src="/assets/img/raspi/config.png" alt="Raspberry Pi enable VNC" /></p>
+
+<h2 id="起動">起動</h2>
+<p>micro SD カードを Raspberry Pi に挿し、電源を接続し起動する。</p>
+
+<h2 id="ssh-で接続">SSH で接続</h2>
+<p>ホスト名は raspberrypi、ユーザー名は pi、パスワードは raspberry で接続</p>
+
+<p><img src="/assets/img/raspi/ssh-c.png" alt="Raspberry Pi connect SSH" /></p>
+
+<h2 id="パッケージの更新">パッケージの更新</h2>
+<div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">sudo </span>apt update
+<span class="nb">sudo </span>apt upgrade <span class="nt">-y</span>
+</code></pre></div></div>
+
+<h2 id="vnc-の有効化-1">VNC の有効化</h2>
+<div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">sudo </span>raspi-config
+</code></pre></div></div>
+
+<p><img src="/assets/img/raspi/raspi-config.png" alt="Raspberry Pi config" /></p>
+
+<p>3 Interface Options を選択し、P3 VNC を選択し、YES。Finish で閉じる。</p>
+
+<h2 id="vnc-で接続">VNC で接続</h2>
+<p><img src="/assets/img/raspi/vncviewer.png" alt="Raspberry Pi VNC viewer" /></p>
+
+<p>ユーザー名、パスワードは SSH のときと同様。</p>
+
+<p><img src="/assets/img/raspi/VNC-c.png" alt="Raspberry Pi VNC connected" /></p>
+
+<h2 id="wi-fi-の有効化">Wi-Fi の有効化</h2>
+<p>VNC から Wi-Fi を有効にすることで有線接続が不要となり、電源のみで Raspberry Pi を操作することが可能。</p>
+
+                </article>
+            </section>
+        </div>
+        
+            <a class="prev primary" href="/2021/08/16/arduino-no-dalay.html"><button class="primary">Arduino で delay() を使わない</button></a>
+        
+        
+            <a class="next primary" href="/2021/09/21/powerline.html"><button class="primary">Powerline のインストール方法</button></a>
+        
+    </div>
+    
+    <footer>
+        <div class="footer">
+    <p>
+        © ひかり 2023
+    </p>
+    <p>
+        ひかりの研究室の著作権はひかりに属します。
+    </p>
+    <script>
+        let postedDates = document.getElementsByClassName("posted-date");
+        for(let i = 0; i < postedDates.length; i++){
+            let date = postedDates[i].innerText
+            if(date != ""){
+                let warekiDate = Wareki.date(date)
+                postedDates[i].innerText = warekiDate;
+            }
+        }
+    </script>
+    <script src="/assets/js/code.js"></script>
+</div>
+    </footer>
+</body>
+
+</html>

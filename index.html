@@ -1,0 +1,480 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ひかりの研究室</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@500;700&display=swap" rel="stylesheet"> 
+<link rel="stylesheet" href="/assets/css/styles.css">
+<script src="/assets/js/wareki.js"></script>
+
+</head>
+
+<body>
+    <div class="contents">
+        <div class="left sidemenu">
+    <a class="home-link" href="/">ひかりの研究室</a>
+    <div class="sub-menu-area">
+        <nav class="basic-menu">
+            <a href="/">ホーム</a>
+        </nav>
+        <nav class="sub-menu">
+            <p class="description">
+                メニュー
+            </p>
+            <ul>
+                <li><a href="/docs">ドキュメント</a></li>
+                <li><a href="/archives">アーカイブ</a></li>
+                <li><a href="/tags">タグ別</a></li>
+            </ul>
+        </nav>
+        <nav class="sub-menu">
+            <p class="description">
+                詳細
+            </p>
+            <ul>
+                <li><a href="/about">ひかりの研究室について</a></li>
+            </ul>
+        </nav>
+    </div>
+</div>
+        <div class="main-area">
+            <section class="main-contents">
+                
+    <div class="index">
+        <article class="article">
+            <h1 class="page-title"><a href="/2023/06/10/winui0xc000027b.html">C# アプリを実行すると 0xc000027b がでて終了する件</a></h1>
+            <time class="posted-date">2023-06-10</time>
+            <h2 id="概要">概要</h2>
+<p>Visual Studio 2022 で WinUI アプリをビルドし、実行ファイルを実行して強制終了する。
+(ただし、Visual Studio から直接実行した場合は正常に動作する。)
+また、<code class="language-plaintext highlighter-rouge">dotnet run</code> コマンドでアプリを実行した場合も同様に強制終了する。</p>
+
+<p>イベント ビューアーで調べたところ、Microsoft.ui.xaml.dll が原因とのことだった。</p>
+
+<p><img src="/assets/img/eventviewer.png" alt="イベント ビューアー" /></p>
+
+<h2 id="調査">調査</h2>
+<p>コードを削除したりして、実行していくと、</p>
+
+<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">ApplicationData</span><span class="p">.</span><span class="n">Current</span><span class="p">.</span><span class="n">LocalSettings</span><span class="p">;</span>
+</code></pre></div></div>
+
+<p>を削除すると正常に起動することが判明した。
+そのため、一時的に以下のように変更し、正常起動した。</p>
+
+<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">try</span>
+<span class="p">{</span>
+    <span class="n">config</span> <span class="p">=</span> <span class="n">ApplicationData</span><span class="p">.</span><span class="n">Current</span><span class="p">.</span><span class="n">LocalSettings</span><span class="p">;</span>
+<span class="p">}</span>
+<span class="k">catch</span> <span class="p">(</span><span class="n">Exception</span> <span class="n">ex</span><span class="p">)</span>
+<span class="p">{</span>
+    <span class="p">...</span>    
+<span class="p">}</span>
+</code></pre></div></div>
+
+<p>謎は深まるばかり。</p>
+
+        </article>
+    </div>
+
+    <div class="index">
+        <article class="article">
+            <h1 class="page-title"><a href="/2023/05/14/cs-md5.html">string (文字列) から MD5 (文字列) を返す関数 (C#)</a></h1>
+            <time class="posted-date">2023-05-14</time>
+            <h2 id="使用する関数">使用する関数</h2>
+<ul>
+  <li><code class="language-plaintext highlighter-rouge">byte[] Encoding.UTF8.GetBytes(string)</code><br />
+string から byte[] に変換</li>
+  <li><code class="language-plaintext highlighter-rouge">MD5 MD5.create()</code><br />
+MD5 インスタンスを生成</li>
+  <li><code class="language-plaintext highlighter-rouge">byte[] md5.ComputeHash(byte[])</code><br />
+byte[] から MD5 ハッシュを生成</li>
+</ul>
+
+<h2 id="例">例</h2>
+<div class="language-cs highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kt">string</span> <span class="nf">str2MD5</span><span class="p">(</span><span class="kt">string</span> <span class="n">src</span><span class="p">)</span>
+<span class="p">{</span>
+    <span class="kt">byte</span><span class="p">[]</span> <span class="n">srcBytes</span> <span class="p">=</span> <span class="n">Encoding</span><span class="p">.</span><span class="n">UTF8</span><span class="p">.</span><span class="nf">GetBytes</span><span class="p">(</span><span class="n">src</span><span class="p">);</span>
+    <span class="kt">string</span> <span class="n">MD5src</span><span class="p">;</span>
+    <span class="k">using</span> <span class="p">(</span><span class="n">MD5</span> <span class="n">md5</span> <span class="p">=</span> <span class="n">MD5</span><span class="p">.</span><span class="nf">Create</span><span class="p">())</span>
+    <span class="p">{</span>
+        <span class="kt">byte</span><span class="p">[]</span> <span class="n">MD5srcBytes</span> <span class="p">=</span> <span class="n">md5</span><span class="p">.</span><span class="nf">ComputeHash</span><span class="p">(</span><span class="n">srcBytes</span><span class="p">);</span>
+        <span class="n">StringBuilder</span> <span class="n">sb</span> <span class="p">=</span> <span class="k">new</span><span class="p">();</span>
+        <span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">i</span> <span class="p">=</span> <span class="m">0</span><span class="p">;</span> <span class="n">i</span> <span class="p">&lt;</span> <span class="n">MD5srcBytes</span><span class="p">.</span><span class="n">Length</span><span class="p">;</span> <span class="n">i</span><span class="p">++)</span>
+            <span class="n">sb</span><span class="p">.</span><span class="nf">Append</span><span class="p">(</span><span class="n">MD5srcBytes</span><span class="p">[</span><span class="n">i</span><span class="p">].</span><span class="nf">ToString</span><span class="p">(</span><span class="s">"x2"</span><span class="p">));</span>
+        <span class="n">MD5src</span> <span class="p">=</span> <span class="n">sb</span><span class="p">.</span><span class="nf">ToString</span><span class="p">();</span>
+    <span class="p">}</span>
+    <span class="k">return</span> <span class="n">MD5src</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+        </article>
+    </div>
+
+    <div class="index">
+        <article class="article">
+            <h1 class="page-title"><a href="/2022/12/17/cuda-grid.html">CUDA のグリッド数やブロック数やスレッド数の決め方とメモ</a></h1>
+            <time class="posted-date">2022-12-17</time>
+            <ul>
+  <li>スレッド: 一つの処理</li>
+  <li>ブロック: スレッドの集まり (スレッドを 3 次元に配置)</li>
+  <li>グリッド: ブロックの集まり (ブロックを 3 次元に配置)</li>
+</ul>
+
+<p>スレッド数、ブロック数、グリッド数には上限があり、
+<code class="language-plaintext highlighter-rouge">deviceQuery</code> コマンドで取得可能。</p>
+
+<p>RTX3080、CUDA 11.8 では、以下の通りだった。</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Maximum number of threads per block:           1024
+Max dimension size of a thread block (x,y,z): (1024, 1024, 64)
+Max dimension size of a grid size    (x,y,z): (2147483647, 65535, 65535)
+</code></pre></div></div>
+
+<p>この場合、</p>
+<ul>
+  <li>1 つのブロックの最大スレッド数は 1024</li>
+  <li>ブロックの形状が (1024, 1024, 64) 内に収まる<br />
+つまり、1 つのブロックの形状が (a, b, c) とすると、
+$abc \leq 1024$ かつ $a \leq 1024$ かつ $b \leq 1024$ かつ $c \leq 64$ を満たすことである。</li>
+  <li>グリッドの形状が (2147483647, 65535, 65535) 内に収まる<br />
+つまり、1 つのグリッドの形状が (d, e, f) とすると、
+$def \leq 2147483647 \times 65535 \times 65535$ かつ $d \leq 2147483647$ かつ $e \leq 65535$ かつ $f \leq 65535$ を満たすことである。</li>
+</ul>
+
+<p>グリッドとブロックの形状を定義する型は <code class="language-plaintext highlighter-rouge">dim3</code> である。</p>
+
+<blockquote>
+  <p>使用例</p>
+
+  <div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="cp">#include</span> <span class="cpf">&lt;stdio.h&gt;</span><span class="cp">
+</span>
+<span class="n">__global__</span> <span class="kt">void</span> <span class="nf">func1</span><span class="p">(){</span>
+    <span class="n">printf</span><span class="p">(</span><span class="s">"%d, %d, %d</span><span class="se">\n</span><span class="s">"</span><span class="p">,</span> <span class="n">threadIdx</span><span class="p">.</span><span class="n">x</span><span class="p">,</span> <span class="n">threadIdx</span><span class="p">.</span><span class="n">y</span><span class="p">,</span> <span class="n">threadIdx</span><span class="p">.</span><span class="n">z</span><span class="p">);</span>
+<span class="p">}</span>
+
+<span class="n">__global__</span> <span class="kt">void</span> <span class="nf">func2</span><span class="p">(){</span>
+    <span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="n">threadIdx</span><span class="p">.</span><span class="n">x</span> <span class="o">+</span> <span class="n">blockDim</span><span class="p">.</span><span class="n">x</span> <span class="o">*</span> <span class="n">threadIdx</span><span class="p">.</span><span class="n">y</span> <span class="o">+</span> <span class="n">blockDim</span><span class="p">.</span><span class="n">x</span> <span class="o">*</span> <span class="n">blockDim</span><span class="p">.</span><span class="n">y</span> <span class="o">*</span> <span class="n">threadIdx</span><span class="p">.</span><span class="n">z</span><span class="p">;</span>
+    <span class="n">printf</span><span class="p">(</span><span class="s">"%d</span><span class="se">\n</span><span class="s">"</span><span class="p">,</span> <span class="n">i</span><span class="p">);</span>
+<span class="p">}</span>
+
+<span class="kt">int</span> <span class="nf">main</span><span class="p">(){</span>
+    <span class="n">dim3</span> <span class="n">grid</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">);</span>
+    <span class="n">dim3</span> <span class="n">block</span><span class="p">(</span><span class="mi">4</span><span class="p">,</span> <span class="mi">8</span><span class="p">,</span> <span class="mi">32</span><span class="p">);</span>
+
+    <span class="n">func1</span><span class="o">&lt;&lt;&lt;</span><span class="n">grid</span><span class="p">,</span> <span class="n">block</span><span class="o">&gt;&gt;&gt;</span><span class="p">();</span>
+    <span class="n">func2</span><span class="o">&lt;&lt;&lt;</span><span class="n">grid</span><span class="p">,</span> <span class="n">block</span><span class="o">&gt;&gt;&gt;</span><span class="p">();</span>
+    <span class="n">cudaDeviceSynchronize</span><span class="p">();</span>
+<span class="p">}</span>
+</code></pre></div>  </div>
+</blockquote>
+
+        </article>
+    </div>
+
+    <div class="index">
+        <article class="article">
+            <h1 class="page-title"><a href="/2022/11/27/rust-rand.html">Rust で乱数の生成</a></h1>
+            <time class="posted-date">2022-11-27</time>
+            <p>注意: クレートのバージョンが違うと、関数も異なります。</p>
+
+<h2 id="依存するクレートを追加">依存するクレートを追加</h2>
+<p><code class="language-plaintext highlighter-rouge">rand</code> に依存するので追加します。</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>cargo add rand
+</code></pre></div></div>
+
+<h2 id="一様乱数を生成するプログラムの例">一様乱数を生成するプログラムの例</h2>
+
+<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">use</span> <span class="nn">rand</span><span class="p">::</span><span class="n">Rng</span><span class="p">;</span>
+
+<span class="k">fn</span> <span class="nf">main</span><span class="p">(){</span>
+    <span class="k">let</span> <span class="k">mut</span> <span class="n">rng</span> <span class="o">=</span> <span class="nn">rand</span><span class="p">::</span><span class="nf">thread_rng</span><span class="p">();</span>
+
+    <span class="c1">// 浮動小数点数</span>
+    <span class="k">let</span> <span class="n">r</span><span class="p">:</span> <span class="nb">f64</span> <span class="o">=</span> <span class="n">rng</span><span class="nf">.gen_range</span><span class="p">(</span><span class="mf">0.0</span><span class="o">..</span><span class="mf">10000.0</span><span class="p">);</span>
+    <span class="nd">println!</span><span class="p">(</span><span class="s">"{}"</span><span class="p">,</span> <span class="n">r</span><span class="p">);</span>
+
+    <span class="c1">// 整数</span>
+    <span class="k">let</span> <span class="n">r</span><span class="p">:</span> <span class="nb">i32</span> <span class="o">=</span> <span class="n">rng</span><span class="nf">.gen_range</span><span class="p">(</span><span class="mi">0</span><span class="o">..</span><span class="mi">10000</span><span class="p">);</span>
+    <span class="nd">println!</span><span class="p">(</span><span class="s">"{}"</span><span class="p">,</span> <span class="n">r</span><span class="p">);</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span>cargo run
+    Finished dev <span class="o">[</span>unoptimized + debuginfo] target<span class="o">(</span>s<span class="o">)</span> <span class="k">in </span>0.00s
+     Running <span class="sb">`</span>target/debug/test<span class="sb">`</span>
+9464.07133934519
+9606
+</code></pre></div></div>
+
+<h2 id="正規乱数を生成するプログラムの例">正規乱数を生成するプログラムの例</h2>
+
+<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">use</span> <span class="nn">rand</span><span class="p">::</span><span class="n">Rng</span><span class="p">;</span>
+
+<span class="k">fn</span> <span class="nf">main</span><span class="p">(){</span>
+    <span class="k">let</span> <span class="k">mut</span> <span class="n">rng</span> <span class="o">=</span> <span class="nn">rand</span><span class="p">::</span><span class="nf">thread_rng</span><span class="p">();</span>
+
+    <span class="k">let</span> <span class="n">r</span><span class="p">:</span> <span class="nb">f64</span> <span class="o">=</span> <span class="n">rng</span><span class="nf">.gen</span><span class="p">();</span>
+    <span class="nd">println!</span><span class="p">(</span><span class="s">"{}"</span><span class="p">,</span> <span class="n">r</span><span class="p">);</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span>cargo run
+   Compiling alg2opt v0.1.0 <span class="o">(</span>/home/hikari/2-opt/alg2opt<span class="o">)</span>
+    Finished dev <span class="o">[</span>unoptimized + debuginfo] target<span class="o">(</span>s<span class="o">)</span> <span class="k">in </span>0.26s
+     Running <span class="sb">`</span>target/debug/test<span class="sb">`</span>
+0.34703657185118175
+</code></pre></div></div>
+
+<h2 id="指定した分布に従う乱数">指定した分布に従う乱数</h2>
+
+<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">use</span> <span class="nn">rand</span><span class="p">::</span><span class="n">Rng</span><span class="p">;</span>
+<span class="k">use</span> <span class="nn">rand</span><span class="p">::</span><span class="nn">distributions</span><span class="p">::</span><span class="n">Uniform</span><span class="p">;</span>
+
+<span class="k">fn</span> <span class="nf">main</span><span class="p">(){</span>
+    <span class="k">let</span> <span class="k">mut</span> <span class="n">rng</span> <span class="o">=</span> <span class="nn">rand</span><span class="p">::</span><span class="nf">thread_rng</span><span class="p">();</span>
+
+    <span class="k">let</span> <span class="n">r</span><span class="p">:</span> <span class="nb">f64</span> <span class="o">=</span> <span class="n">rng</span><span class="nf">.sample</span><span class="p">(</span><span class="nn">Uniform</span><span class="p">::</span><span class="nf">new</span><span class="p">(</span><span class="mf">10.0</span><span class="p">,</span> <span class="mf">15.0</span><span class="p">));</span>
+    <span class="nd">println!</span><span class="p">(</span><span class="s">"{}"</span><span class="p">,</span> <span class="n">r</span><span class="p">);</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span>cargo run
+   Compiling alg2opt v0.1.0 <span class="o">(</span>/home/hikari/2-opt/alg2opt<span class="o">)</span>
+    Finished dev <span class="o">[</span>unoptimized + debuginfo] target<span class="o">(</span>s<span class="o">)</span> <span class="k">in </span>0.26s
+     Running <span class="sb">`</span>target/debug/test<span class="sb">`</span>
+12.13344856630783
+</code></pre></div></div>
+
+<h2 id="参考">参考</h2>
+<p>https://docs.rs/rand/0.8.5/rand/trait.Rng.html</p>
+
+        </article>
+    </div>
+
+    <div class="index">
+        <article class="article">
+            <h1 class="page-title"><a href="/2022/07/15/pcenv.html">現在のパソコン周りの環境まとめ</a></h1>
+            <time class="posted-date">2022-07-15</time>
+            <p>パソコン周りに結構お金をかけている気がするが、いったいどのくらいなのか把握していないのでまとめる。</p>
+
+<h2 id="pc-本体">PC 本体</h2>
+
+<table>
+  <thead>
+    <tr>
+      <th style="text-align: center">パーツ</th>
+      <th style="text-align: center">メーカー</th>
+      <th style="text-align: center">型番</th>
+      <th style="text-align: center">購入時の価格</th>
+      <th style="text-align: center">備考</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="text-align: center">マザーボード</td>
+      <td style="text-align: center">ASUS</td>
+      <td style="text-align: center">B450M-K</td>
+      <td style="text-align: center">\7,291</td>
+      <td style="text-align: center">MicroATX</td>
+    </tr>
+    <tr>
+      <td style="text-align: center">CPU</td>
+      <td style="text-align: center">AMD</td>
+      <td style="text-align: center">Ryzen 3 3900X</td>
+      <td style="text-align: center">\53,280</td>
+      <td style="text-align: center">12 コア 24 スレッド、基本クロック 3.8GHz、最大 4.6GHz、TDP 105W、Passmark 32784</td>
+    </tr>
+    <tr>
+      <td style="text-align: center">メモリー</td>
+      <td style="text-align: center">Panram</td>
+      <td style="text-align: center">W4U3200PS-16G</td>
+      <td style="text-align: center">\16,478</td>
+      <td style="text-align: center">DDR4-3200 16GiB x 2</td>
+    </tr>
+    <tr>
+      <td style="text-align: center">SSD</td>
+      <td style="text-align: center">CFD</td>
+      <td style="text-align: center">CSSD-M2B1TPG3VNF</td>
+      <td style="text-align: center">\12,980</td>
+      <td style="text-align: center">1TB NVMe</td>
+    </tr>
+    <tr>
+      <td style="text-align: center">GPU</td>
+      <td style="text-align: center">Palit Microsystems</td>
+      <td style="text-align: center">NED3080019IA-132AA</td>
+      <td style="text-align: center">\120,500</td>
+      <td style="text-align: center">RTX 3080</td>
+    </tr>
+    <tr>
+      <td style="text-align: center">電源ユニット</td>
+      <td style="text-align: center">Corsair</td>
+      <td style="text-align: center">RM850</td>
+      <td style="text-align: center">\12,291</td>
+      <td style="text-align: center">850W 80PLUS Gold</td>
+    </tr>
+    <tr>
+      <td style="text-align: center">PC ケース</td>
+      <td style="text-align: center">DEEPCOOL</td>
+      <td style="text-align: center">MACUBE 110 PK R-MACUBE110-PRNGM1N-A-1</td>
+      <td style="text-align: center">\6,000</td>
+      <td style="text-align: center">MicroATX 対応</td>
+    </tr>
+  </tbody>
+</table>
+
+<p>合計: 228,820 円</p>
+
+<p>ひとこと: 意外と高くない (?)。MicroATX なので拡張性がほぼない。ケチらずに ATX 買ったほうがよかったかもしれない。特にメモリーを増やせないのが。メモリーは普段から 20 GiB 以上消費しているので、もっと欲しいかも。</p>
+
+<h2 id="周辺機器">周辺機器</h2>
+
+<table>
+  <thead>
+    <tr>
+      <th style="text-align: center">周辺機器</th>
+      <th style="text-align: center">メーカー</th>
+      <th style="text-align: center">型番</th>
+      <th style="text-align: center">購入時の価格</th>
+      <th style="text-align: center">備考</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="text-align: center">ディスプレイ</td>
+      <td style="text-align: center">アイ・オー・データ</td>
+      <td style="text-align: center">LD4K271DB</td>
+      <td style="text-align: center">\33,800</td>
+      <td style="text-align: center">4K。27 インチ。Vesa 対応</td>
+    </tr>
+    <tr>
+      <td style="text-align: center">液晶タブレット</td>
+      <td style="text-align: center">XP-Pen</td>
+      <td style="text-align: center">Artist 22 セカンド</td>
+      <td style="text-align: center">\47,680</td>
+      <td style="text-align: center">FHD。21.5 インチ</td>
+    </tr>
+    <tr>
+      <td style="text-align: center">マウス</td>
+      <td style="text-align: center">ロジクール</td>
+      <td style="text-align: center">ERGO M575</td>
+      <td style="text-align: center">\5,500</td>
+      <td style="text-align: center">トラックボール。Bluetooth、Unifying</td>
+    </tr>
+    <tr>
+      <td style="text-align: center">キーボード</td>
+      <td style="text-align: center">東プレ</td>
+      <td style="text-align: center">REALFORCE R2-JP4-BK</td>
+      <td style="text-align: center">\15,470</td>
+      <td style="text-align: center">USB。静電容量無接点方式</td>
+    </tr>
+    <tr>
+      <td style="text-align: center">WEB カメラ</td>
+      <td style="text-align: center">エレコム</td>
+      <td style="text-align: center">UCAM-C820ABBK</td>
+      <td style="text-align: center">\3,809</td>
+      <td style="text-align: center">FHD</td>
+    </tr>
+    <tr>
+      <td style="text-align: center">スピーカー</td>
+      <td style="text-align: center">パイオニア</td>
+      <td style="text-align: center">-</td>
+      <td style="text-align: center">\1,000</td>
+      <td style="text-align: center">中古。ハードオフ</td>
+    </tr>
+    <tr>
+      <td style="text-align: center">アンプ</td>
+      <td style="text-align: center">ELEGIANT</td>
+      <td style="text-align: center">-</td>
+      <td style="text-align: center">\3,488</td>
+      <td style="text-align: center">中華デジタルアンプ。Bluetooth 対応とあったが使えなかった。付属の AUX ケーブルが安っぽいので買い換え推奨。</td>
+    </tr>
+    <tr>
+      <td style="text-align: center">マイク</td>
+      <td style="text-align: center">UHURU</td>
+      <td style="text-align: center">UM900</td>
+      <td style="text-align: center">\6,499</td>
+      <td style="text-align: center">中華 USB マイク。</td>
+    </tr>
+    <tr>
+      <td style="text-align: center">ヘッドホン</td>
+      <td style="text-align: center">audio-technica</td>
+      <td style="text-align: center">ATH-M50x</td>
+      <td style="text-align: center">\16,000</td>
+      <td style="text-align: center"> </td>
+    </tr>
+  </tbody>
+</table>
+
+<p>合計: 133,246 円</p>
+
+<h2 id="その他">その他</h2>
+
+<table>
+  <thead>
+    <tr>
+      <th style="text-align: center">周辺機器</th>
+      <th style="text-align: center">メーカー</th>
+      <th style="text-align: center">型番</th>
+      <th style="text-align: center">購入時の価格</th>
+      <th style="text-align: center">備考</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="text-align: center">IC カードリーダーライター</td>
+      <td style="text-align: center">NTT コミュニケーションズ</td>
+      <td style="text-align: center">ACR39-NTTCom</td>
+      <td style="text-align: center">\2,320</td>
+      <td style="text-align: center">マイナンバーの読み書き可能</td>
+    </tr>
+    <tr>
+      <td style="text-align: center">電源タップ</td>
+      <td style="text-align: center">エレコム</td>
+      <td style="text-align: center">T-DK2320CBS</td>
+      <td style="text-align: center">\1,264</td>
+      <td style="text-align: center">デスク固定。3 個口</td>
+    </tr>
+  </tbody>
+</table>
+
+        </article>
+    </div>
+
+
+            </section>
+        </div>
+        
+        
+    </div>
+    
+    <footer>
+        <div class="footer">
+    <p>
+        © ひかり 2023
+    </p>
+    <p>
+        ひかりの研究室の著作権はひかりに属します。
+    </p>
+    <script>
+        let postedDates = document.getElementsByClassName("posted-date");
+        for(let i = 0; i < postedDates.length; i++){
+            let date = postedDates[i].innerText
+            if(date != ""){
+                let warekiDate = Wareki.date(date)
+                postedDates[i].innerText = warekiDate;
+            }
+        }
+    </script>
+    <script src="/assets/js/code.js"></script>
+</div>
+    </footer>
+</body>
+
+</html>

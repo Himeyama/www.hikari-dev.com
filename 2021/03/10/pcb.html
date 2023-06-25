@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>アセトン転写でプリント基板づくり｜ひかりの研究室</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@500;700&display=swap" rel="stylesheet"> 
+<link rel="stylesheet" href="/assets/css/styles.css">
+<script src="/assets/js/wareki.js"></script>
+
+</head>
+
+<body>
+    <div class="contents">
+        <div class="left sidemenu">
+    <a class="home-link" href="/">ひかりの研究室</a>
+    <div class="sub-menu-area">
+        <nav class="basic-menu">
+            <a href="/">ホーム</a>
+        </nav>
+        <nav class="sub-menu">
+            <p class="description">
+                メニュー
+            </p>
+            <ul>
+                <li><a href="/docs">ドキュメント</a></li>
+                <li><a href="/archives">アーカイブ</a></li>
+                <li><a href="/tags">タグ別</a></li>
+            </ul>
+        </nav>
+        <nav class="sub-menu">
+            <p class="description">
+                詳細
+            </p>
+            <ul>
+                <li><a href="/about">ひかりの研究室について</a></li>
+            </ul>
+        </nav>
+    </div>
+</div>
+        <div class="main-area">
+            <section class="main-contents">
+                <h1 class="page-title">アセトン転写でプリント基板づくり</h1>
+<time class="posted-date">2021-03-10</time>
+                <article class="article">
+                    <p>自作計測器開発用にプリント基板を作ってみました。</p>
+
+<h2 id="アセトン転写">アセトン転写</h2>
+<p>普通紙にレーザープリンターで印刷して、
+印刷物を銅基板に合わせ水をつけて紙を密着させる。
+次に、アセトンを少しかけて
+クリアファイルの上から
+トナーを銅基板に押し付けるように爪でこすり、アセトン転写。
+1回目はアセトンが多すぎて失敗。
+全体に染みるくらいが丁度いい。
+アセトンはアセトン100%の除光液を使用。</p>
+
+<p><img src="/assets/img/pcb/(7).webp" alt="プリント基板 アセトン転写" /></p>
+
+<p>水で洗いながらこすって紙を落とす。</p>
+<h2 id="エッジング">エッジング</h2>
+
+<p>適当な容器にエッジング液を入れ、
+お湯を入れたフリーザーパックで
+人肌程度に液が温まるようにして
+エッジング。
+40から45℃ 程度が良いみたいだが、
+温度計を入れたら錆びるので適当。
+目視で塗ってないところの銅が溶けているのを確認し、エッジング終了。</p>
+
+<p><img src="/assets/img/pcb/(2).webp" alt="プリント基板 エッジング" /></p>
+
+<h2 id="塗った部分を溶かす">塗った部分を溶かす</h2>
+<p>トナーやマジックペンでマスクした部分をアセトンで溶かす。
+すると、マスクした部分だけの銅が残り回路ができる。</p>
+
+<p><img src="/assets/img/pcb/(5).webp" alt="プリント基板 エッジング" /></p>
+
+<h2 id="少しだけ回路づくり">少しだけ回路づくり</h2>
+<p>ドリルで穴を開け、
+はんだ付けして、少しだけ回路を作った。
+銅に乗せるような感じではんだ付けをすると
+作りやすかった。</p>
+
+<p><img src="/assets/img/pcb/(6).webp" alt="プリント基板 エッジング" /></p>
+
+                </article>
+            </section>
+        </div>
+        
+        
+            <a class="next primary" href="/2021/03/11/pcb2.html"><button class="primary">アセトン転写のプリント基板をはんだ付け</button></a>
+        
+    </div>
+    
+    <footer>
+        <div class="footer">
+    <p>
+        © ひかり 2023
+    </p>
+    <p>
+        ひかりの研究室の著作権はひかりに属します。
+    </p>
+    <script>
+        let postedDates = document.getElementsByClassName("posted-date");
+        for(let i = 0; i < postedDates.length; i++){
+            let date = postedDates[i].innerText
+            if(date != ""){
+                let warekiDate = Wareki.date(date)
+                postedDates[i].innerText = warekiDate;
+            }
+        }
+    </script>
+    <script src="/assets/js/code.js"></script>
+</div>
+    </footer>
+</body>
+
+</html>

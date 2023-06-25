@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>JavaScript のメモ｜ひかりの研究室</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@500;700&display=swap" rel="stylesheet"> 
+<link rel="stylesheet" href="/assets/css/styles.css">
+<script src="/assets/js/wareki.js"></script>
+
+</head>
+
+<body>
+    <div class="contents">
+        <div class="left sidemenu">
+    <a class="home-link" href="/">ひかりの研究室</a>
+    <div class="sub-menu-area">
+        <nav class="basic-menu">
+            <a href="/">ホーム</a>
+        </nav>
+        <nav class="sub-menu">
+            <p class="description">
+                メニュー
+            </p>
+            <ul>
+                <li><a href="/docs">ドキュメント</a></li>
+                <li><a href="/archives">アーカイブ</a></li>
+                <li><a href="/tags">タグ別</a></li>
+            </ul>
+        </nav>
+        <nav class="sub-menu">
+            <p class="description">
+                詳細
+            </p>
+            <ul>
+                <li><a href="/about">ひかりの研究室について</a></li>
+            </ul>
+        </nav>
+    </div>
+</div>
+        <div class="main-area">
+            <section class="main-contents">
+                <h1 class="page-title">JavaScript のメモ</h1>
+<time class="posted-date">2022-06-27</time>
+                <article class="article">
+                    <h2 id="配列">配列</h2>
+<blockquote>
+  <p>例: <code class="language-plaintext highlighter-rouge">[1, 2, 3]</code></p>
+</blockquote>
+
+<h3 id="配列のコピー">配列のコピー</h3>
+<div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// 参照渡し</span>
+<span class="kd">let</span> <span class="nx">a</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">]</span>
+<span class="kd">let</span> <span class="nx">b</span> <span class="o">=</span> <span class="nx">a</span>
+<span class="nx">b</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span>
+<span class="nx">a</span> <span class="c1">// [-1, 2, 3]</span>
+
+<span class="c1">// コピー</span>
+<span class="nx">a</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">]</span>
+<span class="nx">b</span> <span class="o">=</span> <span class="nx">a</span><span class="p">.</span><span class="nf">slice</span><span class="p">()</span>
+<span class="nx">b</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span>
+<span class="nx">a</span> <span class="c1">// [1, 2, 3]</span>
+<span class="nx">b</span> <span class="c1">// [-1, 2, 3]</span>
+</code></pre></div></div>
+
+<h3 id="末尾の値">末尾の値</h3>
+<div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">let</span> <span class="nx">a</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">]</span>
+<span class="nx">a</span><span class="p">.</span><span class="nf">at</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span>
+</code></pre></div></div>
+
+<h3 id="配列を取り出す">配列を取り出す</h3>
+<div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">let</span> <span class="nx">a</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">]</span>
+<span class="nx">a</span><span class="p">.</span><span class="nf">slice</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span> <span class="c1">// [3, 4, 5]</span>
+<span class="c1">// 注意</span>
+<span class="nx">a</span><span class="p">.</span><span class="nf">slice</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">)</span> <span class="c1">// [3, 4]</span>
+</code></pre></div></div>
+
+<h3 id="数列の作成-いわゆる-range">数列の作成 (いわゆる range)</h3>
+<div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">const</span> <span class="nx">range</span> <span class="o">=</span> <span class="p">(</span><span class="nx">start</span><span class="p">,</span> <span class="nx">stop</span><span class="p">,</span> <span class="nx">step</span><span class="p">)</span> <span class="o">=&gt;</span>
+  <span class="nb">Array</span><span class="p">.</span><span class="k">from</span><span class="p">({</span> <span class="na">length</span><span class="p">:</span> <span class="p">(</span><span class="nx">stop</span> <span class="o">-</span> <span class="nx">start</span><span class="p">)</span> <span class="o">/</span> <span class="nx">step</span> <span class="o">+</span> <span class="mi">1</span><span class="p">},</span> <span class="p">(</span><span class="nx">_</span><span class="p">,</span> <span class="nx">i</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="nx">start</span> <span class="o">+</span> <span class="p">(</span><span class="nx">i</span> <span class="o">*</span> <span class="nx">step</span><span class="p">));</span>
+
+<span class="nf">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span> <span class="c1">// [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10]</span>
+</code></pre></div></div>
+
+<h3 id="for-of">for-of</h3>
+<div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">for</span><span class="p">(</span><span class="kd">let</span> <span class="nx">c</span> <span class="k">of</span> <span class="p">[</span><span class="dl">'</span><span class="s1">a</span><span class="dl">'</span><span class="p">,</span> <span class="dl">'</span><span class="s1">b</span><span class="dl">'</span><span class="p">,</span> <span class="dl">'</span><span class="s1">c</span><span class="dl">'</span><span class="p">]){</span>
+  <span class="nx">console</span><span class="p">.</span><span class="nf">log</span><span class="p">(</span><span class="nx">c</span><span class="p">)</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<p>```js title=”結果”
+a
+b
+c</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
+### map
+```js
+let a = [1, 2, 3].map(x =&gt; x ** 2)
+// [2, 4, 6]
+</code></pre></div></div>
+
+<h3 id="すべて零の配列-zeros">すべて零の配列 (zeros)</h3>
+<div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">Array</span><span class="p">.</span><span class="nx">zeros</span> <span class="o">=</span> <span class="p">(</span><span class="nx">n</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="nb">Array</span><span class="p">.</span><span class="k">from</span><span class="p">({</span> <span class="na">length</span><span class="p">:</span> <span class="nx">n</span><span class="p">},</span> <span class="p">()</span> <span class="o">=&gt;</span> <span class="mi">0</span><span class="p">);</span>
+
+<span class="nb">Array</span><span class="p">.</span><span class="nf">zeros</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span> <span class="c1">// [0, 0, 0, 0, 0]</span>
+</code></pre></div></div>
+
+<h3 id="合計-sum">合計 (sum)</h3>
+<div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">Array</span><span class="p">.</span><span class="nx">prototype</span><span class="p">.</span><span class="nx">sum</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(){</span> <span class="k">return</span> <span class="k">this</span><span class="p">.</span><span class="nf">reduce</span><span class="p">((</span><span class="nx">prev</span><span class="p">,</span> <span class="nx">curr</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="nx">prev</span> <span class="o">+</span> <span class="nx">curr</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span> <span class="p">}</span>
+
+<span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">].</span><span class="nf">sum</span><span class="p">()</span> <span class="c1">// 10</span>
+</code></pre></div></div>
+
+<h3 id="平均-mean">平均 (mean)</h3>
+<div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">Array</span><span class="p">.</span><span class="nx">prototype</span><span class="p">.</span><span class="nx">mean</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(){</span> <span class="k">return</span> <span class="k">this</span><span class="p">.</span><span class="nf">reduce</span><span class="p">((</span><span class="nx">prev</span><span class="p">,</span> <span class="nx">curr</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="nx">prev</span> <span class="o">+</span> <span class="nx">curr</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span> <span class="o">/</span> <span class="k">this</span><span class="p">.</span><span class="nx">length</span> <span class="p">}</span>
+
+<span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">].</span><span class="nf">mean</span><span class="p">()</span> <span class="c1">// 2.5</span>
+</code></pre></div></div>
+
+<h2 id="文字列">文字列</h2>
+<blockquote>
+  <p>例: <code class="language-plaintext highlighter-rouge">"text"</code></p>
+</blockquote>
+
+<h3 id="テンプレートリテラル">テンプレートリテラル</h3>
+<div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">let</span> <span class="nx">a</span> <span class="o">=</span> <span class="mi">100</span>
+<span class="s2">`</span><span class="p">${</span><span class="nx">a</span> <span class="o">/</span> <span class="mi">10</span><span class="p">}</span><span class="s2">`</span> <span class="c1">// "10"</span>
+</code></pre></div></div>
+
+<h2 id="数値">数値</h2>
+<blockquote>
+  <p>例: <code class="language-plaintext highlighter-rouge">1</code></p>
+</blockquote>
+
+<h3 id="文字列を数値に変換">文字列を数値に変換</h3>
+<div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nf">parseInt</span><span class="p">(</span><span class="dl">'</span><span class="s1">100</span><span class="dl">'</span><span class="p">)</span> <span class="c1">// 100 </span>
+<span class="nf">parseFloat</span><span class="p">(</span><span class="dl">'</span><span class="s1">100.1</span><span class="dl">'</span><span class="p">)</span> <span class="c1">// 100.1</span>
+</code></pre></div></div>
+
+<h3 id="フォーマット">フォーマット</h3>
+<div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// 小数点以下 3 桁</span>
+<span class="p">(</span><span class="mf">1.2</span><span class="p">).</span><span class="nf">toFixed</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span> <span class="c1">// "1.200"</span>
+</code></pre></div></div>
+
+<h2 id="日付">日付</h2>
+<div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">let</span> <span class="nx">today</span> <span class="o">=</span> <span class="k">new</span> <span class="nb">Date</span>
+
+<span class="nx">today</span><span class="p">.</span><span class="nf">toDateString</span><span class="p">()</span> <span class="c1">// "Sat Jan 01 2022"</span>
+<span class="nx">today</span><span class="p">.</span><span class="nf">toISOString</span><span class="p">()</span> <span class="c1">// "2021-12-31T15:00:00.000Z"</span>
+<span class="nx">today</span><span class="p">.</span><span class="nf">toLocaleDateString</span><span class="p">()</span> <span class="c1">// "2022/1/1"</span>
+<span class="nx">today</span><span class="p">.</span><span class="nf">toLocaleString</span><span class="p">()</span> <span class="c1">// "2022/1/1 0:00:00" </span>
+<span class="nx">today</span><span class="p">.</span><span class="nf">toLocaleTimeString</span><span class="p">()</span> <span class="c1">// "0:00:00"</span>
+<span class="nx">today</span><span class="p">.</span><span class="nf">toString</span><span class="p">()</span> <span class="c1">// "Sat Jan 01 2022 00:00:00 GMT+0900 (日本標準時)"</span>
+<span class="nx">today</span><span class="p">.</span><span class="nf">toTimeString</span><span class="p">()</span> <span class="c1">// "00:00:00 GMT+0900 (日本標準時)" </span>
+<span class="nx">today</span><span class="p">.</span><span class="nf">toUTCString</span><span class="p">()</span> <span class="c1">// "Fri, 31 Dec 2021 15:00:00 GMT"</span>
+</code></pre></div></div>
+
+                </article>
+            </section>
+        </div>
+        
+            <a class="prev primary" href="/2022/06/26/how-to-install-docker.html"><button class="primary">Ubuntu に Docker をインストールする</button></a>
+        
+        
+            <a class="next primary" href="/2022/07/05/git-memo.html"><button class="primary">git のメモ</button></a>
+        
+    </div>
+    
+    <footer>
+        <div class="footer">
+    <p>
+        © ひかり 2023
+    </p>
+    <p>
+        ひかりの研究室の著作権はひかりに属します。
+    </p>
+    <script>
+        let postedDates = document.getElementsByClassName("posted-date");
+        for(let i = 0; i < postedDates.length; i++){
+            let date = postedDates[i].innerText
+            if(date != ""){
+                let warekiDate = Wareki.date(date)
+                postedDates[i].innerText = warekiDate;
+            }
+        }
+    </script>
+    <script src="/assets/js/code.js"></script>
+</div>
+    </footer>
+</body>
+
+</html>

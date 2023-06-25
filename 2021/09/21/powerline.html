@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Powerline のインストール方法｜ひかりの研究室</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@500;700&display=swap" rel="stylesheet"> 
+<link rel="stylesheet" href="/assets/css/styles.css">
+<script src="/assets/js/wareki.js"></script>
+
+</head>
+
+<body>
+    <div class="contents">
+        <div class="left sidemenu">
+    <a class="home-link" href="/">ひかりの研究室</a>
+    <div class="sub-menu-area">
+        <nav class="basic-menu">
+            <a href="/">ホーム</a>
+        </nav>
+        <nav class="sub-menu">
+            <p class="description">
+                メニュー
+            </p>
+            <ul>
+                <li><a href="/docs">ドキュメント</a></li>
+                <li><a href="/archives">アーカイブ</a></li>
+                <li><a href="/tags">タグ別</a></li>
+            </ul>
+        </nav>
+        <nav class="sub-menu">
+            <p class="description">
+                詳細
+            </p>
+            <ul>
+                <li><a href="/about">ひかりの研究室について</a></li>
+            </ul>
+        </nav>
+    </div>
+</div>
+        <div class="main-area">
+            <section class="main-contents">
+                <h1 class="page-title">Powerline のインストール方法</h1>
+<time class="posted-date">2021-09-21</time>
+                <article class="article">
+                    <h1 id="インストール">インストール</h1>
+<h2 id="go-のインストール">Go のインストール</h2>
+<p>powreline-go のインストールのために Go をインストールする。</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>brew <span class="nb">install </span>go
+</code></pre></div></div>
+
+<h2 id="powerline-go-のインストール">Powerline-go のインストール</h2>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>go get <span class="nt">-u</span> github.com/justjanne/powerline-go
+</code></pre></div></div>
+
+<h1 id="設定">設定</h1>
+<h2 id="bashrc">Bashrc</h2>
+<p>Vim とか nano とかで <code class="language-plaintext highlighter-rouge">~/.bashrc</code> を開き、以下を追加する。</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">GOPATH</span><span class="o">=</span><span class="nv">$HOME</span>/go
+<span class="k">function </span>_update_ps1<span class="o">()</span> <span class="o">{</span>
+    <span class="nv">PS1</span><span class="o">=</span><span class="s2">"</span><span class="si">$(</span><span class="nv">$GOPATH</span>/bin/powerline-go <span class="nt">-newline</span> <span class="nt">-error</span> <span class="nv">$?</span><span class="si">)</span><span class="s2">"</span>
+<span class="o">}</span>
+<span class="k">if</span> <span class="o">[</span> <span class="s2">"</span><span class="nv">$TERM</span><span class="s2">"</span> <span class="o">!=</span> <span class="s2">"linux"</span> <span class="o">]</span> <span class="o">&amp;&amp;</span> <span class="o">[</span> <span class="nt">-f</span> <span class="s2">"</span><span class="nv">$GOPATH</span><span class="s2">/bin/powerline-go"</span> <span class="o">]</span><span class="p">;</span> <span class="k">then
+    </span><span class="nv">PROMPT_COMMAND</span><span class="o">=</span><span class="s2">"_update_ps1; </span><span class="nv">$PROMPT_COMMAND</span><span class="s2">"</span>
+<span class="k">fi</span>
+</code></pre></div></div>
+
+<p><code class="language-plaintext highlighter-rouge">source ~/.bashrc</code> を実行すると変更が適応される。</p>
+
+<h1 id="フォント">フォント</h1>
+<p>一応これで終了だが、文字化けする場合がある。
+Powerline に対応したフォントを設定する必要がある。
+Windows では、Cascadia Code PL とか、Cascadia Mono PL とかが使える。</p>
+
+<p>おすすめは、https://github.com/yuru7/PlemolJP/ の PlemolJP。
+ダウンロードは、
+https://github.com/yuru7/PlemolJP/releases
+の PlemolJP_NF_vX.X.X.zip をクリックし、ダウンロードし展開してフォントをインストール。
+フォントの設定は、PlemolJP35 Console NF とする。</p>
+
+                </article>
+            </section>
+        </div>
+        
+            <a class="prev primary" href="/2021/08/16/raspi.html"><button class="primary">モニター無しで Raspberry Pi のセットアップ</button></a>
+        
+        
+            <a class="next primary" href="/2021/09/23/ssh-tunnel.html"><button class="primary">SSH トンネル</button></a>
+        
+    </div>
+    
+    <footer>
+        <div class="footer">
+    <p>
+        © ひかり 2023
+    </p>
+    <p>
+        ひかりの研究室の著作権はひかりに属します。
+    </p>
+    <script>
+        let postedDates = document.getElementsByClassName("posted-date");
+        for(let i = 0; i < postedDates.length; i++){
+            let date = postedDates[i].innerText
+            if(date != ""){
+                let warekiDate = Wareki.date(date)
+                postedDates[i].innerText = warekiDate;
+            }
+        }
+    </script>
+    <script src="/assets/js/code.js"></script>
+</div>
+    </footer>
+</body>
+
+</html>
