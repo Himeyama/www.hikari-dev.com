@@ -13,7 +13,6 @@ jobs:
     - uses: ruby/setup-ruby@v1
       with:
         ruby-version: '3.0' # Not needed with a .ruby-version file
-        bundler-cache: true # runs 'bundle install' and caches installed gems automatically
     - name: Bundle
       run: bundle
     - name: Build jekyll
