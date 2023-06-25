@@ -17,10 +17,10 @@
             </section>
         </div>
         {% if page.previous.url %}
-            <a class="prev primary" href="{{page.previous.url}}"><button class="primary">{{page.previous.title}}</button></a>
+            <a class="prev primary" href="{{page.previous.url}}"><div class="prev button">＜</div></a>
         {% endif %}
         {% if page.next.url %}
-            <a class="next primary" href="{{page.next.url}}"><button class="primary">{{page.next.title}}</button></a>
+            <a class="next primary" href="{{page.next.url}}"><div class="next button">＞</div></a>
         {% endif %}
     </div>
     

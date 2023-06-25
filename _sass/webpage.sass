@@ -43,23 +43,43 @@ body
         grid-template-columns: repeat(12, 1fr)
         margin-top: 64px
         .prev
+            grid-area: auto / 7 / auto / 8
+            display: inline-block
+            text-decoration: unset
+            color: $sea-800
+            width: 50px
             margin-top: 64px
-            grid-area: auto / 4 / auto / 8
-            width: 100%
-            display: block
-            button
-                width: 100%
-                height: 100%
+            .prev.button
                 cursor: pointer
+                height: 24px
+                width: 24px
+                padding: 12px
+                text-align: center
+                border-radius: 25px
+                border: solid 1px #d8d8d8
+                transition: .2s
+                &:hover
+                    border: solid 1px $sea-800
+                    background-color: $sea-50
         .next
+            grid-area: auto / 9 / auto / 10
+            display: inline-block
+            text-decoration: unset
+            color: $sea-800
+            width: 50px
             margin-top: 64px
-            grid-area: auto / 9 / auto / 13
-            width: 100%
-            display: block
-            button
-                width: 100%
-                height: 100%
+            .next.button
                 cursor: pointer
+                height: 24px
+                width: 24px
+                padding: 12px
+                text-align: center
+                border-radius: 25px
+                border: solid 1px #d8d8d8
+                transition: .2s
+                &:hover
+                    border: solid 1px $sea-800
+                    background-color: $sea-50
         .main-area
             grid-area: auto / 4 / auto / 13
             .main-contents
@@ -139,6 +159,20 @@ body
         footer
             background-color: $sumi-800
         .contents
+            .prev
+                color: $dark-color
+                .prev.button
+                    border: solid 1px #d8d8d8
+                    &:hover
+                        border: solid 1px $dark-color
+                        background-color: $sumi-800
+            .next
+                color: $dark-color
+                .next.button
+                    border: solid 1px #d8d8d8
+                    &:hover
+                        border: solid 1px $dark-color
+                        background-color: $sumi-800
             .main-area
                 .main-contents
                     time
