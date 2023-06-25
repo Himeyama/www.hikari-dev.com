@@ -1,0 +1,19 @@
+@import "color.sass"
+
+body
+    .index
+        margin-bottom: 64px
+        .page-title
+            a
+                text-decoration: unset
+                color: $color
+                &:hover
+                    text-decoration: underline
+
+@media (prefers-color-scheme: dark)
+    body
+        .index
+            .page-title
+                a
+                    color: $dark-color
+

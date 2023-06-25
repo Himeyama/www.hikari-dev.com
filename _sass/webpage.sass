@@ -5,6 +5,27 @@ body
     position: relative
     min-height: calc(100vh - 364px)
     padding-bottom: 400px
+    blockquote
+        margin-left: 0
+        padding-left: 40px
+        border-left: solid 2px $sumi-200
+    table
+        border-collapse: separate
+        border-spacing: 0
+        font-size: .8rem
+        border: 1px solid $sumi-200
+        thead
+            tr
+                background-color: $sumi-100
+                th
+                    border: 1px solid $sumi-200
+                    padding: 4px
+        tbody
+            tr
+                td
+                    border: 1px solid $sumi-200
+                    padding: 4px
+                    
     img
         max-width: 100%
     footer
@@ -43,11 +64,10 @@ body
             grid-area: auto / 4 / auto / 13
             .main-contents
                 line-height: 1.75
-                article
-                    margin-top: 64px
                 .page-title
-                    line-height: 2.625rem
+                    line-height: 1.25
                     margin: 0 0 24px 0
+                    margin-top: -4px
                 time
                     color: $description-color
                 h2
@@ -103,6 +123,19 @@ body
 
 @media (prefers-color-scheme: dark)
     body
+        blockquote
+            border-left: solid 2px $sumi-700
+        table
+            border: 1px solid $sumi-700
+            thead
+                tr
+                    background-color: $sumi-800
+                    th
+                        border: 1px solid $sumi-700
+            tbody
+                tr
+                    td
+                        border: 1px solid $sumi-700
         footer
             background-color: $sumi-800
         .contents

@@ -2,7 +2,6 @@ var Wareki = /** @class */ (function () {
     function Wareki() {
     }
     Wareki.date = function (dateString) {
-        console.log(dateString);
         var dateObject = new Date(dateString);
         var year = dateObject.getFullYear();
         var month = dateObject.getMonth();

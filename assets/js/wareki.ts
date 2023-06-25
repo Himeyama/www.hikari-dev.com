@@ -8,7 +8,6 @@ interface EraStruct {
 
 class Wareki {
     static date(dateString: string): string {
-        console.log(dateString);
         let dateObject: Date = new Date(dateString);
         let year: number = dateObject.getFullYear();
         let month: number = dateObject.getMonth();
