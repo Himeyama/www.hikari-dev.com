@@ -1,0 +1,14 @@
+version: "3.9"
+services:
+  jekyll:
+    container_name: jekyll-build
+    image: ruby:3
+    volumes:
+      - .:/project
+    command: >
+      bash -c "
+        cd /project &&
+        bundle &&
+        jekyll build
+      "
+
