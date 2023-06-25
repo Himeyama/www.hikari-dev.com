@@ -2,3 +2,4 @@ _site/
 .sass-cache/
 *.css
 *.css.map
+.jekyll-cache/

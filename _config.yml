@@ -1,6 +1,7 @@
 title: ひかりの研究室
 copyright: © ひかり 2023
 author: ひかり
+future: true
 
 jekyll-archives:
   enabled: all
