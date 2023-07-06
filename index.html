@@ -47,6 +47,44 @@
                 
     <div class="index">
         <article class="article">
+            <h1 class="page-title"><a href="/2023/07/06/wsa-android-threads.html">threads を Windows 11 で利用する方法</a></h1>
+            <time class="posted-date">2023-07-06</time>
+            <h2 id="apk-の抽出">apk の抽出</h2>
+<p>threads がインストールされている Android 端末を Windows PC に接続し、
+adb コマンドを実行して apk を抽出します。</p>
+
+<p>まずは、パッケージの場所を調べるために検索を行います。</p>
+
+<div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code>adb shell pm list packages <span class="nt">-f</span> | Select-String instagram.barcelona
+</code></pre></div></div>
+
+<p>次に、抽出します。apk は PC に保存されます。</p>
+
+<div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code>adb pull /data/app/.../base.apk
+</code></pre></div></div>
+
+<p>次に、WSA に接続します。
+WSA 側で開発者モード及び USB デバッグを有効にします。</p>
+
+<div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code>adb connect 127.0.0.1:58526
+</code></pre></div></div>
+
+<p><img src="/assets/img/wsa-android-threads/スクリーンショット 2023-07-06 235222.png" alt="Threads apk WSA" /></p>
+
+<p>最後に、抽出した apk を WSA にインストールします。</p>
+
+<div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code>adb <span class="nb">install </span>base.apk
+</code></pre></div></div>
+
+<p>できました。</p>
+
+<p><img src="/assets/img/wsa-android-threads/スクリーンショット 2023-07-07 001525.png" alt="Threads Android" /></p>
+
+        </article>
+    </div>
+
+    <div class="index">
+        <article class="article">
             <h1 class="page-title"><a href="/2023/06/26/create-homepage.html">個人サイトについて語る</a></h1>
             <time class="posted-date">2023-06-26</time>
             <p>情報発信では、Twitter、Instagram がメジャーであるが、規約や仕様によって制限され自由度が小さい。
@@ -229,87 +267,6 @@ $def \leq 2147483647 \times 65535 \times 65535$ かつ $d \leq 2147483647$ か�
 <span class="p">}</span>
 </code></pre></div>  </div>
 </blockquote>
-
-        </article>
-    </div>
-
-    <div class="index">
-        <article class="article">
-            <h1 class="page-title"><a href="/2022/11/27/rust-rand.html">Rust で乱数の生成</a></h1>
-            <time class="posted-date">2022-11-27</time>
-            <p>注意: クレートのバージョンが違うと、関数も異なります。</p>
-
-<h2 id="依存するクレートを追加">依存するクレートを追加</h2>
-<p><code class="language-plaintext highlighter-rouge">rand</code> に依存するので追加します。</p>
-
-<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>cargo add rand
-</code></pre></div></div>
-
-<h2 id="一様乱数を生成するプログラムの例">一様乱数を生成するプログラムの例</h2>
-
-<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">use</span> <span class="nn">rand</span><span class="p">::</span><span class="n">Rng</span><span class="p">;</span>
-
-<span class="k">fn</span> <span class="nf">main</span><span class="p">(){</span>
-    <span class="k">let</span> <span class="k">mut</span> <span class="n">rng</span> <span class="o">=</span> <span class="nn">rand</span><span class="p">::</span><span class="nf">thread_rng</span><span class="p">();</span>
-
-    <span class="c1">// 浮動小数点数</span>
-    <span class="k">let</span> <span class="n">r</span><span class="p">:</span> <span class="nb">f64</span> <span class="o">=</span> <span class="n">rng</span><span class="nf">.gen_range</span><span class="p">(</span><span class="mf">0.0</span><span class="o">..</span><span class="mf">10000.0</span><span class="p">);</span>
-    <span class="nd">println!</span><span class="p">(</span><span class="s">"{}"</span><span class="p">,</span> <span class="n">r</span><span class="p">);</span>
-
-    <span class="c1">// 整数</span>
-    <span class="k">let</span> <span class="n">r</span><span class="p">:</span> <span class="nb">i32</span> <span class="o">=</span> <span class="n">rng</span><span class="nf">.gen_range</span><span class="p">(</span><span class="mi">0</span><span class="o">..</span><span class="mi">10000</span><span class="p">);</span>
-    <span class="nd">println!</span><span class="p">(</span><span class="s">"{}"</span><span class="p">,</span> <span class="n">r</span><span class="p">);</span>
-<span class="p">}</span>
-</code></pre></div></div>
-
-<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span>cargo run
-    Finished dev <span class="o">[</span>unoptimized + debuginfo] target<span class="o">(</span>s<span class="o">)</span> <span class="k">in </span>0.00s
-     Running <span class="sb">`</span>target/debug/test<span class="sb">`</span>
-9464.07133934519
-9606
-</code></pre></div></div>
-
-<h2 id="正規乱数を生成するプログラムの例">正規乱数を生成するプログラムの例</h2>
-
-<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">use</span> <span class="nn">rand</span><span class="p">::</span><span class="n">Rng</span><span class="p">;</span>
-
-<span class="k">fn</span> <span class="nf">main</span><span class="p">(){</span>
-    <span class="k">let</span> <span class="k">mut</span> <span class="n">rng</span> <span class="o">=</span> <span class="nn">rand</span><span class="p">::</span><span class="nf">thread_rng</span><span class="p">();</span>
-
-    <span class="k">let</span> <span class="n">r</span><span class="p">:</span> <span class="nb">f64</span> <span class="o">=</span> <span class="n">rng</span><span class="nf">.gen</span><span class="p">();</span>
-    <span class="nd">println!</span><span class="p">(</span><span class="s">"{}"</span><span class="p">,</span> <span class="n">r</span><span class="p">);</span>
-<span class="p">}</span>
-</code></pre></div></div>
-
-<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span>cargo run
-   Compiling alg2opt v0.1.0 <span class="o">(</span>/home/hikari/2-opt/alg2opt<span class="o">)</span>
-    Finished dev <span class="o">[</span>unoptimized + debuginfo] target<span class="o">(</span>s<span class="o">)</span> <span class="k">in </span>0.26s
-     Running <span class="sb">`</span>target/debug/test<span class="sb">`</span>
-0.34703657185118175
-</code></pre></div></div>
-
-<h2 id="指定した分布に従う乱数">指定した分布に従う乱数</h2>
-
-<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">use</span> <span class="nn">rand</span><span class="p">::</span><span class="n">Rng</span><span class="p">;</span>
-<span class="k">use</span> <span class="nn">rand</span><span class="p">::</span><span class="nn">distributions</span><span class="p">::</span><span class="n">Uniform</span><span class="p">;</span>
-
-<span class="k">fn</span> <span class="nf">main</span><span class="p">(){</span>
-    <span class="k">let</span> <span class="k">mut</span> <span class="n">rng</span> <span class="o">=</span> <span class="nn">rand</span><span class="p">::</span><span class="nf">thread_rng</span><span class="p">();</span>
-
-    <span class="k">let</span> <span class="n">r</span><span class="p">:</span> <span class="nb">f64</span> <span class="o">=</span> <span class="n">rng</span><span class="nf">.sample</span><span class="p">(</span><span class="nn">Uniform</span><span class="p">::</span><span class="nf">new</span><span class="p">(</span><span class="mf">10.0</span><span class="p">,</span> <span class="mf">15.0</span><span class="p">));</span>
-    <span class="nd">println!</span><span class="p">(</span><span class="s">"{}"</span><span class="p">,</span> <span class="n">r</span><span class="p">);</span>
-<span class="p">}</span>
-</code></pre></div></div>
-
-<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span>cargo run
-   Compiling alg2opt v0.1.0 <span class="o">(</span>/home/hikari/2-opt/alg2opt<span class="o">)</span>
-    Finished dev <span class="o">[</span>unoptimized + debuginfo] target<span class="o">(</span>s<span class="o">)</span> <span class="k">in </span>0.26s
-     Running <span class="sb">`</span>target/debug/test<span class="sb">`</span>
-12.13344856630783
-</code></pre></div></div>
-
-<h2 id="参考">参考</h2>
-<p>https://docs.rs/rand/0.8.5/rand/trait.Rng.html</p>
 
         </article>
     </div>
