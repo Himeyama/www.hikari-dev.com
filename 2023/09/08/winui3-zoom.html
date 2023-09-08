@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Windows App SDK の MenuFlyoutItem.KeyboardAccelerators で拡大縮小のショートカットを設定する方法 (Microsoft.UI.Xaml, WinUI3)｜ひかりの研究室</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@500;700&display=swap" rel="stylesheet"> 
+<link rel="stylesheet" href="/assets/css/styles.css">
+<script src="/assets/js/wareki.js"></script>
+
+</head>
+
+<body>
+    <div class="contents">
+        <div class="left sidemenu">
+    <a class="home-link" href="/">ひかりの研究室</a>
+    <div class="sub-menu-area">
+        <nav class="basic-menu">
+            <a href="/">ホーム</a>
+        </nav>
+        <nav class="sub-menu">
+            <p class="description">
+                メニュー
+            </p>
+            <ul>
+                <li><a href="/docs">ドキュメント</a></li>
+                <li><a href="/archives">アーカイブ</a></li>
+                <li><a href="/tags">タグ別</a></li>
+            </ul>
+        </nav>
+        <nav class="sub-menu">
+            <p class="description">
+                詳細
+            </p>
+            <ul>
+                <li><a href="/about">ひかりの研究室について</a></li>
+            </ul>
+        </nav>
+    </div>
+</div>
+        <div class="main-area">
+            <section class="main-contents">
+                <h1 class="page-title">Windows App SDK の MenuFlyoutItem.KeyboardAccelerators で拡大縮小のショートカットを設定する方法 (Microsoft.UI.Xaml, WinUI3)</h1>
+<time class="posted-date">2023-09-08</time>
+                <article class="article">
+                    <h2 id="結論-keyaddkeysubtractkeynumber0-とすればよい">結論 <code class="language-plaintext highlighter-rouge">Key="Add"</code>、<code class="language-plaintext highlighter-rouge">Key="subtract"</code>、<code class="language-plaintext highlighter-rouge">Key="Number0"</code> とすればよい</h2>
+
+<h3 id="拡大">拡大</h3>
+<blockquote>
+  <div class="language-xml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">&lt;MenuFlyoutItem</span> <span class="na">Text=</span><span class="s">"Zoom in"</span> <span class="na">x:Uid=</span><span class="s">"ZoomIn"</span><span class="nt">&gt;</span>
+    <span class="nt">&lt;MenuFlyoutItem.Icon&gt;</span>
+        <span class="nt">&lt;FontIcon</span> <span class="na">Glyph=</span><span class="s">"&amp;#xE8A3;"</span> <span class="na">FontFamily=</span><span class="s">"Segoe MDL2 Assets"</span> <span class="nt">/&gt;</span>
+    <span class="nt">&lt;/MenuFlyoutItem.Icon&gt;</span>
+    <span class="nt">&lt;MenuFlyoutItem.KeyboardAccelerators&gt;</span>
+        <span class="nt">&lt;KeyboardAccelerator</span> <span class="na">Key=</span><span class="s">"Add"</span> <span class="na">Modifiers=</span><span class="s">"Control"</span> <span class="nt">/&gt;</span>
+    <span class="nt">&lt;/MenuFlyoutItem.KeyboardAccelerators&gt;</span>
+<span class="nt">&lt;/MenuFlyoutItem&gt;</span>
+</code></pre></div>  </div>
+</blockquote>
+
+<h3 id="縮小">縮小</h3>
+<blockquote>
+  <div class="language-xml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">&lt;MenuFlyoutItem</span> <span class="na">Text=</span><span class="s">"Zoom out"</span> <span class="na">x:Uid=</span><span class="s">"ZoomOut"</span><span class="nt">&gt;</span>
+    <span class="nt">&lt;MenuFlyoutItem.Icon&gt;</span>
+        <span class="nt">&lt;FontIcon</span> <span class="na">Glyph=</span><span class="s">"&amp;#xE71F;"</span> <span class="na">FontFamily=</span><span class="s">"Segoe MDL2 Assets"</span> <span class="nt">/&gt;</span>
+    <span class="nt">&lt;/MenuFlyoutItem.Icon&gt;</span>
+    <span class="nt">&lt;MenuFlyoutItem.KeyboardAccelerators&gt;</span>
+        <span class="nt">&lt;KeyboardAccelerator</span> <span class="na">Key=</span><span class="s">"Subtract"</span> <span class="na">Modifiers=</span><span class="s">"Control"</span> <span class="nt">/&gt;</span>
+    <span class="nt">&lt;/MenuFlyoutItem.KeyboardAccelerators&gt;</span>
+<span class="nt">&lt;/MenuFlyoutItem&gt;</span>
+</code></pre></div>  </div>
+</blockquote>
+
+<h3 id="デフォルト">デフォルト</h3>
+<blockquote>
+  <div class="language-xml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">&lt;MenuFlyoutItem</span> <span class="na">Text=</span><span class="s">"Restore default zoom"</span> <span class="na">x:Uid=</span><span class="s">"RestoreDefaultZoom"</span><span class="nt">&gt;</span>
+    <span class="nt">&lt;MenuFlyoutItem.Icon&gt;</span>
+        <span class="nt">&lt;FontIcon</span> <span class="na">Glyph=</span><span class="s">"&amp;#xE71E;"</span> <span class="na">FontFamily=</span><span class="s">"Segoe MDL2 &gt; Assets"</span> <span class="nt">/&gt;</span>
+    <span class="nt">&lt;/MenuFlyoutItem.Icon&gt;</span>
+    <span class="nt">&lt;MenuFlyoutItem.KeyboardAccelerators&gt;</span>
+        <span class="nt">&lt;KeyboardAccelerator</span> <span class="na">Key=</span><span class="s">"Number0"</span> <span class="na">Modifiers=</span><span class="s">"Control"</span> <span class="nt">/&gt;</span>
+    <span class="nt">&lt;/MenuFlyoutItem.KeyboardAccelerators&gt;</span>
+<span class="nt">&lt;/MenuFlyoutItem&gt;</span>
+</code></pre></div>  </div>
+</blockquote>
+
+                </article>
+            </section>
+        </div>
+        
+            <a class="prev primary" href="/2023/09/08/winui3-menuflyouticon.html"><div class="prev button">＜</div></a>
+        
+        
+    </div>
+    
+    <footer>
+        <div class="footer">
+    <p>
+        © ひかり 2023
+    </p>
+    <p>
+        ひかりの研究室の著作権はひかりに属します。
+    </p>
+    <script>
+        let postedDates = document.getElementsByClassName("posted-date");
+        for(let i = 0; i < postedDates.length; i++){
+            let date = postedDates[i].innerText
+            if(date != ""){
+                let warekiDate = Wareki.date(date)
+                postedDates[i].innerText = warekiDate;
+            }
+        }
+    </script>
+    <script src="/assets/js/code.js"></script>
+</div>
+    </footer>
+</body>
+
+</html>

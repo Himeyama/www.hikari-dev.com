@@ -47,6 +47,54 @@
                 
     <div class="index">
         <article class="article">
+            <h1 class="page-title"><a href="/2023/09/08/winui3-zoom.html">Windows App SDK の MenuFlyoutItem.KeyboardAccelerators で拡大縮小のショートカットを設定する方法 (Microsoft.UI.Xaml, WinUI3)</a></h1>
+            <time class="posted-date">2023-09-08</time>
+            <h2 id="結論-keyaddkeysubtractkeynumber0-とすればよい">結論 <code class="language-plaintext highlighter-rouge">Key="Add"</code>、<code class="language-plaintext highlighter-rouge">Key="subtract"</code>、<code class="language-plaintext highlighter-rouge">Key="Number0"</code> とすればよい</h2>
+
+<h3 id="拡大">拡大</h3>
+<blockquote>
+  <div class="language-xml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">&lt;MenuFlyoutItem</span> <span class="na">Text=</span><span class="s">"Zoom in"</span> <span class="na">x:Uid=</span><span class="s">"ZoomIn"</span><span class="nt">&gt;</span>
+    <span class="nt">&lt;MenuFlyoutItem.Icon&gt;</span>
+        <span class="nt">&lt;FontIcon</span> <span class="na">Glyph=</span><span class="s">"&amp;#xE8A3;"</span> <span class="na">FontFamily=</span><span class="s">"Segoe MDL2 Assets"</span> <span class="nt">/&gt;</span>
+    <span class="nt">&lt;/MenuFlyoutItem.Icon&gt;</span>
+    <span class="nt">&lt;MenuFlyoutItem.KeyboardAccelerators&gt;</span>
+        <span class="nt">&lt;KeyboardAccelerator</span> <span class="na">Key=</span><span class="s">"Add"</span> <span class="na">Modifiers=</span><span class="s">"Control"</span> <span class="nt">/&gt;</span>
+    <span class="nt">&lt;/MenuFlyoutItem.KeyboardAccelerators&gt;</span>
+<span class="nt">&lt;/MenuFlyoutItem&gt;</span>
+</code></pre></div>  </div>
+</blockquote>
+
+<h3 id="縮小">縮小</h3>
+<blockquote>
+  <div class="language-xml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">&lt;MenuFlyoutItem</span> <span class="na">Text=</span><span class="s">"Zoom out"</span> <span class="na">x:Uid=</span><span class="s">"ZoomOut"</span><span class="nt">&gt;</span>
+    <span class="nt">&lt;MenuFlyoutItem.Icon&gt;</span>
+        <span class="nt">&lt;FontIcon</span> <span class="na">Glyph=</span><span class="s">"&amp;#xE71F;"</span> <span class="na">FontFamily=</span><span class="s">"Segoe MDL2 Assets"</span> <span class="nt">/&gt;</span>
+    <span class="nt">&lt;/MenuFlyoutItem.Icon&gt;</span>
+    <span class="nt">&lt;MenuFlyoutItem.KeyboardAccelerators&gt;</span>
+        <span class="nt">&lt;KeyboardAccelerator</span> <span class="na">Key=</span><span class="s">"Subtract"</span> <span class="na">Modifiers=</span><span class="s">"Control"</span> <span class="nt">/&gt;</span>
+    <span class="nt">&lt;/MenuFlyoutItem.KeyboardAccelerators&gt;</span>
+<span class="nt">&lt;/MenuFlyoutItem&gt;</span>
+</code></pre></div>  </div>
+</blockquote>
+
+<h3 id="デフォルト">デフォルト</h3>
+<blockquote>
+  <div class="language-xml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">&lt;MenuFlyoutItem</span> <span class="na">Text=</span><span class="s">"Restore default zoom"</span> <span class="na">x:Uid=</span><span class="s">"RestoreDefaultZoom"</span><span class="nt">&gt;</span>
+    <span class="nt">&lt;MenuFlyoutItem.Icon&gt;</span>
+        <span class="nt">&lt;FontIcon</span> <span class="na">Glyph=</span><span class="s">"&amp;#xE71E;"</span> <span class="na">FontFamily=</span><span class="s">"Segoe MDL2 &gt; Assets"</span> <span class="nt">/&gt;</span>
+    <span class="nt">&lt;/MenuFlyoutItem.Icon&gt;</span>
+    <span class="nt">&lt;MenuFlyoutItem.KeyboardAccelerators&gt;</span>
+        <span class="nt">&lt;KeyboardAccelerator</span> <span class="na">Key=</span><span class="s">"Number0"</span> <span class="na">Modifiers=</span><span class="s">"Control"</span> <span class="nt">/&gt;</span>
+    <span class="nt">&lt;/MenuFlyoutItem.KeyboardAccelerators&gt;</span>
+<span class="nt">&lt;/MenuFlyoutItem&gt;</span>
+</code></pre></div>  </div>
+</blockquote>
+
+        </article>
+    </div>
+
+    <div class="index">
+        <article class="article">
             <h1 class="page-title"><a href="/2023/09/08/winui3-menuflyouticon.html">Windows App SDK の MenuFlyoutItem でアイコンを使う方法 Microsoft.UI.Xaml.Controls, WinUI3)</a></h1>
             <time class="posted-date">2023-09-08</time>
             <h2 id="結論-menuflyoutitemicon-を使用する">結論 <code class="language-plaintext highlighter-rouge">&lt;MenuFlyoutItem.Icon&gt;</code> を使用する</h2>
@@ -307,62 +355,6 @@ WSA 側で開発者モード及び USB デバッグを有効にします。</p>
 <p>できました。</p>
 
 <p><img src="/assets/img/wsa-android-threads/スクリーンショット 2023-07-07 001525.png" alt="Threads Android" /></p>
-
-        </article>
-    </div>
-
-    <div class="index">
-        <article class="article">
-            <h1 class="page-title"><a href="/2023/06/26/create-homepage.html">個人サイトについて語る</a></h1>
-            <time class="posted-date">2023-06-26</time>
-            <p>情報発信では、Twitter、Instagram がメジャーであるが、規約や仕様によって制限され自由度が小さい。
-個人サイトというものに回帰してみるのもアリである。
-このサイトは、W○X 等を利用していないので、宣伝や広告がなくユーザーフレンドリーである。</p>
-
-<h2 id="デザイン的なこと">デザイン的なこと</h2>
-<p>このサイトは、Jekyll というフレームワーク的なもので作られており、
-テーマはすべて自作している。
-ここでいうテーマは、フォントの大きさ、サイズやサイトの構造、余白等だ。
-また、レスポンシブデザイン (スマホ、パソコンなどの様々なデバイスに対応するデザイン) やダークモードにも対応している。
-一見シンプルに見えるが、CSS だけで、13.5 KiB もある。
-これには、理由がある。
-デザインを理解していない人が作るプレゼンテーション資料によくみられるが、
-強調色を多用したり、虹色のグラデーションや小さい余白などの使用でダサいデザインができる。
-このように、下手にデザインをするとかえってダサくなるのだ。
-つまり、強調色を多用せず余白を適切に設定するなどすれば良いのだ。
-それらを細かく行った結果が、膨大な量の CSS である。
-このホームページがダサいという人がいれば意見してほしい。
-個人的にはシンプルでムダな動作がないウェブサイトがベストだと考えている。</p>
-
-<h2 id="ホームページの設計">ホームページの設計</h2>
-<p>このホームページは Jekyll で作られている。
-Jekyll は HTML のテンプレートを書いておき、
-マークダウンの内容をテンプレートと組み合わせることでウェブページの作成が楽になっている。
-具体的には、通常なら HTML をページひとつひとつに書く必要があり、
-変更したい場合はひとつひとつのページを変更するといった面倒なことをしなければならないが、
-Jekyll を使用することで、変更が容易になっている。</p>
-
-<h2 id="github-pages-への配置">GitHub Pages への配置</h2>
-<p>このサイトは GitHub Pages を利用している。
-GitHub Pages は無料でもウェブページが公開でき、さらに独自ドメインを設定することができる。
-ただし、無料の場合はパブリックリポジトリのみ Pages が利用可能といった制限がある。
-Jekyll の配置だが GitHub Actions を使用することで、プッシュしたときにウェブページが生成されるようになっている。
-Jekyll はプッシュしただけでもページが生成されるようにできるが、workflows を使用することでプラグインの利用を可能としている。</p>
-
-<h2 id="必要な技術">必要な技術</h2>
-<p>このような個人サイトの作成に必要な技術は、</p>
-
-<ul>
-  <li>Jekyll</li>
-  <li>HTML</li>
-  <li>CSS / SASS</li>
-  <li>GitHub</li>
-  <li>JavaScript / TypeScript (必須ではない)</li>
-</ul>
-
-<p>である。
-個人サイトを作成するだけで、これだけの技術力が身につくことを考えれば、
-プログラミング初心者にはまず、個人サイトを作成することを勧めたい。</p>
 
         </article>
     </div>
