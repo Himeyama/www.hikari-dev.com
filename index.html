@@ -47,6 +47,32 @@
                 
     <div class="index">
         <article class="article">
+            <h1 class="page-title"><a href="/2023/09/08/winui3-menuflyouticon.html">Windows App SDK の MenuFlyoutItem でアイコンを使う方法 Microsoft.UI.Xaml.Controls, WinUI3)</a></h1>
+            <time class="posted-date">2023-09-08</time>
+            <h2 id="結論-menuflyoutitemicon-を使用する">結論 <code class="language-plaintext highlighter-rouge">&lt;MenuFlyoutItem.Icon&gt;</code> を使用する</h2>
+
+<p>参考: <a href="https://learn.microsoft.com/ja-jp/windows/windows-app-sdk/api/winrt/microsoft.ui.xaml.controls.menuflyoutitem.icon?view=windows-app-sdk-1.4">MenuFlyoutItem.Icon プロパティ</a></p>
+
+<blockquote>
+  <p>例</p>
+
+  <div class="language-xml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">&lt;MenuBar&gt;</span>
+    <span class="nt">&lt;MenuBarItem</span> <span class="na">Title=</span><span class="s">"File"</span> <span class="na">x:Uid=</span><span class="s">"File"</span><span class="nt">&gt;</span>
+        <span class="nt">&lt;MenuFlyoutItem</span> <span class="na">x:Name=</span><span class="s">"Open"</span> <span class="na">Text=</span><span class="s">"Open"</span> <span class="na">x:Uid=</span><span class="s">"Open"</span><span class="nt">&gt;</span>
+            <span class="nt">&lt;MenuFlyoutItem.Icon&gt;</span>
+                <span class="nt">&lt;FontIcon</span> <span class="na">Glyph=</span><span class="s">"&amp;#xED25;"</span> <span class="na">FontFamily=</span><span class="s">"Segoe MDL2 Assets"</span> <span class="nt">/&gt;</span>
+            <span class="nt">&lt;/MenuFlyoutItem.Icon&gt;</span>
+            <span class="nt">&lt;MenuFlyoutItem.KeyboardAccelerators&gt;</span>
+                <span class="nt">&lt;KeyboardAccelerator</span> <span class="na">Modifiers=</span><span class="s">"Control"</span> <span class="na">Key=</span><span class="s">"O"</span><span class="nt">/&gt;</span>
+            <span class="nt">&lt;/MenuFlyoutItem.KeyboardAccelerators&gt;</span>
+</code></pre></div>  </div>
+</blockquote>
+
+        </article>
+    </div>
+
+    <div class="index">
+        <article class="article">
             <h1 class="page-title"><a href="/2023/07/09/poetry.html">Python のパッケージ管理ツールである Poetry を使ってみよう</a></h1>
             <time class="posted-date">2023-07-09</time>
             <h2 id="poetry-のインストール">Poetry のインストール</h2>
@@ -337,43 +363,6 @@ Jekyll はプッシュしただけでもページが生成されるようにで�
 <p>である。
 個人サイトを作成するだけで、これだけの技術力が身につくことを考えれば、
 プログラミング初心者にはまず、個人サイトを作成することを勧めたい。</p>
-
-        </article>
-    </div>
-
-    <div class="index">
-        <article class="article">
-            <h1 class="page-title"><a href="/2023/06/10/winui0xc000027b.html">C# アプリを実行すると 0xc000027b がでて終了する件</a></h1>
-            <time class="posted-date">2023-06-10</time>
-            <h2 id="概要">概要</h2>
-<p>Visual Studio 2022 で WinUI アプリをビルドし、実行ファイルを実行して強制終了する。
-(ただし、Visual Studio から直接実行した場合は正常に動作する。)
-また、<code class="language-plaintext highlighter-rouge">dotnet run</code> コマンドでアプリを実行した場合も同様に強制終了する。</p>
-
-<p>イベント ビューアーで調べたところ、Microsoft.ui.xaml.dll が原因とのことだった。</p>
-
-<p><img src="/assets/img/eventviewer.png" alt="イベント ビューアー" /></p>
-
-<h2 id="調査">調査</h2>
-<p>コードを削除したりして、実行していくと、</p>
-
-<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">ApplicationData</span><span class="p">.</span><span class="n">Current</span><span class="p">.</span><span class="n">LocalSettings</span><span class="p">;</span>
-</code></pre></div></div>
-
-<p>を削除すると正常に起動することが判明した。
-そのため、一時的に以下のように変更し、正常起動した。</p>
-
-<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">try</span>
-<span class="p">{</span>
-    <span class="n">config</span> <span class="p">=</span> <span class="n">ApplicationData</span><span class="p">.</span><span class="n">Current</span><span class="p">.</span><span class="n">LocalSettings</span><span class="p">;</span>
-<span class="p">}</span>
-<span class="k">catch</span> <span class="p">(</span><span class="n">Exception</span> <span class="n">ex</span><span class="p">)</span>
-<span class="p">{</span>
-    <span class="p">...</span>    
-<span class="p">}</span>
-</code></pre></div></div>
-
-<p>謎は深まるばかり。</p>
 
         </article>
     </div>
