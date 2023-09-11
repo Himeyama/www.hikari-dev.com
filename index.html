@@ -47,6 +47,82 @@
                 
     <div class="index">
         <article class="article">
+            <h1 class="page-title"><a href="/2023/09/12/winui3-Button.html">Windows App SDK (WinUI3) の Button コンポーネントとサンプル</a></h1>
+            <time class="posted-date">2023-09-12</time>
+            <h2 id="名前空間">名前空間</h2>
+<p><a href="https://learn.microsoft.com/ja-jp/windows/windows-app-sdk/api/winrt/microsoft.ui.xaml.controls"><code class="language-plaintext highlighter-rouge">Microsoft.UI.Xaml.Controls</code></a></p>
+
+<h2 id="普通のボタン">普通のボタン</h2>
+<p><img src="/assets/img/Microsoft.UI.Xaml.Component/Button/Button.png" alt="Button" /></p>
+
+<div class="language-xml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">&lt;Button</span> <span class="na">Content=</span><span class="s">"Button"</span> <span class="nt">/&gt;</span>
+</code></pre></div></div>
+
+<h2 id="絵文字入りのボタン">絵文字入りのボタン</h2>
+<p><img src="/assets/img/Microsoft.UI.Xaml.Component/Button/ButtonWithICON.png" alt="Button with icon" /></p>
+
+<div class="language-xml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">&lt;Button&gt;</span>
+    <span class="nt">&lt;StackPanel</span> <span class="na">Orientation=</span><span class="s">"Horizontal"</span><span class="nt">&gt;</span>
+        <span class="nt">&lt;FontIcon</span> <span class="na">Glyph=</span><span class="s">"&amp;#xED25;"</span> <span class="na">FontFamily=</span><span class="s">"Segoe MDL2 Assets"</span> <span class="nt">/&gt;</span>
+        <span class="nt">&lt;TextBlock</span> <span class="na">Text=</span><span class="s">"Open"</span> <span class="na">Margin=</span><span class="s">"8, 0, 0, 0"</span> <span class="nt">/&gt;</span>
+    <span class="nt">&lt;/StackPanel&gt;</span>
+<span class="nt">&lt;/Button&gt;</span>
+</code></pre></div></div>
+
+<h2 id="強調スタイルのボタン">強調スタイルのボタン</h2>
+<p><img src="/assets/img/Microsoft.UI.Xaml.Component/Button/AccentStyleButton.png" alt="AccentStyleButton" /></p>
+
+<div class="language-xml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">&lt;Button</span> <span class="na">Style=</span><span class="s">"{StaticResource AccentButtonStyle}"</span> <span class="na">Content=</span><span class="s">"Accent style button"</span> <span class="nt">/&gt;</span>
+</code></pre></div></div>
+
+<h2 id="幅いっぱいに伸ばす">幅いっぱいに伸ばす</h2>
+<p><img src="/assets/img/Microsoft.UI.Xaml.Component/Button/StretchButton.png" alt="Stretch Button" /></p>
+
+<div class="language-xml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">&lt;Button</span> <span class="na">Content=</span><span class="s">"Button"</span> <span class="na">HorizontalAlignment=</span><span class="s">"Stretch"</span> <span class="nt">/&gt;</span>
+</code></pre></div></div>
+
+<h2 id="ボタンの無効化">ボタンの無効化</h2>
+<p><img src="/assets/img/Microsoft.UI.Xaml.Component/Button/DisabledButton.png" alt="Disabled Button" /></p>
+
+<div class="language-xml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">&lt;Button</span> <span class="na">IsEnabled=</span><span class="s">"False"</span> <span class="na">Content=</span><span class="s">"Button"</span> <span class="nt">/&gt;</span>
+</code></pre></div></div>
+
+<p>C# では <code class="language-plaintext highlighter-rouge">ボタン.IsEnabled = 真偽値;</code> で有効化 / 無効化が可能。</p>
+
+<h2 id="ボタンを非表示">ボタンを非表示</h2>
+<p><code class="language-plaintext highlighter-rouge">Visibility="Collapsed"</code> でコンポーネントが無くなったように見える。<code class="language-plaintext highlighter-rouge">Visibility="Visible"</code> で表示。</p>
+
+<div class="language-xml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">&lt;Button</span> <span class="na">Name=</span><span class="s">"Btn"</span> <span class="na">Content=</span><span class="s">"Button"</span> <span class="na">Visibility=</span><span class="s">"Collapsed"</span> <span class="nt">/&gt;</span>
+</code></pre></div></div>
+
+<p>無効化されたボタンを C# で表示 / 非表示するには、以下のようにする。</p>
+
+<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="cm">/* 表示 */</span>
+<span class="n">Btn</span><span class="p">.</span><span class="n">Visibility</span> <span class="p">=</span> <span class="n">Visibility</span><span class="p">.</span><span class="n">Visible</span><span class="p">;</span>
+
+<span class="cm">/* 非表示 */</span>
+<span class="n">Btn</span><span class="p">.</span><span class="n">Visibility</span> <span class="p">=</span> <span class="n">Visibility</span><span class="p">.</span><span class="n">Collapsed</span><span class="p">;</span>
+</code></pre></div></div>
+
+<h2 id="関数の呼び出し">関数の呼び出し</h2>
+
+<h3 id="c">C#</h3>
+<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">void</span> <span class="nf">Button_Click</span><span class="p">(</span><span class="kt">object</span> <span class="n">sender</span><span class="p">,</span> <span class="n">RoutedEventArgs</span> <span class="n">e</span><span class="p">)</span>
+<span class="p">{</span>
+    <span class="c1">// 処理</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<h3 id="xaml">XAML</h3>
+<div class="language-xml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">&lt;Button</span> <span class="na">Click=</span><span class="s">"Button_Click"</span> <span class="na">Content=</span><span class="s">"Button"</span> <span class="nt">/&gt;</span>
+</code></pre></div></div>
+
+
+        </article>
+    </div>
+
+    <div class="index">
+        <article class="article">
             <h1 class="page-title"><a href="/2023/09/08/winui3-zoom.html">Windows App SDK の MenuFlyoutItem.KeyboardAccelerators で拡大縮小のショートカットを設定する方法 (Microsoft.UI.Xaml, WinUI3)</a></h1>
             <time class="posted-date">2023-09-08</time>
             <h2 id="結論-keyaddkeysubtractkeynumber0-とすればよい">結論 <code class="language-plaintext highlighter-rouge">Key="Add"</code>、<code class="language-plaintext highlighter-rouge">Key="subtract"</code>、<code class="language-plaintext highlighter-rouge">Key="Number0"</code> とすればよい</h2>
@@ -321,44 +397,6 @@ Poetry を利用して追加したパッケージが使用できる。</p>
  とはいっても資格証明書という本末転倒な仕組みを導入するそうだが。</p>
   </li>
 </ol>
-
-        </article>
-    </div>
-
-    <div class="index">
-        <article class="article">
-            <h1 class="page-title"><a href="/2023/07/06/wsa-android-threads.html">threads を Windows 11 で利用する方法</a></h1>
-            <time class="posted-date">2023-07-06</time>
-            <h2 id="apk-の抽出">apk の抽出</h2>
-<p>threads がインストールされている Android 端末を Windows PC に接続し、
-adb コマンドを実行して apk を抽出します。</p>
-
-<p>まずは、パッケージの場所を調べるために検索を行います。</p>
-
-<div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code>adb shell pm list packages <span class="nt">-f</span> | Select-String instagram.barcelona
-</code></pre></div></div>
-
-<p>次に、抽出します。apk は PC に保存されます。</p>
-
-<div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code>adb pull /data/app/.../base.apk
-</code></pre></div></div>
-
-<p>次に、WSA に接続します。
-WSA 側で開発者モード及び USB デバッグを有効にします。</p>
-
-<div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code>adb connect 127.0.0.1:58526
-</code></pre></div></div>
-
-<p><img src="/assets/img/wsa-android-threads/スクリーンショット 2023-07-06 235222.png" alt="Threads apk WSA" /></p>
-
-<p>最後に、抽出した apk を WSA にインストールします。</p>
-
-<div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code>adb <span class="nb">install </span>base.apk
-</code></pre></div></div>
-
-<p>できました。</p>
-
-<p><img src="/assets/img/wsa-android-threads/スクリーンショット 2023-07-07 001525.png" alt="Threads Android" /></p>
 
         </article>
     </div>

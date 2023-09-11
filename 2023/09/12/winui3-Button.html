@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Windows App SDK (WinUI3) の Button コンポーネントとサンプル｜ひかりの研究室</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@500;700&display=swap" rel="stylesheet"> 
+<link rel="stylesheet" href="/assets/css/styles.css">
+<script src="/assets/js/wareki.js"></script>
+
+</head>
+
+<body>
+    <div class="contents">
+        <div class="left sidemenu">
+    <a class="home-link" href="/">ひかりの研究室</a>
+    <div class="sub-menu-area">
+        <nav class="basic-menu">
+            <a href="/">ホーム</a>
+        </nav>
+        <nav class="sub-menu">
+            <p class="description">
+                メニュー
+            </p>
+            <ul>
+                <li><a href="/docs">ドキュメント</a></li>
+                <li><a href="/archives">アーカイブ</a></li>
+                <li><a href="/tags">タグ別</a></li>
+            </ul>
+        </nav>
+        <nav class="sub-menu">
+            <p class="description">
+                詳細
+            </p>
+            <ul>
+                <li><a href="/about">ひかりの研究室について</a></li>
+            </ul>
+        </nav>
+    </div>
+</div>
+        <div class="main-area">
+            <section class="main-contents">
+                <h1 class="page-title">Windows App SDK (WinUI3) の Button コンポーネントとサンプル</h1>
+<time class="posted-date">2023-09-12</time>
+                <article class="article">
+                    <h2 id="名前空間">名前空間</h2>
+<p><a href="https://learn.microsoft.com/ja-jp/windows/windows-app-sdk/api/winrt/microsoft.ui.xaml.controls"><code class="language-plaintext highlighter-rouge">Microsoft.UI.Xaml.Controls</code></a></p>
+
+<h2 id="普通のボタン">普通のボタン</h2>
+<p><img src="/assets/img/Microsoft.UI.Xaml.Component/Button/Button.png" alt="Button" /></p>
+
+<div class="language-xml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">&lt;Button</span> <span class="na">Content=</span><span class="s">"Button"</span> <span class="nt">/&gt;</span>
+</code></pre></div></div>
+
+<h2 id="絵文字入りのボタン">絵文字入りのボタン</h2>
+<p><img src="/assets/img/Microsoft.UI.Xaml.Component/Button/ButtonWithICON.png" alt="Button with icon" /></p>
+
+<div class="language-xml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">&lt;Button&gt;</span>
+    <span class="nt">&lt;StackPanel</span> <span class="na">Orientation=</span><span class="s">"Horizontal"</span><span class="nt">&gt;</span>
+        <span class="nt">&lt;FontIcon</span> <span class="na">Glyph=</span><span class="s">"&amp;#xED25;"</span> <span class="na">FontFamily=</span><span class="s">"Segoe MDL2 Assets"</span> <span class="nt">/&gt;</span>
+        <span class="nt">&lt;TextBlock</span> <span class="na">Text=</span><span class="s">"Open"</span> <span class="na">Margin=</span><span class="s">"8, 0, 0, 0"</span> <span class="nt">/&gt;</span>
+    <span class="nt">&lt;/StackPanel&gt;</span>
+<span class="nt">&lt;/Button&gt;</span>
+</code></pre></div></div>
+
+<h2 id="強調スタイルのボタン">強調スタイルのボタン</h2>
+<p><img src="/assets/img/Microsoft.UI.Xaml.Component/Button/AccentStyleButton.png" alt="AccentStyleButton" /></p>
+
+<div class="language-xml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">&lt;Button</span> <span class="na">Style=</span><span class="s">"{StaticResource AccentButtonStyle}"</span> <span class="na">Content=</span><span class="s">"Accent style button"</span> <span class="nt">/&gt;</span>
+</code></pre></div></div>
+
+<h2 id="幅いっぱいに伸ばす">幅いっぱいに伸ばす</h2>
+<p><img src="/assets/img/Microsoft.UI.Xaml.Component/Button/StretchButton.png" alt="Stretch Button" /></p>
+
+<div class="language-xml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">&lt;Button</span> <span class="na">Content=</span><span class="s">"Button"</span> <span class="na">HorizontalAlignment=</span><span class="s">"Stretch"</span> <span class="nt">/&gt;</span>
+</code></pre></div></div>
+
+<h2 id="ボタンの無効化">ボタンの無効化</h2>
+<p><img src="/assets/img/Microsoft.UI.Xaml.Component/Button/DisabledButton.png" alt="Disabled Button" /></p>
+
+<div class="language-xml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">&lt;Button</span> <span class="na">IsEnabled=</span><span class="s">"False"</span> <span class="na">Content=</span><span class="s">"Button"</span> <span class="nt">/&gt;</span>
+</code></pre></div></div>
+
+<p>C# では <code class="language-plaintext highlighter-rouge">ボタン.IsEnabled = 真偽値;</code> で有効化 / 無効化が可能。</p>
+
+<h2 id="ボタンを非表示">ボタンを非表示</h2>
+<p><code class="language-plaintext highlighter-rouge">Visibility="Collapsed"</code> でコンポーネントが無くなったように見える。<code class="language-plaintext highlighter-rouge">Visibility="Visible"</code> で表示。</p>
+
+<div class="language-xml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">&lt;Button</span> <span class="na">Name=</span><span class="s">"Btn"</span> <span class="na">Content=</span><span class="s">"Button"</span> <span class="na">Visibility=</span><span class="s">"Collapsed"</span> <span class="nt">/&gt;</span>
+</code></pre></div></div>
+
+<p>無効化されたボタンを C# で表示 / 非表示するには、以下のようにする。</p>
+
+<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="cm">/* 表示 */</span>
+<span class="n">Btn</span><span class="p">.</span><span class="n">Visibility</span> <span class="p">=</span> <span class="n">Visibility</span><span class="p">.</span><span class="n">Visible</span><span class="p">;</span>
+
+<span class="cm">/* 非表示 */</span>
+<span class="n">Btn</span><span class="p">.</span><span class="n">Visibility</span> <span class="p">=</span> <span class="n">Visibility</span><span class="p">.</span><span class="n">Collapsed</span><span class="p">;</span>
+</code></pre></div></div>
+
+<h2 id="関数の呼び出し">関数の呼び出し</h2>
+
+<h3 id="c">C#</h3>
+<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">void</span> <span class="nf">Button_Click</span><span class="p">(</span><span class="kt">object</span> <span class="n">sender</span><span class="p">,</span> <span class="n">RoutedEventArgs</span> <span class="n">e</span><span class="p">)</span>
+<span class="p">{</span>
+    <span class="c1">// 処理</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<h3 id="xaml">XAML</h3>
+<div class="language-xml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">&lt;Button</span> <span class="na">Click=</span><span class="s">"Button_Click"</span> <span class="na">Content=</span><span class="s">"Button"</span> <span class="nt">/&gt;</span>
+</code></pre></div></div>
+
+
+                </article>
+            </section>
+        </div>
+        
+            <a class="prev primary" href="/2023/09/08/winui3-zoom.html"><div class="prev button">＜</div></a>
+        
+        
+    </div>
+    
+    <footer>
+        <div class="footer">
+    <p>
+        © ひかり 2023
+    </p>
+    <p>
+        ひかりの研究室の著作権はひかりに属します。
+    </p>
+    <script>
+        let postedDates = document.getElementsByClassName("posted-date");
+        for(let i = 0; i < postedDates.length; i++){
+            let date = postedDates[i].innerText
+            if(date != ""){
+                let warekiDate = Wareki.date(date)
+                postedDates[i].innerText = warekiDate;
+            }
+        }
+    </script>
+    <script src="/assets/js/code.js"></script>
+</div>
+    </footer>
+</body>
+
+</html>
