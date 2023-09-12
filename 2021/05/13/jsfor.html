@@ -1,1 +1,132 @@
-<!DOCTYPE html><html><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><link rel="stylesheet" href="/assets/css/styles.css"><meta name="Hikari's personal website that is written information technology."><title>JavaScript 便利ワザ | ひかりの研究室</title><meta name="generator" content="Jekyll v4.3.2"><meta property="og:title" content="JavaScript 便利ワザ"><meta name="author" content="ひかり"><meta property="og:locale" content="ja_JP"><meta name="description" content="添字を添えて for で繰り返し"><meta property="og:description" content="添字を添えて for で繰り返し"><link rel="canonical" href="https://www.hikari-dev.com/2021/05/13/jsfor.html"><meta property="og:url" content="https://www.hikari-dev.com/2021/05/13/jsfor.html"><meta property="og:site_name" content="ひかりの研究室"><meta property="og:type" content="article"><meta property="article:published_time" content="2021-05-13T21:29:00+00:00"><meta name="twitter:card" content="summary"><meta property="twitter:title" content="JavaScript 便利ワザ"><script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","author":{"@type":"Person","name":"ひかり"},"dateModified":"2021-05-13T21:29:00+00:00","datePublished":"2021-05-13T21:29:00+00:00","description":"添字を添えて for で繰り返し","headline":"JavaScript 便利ワザ","mainEntityOfPage":{"@type":"WebPage","@id":"https://www.hikari-dev.com/2021/05/13/jsfor.html"},"url":"https://www.hikari-dev.com/2021/05/13/jsfor.html"}</script><script src="/assets/js/wareki.js"></script></head><body><div class="contents"><div class="left sidemenu"><a class="home-link" href="/">ひかりの研究室</a><div class="sub-menu-area"><nav class="basic-menu"><a href="/">ホーム</a></nav><nav class="sub-menu"><p class="description">メニュー</p><ul><li><a href="/docs">ドキュメント</a></li><li><a href="/archives">アーカイブ</a></li><li><a href="/tags">タグ別</a></li></ul></nav><nav class="sub-menu"><p class="description">詳細</p><ul><li><a href="/about">ひかりの研究室について</a></li></ul></nav></div></div><div class="main-area"><section class="main-contents"><h1 class="page-title">JavaScript 便利ワザ</h1><time class="posted-date">2021-05-13</time><article class="article"><h2 id="添字を添えて-for-で繰り返し">添字を添えて for で繰り返し</h2><div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">for</span><span class="p">([</span><span class="nx">i</span><span class="p">,</spanspan class="nx">e</span><span class="p">]</spanspan class="k">of</spanspan class="p">[</span><span class="dl">"</span><span class="s2">a</span><span class="dl">"</span><span class="p">,</spanspan class="dl">"</span><span class="s2">b</span><span class="dl">"</span><span class="p">,</spanspan class="dl">"</span><span class="s2">c</span><span class="dl">"</span><span class="p">].</span><span class="nf">entries</span><span class="p">()){</span><span class="nx">console</span><span class="p">.</span><span class="nf">log</span><span class="p">(</span><span class="nx">i</span><span class="p">,</spanspan class="nx">e</span><span class="p">)</span><span class="p">}</span></code></pre></div></div><h3 id="foreach-でも">forEach でも</h3><div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="p">[</span><span class="dl">"</span><span class="s2">a</span><span class="dl">"</span><span class="p">,</spanspan class="dl">"</span><span class="s2">b</span><span class="dl">"</span><span class="p">,</spanspan class="dl">"</span><span class="s2">c</span><span class="dl">"</span><span class="p">].</span><span class="nf">forEach</span><span class="p">((</span><span class="nx">e</span><span class="p">,</spanspan class="nx">i</span><span class="p">)</spanspan class="o">=&gt;</spanspan class="p">{</span><span class="nx">console</span><span class="p">.</span><span class="nf">log</span><span class="p">(</span><span class="nx">e</span><span class="p">,</spanspan class="nx">i</span><span class="p">)</span><span class="p">})</span></code></pre></div></div><h2 id="長さ-n-の配列を作成">長さ n の配列を作成</h2><div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">const</spanspan class="nx">n</spanspan class="o">=</spanspan class="mi">10</span><span class="kd">let</spanspan class="nx">ary</spanspan class="o">=</spanspan class="p">[...</span><span class="nc">Array</span><span class="p">(</span><span class="nx">n</span><span class="p">)].</span><span class="nf">map</span><span class="p">((</span><span class="nx">_</span><span class="p">,</spanspan class="nx">i</span><span class="p">)</spanspan class="o">=&gt;</spanspan class="nx">i</span><span class="p">)</span><span class="c1">// もしくは</span><span class="nx">ary</spanspan class="o">=</spanspan class="nb">Array</span><span class="p">.</span><span class="k">from</span><span class="p">({</span><span class="na">length</span><span class="p">:</spanspan class="nx">n</span><span class="p">}).</span><span class="nf">map</span><span class="p">((</span><span class="nx">_</span><span class="p">,</spanspan class="nx">i</span><span class="p">)</span><span class="o">=&gt;</spanspan class="nx">i</span><span class="p">)</span></code></pre></div></div><h2 id="配列の和">配列の和</h2><div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">let</spanspan class="nx">ary</spanspan class="o">=</spanspan class="p">[</span><span class="mi">1</span><span class="p">,</spanspan class="mi">2</span><span class="p">,</spanspan class="mi">3</span><span class="p">,</spanspan class="mi">4</span><span class="p">,</spanspan class="mi">5</span><span class="p">]</span><span class="nx">ary</span><span class="p">.</span><span class="nf">reduce</span><span class="p">((</span><span class="nx">_</span><span class="p">,</spanspan class="nx">v</span><span class="p">)</spanspan class="o">=&gt;</spanspan class="nx">_</spanspan class="o">+</spanspan class="nx">v</span><span class="p">)</span></code></pre></div></div></article></section></div><a class="prev primary" href="/2021/05/09/youtube-dl.html"><div class="prev button">＜</div></a><a class="next primary" href="/2021/05/14/erajs.html"><div class="next button">＞</div></a></div><footer><div class="footer"><p>© ひかり 2023</p><p>ひかりの研究室の著作権はひかりに属します。</p><script>let postedDates = document.getElementsByClassName("posted-date");for(let i = 0; i < postedDates.length; i++){let date = postedDates[i].innerTextif(date != ""){let warekiDate = Wareki.date(date)postedDates[i].innerText = warekiDate;}}</script><script src="/assets/js/code.js"></script></div></footer></body></html>
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<!-- <title>JavaScript 便利ワザ｜ひかりの研究室</title> -->
+<!-- <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@500;700&display=swap" rel="stylesheet">  -->
+<link rel="stylesheet" href="/assets/css/styles.css">
+<meta name="Hikari's personal website that is written information technology.">
+<!-- Begin Jekyll SEO tag v2.8.0 -->
+<title>JavaScript 便利ワザ | ひかりの研究室</title>
+<meta name="generator" content="Jekyll v4.3.2" />
+<meta property="og:title" content="JavaScript 便利ワザ" />
+<meta name="author" content="ひかり" />
+<meta property="og:locale" content="ja_JP" />
+<meta name="description" content="添字を添えて for で繰り返し" />
+<meta property="og:description" content="添字を添えて for で繰り返し" />
+<link rel="canonical" href="https://www.hikari-dev.com/2021/05/13/jsfor.html" />
+<meta property="og:url" content="https://www.hikari-dev.com/2021/05/13/jsfor.html" />
+<meta property="og:site_name" content="ひかりの研究室" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2021-05-13T21:29:00+00:00" />
+<meta name="twitter:card" content="summary" />
+<meta property="twitter:title" content="JavaScript 便利ワザ" />
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"BlogPosting","author":{"@type":"Person","name":"ひかり"},"dateModified":"2021-05-13T21:29:00+00:00","datePublished":"2021-05-13T21:29:00+00:00","description":"添字を添えて for で繰り返し","headline":"JavaScript 便利ワザ","mainEntityOfPage":{"@type":"WebPage","@id":"https://www.hikari-dev.com/2021/05/13/jsfor.html"},"url":"https://www.hikari-dev.com/2021/05/13/jsfor.html"}</script>
+<!-- End Jekyll SEO tag -->
+
+<script src="/assets/js/wareki.js"></script>
+
+</head>
+
+<body>
+    <div class="contents">
+        <div class="left sidemenu">
+    <a class="home-link" href="/">ひかりの研究室</a>
+    <div class="sub-menu-area">
+        <nav class="basic-menu">
+            <a href="/">ホーム</a>
+        </nav>
+        <nav class="sub-menu">
+            <p class="description">
+                メニュー
+            </p>
+            <ul>
+                <li><a href="/docs">ドキュメント</a></li>
+                <li><a href="/archives">アーカイブ</a></li>
+                <li><a href="/tags">タグ別</a></li>
+            </ul>
+        </nav>
+        <nav class="sub-menu">
+            <p class="description">
+                詳細
+            </p>
+            <ul>
+                <li><a href="/about">ひかりの研究室について</a></li>
+            </ul>
+        </nav>
+    </div>
+</div>
+        <div class="main-area">
+            <section class="main-contents">
+                <h1 class="page-title">JavaScript 便利ワザ</h1>
+<time class="posted-date">2021-05-13</time>
+                <article class="article">
+                    <h2 id="添字を添えて-for-で繰り返し">添字を添えて for で繰り返し</h2>
+
+<div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">for</span><span class="p">([</span><span class="nx">i</span><span class="p">,</span> <span class="nx">e</span><span class="p">]</span> <span class="k">of</span> <span class="p">[</span><span class="dl">"</span><span class="s2">a</span><span class="dl">"</span><span class="p">,</span> <span class="dl">"</span><span class="s2">b</span><span class="dl">"</span><span class="p">,</span> <span class="dl">"</span><span class="s2">c</span><span class="dl">"</span><span class="p">].</span><span class="nf">entries</span><span class="p">()){</span>
+    <span class="nx">console</span><span class="p">.</span><span class="nf">log</span><span class="p">(</span><span class="nx">i</span><span class="p">,</span> <span class="nx">e</span><span class="p">)</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<h3 id="foreach-でも">forEach でも</h3>
+<div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="p">[</span><span class="dl">"</span><span class="s2">a</span><span class="dl">"</span><span class="p">,</span> <span class="dl">"</span><span class="s2">b</span><span class="dl">"</span><span class="p">,</span> <span class="dl">"</span><span class="s2">c</span><span class="dl">"</span><span class="p">].</span><span class="nf">forEach</span><span class="p">((</span><span class="nx">e</span><span class="p">,</span> <span class="nx">i</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="p">{</span>
+    <span class="nx">console</span><span class="p">.</span><span class="nf">log</span><span class="p">(</span><span class="nx">e</span><span class="p">,</span> <span class="nx">i</span><span class="p">)</span>
+<span class="p">})</span>
+</code></pre></div></div>
+
+<h2 id="長さ-n-の配列を作成">長さ n の配列を作成</h2>
+<div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">const</span> <span class="nx">n</span> <span class="o">=</span> <span class="mi">10</span>
+<span class="kd">let</span> <span class="nx">ary</span> <span class="o">=</span> <span class="p">[...</span><span class="nc">Array</span><span class="p">(</span><span class="nx">n</span><span class="p">)].</span><span class="nf">map</span><span class="p">((</span><span class="nx">_</span><span class="p">,</span> <span class="nx">i</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="nx">i</span><span class="p">)</span>
+<span class="c1">// もしくは</span>
+<span class="nx">ary</span> <span class="o">=</span> <span class="nb">Array</span><span class="p">.</span><span class="k">from</span><span class="p">({</span><span class="na">length</span><span class="p">:</span> <span class="nx">n</span><span class="p">}).</span><span class="nf">map</span><span class="p">((</span><span class="nx">_</span><span class="p">,</span> <span class="nx">i</span><span class="p">)</span><span class="o">=&gt;</span> <span class="nx">i</span><span class="p">)</span>
+</code></pre></div></div>
+
+<h2 id="配列の和">配列の和</h2>
+<div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">let</span> <span class="nx">ary</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">]</span>
+<span class="nx">ary</span><span class="p">.</span><span class="nf">reduce</span><span class="p">((</span><span class="nx">_</span><span class="p">,</span> <span class="nx">v</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="nx">_</span> <span class="o">+</span> <span class="nx">v</span><span class="p">)</span>
+</code></pre></div></div>
+
+                </article>
+            </section>
+        </div>
+        
+            <a class="prev primary" href="/2021/05/09/youtube-dl.html"><div class="prev button">＜</div></a>
+        
+        
+            <a class="next primary" href="/2021/05/14/erajs.html"><div class="next button">＞</div></a>
+        
+    </div>
+    
+    <footer>
+        <div class="footer">
+    <p>
+        © ひかり 2023
+    </p>
+    <p>
+        ひかりの研究室の著作権はひかりに属します。
+    </p>
+    <script>
+        let postedDates = document.getElementsByClassName("posted-date");
+        for(let i = 0; i < postedDates.length; i++){
+            let date = postedDates[i].innerText
+            if(date != ""){
+                let warekiDate = Wareki.date(date)
+                postedDates[i].innerText = warekiDate;
+            }
+        }
+    </script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github-dark.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/highlight.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlightjs-line-numbers.js/2.8.0/highlightjs-line-numbers.min.js"></script>
+    <script>hljs.highlightAll();hljs.initLineNumbersOnLoad();</script>
+</div>
+    </footer>
+</body>
+
+</html>

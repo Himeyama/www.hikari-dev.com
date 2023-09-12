@@ -1,1 +1,456 @@
-<!DOCTYPE html><html><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><link rel="stylesheet" href="/assets/css/styles.css"><meta name="Hikari's personal website that is written information technology."><title>ひかりの研究室 | Hikari’s personal website that is written information technology.</title><meta name="generator" content="Jekyll v4.3.2"><meta property="og:title" content="ひかりの研究室"><meta name="author" content="ひかり"><meta property="og:locale" content="ja_JP"><meta name="description" content="Hikari’s personal website that is written information technology."><meta property="og:description" content="Hikari’s personal website that is written information technology."><link rel="canonical" href="https://www.hikari-dev.com/"><meta property="og:url" content="https://www.hikari-dev.com/"><meta property="og:site_name" content="ひかりの研究室"><meta property="og:type" content="website"><meta name="twitter:card" content="summary"><meta property="twitter:title" content="ひかりの研究室"><script type="application/ld+json">{"@context":"https://schema.org","@type":"WebSite","author":{"@type":"Person","name":"ひかり"},"description":"Hikari’s personal website that is written information technology.","headline":"ひかりの研究室","name":"ひかりの研究室","url":"https://www.hikari-dev.com/"}</script><script src="/assets/js/wareki.js"></script></head><body><div class="contents"><div class="left sidemenu"><a class="home-link" href="/">ひかりの研究室</a><div class="sub-menu-area"><nav class="basic-menu"><a href="/">ホーム</a></nav><nav class="sub-menu"><p class="description">メニュー</p><ul><li><a href="/docs">ドキュメント</a></li><li><a href="/archives">アーカイブ</a></li><li><a href="/tags">タグ別</a></li></ul></nav><nav class="sub-menu"><p class="description">詳細</p><ul><li><a href="/about">ひかりの研究室について</a></li></ul></nav></div></div><div class="main-area"><section class="main-contents"><div class="index"><article class="article"><h1 class="page-title"><a href="/2023/09/12/winui3-Button.html">Windows App SDK (WinUI3) の Button コンポーネントとサンプル</a></h1><time class="posted-date">2023-09-12</time><h2 id="名前空間">名前空間</h2><p><a href="https://learn.microsoft.com/ja-jp/windows/windows-app-sdk/api/winrt/microsoft.ui.xaml.controls"><code class="language-plaintext highlighter-rouge">Microsoft.UI.Xaml.Controls</code></a></p><h2 id="普通のボタン">普通のボタン</h2><p><img src="/assets/img/Microsoft.UI.Xaml.Component/Button/Button.png" alt="Button"></p><div class="language-xml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">&lt;Button</spanspan class="na">Content=</span><span class="s">"Button"</spanspan class="nt">/&gt;</span></code></pre></div></div><h2 id="絵文字入りのボタン">絵文字入りのボタン</h2><p><img src="/assets/img/Microsoft.UI.Xaml.Component/Button/ButtonWithICON.png" alt="Button with icon"></p><div class="language-xml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">&lt;Button&gt;</span><span class="nt">&lt;StackPanel</spanspan class="na">Orientation=</span><span class="s">"Horizontal"</span><span class="nt">&gt;</span><span class="nt">&lt;FontIcon</spanspan class="na">Glyph=</span><span class="s">"&amp;#xED25;"</spanspan class="na">FontFamily=</span><span class="s">"Segoe MDL2 Assets"</spanspan class="nt">/&gt;</span><span class="nt">&lt;TextBlock</spanspan class="na">Text=</span><span class="s">"Open"</spanspan class="na">Margin=</span><span class="s">"8, 0, 0, 0"</spanspan class="nt">/&gt;</span><span class="nt">&lt;/StackPanel&gt;</span><span class="nt">&lt;/Button&gt;</span></code></pre></div></div><h2 id="強調スタイルのボタン">強調スタイルのボタン</h2><p><img src="/assets/img/Microsoft.UI.Xaml.Component/Button/AccentStyleButton.png" alt="AccentStyleButton"></p><div class="language-xml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">&lt;Button</spanspan class="na">Style=</span><span class="s">"{StaticResource AccentButtonStyle}"</spanspan class="na">Content=</span><span class="s">"Accent style button"</spanspan class="nt">/&gt;</span></code></pre></div></div><h2 id="幅いっぱいに伸ばす">幅いっぱいに伸ばす</h2><p><img src="/assets/img/Microsoft.UI.Xaml.Component/Button/StretchButton.png" alt="Stretch Button"></p><div class="language-xml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">&lt;Button</spanspan class="na">Content=</span><span class="s">"Button"</spanspan class="na">HorizontalAlignment=</span><span class="s">"Stretch"</spanspan class="nt">/&gt;</span></code></pre></div></div><h2 id="ボタンの無効化">ボタンの無効化</h2><p><img src="/assets/img/Microsoft.UI.Xaml.Component/Button/DisabledButton.png" alt="Disabled Button"></p><div class="language-xml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">&lt;Button</spanspan class="na">IsEnabled=</span><span class="s">"False"</spanspan class="na">Content=</span><span class="s">"Button"</spanspan class="nt">/&gt;</span></code></pre></div></div><p>C# では <code class="language-plaintext highlighter-rouge">ボタン.IsEnabled = 真偽値;</code> で有効化 / 無効化が可能。</p><h2 id="ボタンを非表示">ボタンを非表示</h2><p><code class="language-plaintext highlighter-rouge">Visibility="Collapsed"</code> でコンポーネントが無くなったように見える。<code class="language-plaintext highlighter-rouge">Visibility="Visible"</code> で表示。</p><div class="language-xml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">&lt;Button</spanspan class="na">Name=</span><span class="s">"Btn"</spanspan class="na">Content=</span><span class="s">"Button"</spanspan class="na">Visibility=</span><span class="s">"Collapsed"</spanspan class="nt">/&gt;</span></code></pre></div></div><p>無効化されたボタンを C# で表示 / 非表示するには、以下のようにする。</p><div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="cm">/* 表示 */</span><span class="n">Btn</span><span class="p">.</span><span class="n">Visibility</spanspan class="p">=</spanspan class="n">Visibility</span><span class="p">.</span><span class="n">Visible</span><span class="p">;</span><span class="cm">/* 非表示 */</span><span class="n">Btn</span><span class="p">.</span><span class="n">Visibility</spanspan class="p">=</spanspan class="n">Visibility</span><span class="p">.</span><span class="n">Collapsed</span><span class="p">;</span></code></pre></div></div><h2 id="関数の呼び出し">関数の呼び出し</h2><h3 id="c">C#</h3><div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">void</spanspan class="nf">Button_Click</span><span class="p">(</span><span class="kt">object</spanspan class="n">sender</span><span class="p">,</spanspan class="n">RoutedEventArgs</spanspan class="n">e</span><span class="p">)</span><span class="p">{</span><span class="c1">// 処理</span><span class="p">}</span></code></pre></div></div><h3 id="xaml">XAML</h3><div class="language-xml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">&lt;Button</spanspan class="na">Click=</span><span class="s">"Button_Click"</spanspan class="na">Content=</span><span class="s">"Button"</spanspan class="nt">/&gt;</span></code></pre></div></div></article></div><div class="index"><article class="article"><h1 class="page-title"><a href="/2023/09/08/winui3-zoom.html">Windows App SDK の MenuFlyoutItem.KeyboardAccelerators で拡大縮小のショートカットを設定する方法 (Microsoft.UI.Xaml, WinUI3)</a></h1><time class="posted-date">2023-09-08</time><h2 id="結論-keyaddkeysubtractkeynumber0-とすればよい">結論 <code class="language-plaintext highlighter-rouge">Key="Add"</code>、<code class="language-plaintext highlighter-rouge">Key="subtract"</code>、<code class="language-plaintext highlighter-rouge">Key="Number0"</code> とすればよい</h2><p><img src="/assets/img/winui3/KeyboardAccelerators.png" alt="MenuFlyoutItem.KeyboardAccelerators"></p><h3 id="拡大">拡大</h3><blockquote><div class="language-xml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">&lt;MenuFlyoutItem</spanspan class="na">Text=</span><span class="s">"Zoom in"</spanspan class="na">x:Uid=</span><span class="s">"ZoomIn"</span><span class="nt">&gt;</span><span class="nt">&lt;MenuFlyoutItem.Icon&gt;</span><span class="nt">&lt;FontIcon</spanspan class="na">Glyph=</span><span class="s">"&amp;#xE8A3;"</spanspan class="na">FontFamily=</span><span class="s">"Segoe MDL2 Assets"</spanspan class="nt">/&gt;</span><span class="nt">&lt;/MenuFlyoutItem.Icon&gt;</span><span class="nt">&lt;MenuFlyoutItem.KeyboardAccelerators&gt;</span><span class="nt">&lt;KeyboardAccelerator</spanspan class="na">Key=</span><span class="s">"Add"</spanspan class="na">Modifiers=</span><span class="s">"Control"</spanspan class="nt">/&gt;</span><span class="nt">&lt;/MenuFlyoutItem.KeyboardAccelerators&gt;</span><span class="nt">&lt;/MenuFlyoutItem&gt;</span></code></pre></div></div></blockquote><h3 id="縮小">縮小</h3><blockquote><div class="language-xml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">&lt;MenuFlyoutItem</spanspan class="na">Text=</span><span class="s">"Zoom out"</spanspan class="na">x:Uid=</span><span class="s">"ZoomOut"</span><span class="nt">&gt;</span><span class="nt">&lt;MenuFlyoutItem.Icon&gt;</span><span class="nt">&lt;FontIcon</spanspan class="na">Glyph=</span><span class="s">"&amp;#xE71F;"</spanspan class="na">FontFamily=</span><span class="s">"Segoe MDL2 Assets"</spanspan class="nt">/&gt;</span><span class="nt">&lt;/MenuFlyoutItem.Icon&gt;</span><span class="nt">&lt;MenuFlyoutItem.KeyboardAccelerators&gt;</span><span class="nt">&lt;KeyboardAccelerator</spanspan class="na">Key=</span><span class="s">"Subtract"</spanspan class="na">Modifiers=</span><span class="s">"Control"</spanspan class="nt">/&gt;</span><span class="nt">&lt;/MenuFlyoutItem.KeyboardAccelerators&gt;</span><span class="nt">&lt;/MenuFlyoutItem&gt;</span></code></pre></div></div></blockquote><h3 id="デフォルト">デフォルト</h3><blockquote><div class="language-xml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">&lt;MenuFlyoutItem</spanspan class="na">Text=</span><span class="s">"Restore default zoom"</spanspan class="na">x:Uid=</span><span class="s">"RestoreDefaultZoom"</span><span class="nt">&gt;</span><span class="nt">&lt;MenuFlyoutItem.Icon&gt;</span><span class="nt">&lt;FontIcon</spanspan class="na">Glyph=</span><span class="s">"&amp;#xE71E;"</spanspan class="na">FontFamily=</span><span class="s">"Segoe MDL2 &gt; Assets"</spanspan class="nt">/&gt;</span><span class="nt">&lt;/MenuFlyoutItem.Icon&gt;</span><span class="nt">&lt;MenuFlyoutItem.KeyboardAccelerators&gt;</span><span class="nt">&lt;KeyboardAccelerator</spanspan class="na">Key=</span><span class="s">"Number0"</spanspan class="na">Modifiers=</span><span class="s">"Control"</spanspan class="nt">/&gt;</span><span class="nt">&lt;/MenuFlyoutItem.KeyboardAccelerators&gt;</span><span class="nt">&lt;/MenuFlyoutItem&gt;</span></code></pre></div></div></blockquote></article></div><div class="index"><article class="article"><h1 class="page-title"><a href="/2023/09/08/winui3-menuflyouticon.html">Windows App SDK の MenuFlyoutItem でアイコンを使う方法 Microsoft.UI.Xaml.Controls, WinUI3)</a></h1><time class="posted-date">2023-09-08</time><h2 id="結論-menuflyoutitemicon-を使用する">結論 <code class="language-plaintext highlighter-rouge">&lt;MenuFlyoutItem.Icon&gt;</code> を使用する</h2><p><img src="/assets/img/winui3/menuflyoutitemicon.png" alt="MenuFlyoutItem"></p><p>参考: <a href="https://learn.microsoft.com/ja-jp/windows/windows-app-sdk/api/winrt/microsoft.ui.xaml.controls.menuflyoutitem.icon?view=windows-app-sdk-1.4">MenuFlyoutItem.Icon プロパティ</a></p><blockquote><p>例</p><div class="language-xml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">&lt;MenuBar&gt;</span><span class="nt">&lt;MenuBarItem</spanspan class="na">Title=</span><span class="s">"File"</spanspan class="na">x:Uid=</span><span class="s">"File"</span><span class="nt">&gt;</span><span class="nt">&lt;MenuFlyoutItem</spanspan class="na">x:Name=</span><span class="s">"Open"</spanspan class="na">Text=</span><span class="s">"Open"</spanspan class="na">x:Uid=</span><span class="s">"Open"</span><span class="nt">&gt;</span><span class="nt">&lt;MenuFlyoutItem.Icon&gt;</span><span class="nt">&lt;FontIcon</spanspan class="na">Glyph=</span><span class="s">"&amp;#xED25;"</spanspan class="na">FontFamily=</span><span class="s">"Segoe MDL2 Assets"</spanspan class="nt">/&gt;</span><span class="nt">&lt;/MenuFlyoutItem.Icon&gt;</span><span class="nt">&lt;MenuFlyoutItem.KeyboardAccelerators&gt;</span><span class="nt">&lt;KeyboardAccelerator</spanspan class="na">Modifiers=</span><span class="s">"Control"</spanspan class="na">Key=</span><span class="s">"O"</span><span class="nt">/&gt;</span><span class="nt">&lt;/MenuFlyoutItem.KeyboardAccelerators&gt;</span></code></pre></div></div></blockquote></article></div><div class="index"><article class="article"><h1 class="page-title"><a href="/2023/07/09/poetry.html">Python のパッケージ管理ツールである Poetry を使ってみよう</a></h1><time class="posted-date">2023-07-09</time><h2 id="poetry-のインストール">Poetry のインストール</h2><p>Poetry のインストールは pip で行う。(pip のアップグレードもついでに行う。)</p><div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code>python <span class="nt">-m</span> pip <span class="nb">install</spanspan class="nt">--upgrade</span> pippip <span class="nb">install </span>poetry</code></pre></div></div><h2 id="poetry-で-python-プロジェクトの作成">Poetry で Python プロジェクトの作成</h2><h3 id="1-新規で-python-プロジェクトを作成する場合">1. 新規で Python プロジェクトを作成する場合</h3><p>新規に Python プロジェクトを作成する場合は、<code class="language-plaintext highlighter-rouge">poetry new</code> を実行する。Python プロジェクトのひな形が生成される。</p><div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code>poetry new xxxxxxxx</code></pre></div></div><h3 id="2-既に-python-プロジェクトがある場合">2. 既に Python プロジェクトがある場合</h3><p>既に Python プロジェクトがある場合は、<code class="language-plaintext highlighter-rouge">poetry init</code>で Poetry の実行に必要な設定ファイルを追加する。</p><div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code>poetry init</code></pre></div></div><h2 id="poetry-の仮想環境に入る">Poetry の仮想環境に入る</h2><p><code class="language-plaintext highlighter-rouge">poetry shell</code> を実行で、Poetry の仮想環境でシェルが起動する。Poetry を利用して追加したパッケージが使用できる。</p><div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code>poetry shell</code></pre></div></div><h2 id="poetry-にパッケージを追加">Poetry にパッケージを追加</h2><p><code class="language-plaintext highlighter-rouge">poetry add</code> で依存パッケージを追加できる。</p><div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code>poetry add xxxxxxxx</code></pre></div></div><h2 id="その他のよく使うコマンド">その他のよく使うコマンド</h2><ul><li><code class="language-plaintext highlighter-rouge">poetry list</code>コマンド一覧を表示</li><li><code class="language-plaintext highlighter-rouge">poetry build</code>パッケージの作成 (.tar.gz, .whl)</li><li><code class="language-plaintext highlighter-rouge">poetry install</code>依存パッケージのインストール</li><li><code class="language-plaintext highlighter-rouge">poetry publish</code>pypi などに作成物を公開</li><li><code class="language-plaintext highlighter-rouge">poetry search</code>パッケージの検索</li><li><code class="language-plaintext highlighter-rouge">poetry run</code>Poetry 環境でコマンドを実行</li><li><code class="language-plaintext highlighter-rouge">poetry show</code>利用可能なパッケージを表示</li><li><code class="language-plaintext highlighter-rouge">poetry update</code>依存パッケージのアップデートを実行</li></ul></article></div><div class="index"><article class="article"><h1 class="page-title"><a href="/2023/07/09/mycard.html">マイナンバーカード (マイナカード) 何に使った？</a></h1><time class="posted-date">2023-07-09</time><p>平成 30 年に取得したマイナカード、何に使ってどう便利だったかをまとめる。不便なところもまとめる。</p><h2 id="利用したこと">利用したこと</h2><ol><li>コンビニで証明書印刷<ul><li>住民票の写し</li><li>所得証明書</li></ul></li></ol><p>わざわざ、市役所 (出張所) に出向き、並ぶ必要がないので便利。</p><ol><li>本人確認<ul><li>スマホの通信契約</li><li>証券会社の口座開設</li><li>銀行の口座開設</li><li>なんとか Pay の本人確認</li><li>コロナワクチンの受付時の本人確認</li></ul></li></ol><p>今後はマイナンバーカードがないと本人確認は厳しいかも。社会も性善説では通用しなくなってきてるし、仕方ないかも。運転することはないのに、身分証明のために運転免許証を取るといったことはしなくていいのでそこは良い。多分、２割くらいはいそう。</p><ol><li>確定申告</li></ol><p>フォームに数値を打ち込んで送信するだけだった。医療費控除の計算もできるし、便利。</p><ol><li>保険証利用</li></ol><p>保険証を持ち歩かなくて済むのはいいが、資格確認システムのバグで利用できなくて困ることが何回かあったので、念のため保険証を持ち歩くのがよさそう。薬局で処方された医薬品情報がマイナポータルで確認できるのが便利。(薬のアレルギー持ちの人は特に)マイナカードを利用せず、保険証で利用したところは、医療費の計算をしてくれるのかな？そこはちょっとわからない。</p><ol><li>転出届</li></ol><p>3月末の混む時期に市役所 (出張所) に行って、転出届を出すのは気が滅入るが、マイナポータルを利用し転出届がオンラインで出せる。注意しなければならないことは、転入届を忘れないこと。(ちなみに、市役所・区役所行くより、出張所のほうが混んでないのでおすすめ。)転入時にマイナンバーの暗証番号も再設定しなければいけないのが面倒だった。</p><ol><li>スマホ電子証明書</li></ol><p>スマホにマイナンバーの電子証明書を搭載できる。マイナポータルにカードレスでログインできるので便利かも。</p><h2 id="不満なところ">不満なところ</h2><ol><li><p>スマホアプリの NFCスマホに電子証明書を搭載しているのに、毎回 NFC を要求される。NFC を有効にしておかなければアプリが開かないのは不便なので、改善を期待したい。</p></li><li><p>マイナンバーが記載されているマイナンバーカードにマイナンバーを記載することで、紛失したときのリスクがある。とはいっても悪用は考えづらいが。クレジットカードのようにナンバーレスにしてほしい。</p></li><li><p>写真がモノクロマイナンバーカードに内蔵されている写真はモノクロ。なぜカラーにしなかった。</p></li><li><p>更新が面倒電子証明書のセキュリティの関係で更新が 5 年だとか。しかし、有効期間は 10 年間。おいおい。改善されるとかされないとからしいが。</p></li><li><p>カードが使えない病院国から補助金がいくらか出ているそうなので、対応してほしい。</p></li><li><p>暗証番号の種類が多い暗証番号の種類が 4 種類もある。1 種類にしてほしいが、セキュリティ的に難しいのだろうか。わからん。</p></li><li><p>券面がダサい無線従事者の免状を見習ってほしい。</p></li></ol><h2 id="多分勘違いされていること">多分、勘違いされていること</h2><p>マイナカードの的外れな批判が多いのでまとめていく。批判する前に、仕組みを理解してほしい。</p><ol><li><p>マイナカードから紐づけされた個人情報が抜かれるこれは、一部正しい。マイナカードそのものには住所、氏名、性別、生年月日などの基本的な個人情報しか存在しない。運転免許証よりも情報は少ないだろう。マイナカードと紐づけされた情報を見るには、その紐づけされたサイトを開き、マイナカードから認証する必要がある。紐づけされた情報はマイナカードと暗証番号がないとみられないわけだ。もちろん、カードに暗証番号を書いて、そのカードをなくしたりしたら、様々な個人情報が抜かれる可能性はある。この点はキャッシュカードと似てる。</p></li><li><p>暗証番号が 4 桁しかなく、セキュリティが甘いセキュリティが甘いのは誤り。パソコンで SNS へのログインを考えてみると、ID とパスワードでログインできる。SNS では ID は簡単にわかるので、パスワードがあればログインができる。いくらパスワードが複雑だろうと、一要素認証なわけだ。一方マイナンバーカードは、カードの所持＋暗証番号の知識という二要素認証となっている。Windows などで、PIN コードでログインできるようになっているのも、複雑なパスワードを用いた一要素認証よりも、所持＋記憶の二要素認証のほうがセキュリティが高いと言われているからだ。</p></li><li><p>保険証の紐づけの誤りこれは、保険組合の紐づけミス、ヒューマンエラーである。マイナカードはあくまでも個人認証する仕組みしかなく、マイナカードの問題ではない。しかし、保険組合で紐づけるミスをどうにかしろというのはある。保険証情報はマイナポータルで確認できるので、一度確認したほうが望ましい。</p></li><li><p>マイナカードなしで窓口 10 割負担なんてとんでもない従来と同様、保険組合で手続きすることで返金を受けられる。とはいっても資格証明書という本末転倒な仕組みを導入するそうだが。</p></li></ol></article></div></section></div></div><footer><div class="footer"><p>© ひかり 2023</p><p>ひかりの研究室の著作権はひかりに属します。</p><script>let postedDates = document.getElementsByClassName("posted-date");for(let i = 0; i < postedDates.length; i++){let date = postedDates[i].innerTextif(date != ""){let warekiDate = Wareki.date(date)postedDates[i].innerText = warekiDate;}}</script><script src="/assets/js/code.js"></script></div></footer></body></html>
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<!-- <title>ひかりの研究室</title> -->
+<!-- <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@500;700&display=swap" rel="stylesheet">  -->
+<link rel="stylesheet" href="/assets/css/styles.css">
+<meta name="Hikari's personal website that is written information technology.">
+<!-- Begin Jekyll SEO tag v2.8.0 -->
+<title>ひかりの研究室 | Hikari’s personal website that is written information technology.</title>
+<meta name="generator" content="Jekyll v4.3.2" />
+<meta property="og:title" content="ひかりの研究室" />
+<meta name="author" content="ひかり" />
+<meta property="og:locale" content="ja_JP" />
+<meta name="description" content="Hikari’s personal website that is written information technology." />
+<meta property="og:description" content="Hikari’s personal website that is written information technology." />
+<link rel="canonical" href="https://www.hikari-dev.com/" />
+<meta property="og:url" content="https://www.hikari-dev.com/" />
+<meta property="og:site_name" content="ひかりの研究室" />
+<meta property="og:type" content="website" />
+<meta name="twitter:card" content="summary" />
+<meta property="twitter:title" content="ひかりの研究室" />
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"WebSite","author":{"@type":"Person","name":"ひかり"},"description":"Hikari’s personal website that is written information technology.","headline":"ひかりの研究室","name":"ひかりの研究室","url":"https://www.hikari-dev.com/"}</script>
+<!-- End Jekyll SEO tag -->
+
+<script src="/assets/js/wareki.js"></script>
+
+</head>
+
+<body>
+    <div class="contents">
+        <div class="left sidemenu">
+    <a class="home-link" href="/">ひかりの研究室</a>
+    <div class="sub-menu-area">
+        <nav class="basic-menu">
+            <a href="/">ホーム</a>
+        </nav>
+        <nav class="sub-menu">
+            <p class="description">
+                メニュー
+            </p>
+            <ul>
+                <li><a href="/docs">ドキュメント</a></li>
+                <li><a href="/archives">アーカイブ</a></li>
+                <li><a href="/tags">タグ別</a></li>
+            </ul>
+        </nav>
+        <nav class="sub-menu">
+            <p class="description">
+                詳細
+            </p>
+            <ul>
+                <li><a href="/about">ひかりの研究室について</a></li>
+            </ul>
+        </nav>
+    </div>
+</div>
+        <div class="main-area">
+            <section class="main-contents">
+                
+    <div class="index">
+        <article class="article">
+            <h1 class="page-title"><a href="/2023/09/12/winui3-Button.html">Windows App SDK (WinUI3) の Button コンポーネントとサンプル</a></h1>
+            <time class="posted-date">2023-09-12</time>
+            <h2 id="名前空間">名前空間</h2>
+<p><a href="https://learn.microsoft.com/ja-jp/windows/windows-app-sdk/api/winrt/microsoft.ui.xaml.controls"><code class="language-plaintext highlighter-rouge">Microsoft.UI.Xaml.Controls</code></a></p>
+
+<h2 id="普通のボタン">普通のボタン</h2>
+<p><img src="/assets/img/Microsoft.UI.Xaml.Component/Button/Button.png" alt="Button" /></p>
+
+<div class="language-xml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">&lt;Button</span> <span class="na">Content=</span><span class="s">"Button"</span> <span class="nt">/&gt;</span>
+</code></pre></div></div>
+
+<h2 id="絵文字入りのボタン">絵文字入りのボタン</h2>
+<p><img src="/assets/img/Microsoft.UI.Xaml.Component/Button/ButtonWithICON.png" alt="Button with icon" /></p>
+
+<div class="language-xml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">&lt;Button&gt;</span>
+    <span class="nt">&lt;StackPanel</span> <span class="na">Orientation=</span><span class="s">"Horizontal"</span><span class="nt">&gt;</span>
+        <span class="nt">&lt;FontIcon</span> <span class="na">Glyph=</span><span class="s">"&amp;#xED25;"</span> <span class="na">FontFamily=</span><span class="s">"Segoe MDL2 Assets"</span> <span class="nt">/&gt;</span>
+        <span class="nt">&lt;TextBlock</span> <span class="na">Text=</span><span class="s">"Open"</span> <span class="na">Margin=</span><span class="s">"8, 0, 0, 0"</span> <span class="nt">/&gt;</span>
+    <span class="nt">&lt;/StackPanel&gt;</span>
+<span class="nt">&lt;/Button&gt;</span>
+</code></pre></div></div>
+
+<h2 id="強調スタイルのボタン">強調スタイルのボタン</h2>
+<p><img src="/assets/img/Microsoft.UI.Xaml.Component/Button/AccentStyleButton.png" alt="AccentStyleButton" /></p>
+
+<div class="language-xml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">&lt;Button</span> <span class="na">Style=</span><span class="s">"{StaticResource AccentButtonStyle}"</span> <span class="na">Content=</span><span class="s">"Accent style button"</span> <span class="nt">/&gt;</span>
+</code></pre></div></div>
+
+<h2 id="幅いっぱいに伸ばす">幅いっぱいに伸ばす</h2>
+<p><img src="/assets/img/Microsoft.UI.Xaml.Component/Button/StretchButton.png" alt="Stretch Button" /></p>
+
+<div class="language-xml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">&lt;Button</span> <span class="na">Content=</span><span class="s">"Button"</span> <span class="na">HorizontalAlignment=</span><span class="s">"Stretch"</span> <span class="nt">/&gt;</span>
+</code></pre></div></div>
+
+<h2 id="ボタンの無効化">ボタンの無効化</h2>
+<p><img src="/assets/img/Microsoft.UI.Xaml.Component/Button/DisabledButton.png" alt="Disabled Button" /></p>
+
+<div class="language-xml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">&lt;Button</span> <span class="na">IsEnabled=</span><span class="s">"False"</span> <span class="na">Content=</span><span class="s">"Button"</span> <span class="nt">/&gt;</span>
+</code></pre></div></div>
+
+<p>C# では <code class="language-plaintext highlighter-rouge">ボタン.IsEnabled = 真偽値;</code> で有効化 / 無効化が可能。</p>
+
+<h2 id="ボタンを非表示">ボタンを非表示</h2>
+<p><code class="language-plaintext highlighter-rouge">Visibility="Collapsed"</code> でコンポーネントが無くなったように見える。<code class="language-plaintext highlighter-rouge">Visibility="Visible"</code> で表示。</p>
+
+<div class="language-xml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">&lt;Button</span> <span class="na">Name=</span><span class="s">"Btn"</span> <span class="na">Content=</span><span class="s">"Button"</span> <span class="na">Visibility=</span><span class="s">"Collapsed"</span> <span class="nt">/&gt;</span>
+</code></pre></div></div>
+
+<p>無効化されたボタンを C# で表示 / 非表示するには、以下のようにする。</p>
+
+<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="cm">/* 表示 */</span>
+<span class="n">Btn</span><span class="p">.</span><span class="n">Visibility</span> <span class="p">=</span> <span class="n">Visibility</span><span class="p">.</span><span class="n">Visible</span><span class="p">;</span>
+
+<span class="cm">/* 非表示 */</span>
+<span class="n">Btn</span><span class="p">.</span><span class="n">Visibility</span> <span class="p">=</span> <span class="n">Visibility</span><span class="p">.</span><span class="n">Collapsed</span><span class="p">;</span>
+</code></pre></div></div>
+
+<h2 id="関数の呼び出し">関数の呼び出し</h2>
+
+<h3 id="c">C#</h3>
+<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">void</span> <span class="nf">Button_Click</span><span class="p">(</span><span class="kt">object</span> <span class="n">sender</span><span class="p">,</span> <span class="n">RoutedEventArgs</span> <span class="n">e</span><span class="p">)</span>
+<span class="p">{</span>
+    <span class="c1">// 処理</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<h3 id="xaml">XAML</h3>
+<div class="language-xml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">&lt;Button</span> <span class="na">Click=</span><span class="s">"Button_Click"</span> <span class="na">Content=</span><span class="s">"Button"</span> <span class="nt">/&gt;</span>
+</code></pre></div></div>
+
+
+        </article>
+    </div>
+
+    <div class="index">
+        <article class="article">
+            <h1 class="page-title"><a href="/2023/09/08/winui3-zoom.html">Windows App SDK の MenuFlyoutItem.KeyboardAccelerators で拡大縮小のショートカットを設定する方法 (Microsoft.UI.Xaml, WinUI3)</a></h1>
+            <time class="posted-date">2023-09-08</time>
+            <h2 id="結論-keyaddkeysubtractkeynumber0-とすればよい">結論 <code class="language-plaintext highlighter-rouge">Key="Add"</code>、<code class="language-plaintext highlighter-rouge">Key="subtract"</code>、<code class="language-plaintext highlighter-rouge">Key="Number0"</code> とすればよい</h2>
+
+<p><img src="/assets/img/winui3/KeyboardAccelerators.png" alt="MenuFlyoutItem.KeyboardAccelerators" /></p>
+
+<h3 id="拡大">拡大</h3>
+<blockquote>
+  <div class="language-xml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">&lt;MenuFlyoutItem</span> <span class="na">Text=</span><span class="s">"Zoom in"</span> <span class="na">x:Uid=</span><span class="s">"ZoomIn"</span><span class="nt">&gt;</span>
+    <span class="nt">&lt;MenuFlyoutItem.Icon&gt;</span>
+        <span class="nt">&lt;FontIcon</span> <span class="na">Glyph=</span><span class="s">"&amp;#xE8A3;"</span> <span class="na">FontFamily=</span><span class="s">"Segoe MDL2 Assets"</span> <span class="nt">/&gt;</span>
+    <span class="nt">&lt;/MenuFlyoutItem.Icon&gt;</span>
+    <span class="nt">&lt;MenuFlyoutItem.KeyboardAccelerators&gt;</span>
+        <span class="nt">&lt;KeyboardAccelerator</span> <span class="na">Key=</span><span class="s">"Add"</span> <span class="na">Modifiers=</span><span class="s">"Control"</span> <span class="nt">/&gt;</span>
+    <span class="nt">&lt;/MenuFlyoutItem.KeyboardAccelerators&gt;</span>
+<span class="nt">&lt;/MenuFlyoutItem&gt;</span>
+</code></pre></div>  </div>
+</blockquote>
+
+<h3 id="縮小">縮小</h3>
+<blockquote>
+  <div class="language-xml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">&lt;MenuFlyoutItem</span> <span class="na">Text=</span><span class="s">"Zoom out"</span> <span class="na">x:Uid=</span><span class="s">"ZoomOut"</span><span class="nt">&gt;</span>
+    <span class="nt">&lt;MenuFlyoutItem.Icon&gt;</span>
+        <span class="nt">&lt;FontIcon</span> <span class="na">Glyph=</span><span class="s">"&amp;#xE71F;"</span> <span class="na">FontFamily=</span><span class="s">"Segoe MDL2 Assets"</span> <span class="nt">/&gt;</span>
+    <span class="nt">&lt;/MenuFlyoutItem.Icon&gt;</span>
+    <span class="nt">&lt;MenuFlyoutItem.KeyboardAccelerators&gt;</span>
+        <span class="nt">&lt;KeyboardAccelerator</span> <span class="na">Key=</span><span class="s">"Subtract"</span> <span class="na">Modifiers=</span><span class="s">"Control"</span> <span class="nt">/&gt;</span>
+    <span class="nt">&lt;/MenuFlyoutItem.KeyboardAccelerators&gt;</span>
+<span class="nt">&lt;/MenuFlyoutItem&gt;</span>
+</code></pre></div>  </div>
+</blockquote>
+
+<h3 id="デフォルト">デフォルト</h3>
+<blockquote>
+  <div class="language-xml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">&lt;MenuFlyoutItem</span> <span class="na">Text=</span><span class="s">"Restore default zoom"</span> <span class="na">x:Uid=</span><span class="s">"RestoreDefaultZoom"</span><span class="nt">&gt;</span>
+    <span class="nt">&lt;MenuFlyoutItem.Icon&gt;</span>
+        <span class="nt">&lt;FontIcon</span> <span class="na">Glyph=</span><span class="s">"&amp;#xE71E;"</span> <span class="na">FontFamily=</span><span class="s">"Segoe MDL2 &gt; Assets"</span> <span class="nt">/&gt;</span>
+    <span class="nt">&lt;/MenuFlyoutItem.Icon&gt;</span>
+    <span class="nt">&lt;MenuFlyoutItem.KeyboardAccelerators&gt;</span>
+        <span class="nt">&lt;KeyboardAccelerator</span> <span class="na">Key=</span><span class="s">"Number0"</span> <span class="na">Modifiers=</span><span class="s">"Control"</span> <span class="nt">/&gt;</span>
+    <span class="nt">&lt;/MenuFlyoutItem.KeyboardAccelerators&gt;</span>
+<span class="nt">&lt;/MenuFlyoutItem&gt;</span>
+</code></pre></div>  </div>
+</blockquote>
+
+        </article>
+    </div>
+
+    <div class="index">
+        <article class="article">
+            <h1 class="page-title"><a href="/2023/09/08/winui3-menuflyouticon.html">Windows App SDK の MenuFlyoutItem でアイコンを使う方法 Microsoft.UI.Xaml.Controls, WinUI3)</a></h1>
+            <time class="posted-date">2023-09-08</time>
+            <h2 id="結論-menuflyoutitemicon-を使用する">結論 <code class="language-plaintext highlighter-rouge">&lt;MenuFlyoutItem.Icon&gt;</code> を使用する</h2>
+
+<p><img src="/assets/img/winui3/menuflyoutitemicon.png" alt="MenuFlyoutItem" /></p>
+
+<p>参考: <a href="https://learn.microsoft.com/ja-jp/windows/windows-app-sdk/api/winrt/microsoft.ui.xaml.controls.menuflyoutitem.icon?view=windows-app-sdk-1.4">MenuFlyoutItem.Icon プロパティ</a></p>
+
+<blockquote>
+  <p>例</p>
+
+  <div class="language-xml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">&lt;MenuBar&gt;</span>
+    <span class="nt">&lt;MenuBarItem</span> <span class="na">Title=</span><span class="s">"File"</span> <span class="na">x:Uid=</span><span class="s">"File"</span><span class="nt">&gt;</span>
+        <span class="nt">&lt;MenuFlyoutItem</span> <span class="na">x:Name=</span><span class="s">"Open"</span> <span class="na">Text=</span><span class="s">"Open"</span> <span class="na">x:Uid=</span><span class="s">"Open"</span><span class="nt">&gt;</span>
+            <span class="nt">&lt;MenuFlyoutItem.Icon&gt;</span>
+                <span class="nt">&lt;FontIcon</span> <span class="na">Glyph=</span><span class="s">"&amp;#xED25;"</span> <span class="na">FontFamily=</span><span class="s">"Segoe MDL2 Assets"</span> <span class="nt">/&gt;</span>
+            <span class="nt">&lt;/MenuFlyoutItem.Icon&gt;</span>
+            <span class="nt">&lt;MenuFlyoutItem.KeyboardAccelerators&gt;</span>
+                <span class="nt">&lt;KeyboardAccelerator</span> <span class="na">Modifiers=</span><span class="s">"Control"</span> <span class="na">Key=</span><span class="s">"O"</span><span class="nt">/&gt;</span>
+            <span class="nt">&lt;/MenuFlyoutItem.KeyboardAccelerators&gt;</span>
+</code></pre></div>  </div>
+</blockquote>
+
+        </article>
+    </div>
+
+    <div class="index">
+        <article class="article">
+            <h1 class="page-title"><a href="/2023/07/09/poetry.html">Python のパッケージ管理ツールである Poetry を使ってみよう</a></h1>
+            <time class="posted-date">2023-07-09</time>
+            <h2 id="poetry-のインストール">Poetry のインストール</h2>
+<p>Poetry のインストールは pip で行う。
+(pip のアップグレードもついでに行う。)</p>
+
+<div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code>python <span class="nt">-m</span> pip <span class="nb">install</span> <span class="nt">--upgrade</span> pip
+pip <span class="nb">install </span>poetry
+</code></pre></div></div>
+
+<h2 id="poetry-で-python-プロジェクトの作成">Poetry で Python プロジェクトの作成</h2>
+
+<h3 id="1-新規で-python-プロジェクトを作成する場合">1. 新規で Python プロジェクトを作成する場合</h3>
+<p>新規に Python プロジェクトを作成する場合は、
+<code class="language-plaintext highlighter-rouge">poetry new</code> を実行する。
+Python プロジェクトのひな形が生成される。</p>
+
+<div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code>poetry new xxxxxxxx
+</code></pre></div></div>
+
+<h3 id="2-既に-python-プロジェクトがある場合">2. 既に Python プロジェクトがある場合</h3>
+<p>既に Python プロジェクトがある場合は、<code class="language-plaintext highlighter-rouge">poetry init</code>
+で Poetry の実行に必要な設定ファイルを追加する。</p>
+
+<div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code>poetry init
+</code></pre></div></div>
+
+<h2 id="poetry-の仮想環境に入る">Poetry の仮想環境に入る</h2>
+<p><code class="language-plaintext highlighter-rouge">poetry shell</code> を実行で、
+Poetry の仮想環境でシェルが起動する。
+Poetry を利用して追加したパッケージが使用できる。</p>
+
+<div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code>poetry shell
+</code></pre></div></div>
+
+<h2 id="poetry-にパッケージを追加">Poetry にパッケージを追加</h2>
+<p><code class="language-plaintext highlighter-rouge">poetry add</code> で依存パッケージを追加できる。</p>
+
+<div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code>poetry add xxxxxxxx
+</code></pre></div></div>
+
+<h2 id="その他のよく使うコマンド">その他のよく使うコマンド</h2>
+<ul>
+  <li><code class="language-plaintext highlighter-rouge">poetry list</code>     コマンド一覧を表示</li>
+  <li><code class="language-plaintext highlighter-rouge">poetry build</code>    パッケージの作成 (.tar.gz, .whl)</li>
+  <li><code class="language-plaintext highlighter-rouge">poetry install</code>  依存パッケージのインストール</li>
+  <li><code class="language-plaintext highlighter-rouge">poetry publish</code>  pypi などに作成物を公開</li>
+  <li><code class="language-plaintext highlighter-rouge">poetry search</code>   パッケージの検索</li>
+  <li><code class="language-plaintext highlighter-rouge">poetry run</code>      Poetry 環境でコマンドを実行</li>
+  <li><code class="language-plaintext highlighter-rouge">poetry show</code>     利用可能なパッケージを表示</li>
+  <li><code class="language-plaintext highlighter-rouge">poetry update</code>   依存パッケージのアップデートを実行</li>
+</ul>
+
+        </article>
+    </div>
+
+    <div class="index">
+        <article class="article">
+            <h1 class="page-title"><a href="/2023/07/09/mycard.html">マイナンバーカード (マイナカード) 何に使った？</a></h1>
+            <time class="posted-date">2023-07-09</time>
+            <p>平成 30 年に取得したマイナカード、
+何に使ってどう便利だったかをまとめる。
+不便なところもまとめる。</p>
+
+<h2 id="利用したこと">利用したこと</h2>
+
+<ol>
+  <li>コンビニで証明書印刷
+    <ul>
+      <li>住民票の写し</li>
+      <li>所得証明書</li>
+    </ul>
+  </li>
+</ol>
+
+<p>わざわざ、市役所 (出張所) に出向き、並ぶ必要がないので便利。</p>
+
+<ol>
+  <li>本人確認
+    <ul>
+      <li>スマホの通信契約</li>
+      <li>証券会社の口座開設</li>
+      <li>銀行の口座開設</li>
+      <li>なんとか Pay の本人確認</li>
+      <li>コロナワクチンの受付時の本人確認</li>
+    </ul>
+  </li>
+</ol>
+
+<p>今後はマイナンバーカードがないと本人確認は厳しいかも。
+社会も性善説では通用しなくなってきてるし、仕方ないかも。
+運転することはないのに、身分証明のために運転免許証を取るといったことはしなくていいのでそこは良い。多分、２割くらいはいそう。</p>
+
+<ol>
+  <li>確定申告</li>
+</ol>
+
+<p>フォームに数値を打ち込んで送信するだけだった。医療費控除の計算もできるし、便利。</p>
+
+<ol>
+  <li>保険証利用</li>
+</ol>
+
+<p>保険証を持ち歩かなくて済むのはいいが、
+資格確認システムのバグで利用できなくて困ることが何回かあったので、念のため保険証を持ち歩くのがよさそう。
+薬局で処方された医薬品情報がマイナポータルで確認できるのが便利。(薬のアレルギー持ちの人は特に)
+マイナカードを利用せず、保険証で利用したところは、
+医療費の計算をしてくれるのかな？そこはちょっとわからない。</p>
+
+<ol>
+  <li>転出届</li>
+</ol>
+
+<p>3月末の混む時期に市役所 (出張所) に行って、転出届を出すのは気が滅入るが、マイナポータルを利用し転出届がオンラインで出せる。
+注意しなければならないことは、転入届を忘れないこと。
+(ちなみに、市役所・区役所行くより、出張所のほうが混んでないのでおすすめ。)
+転入時にマイナンバーの暗証番号も再設定しなければいけないのが面倒だった。</p>
+
+<ol>
+  <li>スマホ電子証明書</li>
+</ol>
+
+<p>スマホにマイナンバーの電子証明書を搭載できる。
+マイナポータルにカードレスでログインできるので便利かも。</p>
+
+<h2 id="不満なところ">不満なところ</h2>
+<ol>
+  <li>
+    <p>スマホアプリの NFC
+ スマホに電子証明書を搭載しているのに、毎回 NFC を要求される。NFC を有効にしておかなければアプリが開かないのは不便なので、改善を期待したい。</p>
+  </li>
+  <li>
+    <p>マイナンバーが記載されている
+ マイナンバーカードにマイナンバーを記載することで、
+ 紛失したときのリスクがある。とはいっても悪用は考えづらいが。クレジットカードのようにナンバーレスにしてほしい。</p>
+  </li>
+  <li>
+    <p>写真がモノクロ
+ マイナンバーカードに内蔵されている写真はモノクロ。
+ なぜカラーにしなかった。</p>
+  </li>
+  <li>
+    <p>更新が面倒
+ 電子証明書のセキュリティの関係で更新が 5 年だとか。
+ しかし、有効期間は 10 年間。
+ おいおい。
+ 改善されるとかされないとからしいが。</p>
+  </li>
+  <li>
+    <p>カードが使えない病院
+ 国から補助金がいくらか出ているそうなので、対応してほしい。</p>
+  </li>
+  <li>
+    <p>暗証番号の種類が多い
+ 暗証番号の種類が 4 種類もある。1 種類にしてほしいが、
+ セキュリティ的に難しいのだろうか。わからん。</p>
+  </li>
+  <li>
+    <p>券面がダサい
+ 無線従事者の免状を見習ってほしい。</p>
+  </li>
+</ol>
+
+<h2 id="多分勘違いされていること">多分、勘違いされていること</h2>
+<p>マイナカードの的外れな批判が多いのでまとめていく。
+批判する前に、仕組みを理解してほしい。</p>
+
+<ol>
+  <li>
+    <p>マイナカードから紐づけされた個人情報が抜かれる
+ これは、一部正しい。
+ マイナカードそのものには住所、氏名、性別、生年月日などの基本的な個人情報しか存在しない。運転免許証よりも情報は少ないだろう。
+ マイナカードと紐づけされた情報を見るには、その紐づけされたサイトを開き、マイナカードから認証する必要がある。
+ 紐づけされた情報はマイナカードと暗証番号がないとみられないわけだ。もちろん、カードに暗証番号を書いて、そのカードをなくしたりしたら、様々な個人情報が抜かれる可能性はある。この点はキャッシュカードと似てる。</p>
+  </li>
+  <li>
+    <p>暗証番号が 4 桁しかなく、セキュリティが甘い
+ セキュリティが甘いのは誤り。
+ パソコンで SNS へのログインを考えてみると、ID とパスワードでログインできる。
+ SNS では ID は簡単にわかるので、パスワードがあればログインができる。いくらパスワードが複雑だろうと、一要素認証なわけだ。
+ 一方マイナンバーカードは、カードの所持＋暗証番号の知識という二要素認証となっている。
+ Windows などで、PIN コードでログインできるようになっているのも、複雑なパスワードを用いた一要素認証よりも、所持＋記憶の二要素認証のほうがセキュリティが高いと言われているからだ。</p>
+  </li>
+  <li>
+    <p>保険証の紐づけの誤り
+ これは、保険組合の紐づけミス、ヒューマンエラーである。
+ マイナカードはあくまでも個人認証する仕組みしかなく、マイナカードの問題ではない。
+ しかし、保険組合で紐づけるミスをどうにかしろというのはある。
+ 保険証情報はマイナポータルで確認できるので、一度確認したほうが望ましい。</p>
+  </li>
+  <li>
+    <p>マイナカードなしで窓口 10 割負担なんてとんでもない
+ 従来と同様、保険組合で手続きすることで返金を受けられる。
+ とはいっても資格証明書という本末転倒な仕組みを導入するそうだが。</p>
+  </li>
+</ol>
+
+        </article>
+    </div>
+
+
+            </section>
+        </div>
+        
+        
+    </div>
+    
+    <footer>
+        <div class="footer">
+    <p>
+        © ひかり 2023
+    </p>
+    <p>
+        ひかりの研究室の著作権はひかりに属します。
+    </p>
+    <script>
+        let postedDates = document.getElementsByClassName("posted-date");
+        for(let i = 0; i < postedDates.length; i++){
+            let date = postedDates[i].innerText
+            if(date != ""){
+                let warekiDate = Wareki.date(date)
+                postedDates[i].innerText = warekiDate;
+            }
+        }
+    </script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github-dark.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/highlight.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlightjs-line-numbers.js/2.8.0/highlightjs-line-numbers.min.js"></script>
+    <script>hljs.highlightAll();hljs.initLineNumbersOnLoad();</script>
+</div>
+    </footer>
+</body>
+
+</html>

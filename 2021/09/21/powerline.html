@@ -1,1 +1,144 @@
-<!DOCTYPE html><html><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><link rel="stylesheet" href="/assets/css/styles.css"><meta name="Hikari's personal website that is written information technology."><title>Powerline のインストール方法 | ひかりの研究室</title><meta name="generator" content="Jekyll v4.3.2"><meta property="og:title" content="Powerline のインストール方法"><meta name="author" content="ひかり"><meta property="og:locale" content="ja_JP"><meta name="description" content="インストール Go のインストール powreline-go のインストールのために Go をインストールする。"><meta property="og:description" content="インストール Go のインストール powreline-go のインストールのために Go をインストールする。"><link rel="canonical" href="https://www.hikari-dev.com/2021/09/21/powerline.html"><meta property="og:url" content="https://www.hikari-dev.com/2021/09/21/powerline.html"><meta property="og:site_name" content="ひかりの研究室"><meta property="og:type" content="article"><meta property="article:published_time" content="2021-09-21T06:12:00+00:00"><meta name="twitter:card" content="summary"><meta property="twitter:title" content="Powerline のインストール方法"><script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","author":{"@type":"Person","name":"ひかり"},"dateModified":"2021-09-21T06:12:00+00:00","datePublished":"2021-09-21T06:12:00+00:00","description":"インストール Go のインストール powreline-go のインストールのために Go をインストールする。","headline":"Powerline のインストール方法","mainEntityOfPage":{"@type":"WebPage","@id":"https://www.hikari-dev.com/2021/09/21/powerline.html"},"url":"https://www.hikari-dev.com/2021/09/21/powerline.html"}</script><script src="/assets/js/wareki.js"></script></head><body><div class="contents"><div class="left sidemenu"><a class="home-link" href="/">ひかりの研究室</a><div class="sub-menu-area"><nav class="basic-menu"><a href="/">ホーム</a></nav><nav class="sub-menu"><p class="description">メニュー</p><ul><li><a href="/docs">ドキュメント</a></li><li><a href="/archives">アーカイブ</a></li><li><a href="/tags">タグ別</a></li></ul></nav><nav class="sub-menu"><p class="description">詳細</p><ul><li><a href="/about">ひかりの研究室について</a></li></ul></nav></div></div><div class="main-area"><section class="main-contents"><h1 class="page-title">Powerline のインストール方法</h1><time class="posted-date">2021-09-21</time><article class="article"><h1 id="インストール">インストール</h1><h2 id="go-のインストール">Go のインストール</h2><p>powreline-go のインストールのために Go をインストールする。</p><div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>brew <span class="nb">install </span>go</code></pre></div></div><h2 id="powerline-go-のインストール">Powerline-go のインストール</h2><div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>go get <span class="nt">-u</span> github.com/justjanne/powerline-go</code></pre></div></div><h1 id="設定">設定</h1><h2 id="bashrc">Bashrc</h2><p>Vim とか nano とかで <code class="language-plaintext highlighter-rouge">~/.bashrc</code> を開き、以下を追加する。</p><div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">GOPATH</span><span class="o">=</span><span class="nv">$HOME</span>/go<span class="k">function </span>_update_ps1<span class="o">()</spanspan class="o">{</span><span class="nv">PS1</span><span class="o">=</span><span class="s2">"</span><span class="si">$(</span><span class="nv">$GOPATH</span>/bin/powerline-go <span class="nt">-newline</spanspan class="nt">-error</spanspan class="nv">$?</span><span class="si">)</span><span class="s2">"</span><span class="o">}</span><span class="k">if</spanspan class="o">[</spanspan class="s2">"</span><span class="nv">$TERM</span><span class="s2">"</spanspan class="o">!=</spanspan class="s2">"linux"</spanspan class="o">]</spanspan class="o">&amp;&amp;</spanspan class="o">[</spanspan class="nt">-f</spanspan class="s2">"</span><span class="nv">$GOPATH</span><span class="s2">/bin/powerline-go"</spanspan class="o">]</span><span class="p">;</spanspan class="k">then</span><span class="nv">PROMPT_COMMAND</span><span class="o">=</span><span class="s2">"_update_ps1; </span><span class="nv">$PROMPT_COMMAND</span><span class="s2">"</span><span class="k">fi</span></code></pre></div></div><p><code class="language-plaintext highlighter-rouge">source ~/.bashrc</code> を実行すると変更が適応される。</p><h1 id="フォント">フォント</h1><p>一応これで終了だが、文字化けする場合がある。Powerline に対応したフォントを設定する必要がある。Windows では、Cascadia Code PL とか、Cascadia Mono PL とかが使える。</p><p>おすすめは、https://github.com/yuru7/PlemolJP/ の PlemolJP。ダウンロードは、https://github.com/yuru7/PlemolJP/releasesの PlemolJP_NF_vX.X.X.zip をクリックし、ダウンロードし展開してフォントをインストール。フォントの設定は、PlemolJP35 Console NF とする。</p></article></section></div><a class="prev primary" href="/2021/08/16/raspi.html"><div class="prev button">＜</div></a><a class="next primary" href="/2021/09/23/ssh-tunnel.html"><div class="next button">＞</div></a></div><footer><div class="footer"><p>© ひかり 2023</p><p>ひかりの研究室の著作権はひかりに属します。</p><script>let postedDates = document.getElementsByClassName("posted-date");for(let i = 0; i < postedDates.length; i++){let date = postedDates[i].innerTextif(date != ""){let warekiDate = Wareki.date(date)postedDates[i].innerText = warekiDate;}}</script><script src="/assets/js/code.js"></script></div></footer></body></html>
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<!-- <title>Powerline のインストール方法｜ひかりの研究室</title> -->
+<!-- <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@500;700&display=swap" rel="stylesheet">  -->
+<link rel="stylesheet" href="/assets/css/styles.css">
+<meta name="Hikari's personal website that is written information technology.">
+<!-- Begin Jekyll SEO tag v2.8.0 -->
+<title>Powerline のインストール方法 | ひかりの研究室</title>
+<meta name="generator" content="Jekyll v4.3.2" />
+<meta property="og:title" content="Powerline のインストール方法" />
+<meta name="author" content="ひかり" />
+<meta property="og:locale" content="ja_JP" />
+<meta name="description" content="インストール Go のインストール powreline-go のインストールのために Go をインストールする。" />
+<meta property="og:description" content="インストール Go のインストール powreline-go のインストールのために Go をインストールする。" />
+<link rel="canonical" href="https://www.hikari-dev.com/2021/09/21/powerline.html" />
+<meta property="og:url" content="https://www.hikari-dev.com/2021/09/21/powerline.html" />
+<meta property="og:site_name" content="ひかりの研究室" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2021-09-21T06:12:00+00:00" />
+<meta name="twitter:card" content="summary" />
+<meta property="twitter:title" content="Powerline のインストール方法" />
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"BlogPosting","author":{"@type":"Person","name":"ひかり"},"dateModified":"2021-09-21T06:12:00+00:00","datePublished":"2021-09-21T06:12:00+00:00","description":"インストール Go のインストール powreline-go のインストールのために Go をインストールする。","headline":"Powerline のインストール方法","mainEntityOfPage":{"@type":"WebPage","@id":"https://www.hikari-dev.com/2021/09/21/powerline.html"},"url":"https://www.hikari-dev.com/2021/09/21/powerline.html"}</script>
+<!-- End Jekyll SEO tag -->
+
+<script src="/assets/js/wareki.js"></script>
+
+</head>
+
+<body>
+    <div class="contents">
+        <div class="left sidemenu">
+    <a class="home-link" href="/">ひかりの研究室</a>
+    <div class="sub-menu-area">
+        <nav class="basic-menu">
+            <a href="/">ホーム</a>
+        </nav>
+        <nav class="sub-menu">
+            <p class="description">
+                メニュー
+            </p>
+            <ul>
+                <li><a href="/docs">ドキュメント</a></li>
+                <li><a href="/archives">アーカイブ</a></li>
+                <li><a href="/tags">タグ別</a></li>
+            </ul>
+        </nav>
+        <nav class="sub-menu">
+            <p class="description">
+                詳細
+            </p>
+            <ul>
+                <li><a href="/about">ひかりの研究室について</a></li>
+            </ul>
+        </nav>
+    </div>
+</div>
+        <div class="main-area">
+            <section class="main-contents">
+                <h1 class="page-title">Powerline のインストール方法</h1>
+<time class="posted-date">2021-09-21</time>
+                <article class="article">
+                    <h1 id="インストール">インストール</h1>
+<h2 id="go-のインストール">Go のインストール</h2>
+<p>powreline-go のインストールのために Go をインストールする。</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>brew <span class="nb">install </span>go
+</code></pre></div></div>
+
+<h2 id="powerline-go-のインストール">Powerline-go のインストール</h2>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>go get <span class="nt">-u</span> github.com/justjanne/powerline-go
+</code></pre></div></div>
+
+<h1 id="設定">設定</h1>
+<h2 id="bashrc">Bashrc</h2>
+<p>Vim とか nano とかで <code class="language-plaintext highlighter-rouge">~/.bashrc</code> を開き、以下を追加する。</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">GOPATH</span><span class="o">=</span><span class="nv">$HOME</span>/go
+<span class="k">function </span>_update_ps1<span class="o">()</span> <span class="o">{</span>
+    <span class="nv">PS1</span><span class="o">=</span><span class="s2">"</span><span class="si">$(</span><span class="nv">$GOPATH</span>/bin/powerline-go <span class="nt">-newline</span> <span class="nt">-error</span> <span class="nv">$?</span><span class="si">)</span><span class="s2">"</span>
+<span class="o">}</span>
+<span class="k">if</span> <span class="o">[</span> <span class="s2">"</span><span class="nv">$TERM</span><span class="s2">"</span> <span class="o">!=</span> <span class="s2">"linux"</span> <span class="o">]</span> <span class="o">&amp;&amp;</span> <span class="o">[</span> <span class="nt">-f</span> <span class="s2">"</span><span class="nv">$GOPATH</span><span class="s2">/bin/powerline-go"</span> <span class="o">]</span><span class="p">;</span> <span class="k">then
+    </span><span class="nv">PROMPT_COMMAND</span><span class="o">=</span><span class="s2">"_update_ps1; </span><span class="nv">$PROMPT_COMMAND</span><span class="s2">"</span>
+<span class="k">fi</span>
+</code></pre></div></div>
+
+<p><code class="language-plaintext highlighter-rouge">source ~/.bashrc</code> を実行すると変更が適応される。</p>
+
+<h1 id="フォント">フォント</h1>
+<p>一応これで終了だが、文字化けする場合がある。
+Powerline に対応したフォントを設定する必要がある。
+Windows では、Cascadia Code PL とか、Cascadia Mono PL とかが使える。</p>
+
+<p>おすすめは、https://github.com/yuru7/PlemolJP/ の PlemolJP。
+ダウンロードは、
+https://github.com/yuru7/PlemolJP/releases
+の PlemolJP_NF_vX.X.X.zip をクリックし、ダウンロードし展開してフォントをインストール。
+フォントの設定は、PlemolJP35 Console NF とする。</p>
+
+                </article>
+            </section>
+        </div>
+        
+            <a class="prev primary" href="/2021/08/16/raspi.html"><div class="prev button">＜</div></a>
+        
+        
+            <a class="next primary" href="/2021/09/23/ssh-tunnel.html"><div class="next button">＞</div></a>
+        
+    </div>
+    
+    <footer>
+        <div class="footer">
+    <p>
+        © ひかり 2023
+    </p>
+    <p>
+        ひかりの研究室の著作権はひかりに属します。
+    </p>
+    <script>
+        let postedDates = document.getElementsByClassName("posted-date");
+        for(let i = 0; i < postedDates.length; i++){
+            let date = postedDates[i].innerText
+            if(date != ""){
+                let warekiDate = Wareki.date(date)
+                postedDates[i].innerText = warekiDate;
+            }
+        }
+    </script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github-dark.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/highlight.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlightjs-line-numbers.js/2.8.0/highlightjs-line-numbers.min.js"></script>
+    <script>hljs.highlightAll();hljs.initLineNumbersOnLoad();</script>
+</div>
+    </footer>
+</body>
+
+</html>

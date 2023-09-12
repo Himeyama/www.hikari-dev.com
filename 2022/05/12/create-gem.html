@@ -1,1 +1,292 @@
-<!DOCTYPE html><html><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><link rel="stylesheet" href="/assets/css/styles.css"><meta name="Hikari's personal website that is written information technology."><title>自作 gem の作り方 | ひかりの研究室</title><meta name="generator" content="Jekyll v4.3.2"><meta property="og:title" content="自作 gem の作り方"><meta name="author" content="ひかり"><meta property="og:locale" content="ja_JP"><meta name="description" content="gem を作成 (bundle gem) gem_name という gem のテンプレートを作成する場合は以下を実行します。"><meta property="og:description" content="gem を作成 (bundle gem) gem_name という gem のテンプレートを作成する場合は以下を実行します。"><link rel="canonical" href="https://www.hikari-dev.com/2022/05/12/create-gem.html"><meta property="og:url" content="https://www.hikari-dev.com/2022/05/12/create-gem.html"><meta property="og:site_name" content="ひかりの研究室"><meta property="og:type" content="article"><meta property="article:published_time" content="2022-05-12T00:00:00+00:00"><meta name="twitter:card" content="summary"><meta property="twitter:title" content="自作 gem の作り方"><script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","author":{"@type":"Person","name":"ひかり"},"dateModified":"2022-05-12T00:00:00+00:00","datePublished":"2022-05-12T00:00:00+00:00","description":"gem を作成 (bundle gem) gem_name という gem のテンプレートを作成する場合は以下を実行します。","headline":"自作 gem の作り方","mainEntityOfPage":{"@type":"WebPage","@id":"https://www.hikari-dev.com/2022/05/12/create-gem.html"},"url":"https://www.hikari-dev.com/2022/05/12/create-gem.html"}</script><script src="/assets/js/wareki.js"></script></head><body><div class="contents"><div class="left sidemenu"><a class="home-link" href="/">ひかりの研究室</a><div class="sub-menu-area"><nav class="basic-menu"><a href="/">ホーム</a></nav><nav class="sub-menu"><p class="description">メニュー</p><ul><li><a href="/docs">ドキュメント</a></li><li><a href="/archives">アーカイブ</a></li><li><a href="/tags">タグ別</a></li></ul></nav><nav class="sub-menu"><p class="description">詳細</p><ul><li><a href="/about">ひかりの研究室について</a></li></ul></nav></div></div><div class="main-area"><section class="main-contents"><h1 class="page-title">自作 gem の作り方</h1><time class="posted-date">2022-05-12</time><article class="article"><h2 id="gem-を作成-bundle-gem">gem を作成 (<code class="language-plaintext highlighter-rouge">bundle gem</code>)</h2><p><code class="language-plaintext highlighter-rouge">gem_name</code> という gem のテンプレートを作成する場合は以下を実行します。</p><div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>bundle gem gem_name</code></pre></div></div><h2 id="bundle-gem-のオプション"><code class="language-plaintext highlighter-rouge">bundle gem</code> のオプション</h2><p><code class="language-plaintext highlighter-rouge">bundle gem</code> にはオプションが存在します。</p><p>詳細またはその他のオプションを知りたい場合は <a href="https://bundler.io/v2.3/man/bundle-gem.1.html">Bundler: bundle gem</a> を参照してください。</p><table><thead><tr><th style="text-align: left">オプション</th><th style="text-align: left">説明</th></tr></thead><tbody><tr><td style="text-align: left"><code class="language-plaintext highlighter-rouge">--exe</code>, <code class="language-plaintext highlighter-rouge">-b</code>, <code class="language-plaintext highlighter-rouge">--bin</code></td><td style="text-align: left">gem にバイナリ実行ファイルを含めます。</td></tr><tr><td style="text-align: left"><code class="language-plaintext highlighter-rouge">--ext</code></td><td style="text-align: left">gem に C 拡張を含めます。</td></tr><tr><td style="text-align: left"><code class="language-plaintext highlighter-rouge">--mit</code></td><td style="text-align: left">プロジェクトを MIT ライセンスにします。</td></tr><tr><td style="text-align: left"><code class="language-plaintext highlighter-rouge">--ci</code></td><td style="text-align: left">ci サービスを設定します。</td></tr><tr><td style="text-align: left"><code class="language-plaintext highlighter-rouge">--linter</code></td><td style="text-align: left">リンターとフォーマッターを指定します。</td></tr></tbody></table><blockquote><p>例: リンターに <code class="language-plaintext highlighter-rouge">rubocop</code> を使用し、MIT ライセンスでコマンドを含み、C 言語拡張を含む <code class="language-plaintext highlighter-rouge">myapp</code> という gem を作成する場合</p><div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>bundle gem myapp <span class="nt">--exe</spanspan class="nt">--ext</spanspan class="nt">--mit</spanspan class="nt">--ci</span><span class="o">=</span>github <span class="nt">--linter</span><span class="o">=</span>rubocop</code></pre></div></div></blockquote><h2 id="プロジェクトの構造">プロジェクトの構造</h2><p>上記コマンドで生成したプロジェクトの構造は以下のようになっています。</p><div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>myapp├── Gemfile├── LICENSE.txt├── README.md├── Rakefile├── bin│   ├── console│   └── setup├── exe│   └── myapp├── ext│   └── myapp│  ├── extconf.rb│  ├── myapp.c│  └── myapp.h├── lib│   ├── myapp│   │   └── version.rb│   └── myapp.rb├── myapp.gemspec└── sig└── myapp.rbs</code></pre></div></div><p>各ディレクトリーは以下のようになっています。</p><ul><li>lib/: ライブラリーのコード (<code class="language-plaintext highlighter-rouge">require</code> で呼び出される)</li><li>ext/: C 言語のソースコード (インストール時にコンパイルされ、<code class="language-plaintext highlighter-rouge">require</code> で呼び出される)</li><li>exe/: コマンドがある</li></ul><p><code class="language-plaintext highlighter-rouge">myapp.gemspec</code> がもっとも重要なファイルで、gem の構成が定義されています。基本的に上記 3 つのディレクトリー (C 言語を使用しない場合は、2 つのディレクトリー) の中にあるファイルと gemspec ファイルを編集します。(必要に応じて Rakefile や README.md も編集します。)</p><p><strong>Gemfile は編集しないでください。</strong></p><h2 id="gemspec-の編集"><code class="language-plaintext highlighter-rouge">gemspec</code> の編集</h2><p>gem を作るために <code class="language-plaintext highlighter-rouge">myapp.gemspec</code> を編集する必要があります。</p><p>TODO のある行やホームページの行をコメントアウトし、<code class="language-plaintext highlighter-rouge">spec.summary</code> の設定を行えば最低限動作します。</p><p>必須である項目を以下に示します。</p><ul><li>spec.name</li><li>spec.version</li><li>spec.authors</li><li>spec.summary</li></ul><p><code class="language-plaintext highlighter-rouge">bundle install</code> コマンドを実行し、エラーがなければ問題ありません。</p><h3 id="依存パッケージの追加">依存パッケージの追加</h3><p>gemspec に以下のように追記して依存している gem を追加できます。</p><div class="language-rb highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">spec</span><span class="p">.</span><span class="nf">add_dependency</spanspan class="s2">"example-gem"</span><span class="p">,</spanspan class="s2">"~&gt; 1.0"</span></code></pre></div></div><p>gemspec に以下のように追記し開発時に必要な gem を追加できます。</p><div class="language-rb highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">spec</span><span class="p">.</span><span class="nf">add_development_dependency</spanspan class="s2">"example-gem"</span><span class="p">,</spanspan class="s2">"~&gt; 1.0"</span></code></pre></div></div><p>詳しくは、<a href="https://docs.ruby-lang.org/ja/latest/class/Gem=3a=3aSpecification.html">class Gem::Specification (Ruby 3.1) リファレンスマニュアル</a> や <a href="https://docs.ruby-lang.org/ja/latest/library/rubygems.html">library rubygems (Ruby 3.1 リファレンスマニュアル)</a> を参照してください。</p><h2 id="bundle-install"><code class="language-plaintext highlighter-rouge">bundle install</code></h2><p><code class="language-plaintext highlighter-rouge">bundle install</code> を実行することで、Gemfile および gemspec に記述されている gem がインストールされます。</p><h2 id="バージョンの変更">バージョンの変更</h2><p>バージョンは、<code class="language-plaintext highlighter-rouge">lib/myapp/version.rb</code> に定義されています。</p><h2 id="コンパイル">コンパイル</h2><p>以下のコマンドを実行し、C 拡張をコンパイルします。このコマンドの実行により、共有ライブラリー <code class="language-plaintext highlighter-rouge">lib/myapp/myapp.so</code> が生成されます。</p><div class="language-rb highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">rake</spanspan class="n">compile</span></code></pre></div></div><p>コンパイル後、gem に含まれるコマンド実行すると、エラーなく実行されます。</p><div class="language-rb highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">bundle</spanspan class="nb">exec</spanspan class="n">myapp</span></code></pre></div></div><h2 id="c-拡張">C 拡張</h2><p>C 言語で Ruby を拡張することができます。</p><p>たとえば、<code class="language-plaintext highlighter-rouge">/etc/myapp/myapp.c</code> を以下のように変更します。</p><div class="language-diff highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="p">voidInit_myapp(void)</span>{rb_mMyapp = rb_define_module("Myapp");<span class="gi">+ rb_p(rb_str_new2("Hello, world!"));</span>}</code></pre></div></div><p><code class="language-plaintext highlighter-rouge">rake compile</code> でコンパイルを行い、<code class="language-plaintext highlighter-rouge">bundle exec myapp</code> を実行すると、<code class="language-plaintext highlighter-rouge">"Hello, world!"</code> と表示されます。</p><p>この例は、C 言語から Ruby の C API を呼び出し表示するプログラムで、</p><div class="language-rb highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">p</spanspan class="s2">"Hello, world!"</span></code></pre></div></div><p>と同等です。</p><p>Ruby の C API だけではなく、コンピューターにインストールされている共有ライブラリーを扱うことができるため、ラッパーを作成することが可能です。</p><p>また、C 拡張により計算が必要な場合に高速化することができます。</p><h2 id="ライブラリーの作成">ライブラリーの作成</h2><p><code class="language-plaintext highlighter-rouge">lib/myapp.rb</code> あたりを編集。</p><p>新しいファイルを作成した場合は、<code class="language-plaintext highlighter-rouge">git add</code> する必要があります。</p><h2 id="gem-をインストール-rake-install">gem をインストール (<code class="language-plaintext highlighter-rouge">rake install</code>)</h2><p>プロジェクト内の gem がインストールされます。</p><div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>rake <span class="nb">install</span></code></pre></div></div><h2 id="gem-を公開-rake-release">gem を公開 (<code class="language-plaintext highlighter-rouge">rake release</code>)</h2><p>gem を公開するには、rubygems のアカウントを作成する必要があります。リリースするたびに、バージョンを変更する必要があります。</p><div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>rake release</code></pre></div></div><h2 id="gem-パッケージを生成-rake-build">gem パッケージを生成 (<code class="language-plaintext highlighter-rouge">rake build</code>)</h2><p>プロジェクトから <code class="language-plaintext highlighter-rouge">pkg/myapp-x.x.x.gem</code> が作成されます。</p><div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>rake build</code></pre></div></div></article></section></div><a class="prev primary" href="/2022/04/27/ubuntu-dock.html"><div class="prev button">＜</div></a><a class="next primary" href="/2022/05/12/create-jisaku-dist.html"><div class="next button">＞</div></a></div><footer><div class="footer"><p>© ひかり 2023</p><p>ひかりの研究室の著作権はひかりに属します。</p><script>let postedDates = document.getElementsByClassName("posted-date");for(let i = 0; i < postedDates.length; i++){let date = postedDates[i].innerTextif(date != ""){let warekiDate = Wareki.date(date)postedDates[i].innerText = warekiDate;}}</script><script src="/assets/js/code.js"></script></div></footer></body></html>
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<!-- <title>自作 gem の作り方｜ひかりの研究室</title> -->
+<!-- <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@500;700&display=swap" rel="stylesheet">  -->
+<link rel="stylesheet" href="/assets/css/styles.css">
+<meta name="Hikari's personal website that is written information technology.">
+<!-- Begin Jekyll SEO tag v2.8.0 -->
+<title>自作 gem の作り方 | ひかりの研究室</title>
+<meta name="generator" content="Jekyll v4.3.2" />
+<meta property="og:title" content="自作 gem の作り方" />
+<meta name="author" content="ひかり" />
+<meta property="og:locale" content="ja_JP" />
+<meta name="description" content="gem を作成 (bundle gem) gem_name という gem のテンプレートを作成する場合は以下を実行します。" />
+<meta property="og:description" content="gem を作成 (bundle gem) gem_name という gem のテンプレートを作成する場合は以下を実行します。" />
+<link rel="canonical" href="https://www.hikari-dev.com/2022/05/12/create-gem.html" />
+<meta property="og:url" content="https://www.hikari-dev.com/2022/05/12/create-gem.html" />
+<meta property="og:site_name" content="ひかりの研究室" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2022-05-12T00:00:00+00:00" />
+<meta name="twitter:card" content="summary" />
+<meta property="twitter:title" content="自作 gem の作り方" />
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"BlogPosting","author":{"@type":"Person","name":"ひかり"},"dateModified":"2022-05-12T00:00:00+00:00","datePublished":"2022-05-12T00:00:00+00:00","description":"gem を作成 (bundle gem) gem_name という gem のテンプレートを作成する場合は以下を実行します。","headline":"自作 gem の作り方","mainEntityOfPage":{"@type":"WebPage","@id":"https://www.hikari-dev.com/2022/05/12/create-gem.html"},"url":"https://www.hikari-dev.com/2022/05/12/create-gem.html"}</script>
+<!-- End Jekyll SEO tag -->
+
+<script src="/assets/js/wareki.js"></script>
+
+</head>
+
+<body>
+    <div class="contents">
+        <div class="left sidemenu">
+    <a class="home-link" href="/">ひかりの研究室</a>
+    <div class="sub-menu-area">
+        <nav class="basic-menu">
+            <a href="/">ホーム</a>
+        </nav>
+        <nav class="sub-menu">
+            <p class="description">
+                メニュー
+            </p>
+            <ul>
+                <li><a href="/docs">ドキュメント</a></li>
+                <li><a href="/archives">アーカイブ</a></li>
+                <li><a href="/tags">タグ別</a></li>
+            </ul>
+        </nav>
+        <nav class="sub-menu">
+            <p class="description">
+                詳細
+            </p>
+            <ul>
+                <li><a href="/about">ひかりの研究室について</a></li>
+            </ul>
+        </nav>
+    </div>
+</div>
+        <div class="main-area">
+            <section class="main-contents">
+                <h1 class="page-title">自作 gem の作り方</h1>
+<time class="posted-date">2022-05-12</time>
+                <article class="article">
+                    <h2 id="gem-を作成-bundle-gem">gem を作成 (<code class="language-plaintext highlighter-rouge">bundle gem</code>)</h2>
+<p><code class="language-plaintext highlighter-rouge">gem_name</code> という gem のテンプレートを作成する場合は以下を実行します。</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>bundle gem gem_name
+</code></pre></div></div>
+
+<h2 id="bundle-gem-のオプション"><code class="language-plaintext highlighter-rouge">bundle gem</code> のオプション</h2>
+<p><code class="language-plaintext highlighter-rouge">bundle gem</code> にはオプションが存在します。</p>
+
+<p>詳細またはその他のオプションを知りたい場合は <a href="https://bundler.io/v2.3/man/bundle-gem.1.html">Bundler: bundle gem</a> を参照してください。</p>
+
+<table>
+  <thead>
+    <tr>
+      <th style="text-align: left">オプション</th>
+      <th style="text-align: left">説明</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="text-align: left"><code class="language-plaintext highlighter-rouge">--exe</code>, <code class="language-plaintext highlighter-rouge">-b</code>, <code class="language-plaintext highlighter-rouge">--bin</code></td>
+      <td style="text-align: left">gem にバイナリ実行ファイルを含めます。</td>
+    </tr>
+    <tr>
+      <td style="text-align: left"><code class="language-plaintext highlighter-rouge">--ext</code></td>
+      <td style="text-align: left">gem に C 拡張を含めます。</td>
+    </tr>
+    <tr>
+      <td style="text-align: left"><code class="language-plaintext highlighter-rouge">--mit</code></td>
+      <td style="text-align: left">プロジェクトを MIT ライセンスにします。</td>
+    </tr>
+    <tr>
+      <td style="text-align: left"><code class="language-plaintext highlighter-rouge">--ci</code></td>
+      <td style="text-align: left">ci サービスを設定します。</td>
+    </tr>
+    <tr>
+      <td style="text-align: left"><code class="language-plaintext highlighter-rouge">--linter</code></td>
+      <td style="text-align: left">リンターとフォーマッターを指定します。</td>
+    </tr>
+  </tbody>
+</table>
+
+<blockquote>
+  <p>例: リンターに <code class="language-plaintext highlighter-rouge">rubocop</code> を使用し、MIT ライセンスでコマンドを含み、C 言語拡張を含む <code class="language-plaintext highlighter-rouge">myapp</code> という gem を作成する場合</p>
+  <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>bundle gem myapp <span class="nt">--exe</span> <span class="nt">--ext</span> <span class="nt">--mit</span> <span class="nt">--ci</span><span class="o">=</span>github <span class="nt">--linter</span><span class="o">=</span>rubocop
+</code></pre></div>  </div>
+</blockquote>
+
+<h2 id="プロジェクトの構造">プロジェクトの構造</h2>
+<p>上記コマンドで生成したプロジェクトの構造は以下のようになっています。</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>myapp
+├── Gemfile
+├── LICENSE.txt
+├── README.md
+├── Rakefile
+├── bin
+│   ├── console
+│   └── setup
+├── exe
+│   └── myapp
+├── ext
+│   └── myapp
+│       ├── extconf.rb
+│       ├── myapp.c
+│       └── myapp.h
+├── lib
+│   ├── myapp
+│   │   └── version.rb
+│   └── myapp.rb
+├── myapp.gemspec
+└── sig
+    └── myapp.rbs
+</code></pre></div></div>
+
+<p>各ディレクトリーは以下のようになっています。</p>
+
+<ul>
+  <li>lib/: ライブラリーのコード (<code class="language-plaintext highlighter-rouge">require</code> で呼び出される)</li>
+  <li>ext/: C 言語のソースコード (インストール時にコンパイルされ、<code class="language-plaintext highlighter-rouge">require</code> で呼び出される)</li>
+  <li>exe/: コマンドがある</li>
+</ul>
+
+<p><code class="language-plaintext highlighter-rouge">myapp.gemspec</code> がもっとも重要なファイルで、gem の構成が定義されています。
+基本的に上記 3 つのディレクトリー (C 言語を使用しない場合は、2 つのディレクトリー) の中にあるファイルと gemspec ファイルを編集します。(必要に応じて Rakefile や README.md も編集します。)</p>
+
+<p><strong>Gemfile は編集しないでください。</strong></p>
+
+<h2 id="gemspec-の編集"><code class="language-plaintext highlighter-rouge">gemspec</code> の編集</h2>
+<p>gem を作るために <code class="language-plaintext highlighter-rouge">myapp.gemspec</code> を編集する必要があります。</p>
+
+<p>TODO のある行やホームページの行をコメントアウトし、<code class="language-plaintext highlighter-rouge">spec.summary</code> の設定を行えば最低限動作します。</p>
+
+<p>必須である項目を以下に示します。</p>
+<ul>
+  <li>spec.name</li>
+  <li>spec.version</li>
+  <li>spec.authors</li>
+  <li>spec.summary</li>
+</ul>
+
+<p><code class="language-plaintext highlighter-rouge">bundle install</code> コマンドを実行し、エラーがなければ問題ありません。</p>
+
+<h3 id="依存パッケージの追加">依存パッケージの追加</h3>
+<p>gemspec に以下のように追記して依存している gem を追加できます。</p>
+
+<div class="language-rb highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  <span class="n">spec</span><span class="p">.</span><span class="nf">add_dependency</span> <span class="s2">"example-gem"</span><span class="p">,</span> <span class="s2">"~&gt; 1.0"</span>
+</code></pre></div></div>
+
+<p>gemspec に以下のように追記し開発時に必要な gem を追加できます。</p>
+
+<div class="language-rb highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  <span class="n">spec</span><span class="p">.</span><span class="nf">add_development_dependency</span> <span class="s2">"example-gem"</span><span class="p">,</span> <span class="s2">"~&gt; 1.0"</span>
+</code></pre></div></div>
+
+<p>詳しくは、<a href="https://docs.ruby-lang.org/ja/latest/class/Gem=3a=3aSpecification.html">class Gem::Specification (Ruby 3.1) リファレンスマニュアル</a> や <a href="https://docs.ruby-lang.org/ja/latest/library/rubygems.html">library rubygems (Ruby 3.1 リファレンスマニュアル)</a> を参照してください。</p>
+
+<h2 id="bundle-install"><code class="language-plaintext highlighter-rouge">bundle install</code></h2>
+<p><code class="language-plaintext highlighter-rouge">bundle install</code> を実行することで、Gemfile および gemspec に記述されている gem がインストールされます。</p>
+
+<h2 id="バージョンの変更">バージョンの変更</h2>
+<p>バージョンは、<code class="language-plaintext highlighter-rouge">lib/myapp/version.rb</code> に定義されています。</p>
+
+<h2 id="コンパイル">コンパイル</h2>
+<p>以下のコマンドを実行し、C 拡張をコンパイルします。
+このコマンドの実行により、共有ライブラリー <code class="language-plaintext highlighter-rouge">lib/myapp/myapp.so</code> が生成されます。</p>
+
+<div class="language-rb highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">rake</span> <span class="n">compile</span>
+</code></pre></div></div>
+
+<p>コンパイル後、gem に含まれるコマンド実行すると、
+エラーなく実行されます。</p>
+
+<div class="language-rb highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">bundle</span> <span class="nb">exec</span> <span class="n">myapp</span>
+</code></pre></div></div>
+
+<h2 id="c-拡張">C 拡張</h2>
+<p>C 言語で Ruby を拡張することができます。</p>
+
+<p>たとえば、<code class="language-plaintext highlighter-rouge">/etc/myapp/myapp.c</code> を以下のように変更します。</p>
+
+<div class="language-diff highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="p">void
+Init_myapp(void)
+</span>{
+  rb_mMyapp = rb_define_module("Myapp");
+<span class="gi">+ rb_p(rb_str_new2("Hello, world!"));
+</span>}
+</code></pre></div></div>
+
+<p><code class="language-plaintext highlighter-rouge">rake compile</code> でコンパイルを行い、<code class="language-plaintext highlighter-rouge">bundle exec myapp</code> を実行すると、<code class="language-plaintext highlighter-rouge">"Hello, world!"</code> と表示されます。</p>
+
+<p>この例は、C 言語から Ruby の C API を呼び出し表示するプログラムで、</p>
+
+<div class="language-rb highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">p</span> <span class="s2">"Hello, world!"</span>
+</code></pre></div></div>
+
+<p>と同等です。</p>
+
+<p>Ruby の C API だけではなく、コンピューターにインストールされている共有ライブラリーを扱うことができるため、ラッパーを作成することが可能です。</p>
+
+<p>また、C 拡張により計算が必要な場合に高速化することができます。</p>
+
+<h2 id="ライブラリーの作成">ライブラリーの作成</h2>
+<p><code class="language-plaintext highlighter-rouge">lib/myapp.rb</code> あたりを編集。</p>
+
+<p>新しいファイルを作成した場合は、<code class="language-plaintext highlighter-rouge">git add</code> する必要があります。</p>
+
+<h2 id="gem-をインストール-rake-install">gem をインストール (<code class="language-plaintext highlighter-rouge">rake install</code>)</h2>
+<p>プロジェクト内の gem がインストールされます。</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>rake <span class="nb">install</span>
+</code></pre></div></div>
+
+<h2 id="gem-を公開-rake-release">gem を公開 (<code class="language-plaintext highlighter-rouge">rake release</code>)</h2>
+<p>gem を公開するには、rubygems のアカウントを作成する必要があります。
+リリースするたびに、バージョンを変更する必要があります。</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>rake release
+</code></pre></div></div>
+
+<h2 id="gem-パッケージを生成-rake-build">gem パッケージを生成 (<code class="language-plaintext highlighter-rouge">rake build</code>)</h2>
+<p>プロジェクトから <code class="language-plaintext highlighter-rouge">pkg/myapp-x.x.x.gem</code> が作成されます。</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>rake build
+</code></pre></div></div>
+
+                </article>
+            </section>
+        </div>
+        
+            <a class="prev primary" href="/2022/04/27/ubuntu-dock.html"><div class="prev button">＜</div></a>
+        
+        
+            <a class="next primary" href="/2022/05/12/create-jisaku-dist.html"><div class="next button">＞</div></a>
+        
+    </div>
+    
+    <footer>
+        <div class="footer">
+    <p>
+        © ひかり 2023
+    </p>
+    <p>
+        ひかりの研究室の著作権はひかりに属します。
+    </p>
+    <script>
+        let postedDates = document.getElementsByClassName("posted-date");
+        for(let i = 0; i < postedDates.length; i++){
+            let date = postedDates[i].innerText
+            if(date != ""){
+                let warekiDate = Wareki.date(date)
+                postedDates[i].innerText = warekiDate;
+            }
+        }
+    </script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github-dark.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/highlight.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlightjs-line-numbers.js/2.8.0/highlightjs-line-numbers.min.js"></script>
+    <script>hljs.highlightAll();hljs.initLineNumbersOnLoad();</script>
+</div>
+    </footer>
+</body>
+
+</html>

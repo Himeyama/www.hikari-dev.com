@@ -1,1 +1,278 @@
-<!DOCTYPE html><html><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><link rel="stylesheet" href="/assets/css/styles.css"><meta name="Hikari's personal website that is written information technology."><title>era.js | ひかりの研究室</title><meta name="generator" content="Jekyll v4.3.2"><meta property="og:title" content="era.js"><meta name="author" content="ひかり"><meta property="og:locale" content="ja_JP"><meta name="description" content="JavaScript で使える和暦のライブラリーを作りました。"><meta property="og:description" content="JavaScript で使える和暦のライブラリーを作りました。"><link rel="canonical" href="https://www.hikari-dev.com/2021/05/14/erajs.html"><meta property="og:url" content="https://www.hikari-dev.com/2021/05/14/erajs.html"><meta property="og:site_name" content="ひかりの研究室"><meta property="og:type" content="article"><meta property="article:published_time" content="2021-05-14T00:00:00+00:00"><meta name="twitter:card" content="summary"><meta property="twitter:title" content="era.js"><script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","author":{"@type":"Person","name":"ひかり"},"dateModified":"2021-05-14T00:00:00+00:00","datePublished":"2021-05-14T00:00:00+00:00","description":"JavaScript で使える和暦のライブラリーを作りました。","headline":"era.js","mainEntityOfPage":{"@type":"WebPage","@id":"https://www.hikari-dev.com/2021/05/14/erajs.html"},"url":"https://www.hikari-dev.com/2021/05/14/erajs.html"}</script><script src="/assets/js/wareki.js"></script></head><body><div class="contents"><div class="left sidemenu"><a class="home-link" href="/">ひかりの研究室</a><div class="sub-menu-area"><nav class="basic-menu"><a href="/">ホーム</a></nav><nav class="sub-menu"><p class="description">メニュー</p><ul><li><a href="/docs">ドキュメント</a></li><li><a href="/archives">アーカイブ</a></li><li><a href="/tags">タグ別</a></li></ul></nav><nav class="sub-menu"><p class="description">詳細</p><ul><li><a href="/about">ひかりの研究室について</a></li></ul></nav></div></div><div class="main-area"><section class="main-contents"><h1 class="page-title">era.js</h1><time class="posted-date">2021-05-14</time><article class="article"><p>JavaScript で使える和暦のライブラリーを作りました。</p><p><a href="https://himeyama.github.io/era.js/era.js">https://himeyama.github.io/era.js/era.js</a></p><div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">let</spanspan class="nx">date</spanspan class="o">=</spanspan class="k">new</spanspan class="nc">Era</span><span class="p">()</span><span class="nx">date</span><span class="p">.</span><span class="nf">getWareki</span><span class="p">()</spanspan class="c1">// "令和X年X月X日" (今日の日付)</span><span class="nx">date</spanspan class="o">=</spanspan class="k">new</spanspan class="nc">Era</span><span class="p">(</span><span class="dl">"</span><span class="s2">2020-1-1</span><span class="dl">"</span><span class="p">)</span><span class="nx">date</span><span class="p">.</span><span class="nf">getWareki</span><span class="p">()</spanspan class="c1">// "令和2年1月1日"</span><span class="nx">date</span><span class="p">.</span><span class="nf">getWareki</span><span class="p">(</span><span class="dl">"</span><span class="s2">西暦</span><span class="dl">"</span><span class="p">)</spanspan class="c1">// "2020/01/01"</span><span class="nx">date</span><span class="p">.</span><span class="nf">getDateAry</span><span class="p">()</spanspan class="c1">// ["令和", 2, 1, 1]</span><span class="nx">Era</span><span class="p">.</span><span class="nf">date2wareki</span><span class="p">(</span><span class="nx">id</span><span class="p">)</spanspan class="c1">// id を指定して要素を和暦に変換</span></code></pre></div></div><h3 id="getwareki-の引数">getWareki() の引数</h3><table><thead><tr><th style="text-align: center">cal</th><th style="text-align: center">short</th><th style="text-align: center">type</th><th style="text-align: center">表示</th></tr></thead><tbody><tr><td style="text-align: center"><code class="language-plaintext highlighter-rouge">"和暦"</code></td><td style="text-align: center"><code class="language-plaintext highlighter-rouge">true</code></td><td style="text-align: center"><code class="language-plaintext highlighter-rouge">0</code></td><td style="text-align: center"><span id="w_t_0"></span></td></tr><tr><td style="text-align: center"> </td><td style="text-align: center"> </td><td style="text-align: center"><code class="language-plaintext highlighter-rouge">1</code></td><td style="text-align: center"><span id="w_t_1"></span></td></tr><tr><td style="text-align: center"> </td><td style="text-align: center"> </td><td style="text-align: center"><code class="language-plaintext highlighter-rouge">2</code></td><td style="text-align: center"><span id="w_t_2"></span></td></tr><tr><td style="text-align: center"> </td><td style="text-align: center"> </td><td style="text-align: center"><code class="language-plaintext highlighter-rouge">3</code></td><td style="text-align: center"><span id="w_t_3"></span></td></tr><tr><td style="text-align: center"> </td><td style="text-align: center"> </td><td style="text-align: center"><code class="language-plaintext highlighter-rouge">4</code></td><td style="text-align: center"><span id="w_t_4"></span></td></tr><tr><td style="text-align: center"> </td><td style="text-align: center"> </td><td style="text-align: center"><code class="language-plaintext highlighter-rouge">5</code></td><td style="text-align: center"><span id="w_t_5"></span></td></tr><tr><td style="text-align: center"> </td><td style="text-align: center"><code class="language-plaintext highlighter-rouge">false</code></td><td style="text-align: center"><code class="language-plaintext highlighter-rouge">0</code></td><td style="text-align: center"><span id="w_f_0"></span></td></tr><tr><td style="text-align: center"> </td><td style="text-align: center"> </td><td style="text-align: center"><code class="language-plaintext highlighter-rouge">1</code></td><td style="text-align: center"><span id="w_f_1"></span></td></tr><tr><td style="text-align: center"> </td><td style="text-align: center"> </td><td style="text-align: center"><code class="language-plaintext highlighter-rouge">2</code></td><td style="text-align: center"><span id="w_f_2"></span></td></tr><tr><td style="text-align: center"> </td><td style="text-align: center"> </td><td style="text-align: center"><code class="language-plaintext highlighter-rouge">3</code></td><td style="text-align: center"><span id="w_f_3"></span></td></tr><tr><td style="text-align: center"><code class="language-plaintext highlighter-rouge">"西暦"</code></td><td style="text-align: center"><code class="language-plaintext highlighter-rouge">true</code></td><td style="text-align: center"><code class="language-plaintext highlighter-rouge">0</code></td><td style="text-align: center"><span id="s_t_0"></span></td></tr><tr><td style="text-align: center"> </td><td style="text-align: center"> </td><td style="text-align: center"><code class="language-plaintext highlighter-rouge">1</code></td><td style="text-align: center"><span id="s_t_1"></span></td></tr><tr><td style="text-align: center"> </td><td style="text-align: center"> </td><td style="text-align: center"><code class="language-plaintext highlighter-rouge">2</code></td><td style="text-align: center"><span id="s_t_2"></span></td></tr><tr><td style="text-align: center"> </td><td style="text-align: center"> </td><td style="text-align: center"><code class="language-plaintext highlighter-rouge">3</code></td><td style="text-align: center"><span id="s_t_3"></span></td></tr><tr><td style="text-align: center"> </td><td style="text-align: center"> </td><td style="text-align: center"><code class="language-plaintext highlighter-rouge">4</code></td><td style="text-align: center"><span id="s_t_4"></span></td></tr><tr><td style="text-align: center"> </td><td style="text-align: center"> </td><td style="text-align: center"><code class="language-plaintext highlighter-rouge">5</code></td><td style="text-align: center"><span id="s_t_5"></span></td></tr><tr><td style="text-align: center"> </td><td style="text-align: center"><code class="language-plaintext highlighter-rouge">false</code></td><td style="text-align: center"><code class="language-plaintext highlighter-rouge">0</code></td><td style="text-align: center"><span id="s_f_0"></span></td></tr><tr><td style="text-align: center"> </td><td style="text-align: center"> </td><td style="text-align: center"><code class="language-plaintext highlighter-rouge">1</code></td><td style="text-align: center"><span id="s_f_1"></span></td></tr><tr><td style="text-align: center"> </td><td style="text-align: center"> </td><td style="text-align: center"><code class="language-plaintext highlighter-rouge">2</code></td><td style="text-align: center"><span id="s_f_2"></span></td></tr><tr><td style="text-align: center"> </td><td style="text-align: center"> </td><td style="text-align: center"><code class="language-plaintext highlighter-rouge">3</code></td><td style="text-align: center"><span id="s_f_3"></span></td></tr><tr><td style="text-align: center"> </td><td style="text-align: center"> </td><td style="text-align: center"><code class="language-plaintext highlighter-rouge">4</code></td><td style="text-align: center"><span id="s_f_4"></span></td></tr></tbody></table><script>for(let i = 0; i <= 5; i++)Era.date2wareki(`w_t_${i}`, "和暦", true, i)for(let i = 0; i <= 3; i++)Era.date2wareki(`w_f_${i}`, "和暦", false, i)for(let i = 0; i <= 5; i++)Era.date2wareki(`s_t_${i}`, "西暦", true, i)for(let i = 0; i <= 4; i++)Era.date2wareki(`s_f_${i}`, "西暦", false, i)</script></article></section></div><a class="prev primary" href="/2021/05/13/jsfor.html"><div class="prev button">＜</div></a><a class="next primary" href="/2021/06/04/narray-dot.html"><div class="next button">＞</div></a></div><footer><div class="footer"><p>© ひかり 2023</p><p>ひかりの研究室の著作権はひかりに属します。</p><script>let postedDates = document.getElementsByClassName("posted-date");for(let i = 0; i < postedDates.length; i++){let date = postedDates[i].innerTextif(date != ""){let warekiDate = Wareki.date(date)postedDates[i].innerText = warekiDate;}}</script><script src="/assets/js/code.js"></script></div></footer></body></html>
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<!-- <title>era.js｜ひかりの研究室</title> -->
+<!-- <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@500;700&display=swap" rel="stylesheet">  -->
+<link rel="stylesheet" href="/assets/css/styles.css">
+<meta name="Hikari's personal website that is written information technology.">
+<!-- Begin Jekyll SEO tag v2.8.0 -->
+<title>era.js | ひかりの研究室</title>
+<meta name="generator" content="Jekyll v4.3.2" />
+<meta property="og:title" content="era.js" />
+<meta name="author" content="ひかり" />
+<meta property="og:locale" content="ja_JP" />
+<meta name="description" content="JavaScript で使える和暦のライブラリーを作りました。" />
+<meta property="og:description" content="JavaScript で使える和暦のライブラリーを作りました。" />
+<link rel="canonical" href="https://www.hikari-dev.com/2021/05/14/erajs.html" />
+<meta property="og:url" content="https://www.hikari-dev.com/2021/05/14/erajs.html" />
+<meta property="og:site_name" content="ひかりの研究室" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2021-05-14T00:00:00+00:00" />
+<meta name="twitter:card" content="summary" />
+<meta property="twitter:title" content="era.js" />
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"BlogPosting","author":{"@type":"Person","name":"ひかり"},"dateModified":"2021-05-14T00:00:00+00:00","datePublished":"2021-05-14T00:00:00+00:00","description":"JavaScript で使える和暦のライブラリーを作りました。","headline":"era.js","mainEntityOfPage":{"@type":"WebPage","@id":"https://www.hikari-dev.com/2021/05/14/erajs.html"},"url":"https://www.hikari-dev.com/2021/05/14/erajs.html"}</script>
+<!-- End Jekyll SEO tag -->
+
+<script src="/assets/js/wareki.js"></script>
+
+</head>
+
+<body>
+    <div class="contents">
+        <div class="left sidemenu">
+    <a class="home-link" href="/">ひかりの研究室</a>
+    <div class="sub-menu-area">
+        <nav class="basic-menu">
+            <a href="/">ホーム</a>
+        </nav>
+        <nav class="sub-menu">
+            <p class="description">
+                メニュー
+            </p>
+            <ul>
+                <li><a href="/docs">ドキュメント</a></li>
+                <li><a href="/archives">アーカイブ</a></li>
+                <li><a href="/tags">タグ別</a></li>
+            </ul>
+        </nav>
+        <nav class="sub-menu">
+            <p class="description">
+                詳細
+            </p>
+            <ul>
+                <li><a href="/about">ひかりの研究室について</a></li>
+            </ul>
+        </nav>
+    </div>
+</div>
+        <div class="main-area">
+            <section class="main-contents">
+                <h1 class="page-title">era.js</h1>
+<time class="posted-date">2021-05-14</time>
+                <article class="article">
+                    <p>JavaScript で使える和暦のライブラリーを作りました。</p>
+
+<p><a href="https://himeyama.github.io/era.js/era.js">https://himeyama.github.io/era.js/era.js</a></p>
+
+<div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">let</span> <span class="nx">date</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">Era</span><span class="p">()</span>
+<span class="nx">date</span><span class="p">.</span><span class="nf">getWareki</span><span class="p">()</span> <span class="c1">// "令和X年X月X日" (今日の日付)</span>
+
+<span class="nx">date</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">Era</span><span class="p">(</span><span class="dl">"</span><span class="s2">2020-1-1</span><span class="dl">"</span><span class="p">)</span>
+<span class="nx">date</span><span class="p">.</span><span class="nf">getWareki</span><span class="p">()</span> <span class="c1">// "令和2年1月1日"</span>
+
+<span class="nx">date</span><span class="p">.</span><span class="nf">getWareki</span><span class="p">(</span><span class="dl">"</span><span class="s2">西暦</span><span class="dl">"</span><span class="p">)</span> <span class="c1">// "2020/01/01"</span>
+
+<span class="nx">date</span><span class="p">.</span><span class="nf">getDateAry</span><span class="p">()</span> <span class="c1">// ["令和", 2, 1, 1]</span>
+
+<span class="nx">Era</span><span class="p">.</span><span class="nf">date2wareki</span><span class="p">(</span><span class="nx">id</span><span class="p">)</span> <span class="c1">// id を指定して要素を和暦に変換</span>
+</code></pre></div></div>
+
+<h3 id="getwareki-の引数">getWareki() の引数</h3>
+
+<table>
+  <thead>
+    <tr>
+      <th style="text-align: center">cal</th>
+      <th style="text-align: center">short</th>
+      <th style="text-align: center">type</th>
+      <th style="text-align: center">表示</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="text-align: center"><code class="language-plaintext highlighter-rouge">"和暦"</code></td>
+      <td style="text-align: center"><code class="language-plaintext highlighter-rouge">true</code></td>
+      <td style="text-align: center"><code class="language-plaintext highlighter-rouge">0</code></td>
+      <td style="text-align: center"><span id="w_t_0"></span></td>
+    </tr>
+    <tr>
+      <td style="text-align: center"> </td>
+      <td style="text-align: center"> </td>
+      <td style="text-align: center"><code class="language-plaintext highlighter-rouge">1</code></td>
+      <td style="text-align: center"><span id="w_t_1"></span></td>
+    </tr>
+    <tr>
+      <td style="text-align: center"> </td>
+      <td style="text-align: center"> </td>
+      <td style="text-align: center"><code class="language-plaintext highlighter-rouge">2</code></td>
+      <td style="text-align: center"><span id="w_t_2"></span></td>
+    </tr>
+    <tr>
+      <td style="text-align: center"> </td>
+      <td style="text-align: center"> </td>
+      <td style="text-align: center"><code class="language-plaintext highlighter-rouge">3</code></td>
+      <td style="text-align: center"><span id="w_t_3"></span></td>
+    </tr>
+    <tr>
+      <td style="text-align: center"> </td>
+      <td style="text-align: center"> </td>
+      <td style="text-align: center"><code class="language-plaintext highlighter-rouge">4</code></td>
+      <td style="text-align: center"><span id="w_t_4"></span></td>
+    </tr>
+    <tr>
+      <td style="text-align: center"> </td>
+      <td style="text-align: center"> </td>
+      <td style="text-align: center"><code class="language-plaintext highlighter-rouge">5</code></td>
+      <td style="text-align: center"><span id="w_t_5"></span></td>
+    </tr>
+    <tr>
+      <td style="text-align: center"> </td>
+      <td style="text-align: center"><code class="language-plaintext highlighter-rouge">false</code></td>
+      <td style="text-align: center"><code class="language-plaintext highlighter-rouge">0</code></td>
+      <td style="text-align: center"><span id="w_f_0"></span></td>
+    </tr>
+    <tr>
+      <td style="text-align: center"> </td>
+      <td style="text-align: center"> </td>
+      <td style="text-align: center"><code class="language-plaintext highlighter-rouge">1</code></td>
+      <td style="text-align: center"><span id="w_f_1"></span></td>
+    </tr>
+    <tr>
+      <td style="text-align: center"> </td>
+      <td style="text-align: center"> </td>
+      <td style="text-align: center"><code class="language-plaintext highlighter-rouge">2</code></td>
+      <td style="text-align: center"><span id="w_f_2"></span></td>
+    </tr>
+    <tr>
+      <td style="text-align: center"> </td>
+      <td style="text-align: center"> </td>
+      <td style="text-align: center"><code class="language-plaintext highlighter-rouge">3</code></td>
+      <td style="text-align: center"><span id="w_f_3"></span></td>
+    </tr>
+    <tr>
+      <td style="text-align: center"><code class="language-plaintext highlighter-rouge">"西暦"</code></td>
+      <td style="text-align: center"><code class="language-plaintext highlighter-rouge">true</code></td>
+      <td style="text-align: center"><code class="language-plaintext highlighter-rouge">0</code></td>
+      <td style="text-align: center"><span id="s_t_0"></span></td>
+    </tr>
+    <tr>
+      <td style="text-align: center"> </td>
+      <td style="text-align: center"> </td>
+      <td style="text-align: center"><code class="language-plaintext highlighter-rouge">1</code></td>
+      <td style="text-align: center"><span id="s_t_1"></span></td>
+    </tr>
+    <tr>
+      <td style="text-align: center"> </td>
+      <td style="text-align: center"> </td>
+      <td style="text-align: center"><code class="language-plaintext highlighter-rouge">2</code></td>
+      <td style="text-align: center"><span id="s_t_2"></span></td>
+    </tr>
+    <tr>
+      <td style="text-align: center"> </td>
+      <td style="text-align: center"> </td>
+      <td style="text-align: center"><code class="language-plaintext highlighter-rouge">3</code></td>
+      <td style="text-align: center"><span id="s_t_3"></span></td>
+    </tr>
+    <tr>
+      <td style="text-align: center"> </td>
+      <td style="text-align: center"> </td>
+      <td style="text-align: center"><code class="language-plaintext highlighter-rouge">4</code></td>
+      <td style="text-align: center"><span id="s_t_4"></span></td>
+    </tr>
+    <tr>
+      <td style="text-align: center"> </td>
+      <td style="text-align: center"> </td>
+      <td style="text-align: center"><code class="language-plaintext highlighter-rouge">5</code></td>
+      <td style="text-align: center"><span id="s_t_5"></span></td>
+    </tr>
+    <tr>
+      <td style="text-align: center"> </td>
+      <td style="text-align: center"><code class="language-plaintext highlighter-rouge">false</code></td>
+      <td style="text-align: center"><code class="language-plaintext highlighter-rouge">0</code></td>
+      <td style="text-align: center"><span id="s_f_0"></span></td>
+    </tr>
+    <tr>
+      <td style="text-align: center"> </td>
+      <td style="text-align: center"> </td>
+      <td style="text-align: center"><code class="language-plaintext highlighter-rouge">1</code></td>
+      <td style="text-align: center"><span id="s_f_1"></span></td>
+    </tr>
+    <tr>
+      <td style="text-align: center"> </td>
+      <td style="text-align: center"> </td>
+      <td style="text-align: center"><code class="language-plaintext highlighter-rouge">2</code></td>
+      <td style="text-align: center"><span id="s_f_2"></span></td>
+    </tr>
+    <tr>
+      <td style="text-align: center"> </td>
+      <td style="text-align: center"> </td>
+      <td style="text-align: center"><code class="language-plaintext highlighter-rouge">3</code></td>
+      <td style="text-align: center"><span id="s_f_3"></span></td>
+    </tr>
+    <tr>
+      <td style="text-align: center"> </td>
+      <td style="text-align: center"> </td>
+      <td style="text-align: center"><code class="language-plaintext highlighter-rouge">4</code></td>
+      <td style="text-align: center"><span id="s_f_4"></span></td>
+    </tr>
+  </tbody>
+</table>
+
+<script>
+for(let i = 0; i <= 5; i++)
+    Era.date2wareki(`w_t_${i}`, "和暦", true, i)
+for(let i = 0; i <= 3; i++)
+    Era.date2wareki(`w_f_${i}`, "和暦", false, i)
+for(let i = 0; i <= 5; i++)
+    Era.date2wareki(`s_t_${i}`, "西暦", true, i)
+for(let i = 0; i <= 4; i++)
+    Era.date2wareki(`s_f_${i}`, "西暦", false, i)
+
+</script>
+
+
+                </article>
+            </section>
+        </div>
+        
+            <a class="prev primary" href="/2021/05/13/jsfor.html"><div class="prev button">＜</div></a>
+        
+        
+            <a class="next primary" href="/2021/06/04/narray-dot.html"><div class="next button">＞</div></a>
+        
+    </div>
+    
+    <footer>
+        <div class="footer">
+    <p>
+        © ひかり 2023
+    </p>
+    <p>
+        ひかりの研究室の著作権はひかりに属します。
+    </p>
+    <script>
+        let postedDates = document.getElementsByClassName("posted-date");
+        for(let i = 0; i < postedDates.length; i++){
+            let date = postedDates[i].innerText
+            if(date != ""){
+                let warekiDate = Wareki.date(date)
+                postedDates[i].innerText = warekiDate;
+            }
+        }
+    </script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github-dark.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/highlight.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlightjs-line-numbers.js/2.8.0/highlightjs-line-numbers.min.js"></script>
+    <script>hljs.highlightAll();hljs.initLineNumbersOnLoad();</script>
+</div>
+    </footer>
+</body>
+
+</html>

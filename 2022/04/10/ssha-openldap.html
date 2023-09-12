@@ -1,1 +1,147 @@
-<!DOCTYPE html><html><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><link rel="stylesheet" href="/assets/css/styles.css"><meta name="Hikari's personal website that is written information technology."><title>OpenLDAP の slappasswd で生成される SSHA とは | ひかりの研究室</title><meta name="generator" content="Jekyll v4.3.2"><meta property="og:title" content="OpenLDAP の slappasswd で生成される SSHA とは"><meta name="author" content="ひかり"><meta property="og:locale" content="ja_JP"><meta name="description" content="slappasswd コマンドとは slappasswd コマンドは OpenLDAP 用のパスワードを生成するコマンドで、 デフォルトでは SSHA を用いて、パスワードをハッシュ化する。"><meta property="og:description" content="slappasswd コマンドとは slappasswd コマンドは OpenLDAP 用のパスワードを生成するコマンドで、 デフォルトでは SSHA を用いて、パスワードをハッシュ化する。"><link rel="canonical" href="https://www.hikari-dev.com/2022/04/10/ssha-openldap.html"><meta property="og:url" content="https://www.hikari-dev.com/2022/04/10/ssha-openldap.html"><meta property="og:site_name" content="ひかりの研究室"><meta property="og:type" content="article"><meta property="article:published_time" content="2022-04-10T00:00:00+00:00"><meta name="twitter:card" content="summary"><meta property="twitter:title" content="OpenLDAP の slappasswd で生成される SSHA とは"><script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","author":{"@type":"Person","name":"ひかり"},"dateModified":"2022-04-10T00:00:00+00:00","datePublished":"2022-04-10T00:00:00+00:00","description":"slappasswd コマンドとは slappasswd コマンドは OpenLDAP 用のパスワードを生成するコマンドで、 デフォルトでは SSHA を用いて、パスワードをハッシュ化する。","headline":"OpenLDAP の slappasswd で生成される SSHA とは","mainEntityOfPage":{"@type":"WebPage","@id":"https://www.hikari-dev.com/2022/04/10/ssha-openldap.html"},"url":"https://www.hikari-dev.com/2022/04/10/ssha-openldap.html"}</script><script src="/assets/js/wareki.js"></script></head><body><div class="contents"><div class="left sidemenu"><a class="home-link" href="/">ひかりの研究室</a><div class="sub-menu-area"><nav class="basic-menu"><a href="/">ホーム</a></nav><nav class="sub-menu"><p class="description">メニュー</p><ul><li><a href="/docs">ドキュメント</a></li><li><a href="/archives">アーカイブ</a></li><li><a href="/tags">タグ別</a></li></ul></nav><nav class="sub-menu"><p class="description">詳細</p><ul><li><a href="/about">ひかりの研究室について</a></li></ul></nav></div></div><div class="main-area"><section class="main-contents"><h1 class="page-title">OpenLDAP の slappasswd で生成される SSHA とは</h1><time class="posted-date">2022-04-10</time><article class="article"><h2 id="slappasswd-コマンドとは">slappasswd コマンドとは</h2><p>slappasswd コマンドは OpenLDAP 用のパスワードを生成するコマンドで、デフォルトでは SSHA を用いて、パスワードをハッシュ化する。</p><pre><code class="language-mermaid">graph TDpass["Password: 'admin'"]ssha["{SSHA}23AUBfRZytVFNpe7onuFhyCSJOHRzCWh"]pass -- slappasswd --&gt; ssha</code></pre><h2 id="認証の仕組み">認証の仕組み</h2><p>SSHA では生成されたハッシュの末尾 4 バイトがソルトとなっており、入力されたパスワードと保存されているソルトからハッシュを生成し、保存されているハッシュと一致するかどうかで認証を行う。</p><pre><code class="language-mermaid">graph TDpass["Password: 'admin' + Salt: D1 CC 25 A1"]pass -- SHA --&gt; ssha["SSHA: DB 70 14 5 F4 59 CA D5 45 36 97 BB A2 7B 85 87 20 92 24 E1"]salt["Salt: D1 CC 25 A1"] -- "Base64 (encode)" --&gt; sshabase64ssha -- "Base64 (encode)" --&gt; sshabase64["23AUBfRZytVFNpe7onuFhyCSJOHRzCWh"]</code></pre><p>以下のプログラムでは、適切なパスワード (例: admin) を与えると、元のハッシュと生成されたハッシュが一致する。</p><div class="language-rb highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">require</spanspan class="s1">'base64'</span><span class="nb">require</spanspan class="s1">'digest'</span><span class="n">pass</spanspan class="o">=</spanspan class="s1">'admin'</span><span class="n">ssha</spanspan class="o">=</spanspan class="s1">'{SSHA}23AUBfRZytVFNpe7onuFhyCSJOHRzCWh'</span><span class="n">ssha</spanspan class="o">=~</spanspan class="sr">/{.+}(.+)/</span><span class="n">salt256s</spanspan class="o">=</spanspan class="no">Base64</span><span class="p">.</span><span class="nf">decode64</span><span class="p">(</span><span class="no">Regexp</span><span class="p">.</span><span class="nf">last_match</span><span class="p">(</span><span class="mi">1</span><span class="p">)).</span><span class="nf">unpack</span><span class="p">(</span><span class="s1">'C*'</span><span class="p">)[</span><span class="o">-</span><span class="mi">4</span><span class="o">..-</span><span class="mi">1</span><span class="p">]</span><span class="n">salt</spanspan class="o">=</spanspan class="n">salt256s</span><span class="p">.</span><span class="nf">pack</span><span class="p">(</span><span class="s1">'C*'</span><span class="p">)</span><span class="n">b_ssha</spanspan class="o">=</spanspan class="no">Digest</span><span class="o">::</span><span class="no">SHA1</span><span class="p">.</span><span class="nf">digest</span><span class="p">(</span><span class="n">pass</spanspan class="o">+</spanspan class="n">salt</span><span class="p">)</span><span class="no">Base64</span><span class="p">.</span><span class="nf">strict_encode64</span><span class="p">(</span><span class="p">(</span><span class="n">b_ssha</span><span class="p">.</span><span class="nf">unpack</span><span class="p">(</span><span class="s1">'C*'</span><span class="p">)</spanspan class="o">+</spanspan class="n">salt256s</span><span class="p">).</span><span class="nf">pack</span><span class="p">(</span><span class="s1">'C*'</span><span class="p">)</span><span class="p">)</span></code></pre></div></div></article></section></div><a class="prev primary" href="/2022/03/13/poetry-python-project.html"><div class="prev button">＜</div></a><a class="next primary" href="/2022/04/27/install-binary-firefox.html"><div class="next button">＞</div></a></div><footer><div class="footer"><p>© ひかり 2023</p><p>ひかりの研究室の著作権はひかりに属します。</p><script>let postedDates = document.getElementsByClassName("posted-date");for(let i = 0; i < postedDates.length; i++){let date = postedDates[i].innerTextif(date != ""){let warekiDate = Wareki.date(date)postedDates[i].innerText = warekiDate;}}</script><script src="/assets/js/code.js"></script></div></footer></body></html>
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<!-- <title>OpenLDAP の slappasswd で生成される SSHA とは｜ひかりの研究室</title> -->
+<!-- <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@500;700&display=swap" rel="stylesheet">  -->
+<link rel="stylesheet" href="/assets/css/styles.css">
+<meta name="Hikari's personal website that is written information technology.">
+<!-- Begin Jekyll SEO tag v2.8.0 -->
+<title>OpenLDAP の slappasswd で生成される SSHA とは | ひかりの研究室</title>
+<meta name="generator" content="Jekyll v4.3.2" />
+<meta property="og:title" content="OpenLDAP の slappasswd で生成される SSHA とは" />
+<meta name="author" content="ひかり" />
+<meta property="og:locale" content="ja_JP" />
+<meta name="description" content="slappasswd コマンドとは slappasswd コマンドは OpenLDAP 用のパスワードを生成するコマンドで、 デフォルトでは SSHA を用いて、パスワードをハッシュ化する。" />
+<meta property="og:description" content="slappasswd コマンドとは slappasswd コマンドは OpenLDAP 用のパスワードを生成するコマンドで、 デフォルトでは SSHA を用いて、パスワードをハッシュ化する。" />
+<link rel="canonical" href="https://www.hikari-dev.com/2022/04/10/ssha-openldap.html" />
+<meta property="og:url" content="https://www.hikari-dev.com/2022/04/10/ssha-openldap.html" />
+<meta property="og:site_name" content="ひかりの研究室" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2022-04-10T00:00:00+00:00" />
+<meta name="twitter:card" content="summary" />
+<meta property="twitter:title" content="OpenLDAP の slappasswd で生成される SSHA とは" />
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"BlogPosting","author":{"@type":"Person","name":"ひかり"},"dateModified":"2022-04-10T00:00:00+00:00","datePublished":"2022-04-10T00:00:00+00:00","description":"slappasswd コマンドとは slappasswd コマンドは OpenLDAP 用のパスワードを生成するコマンドで、 デフォルトでは SSHA を用いて、パスワードをハッシュ化する。","headline":"OpenLDAP の slappasswd で生成される SSHA とは","mainEntityOfPage":{"@type":"WebPage","@id":"https://www.hikari-dev.com/2022/04/10/ssha-openldap.html"},"url":"https://www.hikari-dev.com/2022/04/10/ssha-openldap.html"}</script>
+<!-- End Jekyll SEO tag -->
+
+<script src="/assets/js/wareki.js"></script>
+
+</head>
+
+<body>
+    <div class="contents">
+        <div class="left sidemenu">
+    <a class="home-link" href="/">ひかりの研究室</a>
+    <div class="sub-menu-area">
+        <nav class="basic-menu">
+            <a href="/">ホーム</a>
+        </nav>
+        <nav class="sub-menu">
+            <p class="description">
+                メニュー
+            </p>
+            <ul>
+                <li><a href="/docs">ドキュメント</a></li>
+                <li><a href="/archives">アーカイブ</a></li>
+                <li><a href="/tags">タグ別</a></li>
+            </ul>
+        </nav>
+        <nav class="sub-menu">
+            <p class="description">
+                詳細
+            </p>
+            <ul>
+                <li><a href="/about">ひかりの研究室について</a></li>
+            </ul>
+        </nav>
+    </div>
+</div>
+        <div class="main-area">
+            <section class="main-contents">
+                <h1 class="page-title">OpenLDAP の slappasswd で生成される SSHA とは</h1>
+<time class="posted-date">2022-04-10</time>
+                <article class="article">
+                    <h2 id="slappasswd-コマンドとは">slappasswd コマンドとは</h2>
+<p>slappasswd コマンドは OpenLDAP 用のパスワードを生成するコマンドで、
+デフォルトでは SSHA を用いて、パスワードをハッシュ化する。</p>
+
+<pre><code class="language-mermaid">graph TD
+    pass["Password: 'admin'"]
+    ssha["{SSHA}23AUBfRZytVFNpe7onuFhyCSJOHRzCWh"]
+    pass -- slappasswd --&gt; ssha
+</code></pre>
+
+<h2 id="認証の仕組み">認証の仕組み</h2>
+<p>SSHA では生成されたハッシュの末尾 4 バイトがソルトとなっており、
+入力されたパスワードと保存されているソルトからハッシュを生成し、
+保存されているハッシュと一致するかどうかで認証を行う。</p>
+
+<pre><code class="language-mermaid">graph TD
+    pass["Password: 'admin' + Salt: D1 CC 25 A1"]
+    pass -- SHA --&gt; ssha["SSHA: DB 70 14 5 F4 59 CA D5 45 36 97 BB A2 7B 85 87 20 92 24 E1"]
+    salt["Salt: D1 CC 25 A1"] -- "Base64 (encode)" --&gt; sshabase64
+    ssha -- "Base64 (encode)" --&gt; sshabase64["23AUBfRZytVFNpe7onuFhyCSJOHRzCWh"]
+</code></pre>
+
+<p>以下のプログラムでは、
+適切なパスワード (例: admin) を与えると、元のハッシュと生成されたハッシュが一致する。</p>
+
+<div class="language-rb highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">require</span> <span class="s1">'base64'</span>
+<span class="nb">require</span> <span class="s1">'digest'</span>
+
+<span class="n">pass</span> <span class="o">=</span> <span class="s1">'admin'</span>
+<span class="n">ssha</span> <span class="o">=</span> <span class="s1">'{SSHA}23AUBfRZytVFNpe7onuFhyCSJOHRzCWh'</span>
+<span class="n">ssha</span> <span class="o">=~</span> <span class="sr">/{.+}(.+)/</span>
+<span class="n">salt256s</span> <span class="o">=</span> <span class="no">Base64</span><span class="p">.</span><span class="nf">decode64</span><span class="p">(</span><span class="no">Regexp</span><span class="p">.</span><span class="nf">last_match</span><span class="p">(</span><span class="mi">1</span><span class="p">)).</span><span class="nf">unpack</span><span class="p">(</span><span class="s1">'C*'</span><span class="p">)[</span><span class="o">-</span><span class="mi">4</span><span class="o">..-</span><span class="mi">1</span><span class="p">]</span>
+
+<span class="n">salt</span> <span class="o">=</span> <span class="n">salt256s</span><span class="p">.</span><span class="nf">pack</span><span class="p">(</span><span class="s1">'C*'</span><span class="p">)</span>
+<span class="n">b_ssha</span> <span class="o">=</span> <span class="no">Digest</span><span class="o">::</span><span class="no">SHA1</span><span class="p">.</span><span class="nf">digest</span><span class="p">(</span><span class="n">pass</span> <span class="o">+</span> <span class="n">salt</span><span class="p">)</span>
+<span class="no">Base64</span><span class="p">.</span><span class="nf">strict_encode64</span><span class="p">(</span>
+  <span class="p">(</span><span class="n">b_ssha</span><span class="p">.</span><span class="nf">unpack</span><span class="p">(</span><span class="s1">'C*'</span><span class="p">)</span> <span class="o">+</span> <span class="n">salt256s</span><span class="p">).</span><span class="nf">pack</span><span class="p">(</span><span class="s1">'C*'</span><span class="p">)</span>
+<span class="p">)</span>
+</code></pre></div></div>
+
+                </article>
+            </section>
+        </div>
+        
+            <a class="prev primary" href="/2022/03/13/poetry-python-project.html"><div class="prev button">＜</div></a>
+        
+        
+            <a class="next primary" href="/2022/04/27/install-binary-firefox.html"><div class="next button">＞</div></a>
+        
+    </div>
+    
+    <footer>
+        <div class="footer">
+    <p>
+        © ひかり 2023
+    </p>
+    <p>
+        ひかりの研究室の著作権はひかりに属します。
+    </p>
+    <script>
+        let postedDates = document.getElementsByClassName("posted-date");
+        for(let i = 0; i < postedDates.length; i++){
+            let date = postedDates[i].innerText
+            if(date != ""){
+                let warekiDate = Wareki.date(date)
+                postedDates[i].innerText = warekiDate;
+            }
+        }
+    </script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github-dark.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/highlight.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlightjs-line-numbers.js/2.8.0/highlightjs-line-numbers.min.js"></script>
+    <script>hljs.highlightAll();hljs.initLineNumbersOnLoad();</script>
+</div>
+    </footer>
+</body>
+
+</html>

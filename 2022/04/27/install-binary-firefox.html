@@ -1,1 +1,26 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN" "http://www.w3.org/TR/REC-html40/loose.dtd"><html><body><p>Ubuntu 22.04 は snap 版の Firefox がインストールされているらしく、環境によって起動ができなかったので、ビルド済み Firefox のインストールの方法をメモ。</p><h2 id="apt--snap-版の-firefox-のアンインストール">apt / snap 版の Firefox のアンインストール</h2><div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">sudo </span>apt purge firefox<span class="nb">sudo </span>snap remove firefox</code></pre></div></div><h2 id="firefox-のビルドをインストール">Firefox のビルドをインストール</h2><div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c"># ダウンロード</span>wget <span class="s2">"https://download.mozilla.org/?product=firefox-latest-ssl&amp;os=linux64&amp;lang=ja"</spanspan class="nt">--trust-server-names</span><span class="c"># 展開</span><span class="nb">tar </span>xvf firefox-<span class="k">*</span>.tar.bz2<span class="c"># 配置</span><span class="nb">sudo cp</spanspan class="nt">-r</span> firefox /usr/lib<span class="c"># 実行ファイルのシンボリックリンクを作成</span><span class="nb">sudo ln</spanspan class="nt">-s</span> /usr/lib/firefox/firefox /usr/bin/firefox<span class="c"># デスクトップファイルをダウンロードし配置</span><span class="nb">sudo mkdir</spanspan class="nt">-p</span> /usr/share/applications<span class="nb">sudo </span>wget https://bit.ly/3Mwigwx <span class="nt">-O</span> /usr/share/applications/firefox.desktop</code></pre></div></div></body></html>
+<p>Ubuntu 22.04 は snap 版の Firefox がインストールされているらしく、
+環境によって起動ができなかったので、ビルド済み Firefox のインストールの方法をメモ。</p>
+
+<h2 id="apt--snap-版の-firefox-のアンインストール">apt / snap 版の Firefox のアンインストール</h2>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">sudo </span>apt purge firefox
+<span class="nb">sudo </span>snap remove firefox
+</code></pre></div></div>
+
+<h2 id="firefox-のビルドをインストール">Firefox のビルドをインストール</h2>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c"># ダウンロード</span>
+wget <span class="s2">"https://download.mozilla.org/?product=firefox-latest-ssl&amp;os=linux64&amp;lang=ja"</span> <span class="nt">--trust-server-names</span>
+
+<span class="c"># 展開</span>
+<span class="nb">tar </span>xvf firefox-<span class="k">*</span>.tar.bz2
+
+<span class="c"># 配置</span>
+<span class="nb">sudo cp</span> <span class="nt">-r</span> firefox /usr/lib
+
+<span class="c"># 実行ファイルのシンボリックリンクを作成</span>
+<span class="nb">sudo ln</span> <span class="nt">-s</span> /usr/lib/firefox/firefox /usr/bin/firefox
+
+<span class="c"># デスクトップファイルをダウンロードし配置</span>
+<span class="nb">sudo mkdir</span> <span class="nt">-p</span> /usr/share/applications
+<span class="nb">sudo </span>wget https://bit.ly/3Mwigwx <span class="nt">-O</span> /usr/share/applications/firefox.desktop
+</code></pre></div></div>

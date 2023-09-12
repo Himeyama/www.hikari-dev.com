@@ -1,1 +1,186 @@
-<!DOCTYPE html><html><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><link rel="stylesheet" href="/assets/css/styles.css"><meta name="Hikari's personal website that is written information technology."><title>Electron アプリ作成 | ひかりの研究室</title><meta name="generator" content="Jekyll v4.3.2"><meta property="og:title" content="Electron アプリ作成"><meta name="author" content="ひかり"><meta property="og:locale" content="ja_JP"><meta name="description" content="作業ディレクトリーの作成"><meta property="og:description" content="作業ディレクトリーの作成"><link rel="canonical" href="https://www.hikari-dev.com/2021/03/28/electron.html"><meta property="og:url" content="https://www.hikari-dev.com/2021/03/28/electron.html"><meta property="og:site_name" content="ひかりの研究室"><meta property="og:type" content="article"><meta property="article:published_time" content="2021-03-28T00:00:00+00:00"><meta name="twitter:card" content="summary"><meta property="twitter:title" content="Electron アプリ作成"><script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","author":{"@type":"Person","name":"ひかり"},"dateModified":"2021-03-28T00:00:00+00:00","datePublished":"2021-03-28T00:00:00+00:00","description":"作業ディレクトリーの作成","headline":"Electron アプリ作成","mainEntityOfPage":{"@type":"WebPage","@id":"https://www.hikari-dev.com/2021/03/28/electron.html"},"url":"https://www.hikari-dev.com/2021/03/28/electron.html"}</script><script src="/assets/js/wareki.js"></script></head><body><div class="contents"><div class="left sidemenu"><a class="home-link" href="/">ひかりの研究室</a><div class="sub-menu-area"><nav class="basic-menu"><a href="/">ホーム</a></nav><nav class="sub-menu"><p class="description">メニュー</p><ul><li><a href="/docs">ドキュメント</a></li><li><a href="/archives">アーカイブ</a></li><li><a href="/tags">タグ別</a></li></ul></nav><nav class="sub-menu"><p class="description">詳細</p><ul><li><a href="/about">ひかりの研究室について</a></li></ul></nav></div></div><div class="main-area"><section class="main-contents"><h1 class="page-title">Electron アプリ作成</h1><time class="posted-date">2021-03-28</time><article class="article"><h2 id="作業ディレクトリーの作成">作業ディレクトリーの作成</h2><div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">mkdir </span>test-electron-app<span class="nb">cd </span>test-electron-app</code></pre></div></div><h2 id="packagejson-の作成">package.json の作成</h2><div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code>npm init <span class="nt">-y</span></code></pre></div></div><h2 id="electron-のインストール">electron のインストール</h2><div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code>npm i <span class="nt">--save-dev</span> electron</code></pre></div></div><h2 id="indexjs-の作成">index.js の作成</h2><div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">const</spanspan class="p">{</spanspan class="nx">app</span><span class="p">,</spanspan class="nx">BrowserWindow</spanspan class="p">}</spanspan class="o">=</spanspan class="nf">require</span><span class="p">(</span><span class="dl">"</span><span class="s2">electron</span><span class="dl">"</span><span class="p">)</span><span class="kd">const</spanspan class="nx">path</spanspan class="o">=</spanspan class="nf">require</span><span class="p">(</span><span class="dl">"</span><span class="s2">path</span><span class="dl">"</span><span class="p">)</span><span class="kd">function</spanspan class="nf">createWindow</span><span class="p">()</spanspan class="p">{</span><span class="kd">const</spanspan class="nx">win</spanspan class="o">=</spanspan class="k">new</spanspan class="nc">BrowserWindow</span><span class="p">({</span><span class="na">width</span><span class="p">:</spanspan class="mi">800</span><span class="p">,</span><span class="na">height</span><span class="p">:</spanspan class="mi">600</span><span class="p">,</span><span class="na">webPreferences</span><span class="p">:</spanspan class="p">{</span><span class="na">preload</span><span class="p">:</spanspan class="nx">path</span><span class="p">.</span><span class="nf">join</span><span class="p">(</span><span class="nx">__dirname</span><span class="p">,</spanspan class="dl">"</span><span class="s2">preload.js</span><span class="dl">"</span><span class="p">)</span><span class="p">}</span><span class="p">})</span><span class="nx">win</span><span class="p">.</span><span class="nf">loadFile</span><span class="p">(</span><span class="dl">"</span><span class="s2">index.html</span><span class="dl">"</span><span class="p">)</span><span class="p">}</span><span class="nx">app</span><span class="p">.</span><span class="nf">whenReady</span><span class="p">().</span><span class="nf">then</span><span class="p">(()</spanspan class="o">=&gt;</spanspan class="p">{</span><span class="nf">createWindow</span><span class="p">()</span><span class="nx">app</span><span class="p">.</span><span class="nf">on</span><span class="p">(</span><span class="dl">"</span><span class="s2">activate</span><span class="dl">"</span><span class="p">,</spanspan class="p">()</spanspan class="o">=&gt;</spanspan class="p">{</span><span class="k">if </span><span class="p">(</span><span class="nx">BrowserWindow</span><span class="p">.</span><span class="nf">getAllWindows</span><span class="p">().</span><span class="nx">length</spanspan class="o">===</spanspan class="mi">0</span><span class="p">)</spanspan class="p">{</span><span class="nf">createWindow</span><span class="p">()</span><span class="p">}</span><span class="p">})</span><span class="p">})</span><span class="nx">app</span><span class="p">.</span><span class="nf">on</span><span class="p">(</span><span class="dl">"</span><span class="s2">window-all-closed</span><span class="dl">"</span><span class="p">,</spanspan class="p">()</spanspan class="o">=&gt;</spanspan class="p">{</span><span class="k">if </span><span class="p">(</span><span class="nx">process</span><span class="p">.</span><span class="nx">platform</spanspan class="o">!==</spanspan class="dl">"</span><span class="s2">darwin</span><span class="dl">"</span><span class="p">)</spanspan class="p">{</span><span class="nx">app</span><span class="p">.</span><span class="nf">quit</span><span class="p">()</span><span class="p">}</span><span class="p">})</span></code></pre></div></div><h2 id="indexhtml-の作成">index.html の作成</h2><div class="language-html highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="cp">&lt;!DOCTYPE html&gt;</span><span class="nt">&lt;html&gt;</span><span class="nt">&lt;head&gt;</span><span class="nt">&lt;meta</spanspan class="na">charset=</span><span class="s">"UTF-8"</span><span class="nt">&gt;</span><span class="nt">&lt;title&gt;</span>Hello World!<span class="nt">&lt;/title&gt;</span><span class="nt">&lt;meta</spanspan class="na">http-equiv=</span><span class="s">"Content-Security-Policy"</spanspan class="na">content=</span><span class="s">"script-src 'self' 'unsafe-inline';"</spanspan class="nt">/&gt;</span><span class="nt">&lt;/head&gt;</span><span class="nt">&lt;body</spanspan class="na">style=</span><span class="s">"background: white;"</span><span class="nt">&gt;</span><span class="nt">&lt;h1&gt;</span>Hello World!<span class="nt">&lt;/h1&gt;</span><span class="nt">&lt;p&gt;</span>We are using Node.js <span class="nt">&lt;span</spanspan class="na">id=</span><span class="s">"node-version"</span><span class="nt">&gt;&lt;/span&gt;</span>,Chromium <span class="nt">&lt;span</spanspan class="na">id=</span><span class="s">"chrome-version"</span><span class="nt">&gt;&lt;/span&gt;</span>,and Electron <span class="nt">&lt;span</spanspan class="na">id=</span><span class="s">"electron-version"</span><span class="nt">&gt;&lt;/span&gt;</span>.<span class="nt">&lt;/p&gt;</span><span class="nt">&lt;/body&gt;</span><span class="nt">&lt;/html&gt;</span></code></pre></div></div><h1 id="packagejson-の修正">package.json の修正</h1><p><code class="language-plaintext highlighter-rouge">scripts</code> の部分を書き換える。</p><div class="language-json highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nl">"scripts"</span><span class="p">:</span><span class="w"/span><span class="p">{</span><span class="w"></span><span class="nl">"start"</span><span class="p">:</span><span class="w"/span><span class="s2">"electron ."</span><span class="w"></span><span class="p">}</span><span class="w"></span></code></pre></div></div><h1 id="アプリの実行">アプリの実行</h1><div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code>npm start</code></pre></div></div></article></section></div><a class="prev primary" href="/2021/03/13/dllc.html"><div class="prev button">＜</div></a><a class="next primary" href="/2021/05/09/favicon.html"><div class="next button">＞</div></a></div><footer><div class="footer"><p>© ひかり 2023</p><p>ひかりの研究室の著作権はひかりに属します。</p><script>let postedDates = document.getElementsByClassName("posted-date");for(let i = 0; i < postedDates.length; i++){let date = postedDates[i].innerTextif(date != ""){let warekiDate = Wareki.date(date)postedDates[i].innerText = warekiDate;}}</script><script src="/assets/js/code.js"></script></div></footer></body></html>
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<!-- <title>Electron アプリ作成｜ひかりの研究室</title> -->
+<!-- <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@500;700&display=swap" rel="stylesheet">  -->
+<link rel="stylesheet" href="/assets/css/styles.css">
+<meta name="Hikari's personal website that is written information technology.">
+<!-- Begin Jekyll SEO tag v2.8.0 -->
+<title>Electron アプリ作成 | ひかりの研究室</title>
+<meta name="generator" content="Jekyll v4.3.2" />
+<meta property="og:title" content="Electron アプリ作成" />
+<meta name="author" content="ひかり" />
+<meta property="og:locale" content="ja_JP" />
+<meta name="description" content="作業ディレクトリーの作成" />
+<meta property="og:description" content="作業ディレクトリーの作成" />
+<link rel="canonical" href="https://www.hikari-dev.com/2021/03/28/electron.html" />
+<meta property="og:url" content="https://www.hikari-dev.com/2021/03/28/electron.html" />
+<meta property="og:site_name" content="ひかりの研究室" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2021-03-28T00:00:00+00:00" />
+<meta name="twitter:card" content="summary" />
+<meta property="twitter:title" content="Electron アプリ作成" />
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"BlogPosting","author":{"@type":"Person","name":"ひかり"},"dateModified":"2021-03-28T00:00:00+00:00","datePublished":"2021-03-28T00:00:00+00:00","description":"作業ディレクトリーの作成","headline":"Electron アプリ作成","mainEntityOfPage":{"@type":"WebPage","@id":"https://www.hikari-dev.com/2021/03/28/electron.html"},"url":"https://www.hikari-dev.com/2021/03/28/electron.html"}</script>
+<!-- End Jekyll SEO tag -->
+
+<script src="/assets/js/wareki.js"></script>
+
+</head>
+
+<body>
+    <div class="contents">
+        <div class="left sidemenu">
+    <a class="home-link" href="/">ひかりの研究室</a>
+    <div class="sub-menu-area">
+        <nav class="basic-menu">
+            <a href="/">ホーム</a>
+        </nav>
+        <nav class="sub-menu">
+            <p class="description">
+                メニュー
+            </p>
+            <ul>
+                <li><a href="/docs">ドキュメント</a></li>
+                <li><a href="/archives">アーカイブ</a></li>
+                <li><a href="/tags">タグ別</a></li>
+            </ul>
+        </nav>
+        <nav class="sub-menu">
+            <p class="description">
+                詳細
+            </p>
+            <ul>
+                <li><a href="/about">ひかりの研究室について</a></li>
+            </ul>
+        </nav>
+    </div>
+</div>
+        <div class="main-area">
+            <section class="main-contents">
+                <h1 class="page-title">Electron アプリ作成</h1>
+<time class="posted-date">2021-03-28</time>
+                <article class="article">
+                    <h2 id="作業ディレクトリーの作成">作業ディレクトリーの作成</h2>
+
+<div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">mkdir </span>test-electron-app
+<span class="nb">cd </span>test-electron-app
+</code></pre></div></div>
+
+<h2 id="packagejson-の作成">package.json の作成</h2>
+
+<div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code>npm init <span class="nt">-y</span>
+</code></pre></div></div>
+
+<h2 id="electron-のインストール">electron のインストール</h2>
+<div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code>npm i <span class="nt">--save-dev</span> electron
+</code></pre></div></div>
+
+<h2 id="indexjs-の作成">index.js の作成</h2>
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">const</span> <span class="p">{</span> <span class="nx">app</span><span class="p">,</span> <span class="nx">BrowserWindow</span> <span class="p">}</span> <span class="o">=</span> <span class="nf">require</span><span class="p">(</span><span class="dl">"</span><span class="s2">electron</span><span class="dl">"</span><span class="p">)</span>
+<span class="kd">const</span> <span class="nx">path</span> <span class="o">=</span> <span class="nf">require</span><span class="p">(</span><span class="dl">"</span><span class="s2">path</span><span class="dl">"</span><span class="p">)</span>
+
+<span class="kd">function</span> <span class="nf">createWindow</span><span class="p">()</span> <span class="p">{</span>
+    <span class="kd">const</span> <span class="nx">win</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">BrowserWindow</span><span class="p">({</span>
+        <span class="na">width</span><span class="p">:</span> <span class="mi">800</span><span class="p">,</span>
+        <span class="na">height</span><span class="p">:</span> <span class="mi">600</span><span class="p">,</span>
+        <span class="na">webPreferences</span><span class="p">:</span> <span class="p">{</span>
+            <span class="na">preload</span><span class="p">:</span> <span class="nx">path</span><span class="p">.</span><span class="nf">join</span><span class="p">(</span><span class="nx">__dirname</span><span class="p">,</span> <span class="dl">"</span><span class="s2">preload.js</span><span class="dl">"</span><span class="p">)</span>
+        <span class="p">}</span>
+    <span class="p">})</span>
+
+    <span class="nx">win</span><span class="p">.</span><span class="nf">loadFile</span><span class="p">(</span><span class="dl">"</span><span class="s2">index.html</span><span class="dl">"</span><span class="p">)</span>
+<span class="p">}</span>
+
+<span class="nx">app</span><span class="p">.</span><span class="nf">whenReady</span><span class="p">().</span><span class="nf">then</span><span class="p">(()</span> <span class="o">=&gt;</span> <span class="p">{</span>
+    <span class="nf">createWindow</span><span class="p">()</span>
+
+    <span class="nx">app</span><span class="p">.</span><span class="nf">on</span><span class="p">(</span><span class="dl">"</span><span class="s2">activate</span><span class="dl">"</span><span class="p">,</span> <span class="p">()</span> <span class="o">=&gt;</span> <span class="p">{</span>
+        <span class="k">if </span><span class="p">(</span><span class="nx">BrowserWindow</span><span class="p">.</span><span class="nf">getAllWindows</span><span class="p">().</span><span class="nx">length</span> <span class="o">===</span> <span class="mi">0</span><span class="p">)</span> <span class="p">{</span>
+            <span class="nf">createWindow</span><span class="p">()</span>
+        <span class="p">}</span>
+    <span class="p">})</span>
+<span class="p">})</span>
+
+<span class="nx">app</span><span class="p">.</span><span class="nf">on</span><span class="p">(</span><span class="dl">"</span><span class="s2">window-all-closed</span><span class="dl">"</span><span class="p">,</span> <span class="p">()</span> <span class="o">=&gt;</span> <span class="p">{</span>
+    <span class="k">if </span><span class="p">(</span><span class="nx">process</span><span class="p">.</span><span class="nx">platform</span> <span class="o">!==</span> <span class="dl">"</span><span class="s2">darwin</span><span class="dl">"</span><span class="p">)</span> <span class="p">{</span>
+        <span class="nx">app</span><span class="p">.</span><span class="nf">quit</span><span class="p">()</span>
+    <span class="p">}</span>
+<span class="p">})</span>
+</code></pre></div></div>
+
+<h2 id="indexhtml-の作成">index.html の作成</h2>
+<div class="language-html highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="cp">&lt;!DOCTYPE html&gt;</span>
+<span class="nt">&lt;html&gt;</span>
+<span class="nt">&lt;head&gt;</span>
+    <span class="nt">&lt;meta</span> <span class="na">charset=</span><span class="s">"UTF-8"</span><span class="nt">&gt;</span>
+    <span class="nt">&lt;title&gt;</span>Hello World!<span class="nt">&lt;/title&gt;</span>
+    <span class="nt">&lt;meta</span> <span class="na">http-equiv=</span><span class="s">"Content-Security-Policy"</span> <span class="na">content=</span><span class="s">"script-src 'self' 'unsafe-inline';"</span> <span class="nt">/&gt;</span>
+<span class="nt">&lt;/head&gt;</span>
+<span class="nt">&lt;body</span> <span class="na">style=</span><span class="s">"background: white;"</span><span class="nt">&gt;</span>
+    <span class="nt">&lt;h1&gt;</span>Hello World!<span class="nt">&lt;/h1&gt;</span>
+    <span class="nt">&lt;p&gt;</span>
+        We are using Node.js <span class="nt">&lt;span</span> <span class="na">id=</span><span class="s">"node-version"</span><span class="nt">&gt;&lt;/span&gt;</span>,
+        Chromium <span class="nt">&lt;span</span> <span class="na">id=</span><span class="s">"chrome-version"</span><span class="nt">&gt;&lt;/span&gt;</span>,
+        and Electron <span class="nt">&lt;span</span> <span class="na">id=</span><span class="s">"electron-version"</span><span class="nt">&gt;&lt;/span&gt;</span>.
+    <span class="nt">&lt;/p&gt;</span>
+<span class="nt">&lt;/body&gt;</span>
+<span class="nt">&lt;/html&gt;</span>
+</code></pre></div></div>
+
+<h1 id="packagejson-の修正">package.json の修正</h1>
+<p><code class="language-plaintext highlighter-rouge">scripts</code> の部分を書き換える。</p>
+
+<div class="language-json highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nl">"scripts"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+    </span><span class="nl">"start"</span><span class="p">:</span><span class="w"> </span><span class="s2">"electron ."</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre></div></div>
+
+<h1 id="アプリの実行">アプリの実行</h1>
+<div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code>npm start
+</code></pre></div></div>
+
+                </article>
+            </section>
+        </div>
+        
+            <a class="prev primary" href="/2021/03/13/dllc.html"><div class="prev button">＜</div></a>
+        
+        
+            <a class="next primary" href="/2021/05/09/favicon.html"><div class="next button">＞</div></a>
+        
+    </div>
+    
+    <footer>
+        <div class="footer">
+    <p>
+        © ひかり 2023
+    </p>
+    <p>
+        ひかりの研究室の著作権はひかりに属します。
+    </p>
+    <script>
+        let postedDates = document.getElementsByClassName("posted-date");
+        for(let i = 0; i < postedDates.length; i++){
+            let date = postedDates[i].innerText
+            if(date != ""){
+                let warekiDate = Wareki.date(date)
+                postedDates[i].innerText = warekiDate;
+            }
+        }
+    </script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github-dark.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/highlight.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlightjs-line-numbers.js/2.8.0/highlightjs-line-numbers.min.js"></script>
+    <script>hljs.highlightAll();hljs.initLineNumbersOnLoad();</script>
+</div>
+    </footer>
+</body>
+
+</html>
