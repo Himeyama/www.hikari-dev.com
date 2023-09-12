@@ -2,6 +2,11 @@ title: ひかりの研究室
 copyright: © ひかり 2023
 author: ひかり
 future: true
+url: "https://www.hikari-dev.com"
+lang: ja_JP
+description: >-
+  Hikari's personal website that is written information technology.
+github_username: himeyama
 
 jekyll-archives:
   enabled: all
@@ -18,3 +23,4 @@ plugins:
   - jekyll-coffeescript
   - jekyll-archives
   - jekyll-sitemap
+  - jekyll-seo-tag

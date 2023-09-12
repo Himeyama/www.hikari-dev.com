@@ -17,3 +17,7 @@ gem "jekyll-archives", "~> 2.2"
 gem "wdm", "~> 0.1.1"
 
 gem "jekyll-sitemap", "~> 1.4"
+
+gem "jekyll-seo-tag", "~> 2.8"
+
+gem "nokogiri", "~> 1.15"

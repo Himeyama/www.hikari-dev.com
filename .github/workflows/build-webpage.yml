@@ -17,6 +17,8 @@ jobs:
       run: bundle
     - name: Build jekyll
       run: jekyll build
+    - name: pretty
+      run: ruby scripts.rb
     - name: Deploy to GitHub Pages
       uses: peaceiris/actions-gh-pages@v3
       with:
