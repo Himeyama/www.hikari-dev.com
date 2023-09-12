@@ -4,7 +4,7 @@
 <head>
     <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>C# アプリを実行すると 0xc000027b がでて終了する件｜ひかりの研究室</title>
+<title>C# (WinUI3) アプリを実行すると 0xc000027b がでて終了する件｜ひかりの研究室</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700&display=swap" rel="stylesheet">
@@ -44,11 +44,11 @@
 </div>
         <div class="main-area">
             <section class="main-contents">
-                <h1 class="page-title">C# アプリを実行すると 0xc000027b がでて終了する件</h1>
+                <h1 class="page-title">C# (WinUI3) アプリを実行すると 0xc000027b がでて終了する件</h1>
 <time class="posted-date">2023-06-10</time>
                 <article class="article">
                     <h2 id="概要">概要</h2>
-<p>Visual Studio 2022 で WinUI アプリをビルドし、実行ファイルを実行して強制終了する。
+<p>Visual Studio 2022 で WinUI3 アプリをビルドし、実行ファイルを実行して強制終了する。
 (ただし、Visual Studio から直接実行した場合は正常に動作する。)
 また、<code class="language-plaintext highlighter-rouge">dotnet run</code> コマンドでアプリを実行した場合も同様に強制終了する。</p>
 
@@ -75,7 +75,8 @@
 <span class="p">}</span>
 </code></pre></div></div>
 
-<p>謎は深まるばかり。</p>
+<h2 id="追記">追記</h2>
+<p>稀に起こる 0xc000027b のエラーだが、例外が発生すると発生するようだ。ファイルの書き込み、読み込み時などで特に例外が発生しやすいので対策していきたい。</p>
 
                 </article>
             </section>
