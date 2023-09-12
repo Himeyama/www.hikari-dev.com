@@ -15,3 +15,5 @@ gem "jekyll-coffeescript", "~> 2.0"
 gem "jekyll-archives", "~> 2.2"
 
 gem "wdm", "~> 0.1.1"
+
+gem "jekyll-sitemap", "~> 1.4"

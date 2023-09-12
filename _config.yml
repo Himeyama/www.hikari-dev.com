@@ -17,3 +17,4 @@ jekyll-archives:
 plugins:
   - jekyll-coffeescript
   - jekyll-archives
+  - jekyll-sitemap
