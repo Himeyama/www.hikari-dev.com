@@ -602,6 +602,7 @@ body a:visited {
   }
 }
 body .hljs {
+  font-size: 1rem;
   border-radius: 8px;
 }
 body .hljs table.hljs-ln {
