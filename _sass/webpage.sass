@@ -1,10 +1,6 @@
 @import "color.sass"
     
 body
-    div#aswift_1_host
-        width: 100% !important
-        iframe#aswift_1
-            width: 100% !important
     margin: 0
     position: relative
     min-height: calc(100vh - 364px)
@@ -32,117 +28,105 @@ body
                     
     img
         max-width: 100%
-    footer
-        position: absolute
-        bottom: 0
-        margin-top: 64px
-        background-color: $sumi-100
-        height: 300px
-        width: 100%
-        .footer
-            margin: 32px
-    .contents
-        display: grid
-        gap: 0 32px
-        grid-template-columns: repeat(12, 1fr)
-        margin-top: 64px
-        .prev
-            grid-area: auto / 7 / auto / 8
-            display: inline-block
-            text-decoration: unset
-            color: $sea-800
-            width: 50px
-            margin-top: 64px
-            .prev.button
-                cursor: pointer
-                height: 24px
-                width: 24px
-                padding: 12px
-                text-align: center
-                border-radius: 25px
-                border: solid 1px #d8d8d8
-                transition: .2s
-                &:hover
-                    border: solid 1px $sea-800
-                    background-color: $sea-50
-        .next
-            grid-area: auto / 9 / auto / 10
-            display: inline-block
-            text-decoration: unset
-            color: $sea-800
-            width: 50px
-            margin-top: 64px
-            .next.button
-                cursor: pointer
-                height: 24px
-                width: 24px
-                padding: 12px
-                text-align: center
-                border-radius: 25px
-                border: solid 1px #d8d8d8
-                transition: .2s
-                &:hover
-                    border: solid 1px $sea-800
-                    background-color: $sea-50
-        .main-area
-            grid-area: auto / 4 / auto / 13
-            .main-contents
-                line-height: 1.75
-                .page-title
-                    line-height: 1.25
-                    margin: 0 0 24px 0
-                    margin-top: -4px
-                time
-                    color: $description-color
-                h2
-                    margin: 64px 0 24px 0
-                h3
-                    margin: 40px 0 24px 0
-                h4
-                    margin: 40px 0 16px 0
-                h5
-                    margin: 40px 0 16px 0
-                h6
-                    margin: 24px 0 16px 0
-
-        .sidemenu
-            grid-area: auto / 1 / auto / 4
-            user-select: none
-            .home-link
-                font-size: 28px
-                color: $color
-                font-weight: bold
+    .contents-footer
+        footer
+            .footer
+        .contents
+            .prev
+                display: inline-block
                 text-decoration: unset
-                display: block
-                margin-bottom: 48px
-            .basic-menu
-                margin-top: 48px
-                a
-                    color: $link
+                color: $sea-800
+                width: 50px
+                margin: 32px 0 16px 0
+                .prev.button
+                    cursor: pointer
+                    height: 24px
+                    width: 24px
+                    padding: 12px
+                    text-align: center
+                    border-radius: 25px
+                    border: solid 1px #d8d8d8
+                    transition: .2s
+                    &:hover
+                        border: solid 1px $sea-800
+                        background-color: $sea-50
+            .next
+                display: inline-block
+                text-decoration: unset
+                color: $sea-800
+                width: 50px
+                margin: 32px 0 16px 0
+                .next.button
+                    cursor: pointer
+                    height: 24px
+                    width: 24px
+                    padding: 12px
+                    text-align: center
+                    border-radius: 25px
+                    border: solid 1px #d8d8d8
+                    transition: .2s
+                    &:hover
+                        border: solid 1px $sea-800
+                        background-color: $sea-50
+            .main-area
+                .main-contents
+                    line-height: 1.75
+                    .page-title
+                        line-height: 1.25
+                        margin: 0 0 24px 0
+                        margin-top: -4px
+                        h1.page-title
+                        word-break: break-all
+                    time
+                        color: $description-color
+                    h2
+                        margin: 64px 0 24px 0
+                    h3
+                        margin: 40px 0 24px 0
+                    h4
+                        margin: 40px 0 16px 0
+                    h5
+                        margin: 40px 0 16px 0
+                    h6
+                        margin: 24px 0 16px 0
+
+            .sidemenu
+                user-select: none
+                .home-link
+                    font-size: 28px
+                    color: $color
                     font-weight: bold
                     text-decoration: unset
-                    &:hover
-                        text-decoration: underline
-            .sub-menu-area
-                .sub-menu
-                    margin-bottom: 40px
-                    .description
-                        margin-top: 40px
-                        color: $description-color
-                        font-size: 12px
-                        margin-bottom: 12px
-                    ul
-                        padding-left: 0
-                        li
-                            display: block
-                            margin-bottom: 8px
-                            a
-                                color: $color
-                                font-weight: bold
-                                text-decoration: unset
-                                font-size: 14px
-                                &:hover
-                                    text-decoration: underline
+                    display: block
+                    margin-bottom: 48px
+                .basic-menu
+                    margin-top: 48px
+                    a
+                        color: $link
+                        font-weight: bold
+                        text-decoration: unset
+                        &:hover
+                            text-decoration: underline
+                .sub-menu-area
+                    .sub-menu
+                        margin-bottom: 40px
+                        .description
+                            margin-top: 40px
+                            color: $description-color
+                            font-size: 12px
+                            margin-bottom: 12px
+                        ul
+                            padding-left: 0
+                            li
+                                display: block
+                                margin-bottom: 8px
+                                a
+                                    color: $color
+                                    font-weight: bold
+                                    text-decoration: unset
+                                    font-size: 14px
+                                    &:hover
+                                        text-decoration: underline
 
 
 @media (prefers-color-scheme: dark)
@@ -160,74 +144,109 @@ body
                 tr
                     td
                         border: 1px solid $sumi-700
-        footer
-            background-color: $sumi-800
-        .contents
-            .prev
-                color: $dark-color
-                .prev.button
-                    border: solid 1px #d8d8d8
-                    &:hover
-                        border: solid 1px $dark-color
-                        background-color: $sumi-800
-            .next
-                color: $dark-color
-                .next.button
-                    border: solid 1px #d8d8d8
-                    &:hover
-                        border: solid 1px $dark-color
-                        background-color: $sumi-800
-            .main-area
-                .main-contents
-                    time
-                        color: $dark-description-color
-            .sidemenu
-                .home-link
+        .contents-footer
+            .contents
+                .prev
                     color: $dark-color
-                .basic-menu
-                    a
-                        color: $dark-link
-                .sub-menu-area
-                    .sub-menu
-                        .description
+                    .prev.button
+                        border: solid 1px #d8d8d8
+                        &:hover
+                            border: solid 1px $dark-color
+                            background-color: $sumi-800
+                .next
+                    color: $dark-color
+                    .next.button
+                        border: solid 1px #d8d8d8
+                        &:hover
+                            border: solid 1px $dark-color
+                            background-color: $sumi-800
+                .main-area
+                    .main-contents
+                        time
                             color: $dark-description-color
-                        ul
-                            li
-                                a
-                                    color: $dark-color
+                .sidemenu
+                    .home-link
+                        color: $dark-color
+                    .basic-menu
+                        a
+                            color: $dark-link
+                    .sub-menu-area
+                        .sub-menu
+                            .description
+                                color: $dark-description-color
+                            ul
+                                li
+                                    a
+                                        color: $dark-color
 
-@media screen and (max-width: 1088px)
-    body
+body
+    .contents-footer
         .contents
-            margin: 64px 32px auto 32px
-
-@media screen and (max-width: 800px)
-    body
-        min-height: calc(100vh - 332px)
-        .contents
-            margin: 32px 32px auto 32px
-            .prev
-                grid-area: auto / 6 / auto / 7
-            .next
-                grid-area: auto / 7 / auto / 8
+            display: grid
+            grid-template-columns: repeat(12, 1fr)
+            grid-template-rows: auto 1fr auto auto
+            margin: 48px auto 24px auto
             .main-area
-                grid-area: 2 / 1 / 3 / 13
+                grid-column-start: 4
+                grid-column-end: span 12
+                grid-row-start: 1
+                grid-row-end: 2
+            .next-prev
+                display: grid
+                grid-template-columns: 2fr auto 1fr auto 2fr
+                grid-row-start: 3
+                grid-row-end: auto
+                grid-column-start: 1
+                grid-column-end: span 12
+                .prev
+                    grid-column-start: 2
+                    grid-column-end: auto
+                .next
+                    grid-column-start: 4
+                    grid-column-end: auto
             .sidemenu
-                grid-area: 1 / 1 / 2 / 13
-                .sub-menu-area
-                    display: none
+                grid-column-start: 1
+                grid-column-end: 4
+                grid-row-start: 1
+                grid-row-end: 1
+            footer
+                grid-column-start: 1
+                grid-column-end: 13
+                grid-row-start: 4
+                grid-row-end: 4
 
-@media screen and (max-width: 480px)
+@media screen and (max-width: 960px)
     body
-        .contents
-            margin: 16px 16px auto 16px
-            .prev
-                grid-area: auto / 6 / auto / 7
-            .next
-                grid-area: auto / 7 / auto / 8
-            .main-area
-                grid-area: 2 / 1 / 3 / 13
-            .sidemenu
-                grid-area: 1 / 1 / 2 / 13
-                .sub-menu-area
-                    display: none
+        .contents-footer
+            .contents
+                margin: 48px 32px 24px 32px
+                .main-area
+                    grid-column-start: 4
+                    grid-row-start: 1
+                .sidemenu
+                    grid-column-start: 1
+                    grid-column-end: 4
+                footer
+        #aswift_1_host
+            width: 100px !important
+            #aswift_1
+                width: 100% !important
+
+
+@media screen and (max-width: 520px)
+    body
+        .contents-footer
+            .contents
+                margin: 48px 24px 24px 24px
+                .main-area
+                    grid-column-start: 1
+                    grid-column-end: span 12
+                    grid-row-start: 2
+                .sidemenu
+                    grid-column-start: 1
+                    grid-column-end: span12
+                    grid-row-start: 1
+                    grid-row-end: 1
+                    .sub-menu-area
+                        display: none
+                footer

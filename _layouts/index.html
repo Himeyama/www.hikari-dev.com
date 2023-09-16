@@ -6,24 +6,31 @@
 </head>
 
 <body>
-    <div class="contents">
-        {% include sidemenu.html %}
-        <div class="main-area">
-            <section class="main-contents">
-                {{ content }}
-            </section>
+    <div class="contents-footer">
+        <div class="contents">
+            {% include sidemenu.html %}
+            <div class="main-area">
+                <section class="main-contents">
+                    {{ content }}
+                </section>
+            </div>
+
+            <div class="next-prev">
+                {% if page.previous.url %}
+                <a class="prev primary" href="{{page.previous.url}}"><button
+                        class="primary">{{page.previous.title}}</button></a>
+                {% endif %}
+                {% if page.next.url %}
+                <a class="next primary" href="{{page.next.url}}"><button
+                        class="primary">{{page.next.title}}</button></a>
+                {% endif %}
+            </div>
+
+            <footer>
+                {% include footer.html %}
+            </footer>
         </div>
-        {% if page.previous.url %}
-            <a class="prev primary" href="{{page.previous.url}}"><button class="primary">{{page.previous.title}}</button></a>
-        {% endif %}
-        {% if page.next.url %}
-            <a class="next primary" href="{{page.next.url}}"><button class="primary">{{page.next.title}}</button></a>
-        {% endif %}
     </div>
-    
-    <footer>
-        {% include footer.html %}
-    </footer>
 </body>
 
 </html>
