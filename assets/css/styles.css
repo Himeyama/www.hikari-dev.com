@@ -377,10 +377,6 @@ body .contents-footer {
 }
 body .contents-footer footer {
   display: grid;
-  background-color: #f1f1f4;
-}
-body .contents-footer footer .footer {
-  margin: 16px;
 }
 body .contents-footer .contents-margin .contents {
   grid-row-start: 1;
@@ -433,9 +429,6 @@ body .contents-footer .contents-margin .contents .sidemenu {
   }
   body table tbody tr td {
     border: 1px solid #626264;
-  }
-  body .contents-footer footer {
-    background-color: #1a1a1a;
   }
   body .contents-footer .contents .prev {
     color: #ffffff;
