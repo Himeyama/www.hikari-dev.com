@@ -1,0 +1,39 @@
+.sp-menu-btn
+    display: none
+
+@media (max-width: 600px)
+    .sp-menu-btn
+        display: grid
+        grid-template-columns: repeat(3, 1fr)
+        margin-bottom: 32px
+        #sp-btn-home
+            grid-column-start: 1
+            grid-column-end: auto
+            margin-right: 8px
+        #sp-btn-archive
+            grid-column-start: 2
+            grid-column-end: auto
+            margin: 0 4px 0 4px
+        #sp-btn-tabs
+            grid-column-start: 3
+            grid-column-end: auto
+            margin-left: 8px 
+        button
+            color: $link
+            border-color: $link
+            width: auto
+            height: auto
+            padding: 12px
+            font-size: 14px
+            a
+                text-decoration: unset
+                color: $link
+
+@media (max-width: 600px) and (prefers-color-scheme: dark)
+    .sp-menu-btn
+        button
+            border-color: $dark-link
+            color: $dark-link
+            a
+                text-decoration: unset
+                color: $dark-link

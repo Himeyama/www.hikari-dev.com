@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html lang="ja">
 
 <head>
     {% include head.html %}
@@ -7,29 +7,30 @@
 
 <body>
     <div class="contents-footer">
-        <div class="contents">
-            {% include sidemenu.html %}
-            <div class="main-area">
-                <section class="main-contents">
-                    {{ content }}
-                </section>
-            </div>
+        <div class="contents-margin">
+            <div class="contents">
+                {% include sidemenu.html %}
+                <div class="main-area">
+                    <section class="main-contents">
+                        {{ content }}
+                    </section>
+                </div>
 
-            <div class="next-prev">
-                {% if page.previous.url %}
-                <a class="prev primary" href="{{page.previous.url}}"><button
-                        class="primary">{{page.previous.title}}</button></a>
-                {% endif %}
-                {% if page.next.url %}
-                <a class="next primary" href="{{page.next.url}}"><button
-                        class="primary">{{page.next.title}}</button></a>
-                {% endif %}
+                <div class="next-prev">
+                    {% if page.previous.url %}
+                    <a class="prev primary" href="{{page.previous.url}}"><button
+                            class="primary">{{page.previous.title}}</button></a>
+                    {% endif %}
+                    {% if page.next.url %}
+                    <a class="next primary" href="{{page.next.url}}"><button
+                            class="primary">{{page.next.title}}</button></a>
+                    {% endif %}
+                </div>
             </div>
-
-            <footer>
-                {% include footer.html %}
-            </footer>
         </div>
+        <footer>
+            {% include footer.html %}
+        </footer>
     </div>
 </body>
 

@@ -7,33 +7,34 @@
 
 <body>
     <div class="contents-footer">
-        <div class="contents">
-            {% include sidemenu.html %}
-            <div class="main-area">
-                <section class="main-contents">
-                    {% include header.html %}
-                    <article class="article">
-                        {{ content }}
-                    </article>
-                </section>
+        <div class="contents-margin">
+            <div class="contents">
+                {% include sidemenu.html %}
+                <div class="main-area">
+                    <section class="main-contents">
+                        {% include header.html %}
+                        <article class="article">
+                            {{ content }}
+                        </article>
+                    </section>
+                </div>
+                <div class="next-prev">
+                    {% if page.previous.url %}
+                    <a class="prev primary" href="{{page.previous.url}}">
+                        <div class="prev button">＜</div>
+                    </a>
+                    {% endif %}
+                    {% if page.next.url %}
+                    <a class="next primary" href="{{page.next.url}}">
+                        <div class="next button">＞</div>
+                    </a>
+                    {% endif %}
+                </div>
             </div>
-            <div class="next-prev">
-                {% if page.previous.url %}
-                <a class="prev primary" href="{{page.previous.url}}">
-                    <div class="prev button">＜</div>
-                </a>
-                {% endif %}
-                {% if page.next.url %}
-                <a class="next primary" href="{{page.next.url}}">
-                    <div class="next button">＞</div>
-                </a>
-                {% endif %}
-            </div>
-
-            <footer>
-                {% include footer.html %}
-            </footer>
         </div>
+        <footer>
+            {% include footer.html %}
+        </footer>
     </div>
 </body>
 
