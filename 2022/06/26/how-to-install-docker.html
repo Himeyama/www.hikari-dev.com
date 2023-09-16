@@ -3,7 +3,7 @@
 
 <head>
     <meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1">
 <!-- <title>Ubuntu に Docker をインストールする｜ひかりの研究室</title> -->
 <!-- <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -45,8 +45,9 @@
 </head>
 
 <body>
-    <div class="contents">
-        <div class="left sidemenu">
+    <div class="contents-footer">
+        <div class="contents">
+            <div class="left sidemenu">
     <a class="home-link" href="/">ひかりの研究室</a>
     <div class="sub-menu-area">
         <nav class="basic-menu">
@@ -72,12 +73,12 @@
         </nav>
     </div>
 </div>
-        <div class="main-area">
-            <section class="main-contents">
-                <h1 class="page-title">Ubuntu に Docker をインストールする</h1>
+            <div class="main-area">
+                <section class="main-contents">
+                    <h1 class="page-title">Ubuntu に Docker をインストールする</h1>
 <time class="posted-date">2022-06-26</time>
-                <article class="article">
-                    <p>https://docs.docker.com/engine/install/ubuntu/#set-up-the-repository の日本語訳です。</p>
+                    <article class="article">
+                        <p>https://docs.docker.com/engine/install/ubuntu/#set-up-the-repository の日本語訳です。</p>
 
 <p>:::important Docker Desktop for Linux
 Docker Desktop を使用すると、Linux と同様に、
@@ -316,19 +317,24 @@ Docker を root なしモードで実行する方法については、
   <li><a href="https://docs.docker.com/develop/">Docker を使った開発</a>のトピックを読んで、Docker を使って新しいアプリケーションを構築する方法を学んでください。</li>
 </ul>
 
-                </article>
-            </section>
-        </div>
-        
-            <a class="prev primary" href="/2022/05/20/cublas.html"><div class="prev button">＜</div></a>
-        
-        
-            <a class="next primary" href="/2022/06/27/js.html"><div class="next button">＞</div></a>
-        
-    </div>
-    
-    <footer>
-        <div class="footer">
+                    </article>
+                </section>
+            </div>
+            <div class="next-prev">
+                
+                <a class="prev primary" href="/2022/05/20/cublas.html">
+                    <div class="prev button">＜</div>
+                </a>
+                
+                
+                <a class="next primary" href="/2022/06/27/js.html">
+                    <div class="next button">＞</div>
+                </a>
+                
+            </div>
+
+            <footer>
+                <div class="footer">
     <p>
         © ひかり 2023
     </p>
@@ -358,7 +364,9 @@ Docker を root なしモードで実行する方法については、
         (adsbygoogle = window.adsbygoogle || []).push({});
     </script>
 </div>
-    </footer>
+            </footer>
+        </div>
+    </div>
 </body>
 
 </html>

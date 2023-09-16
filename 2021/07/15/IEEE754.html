@@ -3,7 +3,7 @@
 
 <head>
     <meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1">
 <!-- <title>浮動小数点数シミュレーター｜ひかりの研究室</title> -->
 <!-- <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -45,8 +45,9 @@
 </head>
 
 <body>
-    <div class="contents">
-        <div class="left sidemenu">
+    <div class="contents-footer">
+        <div class="contents">
+            <div class="left sidemenu">
     <a class="home-link" href="/">ひかりの研究室</a>
     <div class="sub-menu-area">
         <nav class="basic-menu">
@@ -72,12 +73,12 @@
         </nav>
     </div>
 </div>
-        <div class="main-area">
-            <section class="main-contents">
-                <h1 class="page-title">浮動小数点数シミュレーター</h1>
+            <div class="main-area">
+                <section class="main-contents">
+                    <h1 class="page-title">浮動小数点数シミュレーター</h1>
 <time class="posted-date">2021-07-15</time>
-                <article class="article">
-                    <script src="https://unpkg.com/react@17/umd/react.development.js"></script>
+                    <article class="article">
+                        <script src="https://unpkg.com/react@17/umd/react.development.js"></script>
 <script src="https://unpkg.com/react-dom@17/umd/react-dom.development.js"></script>
 <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
 <script src="/assets/js/ieee754.js"></script>
@@ -136,19 +137,24 @@ class IEEE754InputDec extends React.Component {
     ReactDOM.render(<IEEE754 name="world" />,
         document.getElementById("content"));
 </script>
-                </article>
-            </section>
-        </div>
-        
-            <a class="prev primary" href="/2021/06/15/tiv.html"><div class="prev button">＜</div></a>
-        
-        
-            <a class="next primary" href="/2021/07/16/how2create-gem.html"><div class="next button">＞</div></a>
-        
-    </div>
-    
-    <footer>
-        <div class="footer">
+                    </article>
+                </section>
+            </div>
+            <div class="next-prev">
+                
+                <a class="prev primary" href="/2021/06/15/tiv.html">
+                    <div class="prev button">＜</div>
+                </a>
+                
+                
+                <a class="next primary" href="/2021/07/16/how2create-gem.html">
+                    <div class="next button">＞</div>
+                </a>
+                
+            </div>
+
+            <footer>
+                <div class="footer">
     <p>
         © ひかり 2023
     </p>
@@ -178,7 +184,9 @@ class IEEE754InputDec extends React.Component {
         (adsbygoogle = window.adsbygoogle || []).push({});
     </script>
 </div>
-    </footer>
+            </footer>
+        </div>
+    </div>
 </body>
 
 </html>

@@ -3,7 +3,7 @@
 
 <head>
     <meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1">
 <!-- <title>モニター無しで Raspberry Pi のセットアップ｜ひかりの研究室</title> -->
 <!-- <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -45,8 +45,9 @@
 </head>
 
 <body>
-    <div class="contents">
-        <div class="left sidemenu">
+    <div class="contents-footer">
+        <div class="contents">
+            <div class="left sidemenu">
     <a class="home-link" href="/">ひかりの研究室</a>
     <div class="sub-menu-area">
         <nav class="basic-menu">
@@ -72,12 +73,12 @@
         </nav>
     </div>
 </div>
-        <div class="main-area">
-            <section class="main-contents">
-                <h1 class="page-title">モニター無しで Raspberry Pi のセットアップ</h1>
+            <div class="main-area">
+                <section class="main-contents">
+                    <h1 class="page-title">モニター無しで Raspberry Pi のセットアップ</h1>
 <time class="posted-date">2021-08-16</time>
-                <article class="article">
-                    <p>モニター不要で Raspberry Pi のセットアップ方法の説明。</p>
+                    <article class="article">
+                        <p>モニター不要で Raspberry Pi のセットアップ方法の説明。</p>
 
 <ul>
   <li>有線での接続が必要なため、LAN ケーブルを接続できる Raspberry Pi 端末であること</li>
@@ -138,19 +139,24 @@ framebuffer_height=720
 <h2 id="wi-fi-の有効化">Wi-Fi の有効化</h2>
 <p>VNC から Wi-Fi を有効にすることで有線接続が不要となり、電源のみで Raspberry Pi を操作することが可能。</p>
 
-                </article>
-            </section>
-        </div>
-        
-            <a class="prev primary" href="/2021/08/16/arduino-no-dalay.html"><div class="prev button">＜</div></a>
-        
-        
-            <a class="next primary" href="/2021/09/21/powerline.html"><div class="next button">＞</div></a>
-        
-    </div>
-    
-    <footer>
-        <div class="footer">
+                    </article>
+                </section>
+            </div>
+            <div class="next-prev">
+                
+                <a class="prev primary" href="/2021/08/16/arduino-no-dalay.html">
+                    <div class="prev button">＜</div>
+                </a>
+                
+                
+                <a class="next primary" href="/2021/09/21/powerline.html">
+                    <div class="next button">＞</div>
+                </a>
+                
+            </div>
+
+            <footer>
+                <div class="footer">
     <p>
         © ひかり 2023
     </p>
@@ -180,7 +186,9 @@ framebuffer_height=720
         (adsbygoogle = window.adsbygoogle || []).push({});
     </script>
 </div>
-    </footer>
+            </footer>
+        </div>
+    </div>
 </body>
 
 </html>

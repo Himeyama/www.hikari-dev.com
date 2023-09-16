@@ -3,7 +3,7 @@
 
 <head>
     <meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1">
 <!-- <title>自作 gem の作り方｜ひかりの研究室</title> -->
 <!-- <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -45,8 +45,9 @@
 </head>
 
 <body>
-    <div class="contents">
-        <div class="left sidemenu">
+    <div class="contents-footer">
+        <div class="contents">
+            <div class="left sidemenu">
     <a class="home-link" href="/">ひかりの研究室</a>
     <div class="sub-menu-area">
         <nav class="basic-menu">
@@ -72,12 +73,12 @@
         </nav>
     </div>
 </div>
-        <div class="main-area">
-            <section class="main-contents">
-                <h1 class="page-title">自作 gem の作り方</h1>
+            <div class="main-area">
+                <section class="main-contents">
+                    <h1 class="page-title">自作 gem の作り方</h1>
 <time class="posted-date">2022-05-12</time>
-                <article class="article">
-                    <h2 id="gem-を作成-bundle-gem">gem を作成 (<code class="language-plaintext highlighter-rouge">bundle gem</code>)</h2>
+                    <article class="article">
+                        <h2 id="gem-を作成-bundle-gem">gem を作成 (<code class="language-plaintext highlighter-rouge">bundle gem</code>)</h2>
 <p><code class="language-plaintext highlighter-rouge">gem_name</code> という gem のテンプレートを作成する場合は以下を実行します。</p>
 
 <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>bundle gem gem_name
@@ -262,19 +263,24 @@ Init_myapp(void)
 <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>rake build
 </code></pre></div></div>
 
-                </article>
-            </section>
-        </div>
-        
-            <a class="prev primary" href="/2022/04/27/ubuntu-dock.html"><div class="prev button">＜</div></a>
-        
-        
-            <a class="next primary" href="/2022/05/12/create-jisaku-dist.html"><div class="next button">＞</div></a>
-        
-    </div>
-    
-    <footer>
-        <div class="footer">
+                    </article>
+                </section>
+            </div>
+            <div class="next-prev">
+                
+                <a class="prev primary" href="/2022/04/27/ubuntu-dock.html">
+                    <div class="prev button">＜</div>
+                </a>
+                
+                
+                <a class="next primary" href="/2022/05/12/create-jisaku-dist.html">
+                    <div class="next button">＞</div>
+                </a>
+                
+            </div>
+
+            <footer>
+                <div class="footer">
     <p>
         © ひかり 2023
     </p>
@@ -304,7 +310,9 @@ Init_myapp(void)
         (adsbygoogle = window.adsbygoogle || []).push({});
     </script>
 </div>
-    </footer>
+            </footer>
+        </div>
+    </div>
 </body>
 
 </html>

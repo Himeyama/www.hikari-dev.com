@@ -3,7 +3,7 @@
 
 <head>
     <meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1">
 <!-- <title>Ubuntu 系の Linux ディストリビューションの自作方法｜ひかりの研究室</title> -->
 <!-- <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -45,8 +45,9 @@
 </head>
 
 <body>
-    <div class="contents">
-        <div class="left sidemenu">
+    <div class="contents-footer">
+        <div class="contents">
+            <div class="left sidemenu">
     <a class="home-link" href="/">ひかりの研究室</a>
     <div class="sub-menu-area">
         <nav class="basic-menu">
@@ -72,12 +73,12 @@
         </nav>
     </div>
 </div>
-        <div class="main-area">
-            <section class="main-contents">
-                <h1 class="page-title">Ubuntu 系の Linux ディストリビューションの自作方法</h1>
+            <div class="main-area">
+                <section class="main-contents">
+                    <h1 class="page-title">Ubuntu 系の Linux ディストリビューションの自作方法</h1>
 <time class="posted-date">2022-05-12</time>
-                <article class="article">
-                    <h2 id="概要">概要</h2>
+                    <article class="article">
+                        <h2 id="概要">概要</h2>
 <ol>
   <li>iso ファイル (ディスクイメージ) を展開</li>
   <li>squashfs ファイル (<code class="language-plaintext highlighter-rouge">/</code> の中、ファイルシステムイメージ) を展開</li>
@@ -237,19 +238,24 @@ xorriso <span class="se">\</span>
 <span class="nb">sudo </span>qemu-system-x86_64 <span class="nt">-hda</span> disk.qcow2 <span class="nt">-m</span> 4G <span class="nt">-cdrom</span> mydistribution-22.04-desktop-amd64.iso <span class="nt">-boot</span> d <span class="nt">--enable-kvm</span> <span class="nt">-usb</span> <span class="nt">-smp</span> 6
 </code></pre></div></div>
 
-                </article>
-            </section>
-        </div>
-        
-            <a class="prev primary" href="/2022/05/12/create-gem.html"><div class="prev button">＜</div></a>
-        
-        
-            <a class="next primary" href="/2022/05/20/cublas.html"><div class="next button">＞</div></a>
-        
-    </div>
-    
-    <footer>
-        <div class="footer">
+                    </article>
+                </section>
+            </div>
+            <div class="next-prev">
+                
+                <a class="prev primary" href="/2022/05/12/create-gem.html">
+                    <div class="prev button">＜</div>
+                </a>
+                
+                
+                <a class="next primary" href="/2022/05/20/cublas.html">
+                    <div class="next button">＞</div>
+                </a>
+                
+            </div>
+
+            <footer>
+                <div class="footer">
     <p>
         © ひかり 2023
     </p>
@@ -279,7 +285,9 @@ xorriso <span class="se">\</span>
         (adsbygoogle = window.adsbygoogle || []).push({});
     </script>
 </div>
-    </footer>
+            </footer>
+        </div>
+    </div>
 </body>
 
 </html>

@@ -3,7 +3,7 @@
 
 <head>
     <meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1">
 <!-- <title>ガウシアンフィルターでノイズ除去 (Python / Scipy)｜ひかりの研究室</title> -->
 <!-- <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -45,8 +45,9 @@
 </head>
 
 <body>
-    <div class="contents">
-        <div class="left sidemenu">
+    <div class="contents-footer">
+        <div class="contents">
+            <div class="left sidemenu">
     <a class="home-link" href="/">ひかりの研究室</a>
     <div class="sub-menu-area">
         <nav class="basic-menu">
@@ -72,12 +73,12 @@
         </nav>
     </div>
 </div>
-        <div class="main-area">
-            <section class="main-contents">
-                <h1 class="page-title">ガウシアンフィルターでノイズ除去 (Python / Scipy)</h1>
+            <div class="main-area">
+                <section class="main-contents">
+                    <h1 class="page-title">ガウシアンフィルターでノイズ除去 (Python / Scipy)</h1>
 <time class="posted-date">2021-06-10</time>
-                <article class="article">
-                    <p>例として、1[Hz] の sin 波を信号とする。
+                    <article class="article">
+                        <p>例として、1[Hz] の sin 波を信号とする。
 平均 0、標準偏差 0.5 の正規分布から乱数を作成したノイズを信号に加える。</p>
 
 <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="n">numpy</span> <span class="k">as</span> <span class="n">np</span>
@@ -109,19 +110,24 @@
 
 <p><img src="/assets/img/gaussianfilter/2.svg" alt="pyplot" /></p>
 
-                </article>
-            </section>
-        </div>
-        
-            <a class="prev primary" href="/2021/06/04/narray-dot.html"><div class="prev button">＜</div></a>
-        
-        
-            <a class="next primary" href="/2021/06/10/jupyterlab.html"><div class="next button">＞</div></a>
-        
-    </div>
-    
-    <footer>
-        <div class="footer">
+                    </article>
+                </section>
+            </div>
+            <div class="next-prev">
+                
+                <a class="prev primary" href="/2021/06/04/narray-dot.html">
+                    <div class="prev button">＜</div>
+                </a>
+                
+                
+                <a class="next primary" href="/2021/06/10/jupyterlab.html">
+                    <div class="next button">＞</div>
+                </a>
+                
+            </div>
+
+            <footer>
+                <div class="footer">
     <p>
         © ひかり 2023
     </p>
@@ -151,7 +157,9 @@
         (adsbygoogle = window.adsbygoogle || []).push({});
     </script>
 </div>
-    </footer>
+            </footer>
+        </div>
+    </div>
 </body>
 
 </html>

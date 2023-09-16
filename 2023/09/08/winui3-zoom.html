@@ -3,7 +3,7 @@
 
 <head>
     <meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1">
 <!-- <title>Windows App SDK の MenuFlyoutItem.KeyboardAccelerators で拡大縮小のショートカットを設定する方法 (Microsoft.UI.Xaml, WinUI3)｜ひかりの研究室</title> -->
 <!-- <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -45,8 +45,9 @@
 </head>
 
 <body>
-    <div class="contents">
-        <div class="left sidemenu">
+    <div class="contents-footer">
+        <div class="contents">
+            <div class="left sidemenu">
     <a class="home-link" href="/">ひかりの研究室</a>
     <div class="sub-menu-area">
         <nav class="basic-menu">
@@ -72,12 +73,12 @@
         </nav>
     </div>
 </div>
-        <div class="main-area">
-            <section class="main-contents">
-                <h1 class="page-title">Windows App SDK の MenuFlyoutItem.KeyboardAccelerators で拡大縮小のショートカットを設定する方法 (Microsoft.UI.Xaml, WinUI3)</h1>
+            <div class="main-area">
+                <section class="main-contents">
+                    <h1 class="page-title">Windows App SDK の MenuFlyoutItem.KeyboardAccelerators で拡大縮小のショートカットを設定する方法 (Microsoft.UI.Xaml, WinUI3)</h1>
 <time class="posted-date">2023-09-08</time>
-                <article class="article">
-                    <h2 id="結論-keyaddkeysubtractkeynumber0-とすればよい">結論 <code class="language-plaintext highlighter-rouge">Key="Add"</code>、<code class="language-plaintext highlighter-rouge">Key="subtract"</code>、<code class="language-plaintext highlighter-rouge">Key="Number0"</code> とすればよい</h2>
+                    <article class="article">
+                        <h2 id="結論-keyaddkeysubtractkeynumber0-とすればよい">結論 <code class="language-plaintext highlighter-rouge">Key="Add"</code>、<code class="language-plaintext highlighter-rouge">Key="subtract"</code>、<code class="language-plaintext highlighter-rouge">Key="Number0"</code> とすればよい</h2>
 
 <p><img src="/assets/img/winui3/KeyboardAccelerators.png" alt="MenuFlyoutItem.KeyboardAccelerators" /></p>
 
@@ -120,19 +121,24 @@
 </code></pre></div>  </div>
 </blockquote>
 
-                </article>
-            </section>
-        </div>
-        
-            <a class="prev primary" href="/2023/09/08/winui3-menuflyouticon.html"><div class="prev button">＜</div></a>
-        
-        
-            <a class="next primary" href="/2023/09/12/winui3-Button.html"><div class="next button">＞</div></a>
-        
-    </div>
-    
-    <footer>
-        <div class="footer">
+                    </article>
+                </section>
+            </div>
+            <div class="next-prev">
+                
+                <a class="prev primary" href="/2023/09/08/winui3-menuflyouticon.html">
+                    <div class="prev button">＜</div>
+                </a>
+                
+                
+                <a class="next primary" href="/2023/09/12/winui3-Button.html">
+                    <div class="next button">＞</div>
+                </a>
+                
+            </div>
+
+            <footer>
+                <div class="footer">
     <p>
         © ひかり 2023
     </p>
@@ -162,7 +168,9 @@
         (adsbygoogle = window.adsbygoogle || []).push({});
     </script>
 </div>
-    </footer>
+            </footer>
+        </div>
+    </div>
 </body>
 
 </html>
