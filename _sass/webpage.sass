@@ -1,6 +1,10 @@
 @import "color.sass"
     
 body
+    div#aswift_1_host
+        width: 100% !important
+        iframe#aswift_1
+            width: 100% !important
     margin: 0
     position: relative
     min-height: calc(100vh - 364px)
@@ -202,6 +206,21 @@ body
         min-height: calc(100vh - 332px)
         .contents
             margin: 32px 32px auto 32px
+            .prev
+                grid-area: auto / 6 / auto / 7
+            .next
+                grid-area: auto / 7 / auto / 8
+            .main-area
+                grid-area: 2 / 1 / 3 / 13
+            .sidemenu
+                grid-area: 1 / 1 / 2 / 13
+                .sub-menu-area
+                    display: none
+
+@media screen and (max-width: 480px)
+    body
+        .contents
+            margin: 16px 16px auto 16px
             .prev
                 grid-area: auto / 6 / auto / 7
             .next
