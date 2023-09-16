@@ -1,0 +1,157 @@
+---
+---
+
+@import "codeblock"
+
+$submenu-description-color: #757575
+$submenu-description-color-dark: #9E9E9E
+$footer-background-color: #F5F5F5
+$footer-background-color-dark: #3B3B3B
+$active-color: #00CC6A
+$active-color-dark: #10893E
+$background-color: #ffffff
+$background-color-dark: #3B3B3B
+$color-dark: #FFFFFF
+
+body
+    margin: 0
+    display: grid
+    grid-template-rows: auto 1fr auto auto
+    min-height: 100vh
+
+.articles
+    grid-column: 4 / span 9
+    margin: 16px
+    a
+        color: $active-color
+    article
+        .page-title
+            a
+                word-break: break-all
+                color: $active-color
+                text-decoration: unset
+        word-break: break-all
+        a
+            color: $active-color
+        img
+            max-width: 100%
+
+.archive-date a
+    color: $active-color
+
+.post-link
+    color: $active-color
+    word-break: break-all
+
+menu
+    grid-column: 1 / span 3
+    padding-left: 0
+    margin-top: 36px
+    .page-title
+        a
+            text-decoration: none
+            color: $active-color
+            font-weight: bold
+            font-size: 1.4rem
+            word-break: break-all
+    .sub-menu
+        .description
+            color: $submenu-description-color
+            margin-top: 32px
+        ul
+            list-style: none
+            padding-left: 0
+            margin-top: 32px
+            li
+                margin-top: 8px
+                a
+                    color: $active-color
+                    text-decoration: unset
+
+header
+    grid-row: 1
+    margin: 0 32px 0 32px
+    a
+        text-decoration: unset
+        color: unset
+
+main
+    margin: 0 32px 0 32px
+    width: 1080px
+    grid-row: 2
+    display: grid
+    grid-template-columns: repeat(12, 1fr)
+
+footer
+    grid-row: 3
+    padding: 16px
+    margin-top: 16px
+    background: $footer-background-color
+
+.wrap-margin
+    margin: 0 auto
+
+menu.menu-buttons
+    display: none
+    grid-template-columns: 1fr 1fr 1fr
+
+
+@media screen and (max-width: 1144px)
+    main
+        width: unset
+    .wrap-margin
+        margin: unset
+
+
+@media screen and (max-width: 440px)
+    menu.menu-buttons
+        display: grid
+        a
+            button
+                width: 100%
+                padding-top: 8px
+                padding-bottom: 8px
+                border: solid 2px $active-color
+                border-radius: 4px
+                background-color: transparent
+                color: $active-color
+                cursor: pointer
+                transition: .3s
+                &:hover
+                    background-color: $active-color
+                    color: $background-color
+        a#home-button
+            margin-right: 8px
+        a#archive-button
+            margin: 0px 8px
+        a#tags-button
+            margin-left: 8px
+
+
+    menu
+        display: none
+    .articles
+        grid-column: 1 / span 12
+
+
+@media (prefers-color-scheme: dark)
+    body
+        color: $color-dark
+        background-color: $background-color-dark
+    footer
+        background: $footer-background-color-dark
+    menu
+        .sub-menu
+            .description
+                color: $submenu-description-color-dark
+    menu.menu-buttons
+        a
+            button
+                color: $active-color-dark
+                border: solid 2px $active-color-dark
+                &:hover
+                    background-color: $active-color-dark
+                    color: $color-dark
+
+ins.adsbygoogle
+    grid-row: 4
