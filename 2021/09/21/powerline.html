@@ -3,12 +3,7 @@
 
 <head>
     <meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<!-- <title>Powerline のインストール方法｜ひかりの研究室</title> -->
-<!-- <link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700&display=swap" rel="stylesheet">
-<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@500;700&display=swap" rel="stylesheet">  -->
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
 <link rel="stylesheet" href="/assets/css/styles.css">
 <meta name="Hikari's personal website that is written information technology.">
 <!-- Begin Jekyll SEO tag v2.8.0 -->
@@ -46,9 +41,15 @@
 
 <body>
     <div class="contents-footer">
-        <div class="contents">
-            <div class="left sidemenu">
+        <div class="contents-margin">
+            <div class="contents">
+                <div class="left sidemenu">
     <a class="home-link" href="/">ひかりの研究室</a>
+    <div class="sp-menu-btn">
+        <button id="sp-btn-home"><a href="/">ホーム</a></button>
+        <button id="sp-btn-archive"><a href="/archives">アーカイブ</a></button>
+        <button id="sp-btn-tabs"><a href="/tags">タブ別</a></button>
+    </div>
     <div class="sub-menu-area">
         <nav class="basic-menu">
             <a href="/">ホーム</a>
@@ -73,12 +74,12 @@
         </nav>
     </div>
 </div>
-            <div class="main-area">
-                <section class="main-contents">
-                    <h1 class="page-title">Powerline のインストール方法</h1>
+                <div class="main-area">
+                    <section class="main-contents">
+                        <h1 class="page-title">Powerline のインストール方法</h1>
 <time class="posted-date">2021-09-21</time>
-                    <article class="article">
-                        <h1 id="インストール">インストール</h1>
+                        <article class="article">
+                            <h1 id="インストール">インストール</h1>
 <h2 id="go-のインストール">Go のインストール</h2>
 <p>powreline-go のインストールのために Go をインストールする。</p>
 
@@ -115,24 +116,25 @@ https://github.com/yuru7/PlemolJP/releases
 の PlemolJP_NF_vX.X.X.zip をクリックし、ダウンロードし展開してフォントをインストール。
 フォントの設定は、PlemolJP35 Console NF とする。</p>
 
-                    </article>
-                </section>
+                        </article>
+                    </section>
+                </div>
+                <div class="next-prev">
+                    
+                    <a class="prev primary" href="/2021/08/16/raspi.html">
+                        <div class="prev button">＜</div>
+                    </a>
+                    
+                    
+                    <a class="next primary" href="/2021/09/23/ssh-tunnel.html">
+                        <div class="next button">＞</div>
+                    </a>
+                    
+                </div>
             </div>
-            <div class="next-prev">
-                
-                <a class="prev primary" href="/2021/08/16/raspi.html">
-                    <div class="prev button">＜</div>
-                </a>
-                
-                
-                <a class="next primary" href="/2021/09/23/ssh-tunnel.html">
-                    <div class="next button">＞</div>
-                </a>
-                
-            </div>
-
-            <footer>
-                <div class="footer">
+        </div>
+        <footer>
+            <div class="footer">
     <p>
         © ひかり 2023
     </p>
@@ -162,8 +164,7 @@ https://github.com/yuru7/PlemolJP/releases
         (adsbygoogle = window.adsbygoogle || []).push({});
     </script>
 </div>
-            </footer>
-        </div>
+        </footer>
     </div>
 </body>
 

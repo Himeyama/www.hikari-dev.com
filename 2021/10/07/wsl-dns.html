@@ -3,12 +3,7 @@
 
 <head>
     <meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<!-- <title>WSL2 で DNS サーバーを設定する｜ひかりの研究室</title> -->
-<!-- <link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700&display=swap" rel="stylesheet">
-<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@500;700&display=swap" rel="stylesheet">  -->
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
 <link rel="stylesheet" href="/assets/css/styles.css">
 <meta name="Hikari's personal website that is written information technology.">
 <!-- Begin Jekyll SEO tag v2.8.0 -->
@@ -46,9 +41,15 @@
 
 <body>
     <div class="contents-footer">
-        <div class="contents">
-            <div class="left sidemenu">
+        <div class="contents-margin">
+            <div class="contents">
+                <div class="left sidemenu">
     <a class="home-link" href="/">ひかりの研究室</a>
+    <div class="sp-menu-btn">
+        <button id="sp-btn-home"><a href="/">ホーム</a></button>
+        <button id="sp-btn-archive"><a href="/archives">アーカイブ</a></button>
+        <button id="sp-btn-tabs"><a href="/tags">タブ別</a></button>
+    </div>
     <div class="sub-menu-area">
         <nav class="basic-menu">
             <a href="/">ホーム</a>
@@ -73,12 +74,12 @@
         </nav>
     </div>
 </div>
-            <div class="main-area">
-                <section class="main-contents">
-                    <h1 class="page-title">WSL2 で DNS サーバーを設定する</h1>
+                <div class="main-area">
+                    <section class="main-contents">
+                        <h1 class="page-title">WSL2 で DNS サーバーを設定する</h1>
 <time class="posted-date">2021-10-07</time>
-                    <article class="article">
-                        <h1 id="設定方法">設定方法</h1>
+                        <article class="article">
+                            <h1 id="設定方法">設定方法</h1>
 <h2 id="etcresolvconf-の自動生成の無効化">/etc/resolv.conf の自動生成の無効化</h2>
 <p><code class="language-plaintext highlighter-rouge">/etc/wsl.conf</code> を以下のように編集する。</p>
 
@@ -103,24 +104,25 @@ generateResolvConf = false
   <li><a href="https://github.com/microsoft/WSL/issues/5420">WSL 2 keeps overwriting resolv.conf</a></li>
 </ul>
 
-                    </article>
-                </section>
+                        </article>
+                    </section>
+                </div>
+                <div class="next-prev">
+                    
+                    <a class="prev primary" href="/2021/10/07/nokogiri-build-error.html">
+                        <div class="prev button">＜</div>
+                    </a>
+                    
+                    
+                    <a class="next primary" href="/2021/11/10/NMF-HALS.html">
+                        <div class="next button">＞</div>
+                    </a>
+                    
+                </div>
             </div>
-            <div class="next-prev">
-                
-                <a class="prev primary" href="/2021/10/07/nokogiri-build-error.html">
-                    <div class="prev button">＜</div>
-                </a>
-                
-                
-                <a class="next primary" href="/2021/11/10/NMF-HALS.html">
-                    <div class="next button">＞</div>
-                </a>
-                
-            </div>
-
-            <footer>
-                <div class="footer">
+        </div>
+        <footer>
+            <div class="footer">
     <p>
         © ひかり 2023
     </p>
@@ -150,8 +152,7 @@ generateResolvConf = false
         (adsbygoogle = window.adsbygoogle || []).push({});
     </script>
 </div>
-            </footer>
-        </div>
+        </footer>
     </div>
 </body>
 

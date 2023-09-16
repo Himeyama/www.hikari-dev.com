@@ -3,12 +3,7 @@
 
 <head>
     <meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<!-- <title>C# (WinUI3) アプリを実行すると 0xc000027b がでて終了する件｜ひかりの研究室</title> -->
-<!-- <link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700&display=swap" rel="stylesheet">
-<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@500;700&display=swap" rel="stylesheet">  -->
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
 <link rel="stylesheet" href="/assets/css/styles.css">
 <meta name="Hikari's personal website that is written information technology.">
 <!-- Begin Jekyll SEO tag v2.8.0 -->
@@ -46,9 +41,15 @@
 
 <body>
     <div class="contents-footer">
-        <div class="contents">
-            <div class="left sidemenu">
+        <div class="contents-margin">
+            <div class="contents">
+                <div class="left sidemenu">
     <a class="home-link" href="/">ひかりの研究室</a>
+    <div class="sp-menu-btn">
+        <button id="sp-btn-home"><a href="/">ホーム</a></button>
+        <button id="sp-btn-archive"><a href="/archives">アーカイブ</a></button>
+        <button id="sp-btn-tabs"><a href="/tags">タブ別</a></button>
+    </div>
     <div class="sub-menu-area">
         <nav class="basic-menu">
             <a href="/">ホーム</a>
@@ -73,12 +74,12 @@
         </nav>
     </div>
 </div>
-            <div class="main-area">
-                <section class="main-contents">
-                    <h1 class="page-title">C# (WinUI3) アプリを実行すると 0xc000027b がでて終了する件</h1>
+                <div class="main-area">
+                    <section class="main-contents">
+                        <h1 class="page-title">C# (WinUI3) アプリを実行すると 0xc000027b がでて終了する件</h1>
 <time class="posted-date">2023-06-10</time>
-                    <article class="article">
-                        <h2 id="概要">概要</h2>
+                        <article class="article">
+                            <h2 id="概要">概要</h2>
 <p>Visual Studio 2022 で WinUI3 アプリをビルドし、実行ファイルを実行して強制終了する。
 (ただし、Visual Studio から直接実行した場合は正常に動作する。)
 また、<code class="language-plaintext highlighter-rouge">dotnet run</code> コマンドでアプリを実行した場合も同様に強制終了する。</p>
@@ -109,24 +110,25 @@
 <h2 id="追記">追記</h2>
 <p>稀に起こる 0xc000027b のエラーだが、例外が発生すると発生するようだ。ファイルの書き込み、読み込み時などで特に例外が発生しやすいので対策していきたい。</p>
 
-                    </article>
-                </section>
+                        </article>
+                    </section>
+                </div>
+                <div class="next-prev">
+                    
+                    <a class="prev primary" href="/2023/05/14/cs-md5.html">
+                        <div class="prev button">＜</div>
+                    </a>
+                    
+                    
+                    <a class="next primary" href="/2023/06/26/create-homepage.html">
+                        <div class="next button">＞</div>
+                    </a>
+                    
+                </div>
             </div>
-            <div class="next-prev">
-                
-                <a class="prev primary" href="/2023/05/14/cs-md5.html">
-                    <div class="prev button">＜</div>
-                </a>
-                
-                
-                <a class="next primary" href="/2023/06/26/create-homepage.html">
-                    <div class="next button">＞</div>
-                </a>
-                
-            </div>
-
-            <footer>
-                <div class="footer">
+        </div>
+        <footer>
+            <div class="footer">
     <p>
         © ひかり 2023
     </p>
@@ -156,8 +158,7 @@
         (adsbygoogle = window.adsbygoogle || []).push({});
     </script>
 </div>
-            </footer>
-        </div>
+        </footer>
     </div>
 </body>
 

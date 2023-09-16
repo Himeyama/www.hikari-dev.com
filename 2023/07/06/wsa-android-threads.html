@@ -3,12 +3,7 @@
 
 <head>
     <meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<!-- <title>threads を Windows 11 で利用する方法｜ひかりの研究室</title> -->
-<!-- <link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700&display=swap" rel="stylesheet">
-<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@500;700&display=swap" rel="stylesheet">  -->
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
 <link rel="stylesheet" href="/assets/css/styles.css">
 <meta name="Hikari's personal website that is written information technology.">
 <!-- Begin Jekyll SEO tag v2.8.0 -->
@@ -46,9 +41,15 @@
 
 <body>
     <div class="contents-footer">
-        <div class="contents">
-            <div class="left sidemenu">
+        <div class="contents-margin">
+            <div class="contents">
+                <div class="left sidemenu">
     <a class="home-link" href="/">ひかりの研究室</a>
+    <div class="sp-menu-btn">
+        <button id="sp-btn-home"><a href="/">ホーム</a></button>
+        <button id="sp-btn-archive"><a href="/archives">アーカイブ</a></button>
+        <button id="sp-btn-tabs"><a href="/tags">タブ別</a></button>
+    </div>
     <div class="sub-menu-area">
         <nav class="basic-menu">
             <a href="/">ホーム</a>
@@ -73,12 +74,12 @@
         </nav>
     </div>
 </div>
-            <div class="main-area">
-                <section class="main-contents">
-                    <h1 class="page-title">threads を Windows 11 で利用する方法</h1>
+                <div class="main-area">
+                    <section class="main-contents">
+                        <h1 class="page-title">threads を Windows 11 で利用する方法</h1>
 <time class="posted-date">2023-07-06</time>
-                    <article class="article">
-                        <h2 id="apk-の抽出">apk の抽出</h2>
+                        <article class="article">
+                            <h2 id="apk-の抽出">apk の抽出</h2>
 <p>threads がインストールされている Android 端末を Windows PC に接続し、
 adb コマンドを実行して apk を抽出します。</p>
 
@@ -109,24 +110,25 @@ WSA 側で開発者モード及び USB デバッグを有効にします。</p>
 
 <p><img src="/assets/img/wsa-android-threads/スクリーンショット 2023-07-07 001525.png" alt="Threads Android" /></p>
 
-                    </article>
-                </section>
+                        </article>
+                    </section>
+                </div>
+                <div class="next-prev">
+                    
+                    <a class="prev primary" href="/2023/06/26/create-homepage.html">
+                        <div class="prev button">＜</div>
+                    </a>
+                    
+                    
+                    <a class="next primary" href="/2023/07/09/mycard.html">
+                        <div class="next button">＞</div>
+                    </a>
+                    
+                </div>
             </div>
-            <div class="next-prev">
-                
-                <a class="prev primary" href="/2023/06/26/create-homepage.html">
-                    <div class="prev button">＜</div>
-                </a>
-                
-                
-                <a class="next primary" href="/2023/07/09/mycard.html">
-                    <div class="next button">＞</div>
-                </a>
-                
-            </div>
-
-            <footer>
-                <div class="footer">
+        </div>
+        <footer>
+            <div class="footer">
     <p>
         © ひかり 2023
     </p>
@@ -156,8 +158,7 @@ WSA 側で開発者モード及び USB デバッグを有効にします。</p>
         (adsbygoogle = window.adsbygoogle || []).push({});
     </script>
 </div>
-            </footer>
-        </div>
+        </footer>
     </div>
 </body>
 

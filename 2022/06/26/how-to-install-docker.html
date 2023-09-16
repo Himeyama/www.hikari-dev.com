@@ -3,12 +3,7 @@
 
 <head>
     <meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<!-- <title>Ubuntu に Docker をインストールする｜ひかりの研究室</title> -->
-<!-- <link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700&display=swap" rel="stylesheet">
-<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@500;700&display=swap" rel="stylesheet">  -->
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
 <link rel="stylesheet" href="/assets/css/styles.css">
 <meta name="Hikari's personal website that is written information technology.">
 <!-- Begin Jekyll SEO tag v2.8.0 -->
@@ -46,9 +41,15 @@
 
 <body>
     <div class="contents-footer">
-        <div class="contents">
-            <div class="left sidemenu">
+        <div class="contents-margin">
+            <div class="contents">
+                <div class="left sidemenu">
     <a class="home-link" href="/">ひかりの研究室</a>
+    <div class="sp-menu-btn">
+        <button id="sp-btn-home"><a href="/">ホーム</a></button>
+        <button id="sp-btn-archive"><a href="/archives">アーカイブ</a></button>
+        <button id="sp-btn-tabs"><a href="/tags">タブ別</a></button>
+    </div>
     <div class="sub-menu-area">
         <nav class="basic-menu">
             <a href="/">ホーム</a>
@@ -73,12 +74,12 @@
         </nav>
     </div>
 </div>
-            <div class="main-area">
-                <section class="main-contents">
-                    <h1 class="page-title">Ubuntu に Docker をインストールする</h1>
+                <div class="main-area">
+                    <section class="main-contents">
+                        <h1 class="page-title">Ubuntu に Docker をインストールする</h1>
 <time class="posted-date">2022-06-26</time>
-                    <article class="article">
-                        <p>https://docs.docker.com/engine/install/ubuntu/#set-up-the-repository の日本語訳です。</p>
+                        <article class="article">
+                            <p>https://docs.docker.com/engine/install/ubuntu/#set-up-the-repository の日本語訳です。</p>
 
 <p>:::important Docker Desktop for Linux
 Docker Desktop を使用すると、Linux と同様に、
@@ -317,24 +318,25 @@ Docker を root なしモードで実行する方法については、
   <li><a href="https://docs.docker.com/develop/">Docker を使った開発</a>のトピックを読んで、Docker を使って新しいアプリケーションを構築する方法を学んでください。</li>
 </ul>
 
-                    </article>
-                </section>
+                        </article>
+                    </section>
+                </div>
+                <div class="next-prev">
+                    
+                    <a class="prev primary" href="/2022/05/20/cublas.html">
+                        <div class="prev button">＜</div>
+                    </a>
+                    
+                    
+                    <a class="next primary" href="/2022/06/27/js.html">
+                        <div class="next button">＞</div>
+                    </a>
+                    
+                </div>
             </div>
-            <div class="next-prev">
-                
-                <a class="prev primary" href="/2022/05/20/cublas.html">
-                    <div class="prev button">＜</div>
-                </a>
-                
-                
-                <a class="next primary" href="/2022/06/27/js.html">
-                    <div class="next button">＞</div>
-                </a>
-                
-            </div>
-
-            <footer>
-                <div class="footer">
+        </div>
+        <footer>
+            <div class="footer">
     <p>
         © ひかり 2023
     </p>
@@ -364,8 +366,7 @@ Docker を root なしモードで実行する方法については、
         (adsbygoogle = window.adsbygoogle || []).push({});
     </script>
 </div>
-            </footer>
-        </div>
+        </footer>
     </div>
 </body>
 
