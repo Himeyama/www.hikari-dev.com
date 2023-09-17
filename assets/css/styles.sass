@@ -35,12 +35,15 @@ body
     display: grid
     grid-template-rows: auto 1fr auto auto
     min-height: 100vh
+    font-family: Helvetica, Arial, "BIZ UDPGothic", Meiryo
+    line-height: 1.5
 
 .articles
     grid-column: 4 / span 9
     margin: 16px
     a
         color: $active-color
+        text-decoration: unset
 
     .page-title
         margin-top: 48px
@@ -49,8 +52,6 @@ body
             color: $active-color
             text-decoration: unset
     word-break: break-all
-    a
-        color: $active-color
     img
         max-width: 100%
 
@@ -121,8 +122,15 @@ menu.menu-buttons
 
 
 @media screen and (max-width: 440px)
+    main
+        margin: 0
+    .articles
+        margin-top: 0
+        .page-title
+            margin-top: 0
     menu.menu-buttons
         display: grid
+        margin-top: 16px
         a
             button
                 width: 100%
