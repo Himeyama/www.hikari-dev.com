@@ -33,22 +33,20 @@ body {
 .articles {
   grid-column: 4/span 9;
   margin: 16px;
+  word-break: break-all;
 }
 .articles a {
   color: #00CC6A;
 }
-.articles article {
-  word-break: break-all;
-}
-.articles article .page-title a {
+.articles .page-title a {
   word-break: break-all;
   color: #00CC6A;
   text-decoration: unset;
 }
-.articles article a {
+.articles a {
   color: #00CC6A;
 }
-.articles article img {
+.articles img {
   max-width: 100%;
 }
 
