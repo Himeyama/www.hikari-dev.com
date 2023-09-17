@@ -7,11 +7,28 @@ $submenu-description-color: #757575
 $submenu-description-color-dark: #9E9E9E
 $footer-background-color: #F5F5F5
 $footer-background-color-dark: #3B3B3B
-$active-color: #00CC6A
-$active-color-dark: #10893E
+$active-color: #0078D7
+$active-color-transparent: #0078D780
+$active-color-dark: #00FFCE
+$active-color-dark-transparent: #00FFCE80
+$code-active-color: #E74856
+$code-active-color-dark: #E81123
 $background-color: #ffffff
-$background-color-dark: #3B3B3B
+$background-color-dark: #000000
 $color-dark: #FFFFFF
+
+code.hljs
+    font-family: "PlemolJP Console NF", "Cascadia Code", Consolas, "Courier New", monospace
+    font-weight: bold
+
+code.language-plaintext.highlighter-rouge
+    font-family: "PlemolJP Console NF", "Cascadia Code", Consolas, "Courier New", monospace
+    font-weight: bold
+    color: $code-active-color
+@media (prefers-color-scheme: dark)
+    code.language-plaintext.highlighter-rouge
+        color: $code-active-color-dark
+
 
 body
     margin: 0
@@ -26,6 +43,7 @@ body
         color: $active-color
 
     .page-title
+        margin-top: 48px
         a
             word-break: break-all
             color: $active-color
@@ -46,7 +64,7 @@ body
 menu
     grid-column: 1 / span 3
     padding-left: 0
-    margin-top: 36px
+    margin-top: 64px
     .page-title
         a
             text-decoration: none
@@ -86,7 +104,6 @@ footer
     grid-row: 3
     padding: 16px
     margin-top: 16px
-    background: $footer-background-color
 
 .wrap-margin
     margin: 0 auto
@@ -118,7 +135,7 @@ menu.menu-buttons
                 cursor: pointer
                 transition: .3s
                 &:hover
-                    background-color: $active-color
+                    background-color: $active-color-transparent
                     color: $background-color
         a#home-button
             margin-right: 8px
@@ -139,9 +156,21 @@ menu.menu-buttons
         color: $color-dark
         background-color: $background-color-dark
     footer
-        background: $footer-background-color-dark
+        
+    .articles
+        a
+            color: $active-color-dark
+        .page-title
+            a
+                color: $active-color-dark
     menu
+        .page-title a
+            color: $active-color-dark
         .sub-menu
+            ul
+                li
+                    a
+                        color: $active-color-dark
             .description
                 color: $submenu-description-color-dark
     menu.menu-buttons
@@ -150,8 +179,17 @@ menu.menu-buttons
                 color: $active-color-dark
                 border: solid 2px $active-color-dark
                 &:hover
-                    background-color: $active-color-dark
+                    background-color: $active-color-dark-transparent
                     color: $color-dark
 
 ins.adsbygoogle
     grid-row: 4
+
+.archive-post
+    margin-top: 24px
+    .post-date a
+        background-color: unset
+        text-decoration: unset
+        color: unset
+    .post-link-area
+        margin-top: 8px

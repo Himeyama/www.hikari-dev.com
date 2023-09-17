@@ -3,23 +3,20 @@ layout: default
 title: アーカイブ
 ---
 
-<table style="border: none">
-    <thead></thead>
-    <tbody>
-        {% for post in site.posts %}
-            <tr>
-                <td nowrap style="border: none"><span class="post-date">{{ post.date | date: "%Y-%m-%d" }}</span></td>
-                <td style="border: none"><a class="post-link" href="{{ post.url | relative_url }}">{{ post.title }}</a></td>
-            </tr>
-        {% endfor %}
-    </tbody>
-</table>
+{% for post in site.posts %}
+<div class="archive-post">
+    <time class="post-date">{{ post.date | date: "%Y-%m-%d" }}</time>
+    <div class="post-link-area">
+        <a class="post-link" href="{{ post.url | relative_url }}">{{ post.title }}</a>
+    </div>
+</div>
+{% endfor %}
 
 <script>
     postedDates = document.getElementsByClassName("post-date");
-    for(let i = 0; i < postedDates.length; i++){
+    for (let i = 0; i < postedDates.length; i++) {
         let date = postedDates[i].innerText
-        if(date != ""){
+        if (date != "") {
             console.log(date)
             let warekiDate = Wareki.date(date)
             let DateYMandD = warekiDate.match(/(.*?月)(.*?日)/);
