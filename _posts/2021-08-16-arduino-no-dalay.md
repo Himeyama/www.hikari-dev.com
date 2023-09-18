@@ -1,7 +1,7 @@
 ---
 title: Arduino で delay() を使わない
 tags: [Arduino]
-layout: default
+layout: post
 ---
 
 Arduino で `delay()` を使うと、待機時間中に何もできない。

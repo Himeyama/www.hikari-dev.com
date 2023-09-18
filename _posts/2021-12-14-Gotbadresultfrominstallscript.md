@@ -1,6 +1,6 @@
 ---
 title: Visual Studio Code で Got bad result from install script. のエラーの対処
-layout: default
+layout: post
 date: '2021-12-14 04:08'
 ---
 

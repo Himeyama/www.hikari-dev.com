@@ -1,7 +1,7 @@
 ---
 title: Ubuntu 系の Linux ディストリビューションの自作方法
 tags: [Ubuntu, Linux]
-layout: default
+layout: post
 ---
 
 ## 概要

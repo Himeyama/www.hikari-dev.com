@@ -1,7 +1,7 @@
 ---
 title: Jupyter Lab のインストールと設定
 date: "2021-6-10"
-layout: default
+layout: post
 ---
 
 # Jupyter Lab のインストール

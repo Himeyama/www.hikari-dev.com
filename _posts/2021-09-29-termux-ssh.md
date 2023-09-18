@@ -1,6 +1,6 @@
 ---
 title: termux に ssh する
-layout: default
+layout: post
 date: '2021-09-29 05:11'
 ---
 

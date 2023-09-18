@@ -1,5 +1,5 @@
 ---
-layout: default
+layout: post
 title: threads を Windows 11 で利用する方法
 tag: [android, apk, threads]
 ---

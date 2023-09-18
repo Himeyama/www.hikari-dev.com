@@ -2,7 +2,7 @@
 title: ImageMagick でバイラテラルフィルター
 description: ImageMagick でバイラテラルフィルターをかけて画像をきれいにする
 date: "2021-6-13"
-layout: default
+layout: post
 ---
 
 ImageMagick でバイラテラルフィルターをかける試み。

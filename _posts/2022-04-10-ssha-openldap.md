@@ -1,7 +1,7 @@
 ---
 title: OpenLDAP の slappasswd で生成される SSHA とは
 tags: [OpenLDAP, SHA]
-layout: default
+layout: post
 ---
 
 ## slappasswd コマンドとは

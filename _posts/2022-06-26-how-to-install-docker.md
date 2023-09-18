@@ -1,7 +1,7 @@
 ---
 title: Ubuntu に Docker をインストールする
 tags: [Ubuntu, Linux, Docker, 日本語訳]
-layout: default
+layout: post
 ---
 
 https://docs.docker.com/engine/install/ubuntu/#set-up-the-repository の日本語訳です。

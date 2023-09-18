@@ -1,5 +1,5 @@
 ---
-layout: default
+layout: post
 title: 個人サイトについて語る
 tag: [技術ブログ]
 ---

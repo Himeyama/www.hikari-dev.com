@@ -1,7 +1,7 @@
 ---
 title: 自作 gem の作り方
 tag: [Ruby, gem]
-layout: default
+layout: post
 ---
 
 ## gem を作成 (`bundle gem`)

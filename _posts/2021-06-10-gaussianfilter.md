@@ -2,7 +2,7 @@
 title: ガウシアンフィルターでノイズ除去 (Python / Scipy)
 description: scipy の gaussian_filter1d でノイズ除去
 date: "2021-6-10"
-layout: default
+layout: post
 ---
 
 例として、1[Hz] の sin 波を信号とする。

@@ -1,6 +1,6 @@
 ---
 title: Windows の OpenSSH でパスワード認証を無効にする
-layout: default
+layout: post
 date: '2021-09-27 05:21'
 ---
 

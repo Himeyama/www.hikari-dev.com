@@ -1,6 +1,6 @@
 ---
 title: Numo::NArray でドット積
-layout: default
+layout: post
 date: '2021-06-04 00:20'
 ---
 

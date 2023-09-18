@@ -1,6 +1,6 @@
 ---
 title: Poetry を用いた Python プロジェクトの作成
-layout: default
+layout: post
 ---
 
 ## 環境構築

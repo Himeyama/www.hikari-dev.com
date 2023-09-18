@@ -1,6 +1,6 @@
 ---
 title: termux に powerline をインストールする
-layout: default
+layout: post
 date: '2021-09-29 08:11'
 ---
 

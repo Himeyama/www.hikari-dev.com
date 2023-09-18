@@ -9,15 +9,12 @@ description: >-
 github_username: himeyama
 
 jekyll-archives:
-  enabled: all
+  enabled: none
   layout: archive
   permalinks:
     year: '/:year/'
     month: '/:year/:month/'
     day: '/:year/:month/:day/'
-    tag: '/tag/:name/'
-    archives: '/archives'
-    category: '/category/:name/'
 
 plugins:
   - jekyll-coffeescript
