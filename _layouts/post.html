@@ -2,6 +2,8 @@
 layout: default
 ---
 
-<h1 class="page-title">{{ page.title }}</h1>
-<time class="posted-date">{{ page.date | date: "%Y-%m-%d" }}</time>
-{{ content }}
+<article>
+    <h1 class="page-title">{{ page.title }}</h1>
+    <time class="posted-date">{{ page.date | date: "%Y-%m-%d" }}</time>
+    {{ content }}
+</article>

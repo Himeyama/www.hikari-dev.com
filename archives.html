@@ -4,12 +4,14 @@ title: アーカイブ
 ---
 
 {% for post in site.posts %}
-<div class="archive-post">
-    <time class="post-date">{{ post.date | date: "%Y-%m-%d" }}</time>
-    <div class="post-link-area">
-        <a class="post-link" href="{{ post.url | relative_url }}">{{ post.title }}</a>
+<a class="post-link" href="{{ post.url | relative_url }}">
+    <div class="archive-post">
+        <time class="post-date">{{ post.date | date: "%Y-%m-%d" }}</time>
+        <div class="post-link-area">
+            {{ post.title }}
+        </div>
     </div>
-</div>
+</a>
 {% endfor %}
 
 <script>
