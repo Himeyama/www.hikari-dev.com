@@ -19,6 +19,8 @@ $color: #000000
 $background-image: linear-gradient(to right bottom, #F9EFF7, #F9EFF9)
 $background-image-dark: linear-gradient(to right bottom, #291B21, #261C25)
 $index-bg-dark: #FFFFFF10
+$panel-bg: #FFFFFFB0
+$panel-bg-dark: #00000080
 $card-border: #00000010
 $card-border-dark: #FFFFFF10
 $card-bg: #FFFFFF80
@@ -119,12 +121,15 @@ body
 
 header
     grid-row: 1
-    padding: 0 32px 0 32px
-    background: $card-bg
-    border: solid 1px $card-border
-    a
-        text-decoration: unset
-        color: unset
+    background-image: url(/assets/img/bg/bgimg.jpg)
+    background-size: 100% 100%
+    .header-panel
+        background-color: $card-bg
+        padding: 0 32px 0 32px
+        border: solid 1px $card-border
+        a
+            text-decoration: unset
+            color: unset
 
 main
     margin: 0 32px 0 32px
@@ -135,10 +140,15 @@ main
 
 footer
     grid-row: 3
-    padding: 16px
     margin-top: 16px
-    background: $card-bg
-    border-top: solid 1px $card-border
+    background-image: url(/assets/img/bg/bgimg.jpg)
+    backdrop-filter: blur(32px)
+    background-size: 100% 100%
+    .footer
+        background-color: $panel-bg
+        border-top: solid 1px $card-border
+        .footer-contents
+            padding: 16px
 
 
 .wrap-margin
@@ -233,12 +243,14 @@ ins.adsbygoogle
             color: $color-date-dark
     
     header
-        background: $card-bg-dark
-        border: solid 1px $card-border-dark
+        .header-panel
+            background-color: $panel-bg-dark
+            border: solid 1px $card-border-dark
 
     footer
-        background: $card-bg-dark
-        border-top: solid 1px $card-border-dark
+        .footer
+            background-color: $panel-bg-dark
+            border-top: solid 1px $card-border-dark
 
     .articles
         article
