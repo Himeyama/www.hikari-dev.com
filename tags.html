@@ -4,10 +4,14 @@ title: タグ別
 ---
 
 {% for tag in site.tags %}
-  <h3>{{ tag[0] }}</h3>
-  <ul>
-    {% for post in tag[1] %}
+<div class="index">
+  <article class="article">
+    <h3>{{ tag[0] }}</h3>
+    <ul>
+      {% for post in tag[1] %}
       <li><a href="{{ post.url }}">{{ post.title }}</a></li>
-    {% endfor %}
-  </ul>
+      {% endfor %}
+    </ul>
+  </article>
+</div>
 {% endfor %}
