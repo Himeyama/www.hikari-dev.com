@@ -129,11 +129,15 @@ body {
 
 header {
   grid-row: 1;
+  background-image: url(/assets/img/bg/bgimg.jpg);
+  background-size: 100% 100%;
+}
+header .header-panel {
+  background-color: rgba(255, 255, 255, 0.5019607843);
   padding: 0 32px 0 32px;
-  background: rgba(255, 255, 255, 0.5019607843);
   border: solid 1px rgba(0, 0, 0, 0.062745098);
 }
-header a {
+header .header-panel a {
   text-decoration: unset;
   color: unset;
 }
@@ -148,10 +152,17 @@ main {
 
 footer {
   grid-row: 3;
-  padding: 16px;
   margin-top: 16px;
-  background: rgba(255, 255, 255, 0.5019607843);
+  background-image: url(/assets/img/bg/bgimg.jpg);
+  backdrop-filter: blur(32px);
+  background-size: 100% 100%;
+}
+footer .footer {
+  background-color: rgba(255, 255, 255, 0.6901960784);
   border-top: solid 1px rgba(0, 0, 0, 0.062745098);
+}
+footer .footer .footer-contents {
+  padding: 16px;
 }
 
 .wrap-margin {
@@ -267,12 +278,12 @@ ins.adsbygoogle {
   .post-link .archive-date, .post-link .archive-date a {
     color: rgba(255, 255, 255, 0.5019607843);
   }
-  header {
-    background: rgba(255, 255, 255, 0.062745098);
+  header .header-panel {
+    background-color: rgba(0, 0, 0, 0.5019607843);
     border: solid 1px rgba(255, 255, 255, 0.062745098);
   }
-  footer {
-    background: rgba(255, 255, 255, 0.062745098);
+  footer .footer {
+    background-color: rgba(0, 0, 0, 0.5019607843);
     border-top: solid 1px rgba(255, 255, 255, 0.062745098);
   }
   .articles article {

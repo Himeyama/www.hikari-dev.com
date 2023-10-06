@@ -46,12 +46,14 @@
 
 <body>
     <header>
-        <h1><a href="/">ひかりの実験室</a></h1>
-<menu class="menu-buttons">
-    <a href="/" id="home-button"><button>ホーム</button></a>
-    <a href="/archives" id="archive-button"><button>アーカイブ</button></a>
-    <a href="/tags" id="tags-button"><button>タグ別</button></a>
-</menu>
+        <div class="header-panel">
+    <h1><a href="/">ひかりの実験室</a></h1>
+    <menu class="menu-buttons">
+        <a href="/" id="home-button"><button>ホーム</button></a>
+        <a href="/archives" id="archive-button"><button>アーカイブ</button></a>
+        <a href="/tags" id="tags-button"><button>タグ別</button></a>
+    </menu>
+</div>
     </header>
     <div class="wrap-margin">
         <main>
@@ -85,12 +87,14 @@
     </div>
     <footer>
         <div class="footer">
-    <p>
-        © 2023 Hikari
-    </p>
-    <p>
-        ひかりの実験室の著作権はひかりに属します。
-    </p>
+    <div class="footer-contents">
+        <p>
+            © 2023 Hikari
+        </p>
+        <p>
+            ひかりの実験室の著作権はひかりに属します。
+        </p>
+    </div>
     <script>
         let postedDates = document.getElementsByClassName("posted-date");
         for (let i = 0; i < postedDates.length; i++) {
