@@ -78,14 +78,24 @@ body
     img
         max-width: 100%
 
-menu
+.menu-wrapper
     grid-column: 10 / span 3
     padding-left: 0
-    background: $card-bg
-    border: solid 1px $card-border
-    border-radius: 8px
-    padding: 16px
     margin-top: 16px
+    menu
+        margin-top: 0
+        padding: 16px
+        border: solid 1px $card-border
+        background: $card-bg
+        border-radius: 8px
+    .profile
+        background-image: url(/assets/img/profiles/home-icon-big.png)
+        width: 80%
+        padding-top: 80%
+        margin: 16px auto 0 auto
+        border-radius: 50%
+        background-size: 100%
+        rotate: -25deg
     .page-title
         a
             text-decoration: none
@@ -109,7 +119,9 @@ menu
 
 header
     grid-row: 1
-    margin: 0 32px 0 32px
+    padding: 0 32px 0 32px
+    background: $card-bg
+    border: solid 1px $card-border
     a
         text-decoration: unset
         color: unset
@@ -129,7 +141,7 @@ footer
 .wrap-margin
     margin: 0 auto
 
-menu.menu-buttons
+.menu-buttons
     display: none
     grid-template-columns: 1fr 1fr 1fr
 
@@ -142,13 +154,15 @@ menu.menu-buttons
 
 
 @media screen and (max-width: 440px)
+    header
+        margin-bottom: 16px
     main
         margin: 0
     .articles
         margin-top: 0
         .page-title
             margin-top: 0
-    menu.menu-buttons
+    .menu-wrapper.menu-buttons
         display: grid
         margin-top: 16px
         a
@@ -170,7 +184,7 @@ menu.menu-buttons
             margin: 0px 8px
         a#tags-button
             margin-left: 8px
-    menu
+    .menu-wrapper
         display: none
     .articles
         grid-column: 1 / span 12
@@ -214,6 +228,10 @@ ins.adsbygoogle
             color: $color-dark
         .archive-date, .archive-date a
             color: $color-date-dark
+    
+    header
+        background: $card-bg-dark
+        border: solid 1px $card-border-dark
 
     .articles
         article
@@ -226,9 +244,11 @@ ins.adsbygoogle
         .page-title
             a
                 color: $color-dark
-    menu
-        background: $card-bg-dark
-        border: solid 1px $card-border-dark
+
+    .menu-wrapper
+        menu
+            border: solid 1px $card-border-dark
+            background: $card-bg-dark
         .page-title a
             color: $color-dark
         .sub-menu
