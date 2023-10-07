@@ -85,6 +85,39 @@ body
             color: #FFFFFFB3
 
 
+table
+    border: solid 1px #0000000F
+    border-radius: 4px
+    white-space: nowrap
+    width: 100%
+    display: inline-block
+    border-collapse: collapse
+    overflow-x: auto
+    thead
+        tr
+            background-color: #FFFFFF
+            th
+                font-weight: bold
+                padding: 6px 13px
+    tbody
+        tr
+            background-color: #FFFFFF
+            td
+                padding: 6px 13px
+                width: 1%
+            &:nth-child(2n+1)
+                background-color: transparent
+@media (prefers-color-scheme: dark)
+    table
+        border-color: #FFFFFF0F
+        thead
+            tr
+                background-color: #2B2B2B
+        tbody
+            tr
+                background-color: #2B2B2B
+    
+
 
 @media (prefers-color-scheme: dark)
     .button
@@ -337,11 +370,11 @@ ins.adsbygoogle
                 border-bottom-color: #FFFFFF1F
             .posted-date
                 color: $color-date-dark
+            .page-title
+                a
+                    color: $color-dark
         a
             color: $accent-color-dark
-        .page-title
-            a
-                color: $color-dark
 
     .menu-wrapper
         menu
