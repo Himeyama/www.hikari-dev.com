@@ -19,7 +19,7 @@ $color: #000000
 $background-image: linear-gradient(to right bottom, #F9EFF7, #F9EFF9)
 $background-image-dark: linear-gradient(to right bottom, #291B21, #261C25)
 $index-bg-dark: #FFFFFF10
-$panel-bg: #FFFFFFB0
+$panel-bg: #FFFFFFC0
 $panel-bg-dark: #00000080
 $card-border: #00000010
 $card-border-dark: #FFFFFF10
@@ -55,7 +55,7 @@ body
 
 .articles
     grid-column: 1 / span 9
-    margin: 16px
+    margin: 16px 8px 0 16px
     a
         color: $active-color
         text-decoration: unset
@@ -83,7 +83,7 @@ body
 .menu-wrapper
     grid-column: 10 / span 3
     padding-left: 0
-    margin-top: 16px
+    margin: 16px 16px 0 8px
     menu
         margin-top: 0
         padding: 16px
@@ -124,7 +124,7 @@ header
     background-image: url(/assets/img/bg/bgimg.jpg)
     background-size: 100% 100%
     .header-panel
-        background-color: $card-bg
+        background-color: $panel-bg
         padding: 0 32px 0 32px
         border: solid 1px $card-border
         a
@@ -132,7 +132,6 @@ header
             color: unset
 
 main
-    margin: 0 32px 0 32px
     width: 1080px
     grid-row: 2
     display: grid
