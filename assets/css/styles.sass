@@ -7,11 +7,14 @@ $submenu-description-color: #757575
 $submenu-description-color-dark: #9E9E9E
 $footer-background-color: #F5F5F5
 $footer-background-color-dark: #1C1C1C
-$active-color: #D30050
-$active-color-dark: #FF529F
-$active-color-dark-transparent: #00FFCE80
-$code-active-color: #E74856
-$code-active-color-dark: #E81123
+$accent-color: #D30050
+$accent-color-secondary: #D61961
+$accent-color-tertiary: #D61961CC
+$accent-color-dark: #FF529F
+$accent-color-secondary-dark: #EA4E94
+$accent-color-tertiary-dark: #FF529FCC
+$code-accent-color: #E74856
+$code-accent-color-dark: #E81123
 $background-color: #ffffff
 $background-color-dark: #1C1C1C
 $color-dark: #FFFFFF
@@ -37,10 +40,10 @@ code.hljs
 code.language-plaintext.highlighter-rouge
     font-family: "PlemolJP Console NF", "Cascadia Code", Consolas, "Courier New", monospace
     font-weight: bold
-    color: $code-active-color
+    color: $code-accent-color
 @media (prefers-color-scheme: dark)
     code.language-plaintext.highlighter-rouge
-        color: $code-active-color-dark
+        color: $code-accent-color-dark
 
 
 body
@@ -54,37 +57,55 @@ body
     line-height: 1.5
 
 
-.Button
+.button
     height: 30px
-    border: solid 1px #E5E5E5
-    border-bottom-color: #CCCCCC
-    background-color: #FBFBFB
+    border: solid 1px
     border-radius: 4px
     font-family: "YU Gothic UI"
-    &:hover
-        background-color: #F6F6F6
-        transition: .3s
-    &:active
-        border-bottom-color: #E5E5E5
-@media (prefers-color-scheme: dark)
-    .Button
-        border: solid 1px #3C3438
-        border-top-color: #40383D
-        background-color: #3C3438
-        color: #FFFFFF
+    transition: .3s
+    &.style-standard
+        border-color: #00000024 #00000024 #00000029 #00000024 
+        background-color: #FFFFFFB3
         &:hover
-            border-color: #40383D
-            background-color: #3F363C
+            background-color: #FAFAFA80
+        &:accent
+            background-color: #FAFAFA4D
+            border-color: #0000000F
+            color: #0000009B
+    &.style-accent
+        background-color: $accent-color
+        border-color: #FFFFFF14 #FFFFFF14 #00000066 #FFFFFF14
+        color: #FFFFFF
+        transition: var(--fds-control-faster-duration) ease border-color
+        &:hover
+            background-color: $accent-color-secondary-dark
         &:active
-            border-color: #3C3438
-            background-color: #332A2F
+            background-color: $accent-color-tertiary-dark
+            border-color: transparent
+            color: #FFFFFFB3
+
+
+
+@media (prefers-color-scheme: dark)
+    .button
+        &.style-standard
+            border: solid 1px
+            border-color:  #FFFFFF18 #FFFFFF12 #FFFFFF12 #FFFFFF12
+            background-color: #FFFFFF10
+            color: #FFFFFF
+            &:hover
+                background-color: #FFFFFF15
+            &:accent
+                background-color: #FFFFFF08
+                color: #FFFFFFC8
+                border-color: #FFFFFF12
 
 
 .articles
     grid-column: 1 / span 9
     margin: 16px 8px 0 16px
     a
-        color: $active-color
+        color: $accent-color
         text-decoration: unset
 
     article
@@ -109,13 +130,29 @@ body
         .posted-date
             color: $color-date
 
-    .page-title
-        margin-top: 0
-        a
-            word-break: break-all
-            color: $color
-            text-decoration: unset
+        .page-title
+            font-size: 28px
             margin-top: 0
+            a
+                word-break: break-all
+                color: $color
+                text-decoration: unset
+                margin-top: 0
+        h2
+            font-size: 24px
+            margin-top: 48px
+            margin-bottom: 24px
+            padding-bottom: 2px
+            border-bottom: solid 1px #0000001F
+        h3
+            font-size: 22.4px
+        h4
+            font-size: 19.2px
+        h5
+            font-size: 16px
+        h6
+            font-size: 16px
+
     word-break: break-all
     img
         max-width: 100%
@@ -156,7 +193,7 @@ body
             li
                 margin-top: 8px
                 a
-                    color: $active-color
+                    color: $accent-color
                     text-decoration: unset
 
 header
@@ -223,10 +260,10 @@ footer
                 width: 100%
                 padding-top: 8px
                 padding-bottom: 8px
-                border: solid 2px $active-color
+                border: solid 2px $accent-color
                 border-radius: 4px
                 background-color: transparent
-                color: $active-color
+                color: $accent-color
                 cursor: pointer
                 transition: .3s
                 &:hover
@@ -296,10 +333,12 @@ ins.adsbygoogle
         article
             background-color: $card-bg-dark
             border: solid 1px $card-border-dark
+            h2
+                border-bottom-color: #FFFFFF1F
             .posted-date
                 color: $color-date-dark
         a
-            color: $active-color-dark
+            color: $accent-color-dark
         .page-title
             a
                 color: $color-dark
@@ -314,14 +353,6 @@ ins.adsbygoogle
             ul
                 li
                     a
-                        color: $active-color-dark
+                        color: $accent-color-dark
             .description
                 color: $submenu-description-color-dark
-    menu.menu-buttons
-        a
-            button
-                color: $active-color-dark
-                border: solid 2px $active-color-dark
-                &:hover
-                    background-color: $active-color-dark-transparent
-                    color: $color-dark
