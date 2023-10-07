@@ -1,0 +1,18 @@
+<article>
+    <div class="page-navigation">
+        {% if page.previous.url %}
+        <a class="prev" href="{{page.previous.url}}">
+            <button class="Button">
+                前へ
+            </button>
+        </a>
+        {% endif %}
+        {% if page.next.url %}
+        <a class="next" href="{{page.next.url}}">
+            <button class="Button">
+                次へ
+            </button>
+        </a>
+        {% endif %}
+    </div>
+</article>

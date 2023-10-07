@@ -53,6 +53,19 @@ body
     font-family: Helvetica, Arial, "Yu Gothic UI", "BIZ UDPGothic", Meiryo
     line-height: 1.5
 
+.Button
+    height: 30px
+    border: solid 1px #E5E5E5
+    border-bottom-color: #CCCCCC
+    background-color: #FBFBFB
+    border-radius: 4px
+    font-family: "YU Gothic UI"
+    &:hover
+        background-color: #F6F6F6
+        transition: .3s
+    &:active
+        border-bottom-color: #E5E5E5
+
 .articles
     grid-column: 1 / span 9
     margin: 16px 8px 0 16px
@@ -66,6 +79,19 @@ body
         padding: 24px
         margin-bottom: 8px
         border-radius: 8px
+        .page-navigation
+            display: grid
+            grid-template-columns: 1fr 1fr
+            .prev
+                grid-column: 1
+                margin-right: 4px
+                button
+                    width: 100%
+            .next
+                grid-column: 2
+                margin-left: 4px
+                button
+                    width: 100%
         .posted-date
             color: $color-date
 
