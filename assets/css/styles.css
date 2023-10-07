@@ -50,6 +50,22 @@ body {
   line-height: 1.5;
 }
 
+.Button {
+  height: 30px;
+  border: solid 1px #E5E5E5;
+  border-bottom-color: #CCCCCC;
+  background-color: #FBFBFB;
+  border-radius: 4px;
+  font-family: "YU Gothic UI";
+}
+.Button:hover {
+  background-color: #F6F6F6;
+  transition: 0.3s;
+}
+.Button:active {
+  border-bottom-color: #E5E5E5;
+}
+
 .articles {
   grid-column: 1/span 9;
   margin: 16px 8px 0 16px;
@@ -65,6 +81,24 @@ body {
   padding: 24px;
   margin-bottom: 8px;
   border-radius: 8px;
+}
+.articles article .page-navigation {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+}
+.articles article .page-navigation .prev {
+  grid-column: 1;
+  margin-right: 4px;
+}
+.articles article .page-navigation .prev button {
+  width: 100%;
+}
+.articles article .page-navigation .next {
+  grid-column: 2;
+  margin-left: 4px;
+}
+.articles article .page-navigation .next button {
+  width: 100%;
 }
 .articles article .posted-date {
   color: rgba(0, 0, 0, 0.5019607843);
