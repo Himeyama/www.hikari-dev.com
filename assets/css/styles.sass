@@ -53,6 +53,7 @@ body
     font-family: Helvetica, Arial, "Yu Gothic UI", "BIZ UDPGothic", Meiryo
     line-height: 1.5
 
+
 .Button
     height: 30px
     border: solid 1px #E5E5E5
@@ -65,6 +66,19 @@ body
         transition: .3s
     &:active
         border-bottom-color: #E5E5E5
+@media (prefers-color-scheme: dark)
+    .Button
+        border: solid 1px #3C3438
+        border-top-color: #40383D
+        background-color: #3C3438
+        color: #FFFFFF
+        &:hover
+            border-color: #40383D
+            background-color: #3F363C
+        &:active
+            border-color: #3C3438
+            background-color: #332A2F
+
 
 .articles
     grid-column: 1 / span 9
