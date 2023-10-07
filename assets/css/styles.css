@@ -84,6 +84,44 @@ body {
   color: rgba(255, 255, 255, 0.7019607843);
 }
 
+table {
+  border: solid 1px rgba(0, 0, 0, 0.0588235294);
+  border-radius: 4px;
+  white-space: nowrap;
+  width: 100%;
+  display: inline-block;
+  border-collapse: collapse;
+  overflow-x: auto;
+}
+table thead tr {
+  background-color: #FFFFFF;
+}
+table thead tr th {
+  font-weight: bold;
+  padding: 6px 13px;
+}
+table tbody tr {
+  background-color: #FFFFFF;
+}
+table tbody tr td {
+  padding: 6px 13px;
+  width: 1%;
+}
+table tbody tr:nth-child(2n+1) {
+  background-color: transparent;
+}
+
+@media (prefers-color-scheme: dark) {
+  table {
+    border-color: rgba(255, 255, 255, 0.0588235294);
+  }
+  table thead tr {
+    background-color: #2B2B2B;
+  }
+  table tbody tr {
+    background-color: #2B2B2B;
+  }
+}
 @media (prefers-color-scheme: dark) {
   .button.style-standard {
     border: solid 1px;
@@ -384,11 +422,11 @@ ins.adsbygoogle {
   .articles article .posted-date {
     color: rgba(255, 255, 255, 0.5019607843);
   }
+  .articles article .page-title a {
+    color: #FFFFFF;
+  }
   .articles a {
     color: #FF529F;
-  }
-  .articles .page-title a {
-    color: #FFFFFF;
   }
   .menu-wrapper menu {
     border: solid 1px rgba(255, 255, 255, 0.062745098);
