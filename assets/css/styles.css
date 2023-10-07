@@ -50,36 +50,54 @@ body {
   line-height: 1.5;
 }
 
-.Button {
+.button {
   height: 30px;
-  border: solid 1px #E5E5E5;
-  border-bottom-color: #CCCCCC;
-  background-color: #FBFBFB;
+  border: solid 1px;
   border-radius: 4px;
   font-family: "YU Gothic UI";
-}
-.Button:hover {
-  background-color: #F6F6F6;
   transition: 0.3s;
 }
-.Button:active {
-  border-bottom-color: #E5E5E5;
+.button.style-standard {
+  border-color: rgba(0, 0, 0, 0.1411764706) rgba(0, 0, 0, 0.1411764706) rgba(0, 0, 0, 0.1607843137) rgba(0, 0, 0, 0.1411764706);
+  background-color: rgba(255, 255, 255, 0.7019607843);
+}
+.button.style-standard:hover {
+  background-color: rgba(250, 250, 250, 0.5019607843);
+}
+.button.style-standard:accent {
+  background-color: rgba(250, 250, 250, 0.3019607843);
+  border-color: rgba(0, 0, 0, 0.0588235294);
+  color: rgba(0, 0, 0, 0.6078431373);
+}
+.button.style-accent {
+  background-color: #D30050;
+  border-color: rgba(255, 255, 255, 0.0784313725) rgba(255, 255, 255, 0.0784313725) rgba(0, 0, 0, 0.4) rgba(255, 255, 255, 0.0784313725);
+  color: #FFFFFF;
+  transition: var(--fds-control-faster-duration) ease border-color;
+}
+.button.style-accent:hover {
+  background-color: #EA4E94;
+}
+.button.style-accent:active {
+  background-color: rgba(255, 82, 159, 0.8);
+  border-color: transparent;
+  color: rgba(255, 255, 255, 0.7019607843);
 }
 
 @media (prefers-color-scheme: dark) {
-  .Button {
-    border: solid 1px #3C3438;
-    border-top-color: #40383D;
-    background-color: #3C3438;
+  .button.style-standard {
+    border: solid 1px;
+    border-color: rgba(255, 255, 255, 0.0941176471) rgba(255, 255, 255, 0.0705882353) rgba(255, 255, 255, 0.0705882353) rgba(255, 255, 255, 0.0705882353);
+    background-color: rgba(255, 255, 255, 0.062745098);
     color: #FFFFFF;
   }
-  .Button:hover {
-    border-color: #40383D;
-    background-color: #3F363C;
+  .button.style-standard:hover {
+    background-color: rgba(255, 255, 255, 0.0823529412);
   }
-  .Button:active {
-    border-color: #3C3438;
-    background-color: #332A2F;
+  .button.style-standard:accent {
+    background-color: rgba(255, 255, 255, 0.031372549);
+    color: rgba(255, 255, 255, 0.7843137255);
+    border-color: rgba(255, 255, 255, 0.0705882353);
   }
 }
 .articles {
@@ -119,14 +137,34 @@ body {
 .articles article .posted-date {
   color: rgba(0, 0, 0, 0.5019607843);
 }
-.articles .page-title {
+.articles article .page-title {
+  font-size: 28px;
   margin-top: 0;
 }
-.articles .page-title a {
+.articles article .page-title a {
   word-break: break-all;
   color: #000000;
   text-decoration: unset;
   margin-top: 0;
+}
+.articles article h2 {
+  font-size: 24px;
+  margin-top: 48px;
+  margin-bottom: 24px;
+  padding-bottom: 2px;
+  border-bottom: solid 1px rgba(0, 0, 0, 0.1215686275);
+}
+.articles article h3 {
+  font-size: 22.4px;
+}
+.articles article h4 {
+  font-size: 19.2px;
+}
+.articles article h5 {
+  font-size: 16px;
+}
+.articles article h6 {
+  font-size: 16px;
 }
 .articles img {
   max-width: 100%;
@@ -340,6 +378,9 @@ ins.adsbygoogle {
     background-color: rgba(255, 255, 255, 0.062745098);
     border: solid 1px rgba(255, 255, 255, 0.062745098);
   }
+  .articles article h2 {
+    border-bottom-color: rgba(255, 255, 255, 0.1215686275);
+  }
   .articles article .posted-date {
     color: rgba(255, 255, 255, 0.5019607843);
   }
@@ -361,14 +402,6 @@ ins.adsbygoogle {
   }
   .menu-wrapper .sub-menu .description {
     color: #9E9E9E;
-  }
-  menu.menu-buttons a button {
-    color: #FF529F;
-    border: solid 2px #FF529F;
-  }
-  menu.menu-buttons a button:hover {
-    background-color: rgba(0, 255, 206, 0.5019607843);
-    color: #FFFFFF;
   }
 }
 
