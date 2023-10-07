@@ -66,6 +66,22 @@ body {
   border-bottom-color: #E5E5E5;
 }
 
+@media (prefers-color-scheme: dark) {
+  .Button {
+    border: solid 1px #3C3438;
+    border-top-color: #40383D;
+    background-color: #3C3438;
+    color: #FFFFFF;
+  }
+  .Button:hover {
+    border-color: #40383D;
+    background-color: #3F363C;
+  }
+  .Button:active {
+    border-color: #3C3438;
+    background-color: #332A2F;
+  }
+}
 .articles {
   grid-column: 1/span 9;
   margin: 16px 8px 0 16px;
