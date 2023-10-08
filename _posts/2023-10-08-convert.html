@@ -1,0 +1,109 @@
+---
+title: HSLA 変換ツール
+layout: post
+---
+
+<div style="display: grid; gap: 16px; grid-template-columns: 1fr 1fr 1fr 1fr; margin-top: 24px; margin-bottom: 8px;">
+    <span>H&nbsp;(°)</span>
+    <span>S&nbsp;(%)</span>
+    <span>L&nbsp;(%)</span>
+    <span>A</span>
+</div>
+
+<div style="display: grid; grid-template-columns: repeat(4, 1fr);" class="hsla-input">
+    <div style="grid-column: 1;">
+        <input placeholder="0-360" id="hsla-h" class="TextBox" value="0" />
+    </div>
+    <div style="grid-column: 2;">
+        <input placeholder="0-100" id="hsla-s" class="TextBox" value="0" />
+    </div>
+    <div style="grid-column: 3;">
+        <input placeholder="0-100" id="hsla-l" class="TextBox" value="0" />
+    </div>
+    <div style="grid-column: 4;">
+        <input placeholder="0-1" id="hsla-a" class="TextBox" value="1" />
+    </div>
+</div>
+
+<style>
+.hsla-input div input {
+    box-sizing: border-box;
+    width: 100%;
+    height: 32px;
+}
+.hsla-input div input:active, .hsla-input div input:focus {
+    height: 32px;
+}
+.hsla-input{
+    gap: 16px;
+}
+</style>
+
+<input onClick="ConvertHSLA2();" value="変換" type="button" class="button style-accent"
+    style="margin-top: 16px; width: 100%;">
+
+<p id="hsla-result" style="
+border-radius: 4px;
+padding: 16px;
+color: #FFFFFF;"></p>
+
+<script>
+    function hslaToRgba(h, s, l, a) {
+        s /= 100;
+        l /= 100;
+        let c = (1 - Math.abs(2 * l - 1)) * s,
+            x = c * (1 - Math.abs((h / 60) % 2 - 1)),
+            m = l - c / 2,
+            r = 0,
+            g = 0,
+            b = 0;
+        if (0 <= h && h < 60) {
+            r = c; g = x; b = 0;
+        } else if (60 <= h && h < 120) {
+            r = x; g = c; b = 0;
+        } else if (120 <= h && h < 180) {
+            r = 0; g = c; b = x;
+        } else if (180 <= h && h < 240) {
+            r = 0; g = x; b = c;
+        } else if (240 <= h && h < 300) {
+            r = x; g = 0; b = c;
+        } else if (300 <= h && h < 360) {
+            r = c; g = 0; b = x;
+        }
+        r = Math.round((r + m) * 255);
+        g = Math.round((g + m) * 255);
+        b = Math.round((b + m) * 255);
+
+        return "rgba(" + r + ", " + g + ", " + b + ", " + a + ");";
+    }
+
+    function rgbaToHex(rgba) {
+        let parts = rgba.match(/^rgba?\((\d+),\s*(\d+),\s*(\d+)(?:,\s*(1|0?\.\d+))?\);$/);
+        delete (parts[0]);
+        for (let i = 1; i <= 4; ++i) {
+            if (i === 4) { // alpha channel
+                parts[i] = Math.round(parseFloat(parts[i]) * 255).toString(16).toUpperCase();
+            } else {
+                parts[i] = parseInt(parts[i]).toString(16);
+            }
+            if (parts[i].length == 1) parts[i] = '0' + parts[i];
+        }
+        return '#' + parts.join('');
+    }
+
+    function ConvertHSLA2() {
+        let h = parseFloat(document.getElementById("hsla-h").value);
+        let s = parseFloat(document.getElementById("hsla-s").value);
+        let l = parseFloat(document.getElementById("hsla-l").value);
+        let a = parseFloat(document.getElementById("hsla-a").value);
+
+        let hsla_result = document.getElementById("hsla-result");
+
+        let rgba = hslaToRgba(h, s, l, a);
+        let hex = rgbaToHex(rgba);
+        hsla_result.style.backgroundColor = rgba.slice(0, -1);
+        hsla_result.style.color = l > 50 ? "#000000" : "#FFFFFF";
+
+        hsla_result.innerText = rgba + "\n" + hex;
+    }
+</script>
