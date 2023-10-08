@@ -69,6 +69,7 @@ body {
   border-bottom-width: 2px;
   border-bottom-color: #D30050;
   height: 27px;
+  padding-top: 3px;
 }
 
 @media (prefers-color-scheme: dark) {
@@ -82,7 +83,6 @@ body {
   }
   .TextBox:active, .TextBox:focus {
     border-bottom-color: #FF529F;
-    padding-top: 3px;
   }
 }
 .button {
