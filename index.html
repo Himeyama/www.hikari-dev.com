@@ -181,6 +181,117 @@ USB 3.0 は 最大 5 Gbps、USB 3.1 は最大 10 Gbps、USB 3.2 は最大 20 Gbp
 
     <div class="index">
         <article class="article">
+            <h1 class="page-title"><a href="/2023/10/08/convert.html">HSLA 変換ツール</a></h1>
+            <time class="posted-date">2023-10-08</time>
+            <div style="display: grid; gap: 16px; grid-template-columns: 1fr 1fr 1fr 1fr; margin-top: 24px; margin-bottom: 8px;">
+    <span>H&nbsp;(°)</span>
+    <span>S&nbsp;(%)</span>
+    <span>L&nbsp;(%)</span>
+    <span>A</span>
+</div>
+
+<div style="display: grid; grid-template-columns: repeat(4, 1fr);" class="hsla-input">
+    <div style="grid-column: 1;">
+        <input placeholder="0-360" id="hsla-h" class="TextBox" value="0" />
+    </div>
+    <div style="grid-column: 2;">
+        <input placeholder="0-100" id="hsla-s" class="TextBox" value="0" />
+    </div>
+    <div style="grid-column: 3;">
+        <input placeholder="0-100" id="hsla-l" class="TextBox" value="0" />
+    </div>
+    <div style="grid-column: 4;">
+        <input placeholder="0-1" id="hsla-a" class="TextBox" value="1" />
+    </div>
+</div>
+
+<style>
+.hsla-input div input {
+    box-sizing: border-box;
+    width: 100%;
+    height: 32px;
+}
+.hsla-input div input:active, .hsla-input div input:focus {
+    height: 32px;
+}
+.hsla-input{
+    gap: 16px;
+}
+</style>
+
+<input onClick="ConvertHSLA2();" value="変換" type="button" class="button style-accent"
+    style="margin-top: 16px; width: 100%;">
+
+<p id="hsla-result" style="
+border-radius: 4px;
+padding: 16px;
+color: #FFFFFF;"></p>
+
+<script>
+    function hslaToRgba(h, s, l, a) {
+        s /= 100;
+        l /= 100;
+        let c = (1 - Math.abs(2 * l - 1)) * s,
+            x = c * (1 - Math.abs((h / 60) % 2 - 1)),
+            m = l - c / 2,
+            r = 0,
+            g = 0,
+            b = 0;
+        if (0 <= h && h < 60) {
+            r = c; g = x; b = 0;
+        } else if (60 <= h && h < 120) {
+            r = x; g = c; b = 0;
+        } else if (120 <= h && h < 180) {
+            r = 0; g = c; b = x;
+        } else if (180 <= h && h < 240) {
+            r = 0; g = x; b = c;
+        } else if (240 <= h && h < 300) {
+            r = x; g = 0; b = c;
+        } else if (300 <= h && h < 360) {
+            r = c; g = 0; b = x;
+        }
+        r = Math.round((r + m) * 255);
+        g = Math.round((g + m) * 255);
+        b = Math.round((b + m) * 255);
+
+        return "rgba(" + r + ", " + g + ", " + b + ", " + a + ");";
+    }
+
+    function rgbaToHex(rgba) {
+        let parts = rgba.match(/^rgba?\((\d+),\s*(\d+),\s*(\d+)(?:,\s*(1|0?\.\d+))?\);$/);
+        delete (parts[0]);
+        for (let i = 1; i <= 4; ++i) {
+            if (i === 4) { // alpha channel
+                parts[i] = Math.round(parseFloat(parts[i]) * 255).toString(16).toUpperCase();
+            } else {
+                parts[i] = parseInt(parts[i]).toString(16);
+            }
+            if (parts[i].length == 1) parts[i] = '0' + parts[i];
+        }
+        return '#' + parts.join('');
+    }
+
+    function ConvertHSLA2() {
+        let h = parseFloat(document.getElementById("hsla-h").value);
+        let s = parseFloat(document.getElementById("hsla-s").value);
+        let l = parseFloat(document.getElementById("hsla-l").value);
+        let a = parseFloat(document.getElementById("hsla-a").value);
+
+        let hsla_result = document.getElementById("hsla-result");
+
+        let rgba = hslaToRgba(h, s, l, a);
+        let hex = rgbaToHex(rgba);
+        hsla_result.style.backgroundColor = rgba.slice(0, -1);
+        hsla_result.style.color = l > 50 ? "#000000" : "#FFFFFF";
+
+        hsla_result.innerText = rgba + "\n" + hex;
+    }
+</script>
+        </article>
+    </div>
+
+    <div class="index">
+        <article class="article">
             <h1 class="page-title"><a href="/2023/09/18/remote-work-recommend-code.html">リモートワーク (在宅勤務) 環境におすすめな電源タップ 3 選</a></h1>
             <time class="posted-date">2023-09-18</time>
             <p>リモートワーク環境には電源タップ選びは重要要素の一つである。そこで、おすすめの電源タップを紹介する。</p>
@@ -367,34 +478,6 @@ USB 3.0 は 最大 5 Gbps、USB 3.1 は最大 10 Gbps、USB 3.2 は最大 20 Gbp
         <span class="nt">&lt;KeyboardAccelerator</span> <span class="na">Key=</span><span class="s">"Number0"</span> <span class="na">Modifiers=</span><span class="s">"Control"</span> <span class="nt">/&gt;</span>
     <span class="nt">&lt;/MenuFlyoutItem.KeyboardAccelerators&gt;</span>
 <span class="nt">&lt;/MenuFlyoutItem&gt;</span>
-</code></pre></div>  </div>
-</blockquote>
-
-        </article>
-    </div>
-
-    <div class="index">
-        <article class="article">
-            <h1 class="page-title"><a href="/2023/09/08/winui3-menuflyouticon.html">Windows App SDK の MenuFlyoutItem でアイコンを使う方法 Microsoft.UI.Xaml.Controls, WinUI3)</a></h1>
-            <time class="posted-date">2023-09-08</time>
-            <h2 id="結論-menuflyoutitemicon-を使用する">結論 <code class="language-plaintext highlighter-rouge">&lt;MenuFlyoutItem.Icon&gt;</code> を使用する</h2>
-
-<p><img src="/assets/img/winui3/menuflyoutitemicon.png" alt="MenuFlyoutItem" /></p>
-
-<p>参考: <a href="https://learn.microsoft.com/ja-jp/windows/windows-app-sdk/api/winrt/microsoft.ui.xaml.controls.menuflyoutitem.icon?view=windows-app-sdk-1.4">MenuFlyoutItem.Icon プロパティ</a></p>
-
-<blockquote>
-  <p>例</p>
-
-  <div class="language-xml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">&lt;MenuBar&gt;</span>
-    <span class="nt">&lt;MenuBarItem</span> <span class="na">Title=</span><span class="s">"File"</span> <span class="na">x:Uid=</span><span class="s">"File"</span><span class="nt">&gt;</span>
-        <span class="nt">&lt;MenuFlyoutItem</span> <span class="na">x:Name=</span><span class="s">"Open"</span> <span class="na">Text=</span><span class="s">"Open"</span> <span class="na">x:Uid=</span><span class="s">"Open"</span><span class="nt">&gt;</span>
-            <span class="nt">&lt;MenuFlyoutItem.Icon&gt;</span>
-                <span class="nt">&lt;FontIcon</span> <span class="na">Glyph=</span><span class="s">"&amp;#xED25;"</span> <span class="na">FontFamily=</span><span class="s">"Segoe MDL2 Assets"</span> <span class="nt">/&gt;</span>
-            <span class="nt">&lt;/MenuFlyoutItem.Icon&gt;</span>
-            <span class="nt">&lt;MenuFlyoutItem.KeyboardAccelerators&gt;</span>
-                <span class="nt">&lt;KeyboardAccelerator</span> <span class="na">Modifiers=</span><span class="s">"Control"</span> <span class="na">Key=</span><span class="s">"O"</span><span class="nt">/&gt;</span>
-            <span class="nt">&lt;/MenuFlyoutItem.KeyboardAccelerators&gt;</span>
 </code></pre></div>  </div>
 </blockquote>
 

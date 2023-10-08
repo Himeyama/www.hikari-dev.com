@@ -50,6 +50,39 @@ body {
   line-height: 1.5;
 }
 
+.TextBox {
+  border-radius: 4px;
+  height: 28px;
+  border: solid 1px rgba(0, 0, 0, 0.06);
+  background-color: rgba(255, 255, 255, 0.6980392157);
+  font-size: 14px;
+  padding: 2px 0 0 11px;
+  border-bottom-color: rgba(0, 0, 0, 0.6078431373);
+  color: #000000;
+  outline: none;
+}
+.TextBox:hover {
+  background-color: rgba(249, 249, 249, 0.5019607843);
+}
+.TextBox:active, .TextBox:focus {
+  border-bottom-width: 2px;
+  border-bottom-color: #D30050;
+  height: 27px;
+}
+
+@media (prefers-color-scheme: dark) {
+  .TextBox {
+    background-color: rgba(255, 255, 255, 0.0588235294);
+    border-color: rgba(255, 255, 255, 0.0784313725);
+    color: #FFFFFF;
+  }
+  .TextBox:hover {
+    background-color: rgba(255, 255, 255, 0.0823529412);
+  }
+  .TextBox:active, .TextBox:focus {
+    border-bottom-color: #FF529F;
+  }
+}
 .button {
   height: 30px;
   border: solid 1px;
@@ -176,7 +209,7 @@ table tbody tr:nth-child(2n+1) {
   color: rgba(0, 0, 0, 0.5019607843);
 }
 .articles article .page-title {
-  font-size: 28px;
+  font-size: 36px;
   margin-top: 0;
 }
 .articles article .page-title a {
@@ -186,20 +219,20 @@ table tbody tr:nth-child(2n+1) {
   margin-top: 0;
 }
 .articles article h2 {
-  font-size: 24px;
+  font-size: 32px;
   margin-top: 48px;
   margin-bottom: 24px;
   padding-bottom: 2px;
   border-bottom: solid 1px rgba(0, 0, 0, 0.1215686275);
 }
 .articles article h3 {
-  font-size: 22.4px;
+  font-size: 28px;
 }
 .articles article h4 {
-  font-size: 19.2px;
+  font-size: 24px;
 }
 .articles article h5 {
-  font-size: 16px;
+  font-size: 20px;
 }
 .articles article h6 {
   font-size: 16px;
