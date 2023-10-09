@@ -80,7 +80,12 @@
 <article>
     <h1 class="page-title">Ubuntu 系の Linux ディストリビューションの自作方法</h1>
     <time class="posted-date">2022-05-12</time>
-    <h2 id="概要">概要</h2>
+    <div id="table-of-contents">
+        <h2>目次</h2>
+        
+    </div>
+    <div id="markdown-content">
+        <h2 id="概要">概要</h2>
 <ol>
   <li>iso ファイル (ディスクイメージ) を展開</li>
   <li>squashfs ファイル (<code class="language-plaintext highlighter-rouge">/</code> の中、ファイルシステムイメージ) を展開</li>
@@ -240,6 +245,7 @@ xorriso <span class="se">\</span>
 <span class="nb">sudo </span>qemu-system-x86_64 <span class="nt">-hda</span> disk.qcow2 <span class="nt">-m</span> 4G <span class="nt">-cdrom</span> mydistribution-22.04-desktop-amd64.iso <span class="nt">-boot</span> d <span class="nt">--enable-kvm</span> <span class="nt">-usb</span> <span class="nt">-smp</span> 6
 </code></pre></div></div>
 
+    </div>
 </article>
 
 <article>
