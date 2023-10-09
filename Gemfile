@@ -21,3 +21,5 @@ gem "jekyll-sitemap", "~> 1.4"
 gem "jekyll-seo-tag", "~> 2.8"
 
 gem "nokogiri", "~> 1.15"
+
+gem "jekyll-toc", "~> 0.18.0"
