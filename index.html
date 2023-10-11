@@ -60,6 +60,69 @@
                 
     <div class="index">
         <article class="article">
+            <h1 class="page-title"><a href="/2023/10/12/ssh-pubkey.html">公開鍵認証と SSH</a></h1>
+            <time class="posted-date">2023-10-12</time>
+            <p>公開鍵認証とは、暗号化やデジタル署名に使われる技術の一つで、公開鍵と秘密鍵という二つの鍵を使って通信相手の本人確認や暗号化を行う方法です。
+SSH とは、Secure Shell の略で、ネットワーク上で安全にコマンドやファイルをやり取りするためのプロトコルです。SSH では公開鍵認証を使って、サーバーにログインすることができます。
+具体的にどのように動作するかを説明します。</p>
+
+<p>この記事では、数学についての言及はありません。</p>
+
+<h2 id="公開鍵と秘密鍵について">公開鍵と秘密鍵について</h2>
+
+<p>公開鍵認証では、公開鍵と秘密鍵という二つの鍵を使います。
+公開鍵は名前の通り、誰でも知っていても構わない鍵で、通信相手に送ったり、インターネット上に公開したりします。
+秘密鍵は自分だけが持っている鍵で、絶対に他人に知られてはいけない鍵です。
+秘密鍵は公開鍵から導くことは数学的に非常に困難なものとなっています。
+この性質を利用することで、暗号化やデジタル署名を実現できています。</p>
+
+<h3 id="デジタル署名">デジタル署名</h3>
+
+<p>デジタル署名とは、データの送信者が本人であることを証明するための技術です。
+以下の手順でデジタル署名を行います。</p>
+
+<h4 id="送信者">送信者</h4>
+<ol>
+  <li>文章をハッシュ化 (ハッシュ)</li>
+  <li>ハッシュを秘密鍵で暗号化 (電子署名)</li>
+  <li>文章と電子署名を送信
+    <h4 id="受信者">受信者</h4>
+  </li>
+  <li>文章と電子署名を受信</li>
+  <li>公開鍵で署名を復号しハッシュを取得</li>
+  <li>文章をハッシュ化し、電子署名により得られたハッシュと比較 (ハッシュが同じであれば相手の送信した文章)</li>
+</ol>
+
+<p>デジタル署名は署名を秘密鍵、検証を公開鍵で行っています。</p>
+
+<h2 id="ssh-について">SSH について</h2>
+
+<p>SSH とは、Secure Shell の略で、ネットワーク上で安全にコマンドやファイルをやり取りするためのプロトコルです。
+SSH では公開鍵認証を使って、サーバーにログインすることができます。SSH の利点は以下の通りです。</p>
+
+<ul>
+  <li>パスワードなしでログインできるため、パスワード漏洩や総当たり攻撃などのリスクが低減 (ただし、パスワードを使用することも可能)</li>
+  <li>データが暗号化されるため、通信内容が盗聴されたり、改ざんを防止</li>
+  <li>ポートフォワーディングやトンネリングなどの機能を使って、ネットワークのセキュリティやアクセス制御を強化</li>
+</ul>
+
+<p>SSH では、以下のように公開鍵認証を行います。</p>
+
+<ol>
+  <li>クライアントは、公開鍵と秘密鍵を生成 (<code class="language-plaintext highlighter-rouge">ssh-keygen -t ed25519</code>)</li>
+  <li>クライアントは、クライアントの公開鍵 (<code class="language-plaintext highlighter-rouge">~/.ssh/id_ed25519.pub</code>) を事前にサーバーに登録 (<code class="language-plaintext highlighter-rouge">~/.ssh/authorized_keys</code>)</li>
+  <li>クライアントはサーバーに接続する際に、自分の秘密鍵 (<code class="language-plaintext highlighter-rouge">~/.ssh/id_ed25519</code>) でデジタル署名</li>
+  <li>サーバーはクライアントの公開鍵 (<code class="language-plaintext highlighter-rouge">~/.ssh/authorized_keys</code>)でデジタル署名を検証し、正しい場合はログインを許可</li>
+</ol>
+
+<p>以上が、公開鍵認証と SSH についてのまとめです。
+公開鍵認証と SSH を使うことで、ネットワーク上で安全にコマンドやファイルをやり取りすることができます。</p>
+
+        </article>
+    </div>
+
+    <div class="index">
+        <article class="article">
             <h1 class="page-title"><a href="/2023/10/09/grid-css.html">【初心者】CSS のグリッド (Grid) 攻略</a></h1>
             <time class="posted-date">2023-10-09</time>
             <h2 id="grid-を作成する">Grid を作成する</h2>
@@ -430,82 +493,6 @@ color: #FFFFFF;"></p>
 </ul>
 
 <p>床にある電源タップにプラグを挿す手間が省けるのが良い。</p>
-
-        </article>
-    </div>
-
-    <div class="index">
-        <article class="article">
-            <h1 class="page-title"><a href="/2023/09/12/winui3-Button.html">Windows App SDK (WinUI3) の Button コンポーネントとサンプル</a></h1>
-            <time class="posted-date">2023-09-12</time>
-            <h2 id="名前空間">名前空間</h2>
-<p><a href="https://learn.microsoft.com/ja-jp/windows/windows-app-sdk/api/winrt/microsoft.ui.xaml.controls"><code class="language-plaintext highlighter-rouge">Microsoft.UI.Xaml.Controls</code></a></p>
-
-<h2 id="普通のボタン">普通のボタン</h2>
-<p><img src="/assets/img/Microsoft.UI.Xaml.Component/Button/Button.png" alt="Button" /></p>
-
-<div class="language-xml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">&lt;Button</span> <span class="na">Content=</span><span class="s">"Button"</span> <span class="nt">/&gt;</span>
-</code></pre></div></div>
-
-<h2 id="絵文字入りのボタン">絵文字入りのボタン</h2>
-<p><img src="/assets/img/Microsoft.UI.Xaml.Component/Button/ButtonWithICON.png" alt="Button with icon" /></p>
-
-<div class="language-xml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">&lt;Button&gt;</span>
-    <span class="nt">&lt;StackPanel</span> <span class="na">Orientation=</span><span class="s">"Horizontal"</span><span class="nt">&gt;</span>
-        <span class="nt">&lt;FontIcon</span> <span class="na">Glyph=</span><span class="s">"&amp;#xED25;"</span> <span class="na">FontFamily=</span><span class="s">"Segoe MDL2 Assets"</span> <span class="nt">/&gt;</span>
-        <span class="nt">&lt;TextBlock</span> <span class="na">Text=</span><span class="s">"Open"</span> <span class="na">Margin=</span><span class="s">"8, 0, 0, 0"</span> <span class="nt">/&gt;</span>
-    <span class="nt">&lt;/StackPanel&gt;</span>
-<span class="nt">&lt;/Button&gt;</span>
-</code></pre></div></div>
-
-<h2 id="強調スタイルのボタン">強調スタイルのボタン</h2>
-<p><img src="/assets/img/Microsoft.UI.Xaml.Component/Button/AccentStyleButton.png" alt="AccentStyleButton" /></p>
-
-<div class="language-xml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">&lt;Button</span> <span class="na">Style=</span><span class="s">"{StaticResource AccentButtonStyle}"</span> <span class="na">Content=</span><span class="s">"Accent style button"</span> <span class="nt">/&gt;</span>
-</code></pre></div></div>
-
-<h2 id="幅いっぱいに伸ばす">幅いっぱいに伸ばす</h2>
-<p><img src="/assets/img/Microsoft.UI.Xaml.Component/Button/StretchButton.png" alt="Stretch Button" /></p>
-
-<div class="language-xml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">&lt;Button</span> <span class="na">Content=</span><span class="s">"Button"</span> <span class="na">HorizontalAlignment=</span><span class="s">"Stretch"</span> <span class="nt">/&gt;</span>
-</code></pre></div></div>
-
-<h2 id="ボタンの無効化">ボタンの無効化</h2>
-<p><img src="/assets/img/Microsoft.UI.Xaml.Component/Button/DisabledButton.png" alt="Disabled Button" /></p>
-
-<div class="language-xml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">&lt;Button</span> <span class="na">IsEnabled=</span><span class="s">"False"</span> <span class="na">Content=</span><span class="s">"Button"</span> <span class="nt">/&gt;</span>
-</code></pre></div></div>
-
-<p>C# では <code class="language-plaintext highlighter-rouge">ボタン.IsEnabled = 真偽値;</code> で有効化 / 無効化が可能。</p>
-
-<h2 id="ボタンを非表示">ボタンを非表示</h2>
-<p><code class="language-plaintext highlighter-rouge">Visibility="Collapsed"</code> でコンポーネントが無くなったように見える。<code class="language-plaintext highlighter-rouge">Visibility="Visible"</code> で表示。</p>
-
-<div class="language-xml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">&lt;Button</span> <span class="na">Name=</span><span class="s">"Btn"</span> <span class="na">Content=</span><span class="s">"Button"</span> <span class="na">Visibility=</span><span class="s">"Collapsed"</span> <span class="nt">/&gt;</span>
-</code></pre></div></div>
-
-<p>無効化されたボタンを C# で表示 / 非表示するには、以下のようにする。</p>
-
-<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="cm">/* 表示 */</span>
-<span class="n">Btn</span><span class="p">.</span><span class="n">Visibility</span> <span class="p">=</span> <span class="n">Visibility</span><span class="p">.</span><span class="n">Visible</span><span class="p">;</span>
-
-<span class="cm">/* 非表示 */</span>
-<span class="n">Btn</span><span class="p">.</span><span class="n">Visibility</span> <span class="p">=</span> <span class="n">Visibility</span><span class="p">.</span><span class="n">Collapsed</span><span class="p">;</span>
-</code></pre></div></div>
-
-<h2 id="関数の呼び出し">関数の呼び出し</h2>
-
-<h3 id="c">C#</h3>
-<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">void</span> <span class="nf">Button_Click</span><span class="p">(</span><span class="kt">object</span> <span class="n">sender</span><span class="p">,</span> <span class="n">RoutedEventArgs</span> <span class="n">e</span><span class="p">)</span>
-<span class="p">{</span>
-    <span class="c1">// 処理</span>
-<span class="p">}</span>
-</code></pre></div></div>
-
-<h3 id="xaml">XAML</h3>
-<div class="language-xml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">&lt;Button</span> <span class="na">Click=</span><span class="s">"Button_Click"</span> <span class="na">Content=</span><span class="s">"Button"</span> <span class="nt">/&gt;</span>
-</code></pre></div></div>
-
 
         </article>
     </div>

@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+    <meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+<link rel="stylesheet" href="/assets/css/styles.css">
+<meta name="Hikari's personal website that is written information technology.">
+<!-- Begin Jekyll SEO tag v2.8.0 -->
+<title>公開鍵認証と SSH | ひかりの実験室</title>
+<meta name="generator" content="Jekyll v4.3.2" />
+<meta property="og:title" content="公開鍵認証と SSH" />
+<meta name="author" content="ひかり" />
+<meta property="og:locale" content="ja_JP" />
+<meta name="description" content="公開鍵認証とは、暗号化やデジタル署名に使われる技術の一つで、公開鍵と秘密鍵という二つの鍵を使って通信相手の本人確認や暗号化を行う方法です。 SSH とは、Secure Shell の略で、ネットワーク上で安全にコマンドやファイルをやり取りするためのプロトコルです。SSH では公開鍵認証を使って、サーバーにログインすることができます。 具体的にどのように動作するかを説明します。" />
+<meta property="og:description" content="公開鍵認証とは、暗号化やデジタル署名に使われる技術の一つで、公開鍵と秘密鍵という二つの鍵を使って通信相手の本人確認や暗号化を行う方法です。 SSH とは、Secure Shell の略で、ネットワーク上で安全にコマンドやファイルをやり取りするためのプロトコルです。SSH では公開鍵認証を使って、サーバーにログインすることができます。 具体的にどのように動作するかを説明します。" />
+<link rel="canonical" href="https://www.hikari-dev.com/2023/10/12/ssh-pubkey.html" />
+<meta property="og:url" content="https://www.hikari-dev.com/2023/10/12/ssh-pubkey.html" />
+<meta property="og:site_name" content="ひかりの実験室" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2023-10-12T00:00:00+00:00" />
+<meta name="twitter:card" content="summary" />
+<meta property="twitter:title" content="公開鍵認証と SSH" />
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"BlogPosting","author":{"@type":"Person","name":"ひかり"},"dateModified":"2023-10-12T00:00:00+00:00","datePublished":"2023-10-12T00:00:00+00:00","description":"公開鍵認証とは、暗号化やデジタル署名に使われる技術の一つで、公開鍵と秘密鍵という二つの鍵を使って通信相手の本人確認や暗号化を行う方法です。 SSH とは、Secure Shell の略で、ネットワーク上で安全にコマンドやファイルをやり取りするためのプロトコルです。SSH では公開鍵認証を使って、サーバーにログインすることができます。 具体的にどのように動作するかを説明します。","headline":"公開鍵認証と SSH","mainEntityOfPage":{"@type":"WebPage","@id":"https://www.hikari-dev.com/2023/10/12/ssh-pubkey.html"},"url":"https://www.hikari-dev.com/2023/10/12/ssh-pubkey.html"}</script>
+<!-- End Jekyll SEO tag -->
+
+<script src="/assets/js/wareki.js"></script>
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-6QLJRW2VM8"></script>
+<script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag() { dataLayer.push(arguments); }
+    gtag('js', new Date());
+
+    gtag('config', 'G-6QLJRW2VM8');
+</script>
+<!-- <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9005833361216146"
+    crossorigin="anonymous"></script>
+<ins class="adsbygoogle" style="display:block; text-align:center;" data-ad-layout="in-article" data-ad-format="fluid"
+    data-ad-client="ca-pub-9005833361216146" data-ad-slot="6901616621"></ins>
+<script>
+    (adsbygoogle = window.adsbygoogle || []).push({});
+</script> -->
+</head>
+
+<body>
+    <header>
+        <div class="header-panel">
+    <h1><a href="/">ひかりの実験室</a></h1>
+    <menu class="menu-buttons">
+        <a href="/" id="home-button"><button>ホーム</button></a>
+        <a href="/archives" id="archive-button"><button>アーカイブ</button></a>
+        <a href="/tags" id="tags-button"><button>タグ別</button></a>
+    </menu>
+</div>
+    </header>
+    <div class="wrap-margin">
+        <main>
+            <div class="articles">
+                <article>
+    <div class="page-navigation">
+        
+        <a class="prev" href="/2023/10/09/grid-css.html">
+            <button class="button style-standard">
+                前へ
+            </button>
+        </a>
+        
+        
+    </div>
+</article>
+
+<article>
+    <h1 class="page-title">公開鍵認証と SSH</h1>
+    <time class="posted-date">2023-10-12</time>
+    <div id="table-of-contents">
+        <h2>目次</h2>
+        <ul id="toc" class="section-nav">
+<li class="toc-entry toc-h2"><a href="#公開鍵と秘密鍵について">公開鍵と秘密鍵について</a>
+<ul>
+<li class="toc-entry toc-h3"><a href="#デジタル署名">デジタル署名</a>
+<ul>
+<li class="toc-entry toc-h4"><a href="#送信者">送信者</a></li>
+<li class="toc-entry toc-h4"><a href="#受信者">受信者</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toc-entry toc-h2"><a href="#ssh-について">SSH について</a></li>
+</ul>
+    </div>
+    <div id="markdown-content">
+        <p>公開鍵認証とは、暗号化やデジタル署名に使われる技術の一つで、公開鍵と秘密鍵という二つの鍵を使って通信相手の本人確認や暗号化を行う方法です。
+SSH とは、Secure Shell の略で、ネットワーク上で安全にコマンドやファイルをやり取りするためのプロトコルです。SSH では公開鍵認証を使って、サーバーにログインすることができます。
+具体的にどのように動作するかを説明します。</p>
+
+<p>この記事では、数学についての言及はありません。</p>
+
+<h2 id="公開鍵と秘密鍵について">公開鍵と秘密鍵について</h2>
+
+<p>公開鍵認証では、公開鍵と秘密鍵という二つの鍵を使います。
+公開鍵は名前の通り、誰でも知っていても構わない鍵で、通信相手に送ったり、インターネット上に公開したりします。
+秘密鍵は自分だけが持っている鍵で、絶対に他人に知られてはいけない鍵です。
+秘密鍵は公開鍵から導くことは数学的に非常に困難なものとなっています。
+この性質を利用することで、暗号化やデジタル署名を実現できています。</p>
+
+<h3 id="デジタル署名">デジタル署名</h3>
+
+<p>デジタル署名とは、データの送信者が本人であることを証明するための技術です。
+以下の手順でデジタル署名を行います。</p>
+
+<h4 id="送信者">送信者</h4>
+<ol>
+  <li>文章をハッシュ化 (ハッシュ)</li>
+  <li>ハッシュを秘密鍵で暗号化 (電子署名)</li>
+  <li>文章と電子署名を送信
+    <h4 id="受信者">受信者</h4>
+  </li>
+  <li>文章と電子署名を受信</li>
+  <li>公開鍵で署名を復号しハッシュを取得</li>
+  <li>文章をハッシュ化し、電子署名により得られたハッシュと比較 (ハッシュが同じであれば相手の送信した文章)</li>
+</ol>
+
+<p>デジタル署名は署名を秘密鍵、検証を公開鍵で行っています。</p>
+
+<h2 id="ssh-について">SSH について</h2>
+
+<p>SSH とは、Secure Shell の略で、ネットワーク上で安全にコマンドやファイルをやり取りするためのプロトコルです。
+SSH では公開鍵認証を使って、サーバーにログインすることができます。SSH の利点は以下の通りです。</p>
+
+<ul>
+  <li>パスワードなしでログインできるため、パスワード漏洩や総当たり攻撃などのリスクが低減 (ただし、パスワードを使用することも可能)</li>
+  <li>データが暗号化されるため、通信内容が盗聴されたり、改ざんを防止</li>
+  <li>ポートフォワーディングやトンネリングなどの機能を使って、ネットワークのセキュリティやアクセス制御を強化</li>
+</ul>
+
+<p>SSH では、以下のように公開鍵認証を行います。</p>
+
+<ol>
+  <li>クライアントは、公開鍵と秘密鍵を生成 (<code class="language-plaintext highlighter-rouge">ssh-keygen -t ed25519</code>)</li>
+  <li>クライアントは、クライアントの公開鍵 (<code class="language-plaintext highlighter-rouge">~/.ssh/id_ed25519.pub</code>) を事前にサーバーに登録 (<code class="language-plaintext highlighter-rouge">~/.ssh/authorized_keys</code>)</li>
+  <li>クライアントはサーバーに接続する際に、自分の秘密鍵 (<code class="language-plaintext highlighter-rouge">~/.ssh/id_ed25519</code>) でデジタル署名</li>
+  <li>サーバーはクライアントの公開鍵 (<code class="language-plaintext highlighter-rouge">~/.ssh/authorized_keys</code>)でデジタル署名を検証し、正しい場合はログインを許可</li>
+</ol>
+
+<p>以上が、公開鍵認証と SSH についてのまとめです。
+公開鍵認証と SSH を使うことで、ネットワーク上で安全にコマンドやファイルをやり取りすることができます。</p>
+
+    </div>
+</article>
+
+<article>
+    <div class="page-navigation">
+        
+        <a class="prev" href="/2023/10/09/grid-css.html">
+            <button class="button style-standard">
+                前へ
+            </button>
+        </a>
+        
+        
+    </div>
+</article>
+            </div>
+            <div class="menu-wrapper">
+                <menu>
+                    <div class="page-title">
+    <a href="/">ひかりの実験室</a>
+</div>
+<div class="profile"></div>
+<nav class="sub-menu">
+    <p class="description">
+        メニュー
+    </p>
+    <ul>
+        <li><a href="/archives">アーカイブ</a></li>
+        <li><a href="/tags">タグ別</a></li>
+    </ul>
+</nav>
+                </menu>
+            </div>
+        </main>
+    </div>
+    <footer>
+        <div class="footer">
+    <div class="footer-contents">
+        <p>
+            © 2023 Hikari
+        </p>
+        <p>
+            ひかりの実験室の著作権はひかりに属します。
+        </p>
+    </div>
+    <script>
+        let postedDates = document.getElementsByClassName("posted-date");
+        for (let i = 0; i < postedDates.length; i++) {
+            let date = postedDates[i].innerText
+            if (date != "") {
+                let warekiDate = Wareki.date(date)
+                postedDates[i].innerText = warekiDate;
+            }
+        }
+    </script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github-dark.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/highlight.min.js"></script>
+    <script
+        src="https://cdnjs.cloudflare.com/ajax/libs/highlightjs-line-numbers.js/2.8.0/highlightjs-line-numbers.min.js"></script>
+    <script>hljs.highlightAll(); hljs.initLineNumbersOnLoad();</script>
+</div>
+    </footer>
+</body>
+
+</html>
