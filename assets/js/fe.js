@@ -6,7 +6,7 @@
  * @param {Array} indices - 取得する要素のインデックスの配列
  * @returns {Array} - 取得した要素の配列
  */
-function getElementsFromArray(arr, indices){
+function getElementsFromArray(arr, indices) {
     // map関数を使用して、インデックスに対応する要素を返す新しい配列を作成します
     return indices.map(index => arr[index])
 }
@@ -42,34 +42,38 @@ function findIndex(arr, num) {
 }
 
 
-let questions = Array.from(document.getElementsByClassName("question-sentences"))
-let answersData = Array.from(document.getElementsByClassName("ans-data"))
+let answerButtons = Array.from(document.getElementsByClassName("fe-answer-button"))
+answerButtons.forEach((answerButton) => {
+    let targetArticle = answerButton.parentElement.parentElement
+    let ansAreas = Array.from(targetArticle.getElementsByClassName("tf"))
+    let questions = Array.from(targetArticle.getElementsByClassName("question-sentences"))
+    let answersData = Array.from(targetArticle.getElementsByClassName("ans-data"))
+    let answers = []
 
-let answers = []
-questions.forEach((element, index) => {
-    let questionList = Array.from(element.children)
-    let indices = [0, 1, 2, 3]
-    shuffleArray(indices)
-    let shuffledQuestionsList = getElementsFromArray(questionList, indices)
-    Array.from(element.children).forEach((li) => {
-        element.removeChild(li)
+    questions.forEach((element, index) => {
+        let questionList = Array.from(element.children)
+        let indices = Array.from({ length: questionList.length }, (_, i) => i)
+        shuffleArray(indices)
+        let shuffledQuestionsList = getElementsFromArray(questionList, indices)
+        Array.from(element.children).forEach((li) => {
+            element.removeChild(li)
+        })
+        shuffledQuestionsList.forEach((li) => {
+            element.appendChild(li)
+        })
+        answers = answers.concat([findIndex(indices, parseInt(answersData[index].innerText)) + 1])
     })
-    shuffledQuestionsList.forEach((li) => {
-        element.appendChild(li)
-    })
-    answers = answers.concat([findIndex(indices, parseInt(answersData[index].innerText)) + 1])
-});
 
-let answerButton = document.getElementById("fe-raid-answer-button");
-let ansAreas = Array.from(document.getElementsByClassName("tf"))
-answerButton.addEventListener('click', () => {
-    let userAnswers = Array.from(document.getElementsByClassName("user-ans"));
-    userAnswers.forEach((e, i) => {
-        let userAns = e.selectedIndex
-        if(answers[i] == userAns){
-            ansAreas[i].innerHTML = "<strong class='accent'>正解</strong>"
-        }else{
-            ansAreas[i].innerHTML = "<strong>不正解</strong>"
-        }
+    answerButton.addEventListener('click', () => {
+        let userAnswers = Array.from(targetArticle.getElementsByClassName("user-ans"))
+        userAnswers.forEach((e, i) => {
+            let userAns = e.selectedIndex
+            if (answers[i] == userAns) {
+                ansAreas[i].innerHTML = "<strong class='accent'>正解</strong>"
+            } else {
+                ansAreas[i].innerHTML = "<strong>不正解</strong>"
+            }
+        })
     })
 })
+

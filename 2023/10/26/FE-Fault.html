@@ -7,22 +7,22 @@
 <link rel="stylesheet" href="/assets/css/styles.css">
 <meta name="Hikari's personal website that is written information technology.">
 <!-- Begin Jekyll SEO tag v2.8.0 -->
-<title>RAID (基本情報技術者対策問題) | ひかりの実験室</title>
+<title>信頼性設計 (基本情報技術者対策問題) | ひかりの実験室</title>
 <meta name="generator" content="Jekyll v4.3.2" />
-<meta property="og:title" content="RAID (基本情報技術者対策問題)" />
+<meta property="og:title" content="信頼性設計 (基本情報技術者対策問題)" />
 <meta name="author" content="ひかり" />
 <meta property="og:locale" content="ja_JP" />
-<meta name="description" content="Raid 0" />
-<meta property="og:description" content="Raid 0" />
-<link rel="canonical" href="https://www.hikari-dev.com/2023/10/25/FE-RAID.html" />
-<meta property="og:url" content="https://www.hikari-dev.com/2023/10/25/FE-RAID.html" />
+<meta name="description" content="フォールトアボイダンス" />
+<meta property="og:description" content="フォールトアボイダンス" />
+<link rel="canonical" href="https://www.hikari-dev.com/2023/10/26/FE-Fault.html" />
+<meta property="og:url" content="https://www.hikari-dev.com/2023/10/26/FE-Fault.html" />
 <meta property="og:site_name" content="ひかりの実験室" />
 <meta property="og:type" content="article" />
-<meta property="article:published_time" content="2023-10-25T00:00:00+00:00" />
+<meta property="article:published_time" content="2023-10-26T00:00:00+00:00" />
 <meta name="twitter:card" content="summary" />
-<meta property="twitter:title" content="RAID (基本情報技術者対策問題)" />
+<meta property="twitter:title" content="信頼性設計 (基本情報技術者対策問題)" />
 <script type="application/ld+json">
-{"@context":"https://schema.org","@type":"BlogPosting","author":{"@type":"Person","name":"ひかり"},"dateModified":"2023-10-25T00:00:00+00:00","datePublished":"2023-10-25T00:00:00+00:00","description":"Raid 0","headline":"RAID (基本情報技術者対策問題)","mainEntityOfPage":{"@type":"WebPage","@id":"https://www.hikari-dev.com/2023/10/25/FE-RAID.html"},"url":"https://www.hikari-dev.com/2023/10/25/FE-RAID.html"}</script>
+{"@context":"https://schema.org","@type":"BlogPosting","author":{"@type":"Person","name":"ひかり"},"dateModified":"2023-10-26T00:00:00+00:00","datePublished":"2023-10-26T00:00:00+00:00","description":"フォールトアボイダンス","headline":"信頼性設計 (基本情報技術者対策問題)","mainEntityOfPage":{"@type":"WebPage","@id":"https://www.hikari-dev.com/2023/10/26/FE-Fault.html"},"url":"https://www.hikari-dev.com/2023/10/26/FE-Fault.html"}</script>
 <!-- End Jekyll SEO tag -->
 
 <script src="/assets/js/wareki.js"></script>
@@ -61,40 +61,35 @@
                 <article>
     <div class="page-navigation">
         
-        <a class="prev" href="/2023/10/12/ssh-pubkey.html">
+        <a class="prev" href="/2023/10/25/FE-RAID.html">
             <button class="button style-standard">
                 前へ
             </button>
         </a>
         
         
-        <a class="next" href="/2023/10/26/FE-Fault.html">
-            <button class="button style-standard">
-                次へ
-            </button>
-        </a>
-        
     </div>
 </article>
 
 <article>
-    <h1 class="page-title">RAID (基本情報技術者対策問題)</h1>
-    <time class="posted-date">2023-10-25</time>
+    <h1 class="page-title">信頼性設計 (基本情報技術者対策問題)</h1>
+    <time class="posted-date">2023-10-26</time>
     <!-- <div id="table-of-contents">
         <h2>目次</h2>
         
     </div> -->
     <div id="markdown-content">
         <!-- 問題 1 -->
-<h2>Raid 0</h2>
+<h2>フォールトアボイダンス</h2>
 
-RAID 0 とは、
+フォールトアボイダンス (Fault Avoidance) とは、
 
 <ol class="question-sentences">
-    <li>複数のディスクに分散してデータを書き込むことでアクセスの高速化を図る (ストライピング)</li>
-    <li>同じデータを複数のディスクに書き込む (ミラーリング)</li>
-    <li>複数のディスクに分散してデータを書き込み、一台のディスクにパリティを書き込む。</li>
-    <li>複数のディスクに分散してデータとパリティを書き込む</li>
+    <li>構成要素の信頼性を高め、故障そのものを回避する設計</li>
+    <li>構成要素を冗長化し、故障が発生しても必要な機能を維持する設計</li>
+    <li>システムの一部が故障した際に、危険が生じないようにする設計</li>
+    <li>故障が発生した際、機能を維持した状態で処理を続行 (縮退運動) する設計</li>
+    <li>誤った操作をしても重大な事故を招かないようにする設計</li>
 </ol>
 <div class="ans-data" style="display: none">
     0
@@ -106,20 +101,22 @@ RAID 0 とは、
     <option>2</option>
     <option>3</option>
     <option>4</option>
+    <option>5</option>
 </select>
 
 <p class="tf"></p>
 
 <!-- 問題 2 -->
-<h2>Raid 1</h2>
+<h2>フォールトトレランス</h2>
 
-RAID 1 とは、
+フォールトトレランス (Fault Tolerance) とは、
 
 <ol class="question-sentences">
-    <li>複数のディスクに分散してデータを書き込むことでアクセスの高速化を図る (ストライピング)</li>
-    <li>同じデータを複数のディスクに書き込む (ミラーリング)</li>
-    <li>複数のディスクに分散してデータを書き込み、一台のディスクにパリティを書き込む。</li>
-    <li>複数のディスクに分散してデータとパリティを書き込む</li>
+    <li>構成要素の信頼性を高め、故障そのものを回避する設計</li>
+    <li>構成要素を冗長化し、故障が発生しても必要な機能を維持する設計</li>
+    <li>システムの一部が故障した際に、危険が生じないようにする設計</li>
+    <li>故障が発生した際、機能を維持した状態で処理を続行 (縮退運動) する設計</li>
+    <li>誤った操作をしても重大な事故を招かないようにする設計</li>
 </ol>
 <div class="ans-data" style="display: none">
     1
@@ -131,21 +128,22 @@ RAID 1 とは、
     <option>2</option>
     <option>3</option>
     <option>4</option>
+    <option>5</option>
 </select>
 
 <p class="tf"></p>
 
-
 <!-- 問題 3 -->
-<h2>Raid 3</h2>
+<h2>フェールセーフ</h2>
 
-RAID 3 とは、
+フェールセーフ (Fail Safe) とは、
 
 <ol class="question-sentences">
-    <li>複数のディスクに分散してデータを書き込むことでアクセスの高速化を図る (ストライピング)</li>
-    <li>同じデータを複数のディスクに書き込む (ミラーリング)</li>
-    <li>複数のディスクに分散してデータを書き込み、一台のディスクにパリティを書き込む。</li>
-    <li>複数のディスクに分散してデータとパリティを書き込む</li>
+    <li>構成要素の信頼性を高め、故障そのものを回避する設計</li>
+    <li>構成要素を冗長化し、故障が発生しても必要な機能を維持する設計</li>
+    <li>システムの一部が故障した際に、危険が生じないようにする設計</li>
+    <li>故障が発生した際、機能を維持した状態で処理を続行 (縮退運動) する設計</li>
+    <li>誤った操作をしても重大な事故を招かないようにする設計</li>
 </ol>
 <div class="ans-data" style="display: none">
     2
@@ -157,21 +155,22 @@ RAID 3 とは、
     <option>2</option>
     <option>3</option>
     <option>4</option>
+    <option>5</option>
 </select>
 
 <p class="tf"></p>
 
+<!-- 問題 4 -->
+<h2>フェールソフト</h2>
 
-<!-- 問題 5 -->
-<h2>Raid 5</h2>
-
-RAID 5 とは、
+フェールソフト (Fail Soft) とは、
 
 <ol class="question-sentences">
-    <li>複数のディスクに分散してデータを書き込むことでアクセスの高速化を図る (ストライピング)</li>
-    <li>同じデータを複数のディスクに書き込む (ミラーリング)</li>
-    <li>複数のディスクに分散してデータを書き込み、一台のディスクにパリティを書き込む。</li>
-    <li>複数のディスクに分散してデータとパリティを書き込む</li>
+    <li>構成要素の信頼性を高め、故障そのものを回避する設計</li>
+    <li>構成要素を冗長化し、故障が発生しても必要な機能を維持する設計</li>
+    <li>システムの一部が故障した際に、危険が生じないようにする設計</li>
+    <li>故障が発生した際、機能を維持した状態で処理を続行 (縮退運動) する設計</li>
+    <li>誤った操作をしても重大な事故を招かないようにする設計</li>
 </ol>
 <div class="ans-data" style="display: none">
     3
@@ -183,6 +182,34 @@ RAID 5 とは、
     <option>2</option>
     <option>3</option>
     <option>4</option>
+    <option>5</option>
+</select>
+
+<p class="tf"></p>
+
+<!-- 問題 5 -->
+<h2>フールプルーフ</h2>
+
+フールプルーフ (Fool Proof) とは、
+
+<ol class="question-sentences">
+    <li>構成要素の信頼性を高め、故障そのものを回避する設計</li>
+    <li>構成要素を冗長化し、故障が発生しても必要な機能を維持する設計</li>
+    <li>システムの一部が故障した際に、危険が生じないようにする設計</li>
+    <li>故障が発生した際、機能を維持した状態で処理を続行 (縮退運動) する設計</li>
+    <li>誤った操作をしても重大な事故を招かないようにする設計</li>
+</ol>
+<div class="ans-data" style="display: none">
+    4
+</div>
+
+<select class="Combobox user-ans">
+    <option>選択</option>
+    <option>1</option>
+    <option>2</option>
+    <option>3</option>
+    <option>4</option>
+    <option>5</option>
 </select>
 
 <p class="tf"></p>
@@ -198,18 +225,12 @@ RAID 5 とは、
 <article>
     <div class="page-navigation">
         
-        <a class="prev" href="/2023/10/12/ssh-pubkey.html">
+        <a class="prev" href="/2023/10/25/FE-RAID.html">
             <button class="button style-standard">
                 前へ
             </button>
         </a>
         
-        
-        <a class="next" href="/2023/10/26/FE-Fault.html">
-            <button class="button style-standard">
-                次へ
-            </button>
-        </a>
         
     </div>
 </article>
