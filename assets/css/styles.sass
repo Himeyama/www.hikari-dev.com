@@ -56,6 +56,27 @@ body
     font-family: Helvetica, Arial, "Yu Gothic UI", "BIZ UDPGothic", Meiryo
     line-height: 1.5
 
+.Combobox
+    height: 30px
+    padding: 1px 6px
+    border-width: 1px
+    border-color: #00000024 #00000024 #00000029 #00000024 
+    border-radius: 4px
+    background-color: #FFFFFFB3
+    option
+        font-size: 14px
+        background-color: #FFFFFFB3
+@media (prefers-color-scheme: dark)
+    .Combobox
+        border-color:  #FFFFFF18 #FFFFFF12 #FFFFFF12 #FFFFFF12
+        background-color: #FFFFFF10
+        color: #FFFFFF
+        option
+            background-color: #2C2C2C
+            color: #FFFFFF
+
+
+
 .TextBox
     border-radius: 4px
     height: 28px
@@ -161,6 +182,11 @@ pre:not(.highlight) table
                 color: #FFFFFFC8
                 border-color: #FFFFFF12
 
+.accent
+    color: $accent-color
+@media (prefers-color-scheme: dark)
+    .accent
+        color: $accent-color-dark
 
 .articles
     grid-column: 1 / span 9
