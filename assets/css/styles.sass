@@ -32,6 +32,7 @@ $card-bg-dark: #FFFFFF10
 $card-bg-hover-dark: #FFFFFF20
 $color-date: #00000080
 $color-date-dark: #FFFFFF80
+$table-border-color-dark: #505050
 
 code.hljs
     font-family: "PlemolJP Console NF", "Cascadia Code", Consolas, "Courier New", monospace
@@ -48,7 +49,6 @@ code.language-plaintext.highlighter-rouge
 
 body
     background-color: $background-color
-    background-image: $background-image
     margin: 0
     display: grid
     grid-template-rows: auto 1fr auto auto
@@ -133,6 +133,27 @@ body
             border-color: transparent
             color: #FFFFFFB3
 
+table
+    thead
+        tr
+            font-weight: bold
+    border-collapse: collapse
+    border: 1px solid #A0A0A0
+    th, td
+        border: 1px solid #A0A0A0
+        padding: 8px
+    tbody
+        tr:nth-child(odd)
+            background: #A0A0A088
+
+@media (prefers-color-scheme: dark)
+    table
+        border: 1px solid #505050
+        th, td
+            border: 1px solid #505050
+        tbody
+            tr:nth-child(odd)
+                background: #50505088
 
 pre:not(.highlight) table
     border: solid 1px #0000000F
@@ -393,7 +414,6 @@ ins.adsbygoogle
     body
         color: $color-dark
         background-color: $background-color-dark
-        background-image: $background-image-dark
     
     .post-link
         border: solid 1px $card-border-dark
