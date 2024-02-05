@@ -7,21 +7,22 @@
 <link rel="stylesheet" href="/assets/css/styles.css">
 <meta name="Hikari's personal website that is written information technology.">
 <!-- Begin Jekyll SEO tag v2.8.0 -->
-<title>ひかりの実験室 | Hikari’s personal website that is written information technology.</title>
+<title>基本情報データベースまとめ | ひかりの実験室</title>
 <meta name="generator" content="Jekyll v4.3.2" />
-<meta property="og:title" content="ひかりの実験室" />
+<meta property="og:title" content="基本情報データベースまとめ" />
 <meta name="author" content="ひかり" />
 <meta property="og:locale" content="ja_JP" />
-<meta name="description" content="Hikari’s personal website that is written information technology." />
-<meta property="og:description" content="Hikari’s personal website that is written information technology." />
-<link rel="canonical" href="https://www.hikari-dev.com/" />
-<meta property="og:url" content="https://www.hikari-dev.com/" />
+<meta name="description" content="関係モデル 関係モデルと関係データベースの対応" />
+<meta property="og:description" content="関係モデル 関係モデルと関係データベースの対応" />
+<link rel="canonical" href="https://www.hikari-dev.com/2024/01/30/database-fe.html" />
+<meta property="og:url" content="https://www.hikari-dev.com/2024/01/30/database-fe.html" />
 <meta property="og:site_name" content="ひかりの実験室" />
-<meta property="og:type" content="website" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2024-01-30T00:00:00+00:00" />
 <meta name="twitter:card" content="summary" />
-<meta property="twitter:title" content="ひかりの実験室" />
+<meta property="twitter:title" content="基本情報データベースまとめ" />
 <script type="application/ld+json">
-{"@context":"https://schema.org","@type":"WebSite","author":{"@type":"Person","name":"ひかり"},"description":"Hikari’s personal website that is written information technology.","headline":"ひかりの実験室","name":"ひかりの実験室","url":"https://www.hikari-dev.com/"}</script>
+{"@context":"https://schema.org","@type":"BlogPosting","author":{"@type":"Person","name":"ひかり"},"dateModified":"2024-01-30T00:00:00+00:00","datePublished":"2024-01-30T00:00:00+00:00","description":"関係モデル 関係モデルと関係データベースの対応","headline":"基本情報データベースまとめ","mainEntityOfPage":{"@type":"WebPage","@id":"https://www.hikari-dev.com/2024/01/30/database-fe.html"},"url":"https://www.hikari-dev.com/2024/01/30/database-fe.html"}</script>
 <!-- End Jekyll SEO tag -->
 
 <script src="/assets/js/wareki.js"></script>
@@ -57,12 +58,113 @@
     <div class="wrap-margin">
         <main>
             <div class="articles">
-                
-    <div class="index">
-        <article class="article">
-            <h1 class="page-title"><a href="/2024/01/30/database-fe.html">基本情報データベースまとめ</a></h1>
-            <time class="posted-date">2024-01-30</time>
-            <h2 id="関係モデル">関係モデル</h2>
+                <article>
+    <div class="page-navigation">
+        
+        <a class="prev" href="/2023/10/26/FE-Fault.html">
+            <button class="button style-standard">
+                前へ
+            </button>
+        </a>
+        
+        
+    </div>
+</article>
+
+<article>
+    <h1 class="page-title">基本情報データベースまとめ</h1>
+    <time class="posted-date">2024-01-30</time>
+    <!-- <div id="table-of-contents">
+        <h2>目次</h2>
+        <ul id="toc" class="section-nav">
+<li class="toc-entry toc-h2"><a href="#関係モデル">関係モデル</a>
+<ul>
+<li class="toc-entry toc-h3"><a href="#関係モデルと関係データベースの対応">関係モデルと関係データベースの対応</a></li>
+</ul>
+</li>
+<li class="toc-entry toc-h2"><a href="#関係データベース-リレーショナルデータベース-rdb-relational-database">関係データベース, リレーショナルデータベース (RDB, Relational DataBase)</a></li>
+<li class="toc-entry toc-h2"><a href="#スキーマ">スキーマ</a>
+<ul>
+<li class="toc-entry toc-h3"><a href="#3-層スキーマ">3 層スキーマ</a></li>
+</ul>
+</li>
+<li class="toc-entry toc-h2"><a href="#データベース管理システム-dbms-database-management-system">データベース管理システム (DBMS, DataBase Management System)</a></li>
+<li class="toc-entry toc-h2"><a href="#e-r-図-entity-relationship-diagram">E-R 図 (Entity-Relationship Diagram)</a></li>
+<li class="toc-entry toc-h2"><a href="#表の設計">表の設計</a>
+<ul>
+<li class="toc-entry toc-h3"><a href="#主キー-primary-key">主キー (Primary Key)</a></li>
+<li class="toc-entry toc-h3"><a href="#外部キー-foreign-key">外部キー (Foreign Key)</a></li>
+</ul>
+</li>
+<li class="toc-entry toc-h2"><a href="#データの正規化">データの正規化</a>
+<ul>
+<li class="toc-entry toc-h3"><a href="#第-1-正規化">第 1 正規化</a></li>
+<li class="toc-entry toc-h3"><a href="#第-2-正規化">第 2 正規化</a></li>
+<li class="toc-entry toc-h3"><a href="#第-3-正規化">第 3 正規化</a></li>
+</ul>
+</li>
+<li class="toc-entry toc-h2"><a href="#トランザクション処理">トランザクション処理</a>
+<ul>
+<li class="toc-entry toc-h3"><a href="#acid-特性">ACID 特性</a></li>
+</ul>
+</li>
+<li class="toc-entry toc-h2"><a href="#排他制御">排他制御</a>
+<ul>
+<li class="toc-entry toc-h3"><a href="#共有ロック">共有ロック</a></li>
+<li class="toc-entry toc-h3"><a href="#専有ロック">専有ロック</a></li>
+<li class="toc-entry toc-h3"><a href="#ロックの粒度">ロックの粒度</a></li>
+</ul>
+</li>
+<li class="toc-entry toc-h2"><a href="#デッドロック">デッドロック</a></li>
+<li class="toc-entry toc-h2"><a href="#2-相コミットメント">2 相コミットメント</a></li>
+<li class="toc-entry toc-h2"><a href="#データベースの障害回復">データベースの障害回復</a>
+<ul>
+<li class="toc-entry toc-h3"><a href="#ロールフォワード">ロールフォワード</a></li>
+<li class="toc-entry toc-h3"><a href="#ロールバック">ロールバック</a></li>
+<li class="toc-entry toc-h3"><a href="#チェックポイント">チェックポイント</a></li>
+</ul>
+</li>
+<li class="toc-entry toc-h2"><a href="#関係演算">関係演算</a></li>
+<li class="toc-entry toc-h2"><a href="#sql">SQL</a>
+<ul>
+<li class="toc-entry toc-h3"><a href="#ddl-data-definition-language-データ定義言語">DDL, Data Definition Language (データ定義言語)</a>
+<ul>
+<li class="toc-entry toc-h4"><a href="#create-table">CREATE TABLE</a></li>
+<li class="toc-entry toc-h4"><a href="#create-view">CREATE VIEW</a></li>
+</ul>
+</li>
+<li class="toc-entry toc-h3"><a href="#dml-data-manipulation-language-データ操作言語">DML, Data Manipulation Language (データ操作言語)</a>
+<ul>
+<li class="toc-entry toc-h4"><a href="#select">SELECT</a></li>
+</ul>
+</li>
+<li class="toc-entry toc-h3"><a href="#結合">結合</a></li>
+<li class="toc-entry toc-h3"><a href="#並び替え-order-by">並び替え (ORDER BY)</a>
+<ul>
+<li class="toc-entry toc-h4"><a href="#昇順-asc">昇順 (ASC)</a></li>
+<li class="toc-entry toc-h4"><a href="#降順-desc">降順 (DESC)</a></li>
+</ul>
+</li>
+<li class="toc-entry toc-h3"><a href="#集合関数">集合関数</a></li>
+<li class="toc-entry toc-h3"><a href="#グループ化-group-by">グループ化 (GROUP BY)</a></li>
+<li class="toc-entry toc-h3"><a href="#別名-as">別名 (AS)</a></li>
+<li class="toc-entry toc-h3"><a href="#グループの条件-having">グループの条件 (HAVING)</a></li>
+<li class="toc-entry toc-h3"><a href="#含まれる行を抽出-in">含まれる行を抽出 (IN)</a></li>
+<li class="toc-entry toc-h3"><a href="#相関副問合せ-exists">相関副問合せ (EXISTS)</a></li>
+</ul>
+</li>
+<li class="toc-entry toc-h2"><a href="#データベースの活用">データベースの活用</a>
+<ul>
+<li class="toc-entry toc-h3"><a href="#データウェアハウス">データウェアハウス</a></li>
+<li class="toc-entry toc-h3"><a href="#データマイニング">データマイニング</a></li>
+<li class="toc-entry toc-h3"><a href="#ビッグデータ">ビッグデータ</a></li>
+<li class="toc-entry toc-h3"><a href="#オープンデータ">オープンデータ</a></li>
+</ul>
+</li>
+</ul>
+    </div> -->
+    <div id="markdown-content">
+        <h2 id="関係モデル">関係モデル</h2>
 <h3 id="関係モデルと関係データベースの対応">関係モデルと関係データベースの対応</h3>
 
 <table>
@@ -481,410 +583,21 @@
 <p>原則無償で自由に二次利用可能な官民データ</p>
 
 
-        </article>
     </div>
+</article>
 
-    <div class="index">
-        <article class="article">
-            <h1 class="page-title"><a href="/2023/10/26/FE-Fault.html">信頼性設計 (基本情報技術者対策問題)</a></h1>
-            <time class="posted-date">2023-10-26</time>
-            <!-- 問題 1 -->
-<h2>フォールトアボイダンス</h2>
-
-フォールトアボイダンス (Fault Avoidance) とは、
-
-<ol class="question-sentences">
-    <li>構成要素の信頼性を高め、故障そのものを回避する設計</li>
-    <li>構成要素を冗長化し、故障が発生しても必要な機能を維持する設計</li>
-    <li>システムの一部が故障した際に、危険が生じないようにする設計</li>
-    <li>故障が発生した際、機能を維持した状態で処理を続行 (縮退運動) する設計</li>
-    <li>誤った操作をしても重大な事故を招かないようにする設計</li>
-</ol>
-<div class="ans-data" style="display: none">
-    0
-</div>
-
-<select class="Combobox user-ans">
-    <option>選択</option>
-    <option>1</option>
-    <option>2</option>
-    <option>3</option>
-    <option>4</option>
-    <option>5</option>
-</select>
-
-<p class="tf"></p>
-
-<!-- 問題 2 -->
-<h2>フォールトトレランス</h2>
-
-フォールトトレランス (Fault Tolerance) とは、
-
-<ol class="question-sentences">
-    <li>構成要素の信頼性を高め、故障そのものを回避する設計</li>
-    <li>構成要素を冗長化し、故障が発生しても必要な機能を維持する設計</li>
-    <li>システムの一部が故障した際に、危険が生じないようにする設計</li>
-    <li>故障が発生した際、機能を維持した状態で処理を続行 (縮退運動) する設計</li>
-    <li>誤った操作をしても重大な事故を招かないようにする設計</li>
-</ol>
-<div class="ans-data" style="display: none">
-    1
-</div>
-
-<select class="Combobox user-ans">
-    <option>選択</option>
-    <option>1</option>
-    <option>2</option>
-    <option>3</option>
-    <option>4</option>
-    <option>5</option>
-</select>
-
-<p class="tf"></p>
-
-<!-- 問題 3 -->
-<h2>フェールセーフ</h2>
-
-フェールセーフ (Fail Safe) とは、
-
-<ol class="question-sentences">
-    <li>構成要素の信頼性を高め、故障そのものを回避する設計</li>
-    <li>構成要素を冗長化し、故障が発生しても必要な機能を維持する設計</li>
-    <li>システムの一部が故障した際に、危険が生じないようにする設計</li>
-    <li>故障が発生した際、機能を維持した状態で処理を続行 (縮退運動) する設計</li>
-    <li>誤った操作をしても重大な事故を招かないようにする設計</li>
-</ol>
-<div class="ans-data" style="display: none">
-    2
-</div>
-
-<select class="Combobox user-ans">
-    <option>選択</option>
-    <option>1</option>
-    <option>2</option>
-    <option>3</option>
-    <option>4</option>
-    <option>5</option>
-</select>
-
-<p class="tf"></p>
-
-<!-- 問題 4 -->
-<h2>フェールソフト</h2>
-
-フェールソフト (Fail Soft) とは、
-
-<ol class="question-sentences">
-    <li>構成要素の信頼性を高め、故障そのものを回避する設計</li>
-    <li>構成要素を冗長化し、故障が発生しても必要な機能を維持する設計</li>
-    <li>システムの一部が故障した際に、危険が生じないようにする設計</li>
-    <li>故障が発生した際、機能を維持した状態で処理を続行 (縮退運動) する設計</li>
-    <li>誤った操作をしても重大な事故を招かないようにする設計</li>
-</ol>
-<div class="ans-data" style="display: none">
-    3
-</div>
-
-<select class="Combobox user-ans">
-    <option>選択</option>
-    <option>1</option>
-    <option>2</option>
-    <option>3</option>
-    <option>4</option>
-    <option>5</option>
-</select>
-
-<p class="tf"></p>
-
-<!-- 問題 5 -->
-<h2>フールプルーフ</h2>
-
-フールプルーフ (Fool Proof) とは、
-
-<ol class="question-sentences">
-    <li>構成要素の信頼性を高め、故障そのものを回避する設計</li>
-    <li>構成要素を冗長化し、故障が発生しても必要な機能を維持する設計</li>
-    <li>システムの一部が故障した際に、危険が生じないようにする設計</li>
-    <li>故障が発生した際、機能を維持した状態で処理を続行 (縮退運動) する設計</li>
-    <li>誤った操作をしても重大な事故を招かないようにする設計</li>
-</ol>
-<div class="ans-data" style="display: none">
-    4
-</div>
-
-<select class="Combobox user-ans">
-    <option>選択</option>
-    <option>1</option>
-    <option>2</option>
-    <option>3</option>
-    <option>4</option>
-    <option>5</option>
-</select>
-
-<p class="tf"></p>
-
-<!-- 回答ボタン -->
-<div>
-    <button id="fe-raid-answer-button" class="button style-accent fe-answer-button" style="margin-top: 16px; width: 100%">回答</button>
-</div>
-
-        </article>
+<article>
+    <div class="page-navigation">
+        
+        <a class="prev" href="/2023/10/26/FE-Fault.html">
+            <button class="button style-standard">
+                前へ
+            </button>
+        </a>
+        
+        
     </div>
-
-    <div class="index">
-        <article class="article">
-            <h1 class="page-title"><a href="/2023/10/25/FE-RAID.html">RAID (基本情報技術者対策問題)</a></h1>
-            <time class="posted-date">2023-10-25</time>
-            <!-- 問題 1 -->
-<h2>Raid 0</h2>
-
-RAID 0 とは、
-
-<ol class="question-sentences">
-    <li>複数のディスクに分散してデータを書き込むことでアクセスの高速化を図る (ストライピング)</li>
-    <li>同じデータを複数のディスクに書き込む (ミラーリング)</li>
-    <li>複数のディスクに分散してデータを書き込み、一台のディスクにパリティを書き込む。</li>
-    <li>複数のディスクに分散してデータとパリティを書き込む</li>
-</ol>
-<div class="ans-data" style="display: none">
-    0
-</div>
-
-<select class="Combobox user-ans">
-    <option>選択</option>
-    <option>1</option>
-    <option>2</option>
-    <option>3</option>
-    <option>4</option>
-</select>
-
-<p class="tf"></p>
-
-<!-- 問題 2 -->
-<h2>Raid 1</h2>
-
-RAID 1 とは、
-
-<ol class="question-sentences">
-    <li>複数のディスクに分散してデータを書き込むことでアクセスの高速化を図る (ストライピング)</li>
-    <li>同じデータを複数のディスクに書き込む (ミラーリング)</li>
-    <li>複数のディスクに分散してデータを書き込み、一台のディスクにパリティを書き込む。</li>
-    <li>複数のディスクに分散してデータとパリティを書き込む</li>
-</ol>
-<div class="ans-data" style="display: none">
-    1
-</div>
-
-<select class="Combobox user-ans">
-    <option>選択</option>
-    <option>1</option>
-    <option>2</option>
-    <option>3</option>
-    <option>4</option>
-</select>
-
-<p class="tf"></p>
-
-
-<!-- 問題 3 -->
-<h2>Raid 3</h2>
-
-RAID 3 とは、
-
-<ol class="question-sentences">
-    <li>複数のディスクに分散してデータを書き込むことでアクセスの高速化を図る (ストライピング)</li>
-    <li>同じデータを複数のディスクに書き込む (ミラーリング)</li>
-    <li>複数のディスクに分散してデータを書き込み、一台のディスクにパリティを書き込む。</li>
-    <li>複数のディスクに分散してデータとパリティを書き込む</li>
-</ol>
-<div class="ans-data" style="display: none">
-    2
-</div>
-
-<select class="Combobox user-ans">
-    <option>選択</option>
-    <option>1</option>
-    <option>2</option>
-    <option>3</option>
-    <option>4</option>
-</select>
-
-<p class="tf"></p>
-
-
-<!-- 問題 5 -->
-<h2>Raid 5</h2>
-
-RAID 5 とは、
-
-<ol class="question-sentences">
-    <li>複数のディスクに分散してデータを書き込むことでアクセスの高速化を図る (ストライピング)</li>
-    <li>同じデータを複数のディスクに書き込む (ミラーリング)</li>
-    <li>複数のディスクに分散してデータを書き込み、一台のディスクにパリティを書き込む。</li>
-    <li>複数のディスクに分散してデータとパリティを書き込む</li>
-</ol>
-<div class="ans-data" style="display: none">
-    3
-</div>
-
-<select class="Combobox user-ans">
-    <option>選択</option>
-    <option>1</option>
-    <option>2</option>
-    <option>3</option>
-    <option>4</option>
-</select>
-
-<p class="tf"></p>
-
-<!-- 回答ボタン -->
-<div>
-    <button id="fe-raid-answer-button" class="button style-accent fe-answer-button" style="margin-top: 16px; width: 100%">回答</button>
-</div>
-
-        </article>
-    </div>
-
-    <div class="index">
-        <article class="article">
-            <h1 class="page-title"><a href="/2023/10/12/ssh-pubkey.html">公開鍵認証と SSH</a></h1>
-            <time class="posted-date">2023-10-12</time>
-            <p>公開鍵認証とは、暗号化やデジタル署名に使われる技術の一つで、公開鍵と秘密鍵という二つの鍵を使って通信相手の本人確認や暗号化を行う方法です。
-SSH とは、Secure Shell の略で、ネットワーク上で安全にコマンドやファイルをやり取りするためのプロトコルです。SSH では公開鍵認証を使って、サーバーにログインすることができます。
-具体的にどのように動作するかを説明します。</p>
-
-<p>この記事では、数学についての言及はありません。</p>
-
-<h2 id="公開鍵と秘密鍵について">公開鍵と秘密鍵について</h2>
-
-<p>公開鍵認証では、公開鍵と秘密鍵という二つの鍵を使います。
-公開鍵は名前の通り、誰でも知っていても構わない鍵で、通信相手に送ったり、インターネット上に公開したりします。
-秘密鍵は自分だけが持っている鍵で、絶対に他人に知られてはいけない鍵です。
-秘密鍵は公開鍵から導くことは数学的に非常に困難なものとなっています。
-この性質を利用することで、暗号化やデジタル署名を実現できています。</p>
-
-<h3 id="デジタル署名">デジタル署名</h3>
-
-<p>デジタル署名とは、データの送信者が本人であることを証明するための技術です。
-以下の手順でデジタル署名を行います。</p>
-
-<h4 id="送信者">送信者</h4>
-<ol>
-  <li>文章をハッシュ化 (ハッシュ)</li>
-  <li>ハッシュを秘密鍵で暗号化 (電子署名)</li>
-  <li>文章と電子署名を送信
-    <h4 id="受信者">受信者</h4>
-  </li>
-  <li>文章と電子署名を受信</li>
-  <li>公開鍵で署名を復号しハッシュを取得</li>
-  <li>文章をハッシュ化し、電子署名により得られたハッシュと比較 (ハッシュが同じであれば相手の送信した文章)</li>
-</ol>
-
-<p>デジタル署名は署名を秘密鍵、検証を公開鍵で行っています。</p>
-
-<h2 id="ssh-について">SSH について</h2>
-
-<p>SSH とは、Secure Shell の略で、ネットワーク上で安全にコマンドやファイルをやり取りするためのプロトコルです。
-SSH では公開鍵認証を使って、サーバーにログインすることができます。SSH の利点は以下の通りです。</p>
-
-<ul>
-  <li>パスワードなしでログインできるため、パスワード漏洩や総当たり攻撃などのリスクが低減 (ただし、パスワードを使用することも可能)</li>
-  <li>データが暗号化されるため、通信内容が盗聴されたり、改ざんを防止</li>
-  <li>ポートフォワーディングやトンネリングなどの機能を使って、ネットワークのセキュリティやアクセス制御を強化</li>
-</ul>
-
-<p>SSH では、以下のように公開鍵認証を行います。</p>
-
-<ol>
-  <li>クライアントは、公開鍵と秘密鍵を生成 (<code class="language-plaintext highlighter-rouge">ssh-keygen -t ed25519</code>)</li>
-  <li>クライアントは、クライアントの公開鍵 (<code class="language-plaintext highlighter-rouge">~/.ssh/id_ed25519.pub</code>) を事前にサーバーに登録 (<code class="language-plaintext highlighter-rouge">~/.ssh/authorized_keys</code>)</li>
-  <li>クライアントはサーバーに接続する際に、自分の秘密鍵 (<code class="language-plaintext highlighter-rouge">~/.ssh/id_ed25519</code>) でデジタル署名</li>
-  <li>サーバーはクライアントの公開鍵 (<code class="language-plaintext highlighter-rouge">~/.ssh/authorized_keys</code>)でデジタル署名を検証し、正しい場合はログインを許可</li>
-</ol>
-
-<p>以上が、公開鍵認証と SSH についてのまとめです。
-公開鍵認証と SSH を使うことで、ネットワーク上で安全にコマンドやファイルをやり取りすることができます。</p>
-
-        </article>
-    </div>
-
-    <div class="index">
-        <article class="article">
-            <h1 class="page-title"><a href="/2023/10/09/grid-css.html">【初心者】CSS のグリッド (Grid) 攻略</a></h1>
-            <time class="posted-date">2023-10-09</time>
-            <h2 id="grid-を作成する">Grid を作成する</h2>
-
-<h3 id="5-行-3-列のグリッド">5 行 3 列のグリッド</h3>
-
-<p>5 行 3 列のグリッドを作成してみます。</p>
-
-<div class="language-html highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">&lt;div</span> <span class="na">id=</span><span class="s">"wrap"</span><span class="nt">&gt;</span>
-    <span class="nt">&lt;div</span> <span class="na">id=</span><span class="s">"elem"</span><span class="nt">&gt;</span>要素<span class="nt">&lt;/div&gt;</span>
-<span class="nt">&lt;/div&gt;</span>
-</code></pre></div></div>
-
-<div class="language-css highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nf">#wrap</span><span class="p">{</span>
-    <span class="nl">display</span><span class="p">:</span> <span class="n">grid</span><span class="p">;</span>
-    <span class="py">grid-template-columns</span><span class="p">:</span> <span class="nb">repeat</span><span class="p">(</span><span class="m">3</span><span class="p">,</span> <span class="m">1</span><span class="n">fr</span><span class="p">);</span>
-    <span class="py">grid-template-rows</span><span class="p">:</span> <span class="nb">repeat</span><span class="p">(</span><span class="m">5</span><span class="p">,</span> <span class="m">1</span><span class="n">fr</span><span class="p">);</span>
-<span class="p">}</span>
-</code></pre></div></div>
-
-<p><code class="language-plaintext highlighter-rouge">1fr</code> は等分した長さのことです。
-<code class="language-plaintext highlighter-rouge">repeat(3, 1fr)</code> は <code class="language-plaintext highlighter-rouge">1fr</code> を 3 回繰り返すのと同義で、
-省略せずに書くと <code class="language-plaintext highlighter-rouge">1fr 1fr 1fr</code> になります。</p>
-
-<p>また、<code class="language-plaintext highlighter-rouge">auto</code> は、グリッド内の要素にグリッドのサイズを合わせるときに用います。</p>
-
-<h2 id="要素を配置する">要素を配置する</h2>
-<p>グリッドを定義した後は、要素を配置します。
-要素の配置は、<code class="language-plaintext highlighter-rouge">grid-row</code> と <code class="language-plaintext highlighter-rouge">grid-column</code> を用いて行います。(ただし、<code class="language-plaintext highlighter-rouge">grid-row-start</code>、<code class="language-plaintext highlighter-rouge">grid-row-end</code>、<code class="language-plaintext highlighter-rouge">grid-column-start</code>、<code class="language-plaintext highlighter-rouge">grid-column-end</code> を使用しても可能です。)</p>
-
-<p>図のように要素を 4 行 2 列目に要素を配置したいとします。</p>
-
-<p><img src="/assets/img/grid-css/image.png" alt="Alt text" /></p>
-
-<p>4 行目は 4 と 5 の間なので <code class="language-plaintext highlighter-rouge">grid-row: 4 / 5;</code> とし、
-2 列目は 2 と 3 の間なので <code class="language-plaintext highlighter-rouge">grid-column: 2 / 3;</code> とします。</p>
-
-<div class="language-css highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nf">#elem</span><span class="p">{</span>
-    <span class="nl">grid-column</span><span class="p">:</span> <span class="m">2</span> <span class="p">/</span> <span class="m">3</span><span class="p">;</span>
-    <span class="nl">grid-row</span><span class="p">:</span> <span class="m">4</span> <span class="p">/</span> <span class="m">5</span><span class="p">;</span>
-<span class="p">}</span>
-</code></pre></div></div>
-
-<h3 id="列いっぱいに配置">列いっぱいに配置</h3>
-
-<p><img src="/assets/img/grid-css/image2.png" alt="Alt text" /></p>
-
-<p>4 行目に列いっぱいで配置したい場合は、
-列が 1 と -1 の間なので <code class="language-plaintext highlighter-rouge">grid-column: 1 / -1</code> とします。(このレイアウトの場合 <code class="language-plaintext highlighter-rouge">grid-column: 1 / 4</code> でもかまいませんが端なので -1 としています。)</p>
-
-<div class="language-css highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nf">#elem</span><span class="p">{</span>
-    <span class="nl">grid-column</span><span class="p">:</span> <span class="m">1</span> <span class="p">/</span> <span class="m">-1</span><span class="p">;</span> <span class="c">/* grid-column: 1 / 4; でも可*/</span>
-    <span class="nl">grid-row</span><span class="p">:</span> <span class="m">4</span> <span class="p">/</span> <span class="m">5</span><span class="p">;</span>
-<span class="p">}</span>
-</code></pre></div></div>
-
-<h3 id="span-を使用した例">span を使用した例</h3>
-<p><code class="language-plaintext highlighter-rouge">span</code> キーワードを使用すると、複数の行や列をまたがることができます。(ただし、<code class="language-plaintext highlighter-rouge">span</code> を使用せずとも可能です。)</p>
-
-<p><img src="/assets/img/grid-css/image3.png" alt="Alt text" /></p>
-
-<p>2 列目と 3 列目をまたがるように配置したい場合は、<code class="language-plaintext highlighter-rouge">grid-column: 2 / span 2;</code> とします。</p>
-
-<div class="language-css highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nf">#elem</span><span class="p">{</span>
-    <span class="nl">grid-column</span><span class="p">:</span> <span class="m">2</span> <span class="p">/</span> <span class="n">span</span> <span class="m">2</span><span class="p">;</span>
-    <span class="nl">grid-row</span><span class="p">:</span> <span class="m">4</span> <span class="p">/</span> <span class="m">5</span><span class="p">;</span>
-<span class="p">}</span>
-</code></pre></div></div>
-
-<p>以上、グリッドについての解説でした。</p>
-
-        </article>
-    </div>
-
-
+</article>
             </div>
             <div class="menu-wrapper">
                 <menu>
