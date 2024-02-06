@@ -1,0 +1,119 @@
+---
+layout: default
+---
+
+<article class="article">
+    <h2>メモ帳</h2>
+    <p>最大 5 MiB 程度まで保存できます。ブラウザのキャッシュを削除するとデータは消えます。</p>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/monaco-editor/0.45.0/min/vs/loader.js"></script>
+    <script>
+        require.config({ paths: { vs: "https://cdnjs.cloudflare.com/ajax/libs/monaco-editor/0.45.0/min/vs" } });
+        let editor = null
+        require(["vs/editor/editor.main"], () => {
+            editor = monaco.editor.create(
+                document.getElementById("editor-container"),
+                {
+                    value: "",
+                    language: "markdown",
+                    fontSize: 16
+                }
+            );
+        });
+    </script>
+    <div style="display: grid; grid-template-columns: 1fr auto auto; margin-bottom: 8px;">
+        <input id="memo-save-name" class="TextBox" placeholder="名前" style="margin-right: 8px;" />
+        <button class="button style-accent" id="memo-save" style="margin-right: 8px;">保存</button>
+        <button class="button style-accent" id="memo-remove">削除</button>
+    </div>
+    <div style="display: grid; grid-template-columns: 150px 1fr; margin-bottom: 8px;">
+        <div id="memo-list" style="margin-right: 4px;">
+        </div>
+        <div id="editor-container" style="height: 600px; margin-left: 4px"></div>
+    </div>
+    <script>
+        function addMemoInstance(name){
+            let memoList = document.getElementById("memo-list");
+            // ボタン要素を作成
+            let button = document.createElement("button");
+            // クラス名を設定
+            button.setAttribute("class", "button style-standard memo-instance-button");
+            // スタイルを設定
+            button.setAttribute("style", "width: 100%; margin-bottom: 8px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;");
+            // テキストを設定
+            button.textContent = name;
+
+            button.addEventListener("click", (e) => {
+                instance_name = e.target.textContent;
+                document.getElementById("memo-save-name").value = instance_name;
+                for(let instance of memo){
+                    if(instance.name == instance_name){
+                        editor.setValue(instance.text);
+                    }
+                }
+            });
+
+            const instances = document.getElementsByClassName("memo-instance-button");
+            let add_flag = true;
+            for(let instance of instances){
+                const instance_name = instance.textContent;
+                if(instance_name == name){
+                    add_flag = false;
+                    break;
+                }
+            }
+            if(add_flag){
+                memoList.insertBefore(button, memoList.firstChild);
+            }
+        }
+
+        let memo_save_btn = document.getElementById("memo-save");
+        memo_save_btn.addEventListener("click", () => {
+            let name = document.getElementById("memo-save-name").value;
+            if(name == "") return;
+
+            addMemoInstance(name);
+
+            let save = true;
+            memo.forEach((e) => {
+                if(e.name == name){
+                    e.text = editor.getValue();
+                    save = false;
+                    return;
+                }
+            })
+            if(save){
+                memo.push({
+                    name: name,
+                    text: editor.getValue()
+                })
+            }
+            localStorage.setItem("memo", JSON.stringify(memo));
+        })
+
+        // 削除
+        let memo_remove_btn = document.getElementById("memo-remove");
+        memo_remove_btn.addEventListener("click", () => {
+            let name = document.getElementById("memo-save-name").value;
+            memo = memo.filter(e => e.name != name);
+            localStorage.setItem("memo", JSON.stringify(memo));
+
+            const instances = document.getElementsByClassName("memo-instance-button");
+            for(let instance of instances){
+                if(instance.textContent == name){
+                    const memo_list = document.getElementById("memo-list");
+                    memo_list.removeChild(instance);
+                    break;
+                }
+            }
+        })
+
+        if(window.localStorage.getItem("memo") == null){
+            window.localStorage.setItem("memo", "[]")
+        }
+        let memo = JSON.parse(localStorage.getItem("memo"));
+
+        for(let instance of memo){
+            addMemoInstance(instance.name)
+        }
+    </script>
+</article>
