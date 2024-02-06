@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+    <meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+<link rel="stylesheet" href="/assets/css/styles.css">
+<meta name="Hikari's personal website that is written information technology.">
+<!-- Begin Jekyll SEO tag v2.8.0 -->
+<title>ひかりの実験室 | Hikari’s personal website that is written information technology.</title>
+<meta name="generator" content="Jekyll v4.3.3" />
+<meta property="og:title" content="ひかりの実験室" />
+<meta name="author" content="ひかり" />
+<meta property="og:locale" content="ja_JP" />
+<meta name="description" content="Hikari’s personal website that is written information technology." />
+<meta property="og:description" content="Hikari’s personal website that is written information technology." />
+<link rel="canonical" href="https://www.hikari-dev.com/editor.html" />
+<meta property="og:url" content="https://www.hikari-dev.com/editor.html" />
+<meta property="og:site_name" content="ひかりの実験室" />
+<meta property="og:type" content="website" />
+<meta name="twitter:card" content="summary" />
+<meta property="twitter:title" content="ひかりの実験室" />
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"WebPage","author":{"@type":"Person","name":"ひかり"},"description":"Hikari’s personal website that is written information technology.","headline":"ひかりの実験室","url":"https://www.hikari-dev.com/editor.html"}</script>
+<!-- End Jekyll SEO tag -->
+
+<script src="/assets/js/wareki.js"></script>
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-6QLJRW2VM8"></script>
+<script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag() { dataLayer.push(arguments); }
+    gtag('js', new Date());
+
+    gtag('config', 'G-6QLJRW2VM8');
+</script>
+<!-- <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9005833361216146"
+    crossorigin="anonymous"></script>
+<ins class="adsbygoogle" style="display:block; text-align:center;" data-ad-layout="in-article" data-ad-format="fluid"
+    data-ad-client="ca-pub-9005833361216146" data-ad-slot="6901616621"></ins>
+<script>
+    (adsbygoogle = window.adsbygoogle || []).push({});
+</script> -->
+</head>
+
+<body>
+    <header>
+        <div class="header-panel">
+    <h1><a href="/">ひかりの実験室</a></h1>
+    <menu class="menu-buttons">
+        <a href="/" id="home-button"><button>ホーム</button></a>
+        <a href="/archives" id="archive-button"><button>アーカイブ</button></a>
+        <a href="/tags" id="tags-button"><button>タグ別</button></a>
+    </menu>
+</div>
+    </header>
+    <div class="wrap-margin">
+        <main>
+            <div class="articles">
+                <article class="article">
+    <h2>メモ帳</h2>
+    <p>最大 5 MiB 程度まで保存できます。ブラウザのキャッシュを削除するとデータは消えます。</p>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/monaco-editor/0.45.0/min/vs/loader.js"></script>
+    <script>
+        require.config({ paths: { vs: "https://cdnjs.cloudflare.com/ajax/libs/monaco-editor/0.45.0/min/vs" } });
+        let editor = null
+        require(["vs/editor/editor.main"], () => {
+            editor = monaco.editor.create(
+                document.getElementById("editor-container"),
+                {
+                    value: "",
+                    language: "markdown",
+                    fontSize: 16
+                }
+            );
+        });
+    </script>
+    <div style="display: grid; grid-template-columns: 1fr auto auto; margin-bottom: 8px;">
+        <input id="memo-save-name" class="TextBox" placeholder="名前" style="margin-right: 8px;" />
+        <button class="button style-accent" id="memo-save" style="margin-right: 8px;">保存</button>
+        <button class="button style-accent" id="memo-remove">削除</button>
+    </div>
+    <div style="display: grid; grid-template-columns: 150px 1fr; margin-bottom: 8px;">
+        <div id="memo-list" style="margin-right: 4px;">
+        </div>
+        <div id="editor-container" style="height: 600px; margin-left: 4px"></div>
+    </div>
+    <script>
+        function addMemoInstance(name){
+            let memoList = document.getElementById("memo-list");
+            // ボタン要素を作成
+            let button = document.createElement("button");
+            // クラス名を設定
+            button.setAttribute("class", "button style-standard memo-instance-button");
+            // スタイルを設定
+            button.setAttribute("style", "width: 100%; margin-bottom: 8px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;");
+            // テキストを設定
+            button.textContent = name;
+
+            button.addEventListener("click", (e) => {
+                instance_name = e.target.textContent;
+                document.getElementById("memo-save-name").value = instance_name;
+                for(let instance of memo){
+                    if(instance.name == instance_name){
+                        editor.setValue(instance.text);
+                    }
+                }
+            });
+
+            const instances = document.getElementsByClassName("memo-instance-button");
+            let add_flag = true;
+            for(let instance of instances){
+                const instance_name = instance.textContent;
+                if(instance_name == name){
+                    add_flag = false;
+                    break;
+                }
+            }
+            if(add_flag){
+                memoList.insertBefore(button, memoList.firstChild);
+            }
+        }
+
+        let memo_save_btn = document.getElementById("memo-save");
+        memo_save_btn.addEventListener("click", () => {
+            let name = document.getElementById("memo-save-name").value;
+            if(name == "") return;
+
+            addMemoInstance(name);
+
+            let save = true;
+            memo.forEach((e) => {
+                if(e.name == name){
+                    e.text = editor.getValue();
+                    save = false;
+                    return;
+                }
+            })
+            if(save){
+                memo.push({
+                    name: name,
+                    text: editor.getValue()
+                })
+            }
+            localStorage.setItem("memo", JSON.stringify(memo));
+        })
+
+        // 削除
+        let memo_remove_btn = document.getElementById("memo-remove");
+        memo_remove_btn.addEventListener("click", () => {
+            let name = document.getElementById("memo-save-name").value;
+            memo = memo.filter(e => e.name != name);
+            localStorage.setItem("memo", JSON.stringify(memo));
+
+            const instances = document.getElementsByClassName("memo-instance-button");
+            for(let instance of instances){
+                if(instance.textContent == name){
+                    const memo_list = document.getElementById("memo-list");
+                    memo_list.removeChild(instance);
+                    break;
+                }
+            }
+        })
+
+        if(window.localStorage.getItem("memo") == null){
+            window.localStorage.setItem("memo", "[]")
+        }
+        let memo = JSON.parse(localStorage.getItem("memo"));
+
+        for(let instance of memo){
+            addMemoInstance(instance.name)
+        }
+    </script>
+</article>
+
+            </div>
+            <div class="menu-wrapper">
+                <menu>
+                    <div class="page-title">
+    <a href="/">ひかりの実験室</a>
+</div>
+<div class="profile"></div>
+<nav class="sub-menu">
+    <p class="description">
+        メニュー
+    </p>
+    <ul>
+        <li><a href="/archives">アーカイブ</a></li>
+        <li><a href="/tags">タグ別</a></li>
+        <li><a href="/editor">エディタ</a></li>
+    </ul>
+</nav>
+                </menu>
+            </div>
+        </main>
+    </div>
+    <footer>
+        <div class="footer">
+    <div class="footer-contents">
+        <p>
+            © 2023 Hikari
+        </p>
+        <p>
+            ひかりの実験室の著作権はひかりに属します。
+        </p>
+    </div>
+    <script>
+        let postedDates = document.getElementsByClassName("posted-date");
+        for (let i = 0; i < postedDates.length; i++) {
+            let date = postedDates[i].innerText
+            if (date != "") {
+                let warekiDate = Wareki.date(date)
+                postedDates[i].innerText = warekiDate;
+            }
+        }
+    </script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github-dark.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/highlight.min.js"></script>
+    <script
+        src="https://cdnjs.cloudflare.com/ajax/libs/highlightjs-line-numbers.js/2.8.0/highlightjs-line-numbers.min.js"></script>
+    <script>hljs.highlightAll(); hljs.initLineNumbersOnLoad();</script>
+    <script src="/assets/js/fe.js"></script>
+</div>
+    </footer>
+</body>
+
+</html>
