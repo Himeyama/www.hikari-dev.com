@@ -146,6 +146,12 @@ table
         tr:nth-child(odd)
             background: #A0A0A088
 
+pre.highlight
+    table
+        tbody
+            tr:nth-child(odd)
+                background: unset
+
 @media (prefers-color-scheme: dark)
     table
         border: 1px solid #505050
@@ -154,6 +160,12 @@ table
         tbody
             tr:nth-child(odd)
                 background: #50505088
+
+    pre.highlight
+        table
+            tbody
+                tr:nth-child(odd)
+                    background: unset
 
 pre:not(.highlight) table
     border: solid 1px #0000000F
