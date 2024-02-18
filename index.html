@@ -60,6 +60,38 @@
                 
     <div class="index">
         <article class="article">
+            <h1 class="page-title"><a href="/2024/02/19/plink.html">Windows Terminal と plink を使ってシリアルコンソールを使う</a></h1>
+            <time class="posted-date">2024-02-19</time>
+            <h2 id="arduino-シリアル通信のプログラムを書く">Arduino シリアル通信のプログラムを書く</h2>
+<p>Windows Terminal と plink を用いたシリアル通信を試すために、
+Arduino にシリアル通信のプログラムを書き込みます。</p>
+
+<div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kt">void</span> <span class="nf">setup</span><span class="p">()</span> <span class="p">{</span>
+  <span class="n">Serial</span><span class="p">.</span><span class="n">begin</span><span class="p">(</span><span class="mi">9600</span><span class="p">);</span>
+<span class="p">}</span>
+
+<span class="kt">void</span> <span class="nf">loop</span><span class="p">()</span> <span class="p">{</span>
+  <span class="k">if</span><span class="p">(</span><span class="n">Serial</span><span class="p">.</span><span class="n">available</span><span class="p">()</span> <span class="o">&lt;=</span> <span class="mi">0</span><span class="p">)</span> <span class="k">return</span><span class="p">;</span>
+  <span class="kt">char</span> <span class="n">data</span> <span class="o">=</span> <span class="n">Serial</span><span class="p">.</span><span class="n">read</span><span class="p">();</span>
+  <span class="k">if</span><span class="p">(</span><span class="n">data</span> <span class="o">==</span> <span class="sc">'\r'</span><span class="p">){</span>
+    <span class="n">Serial</span><span class="p">.</span><span class="n">print</span><span class="p">(</span><span class="s">"</span><span class="se">\n</span><span class="s">"</span><span class="p">);</span>
+  <span class="p">}</span><span class="k">else</span><span class="p">{</span>
+    <span class="n">Serial</span><span class="p">.</span><span class="n">print</span><span class="p">(</span><span class="n">data</span><span class="p">);</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<h2 id="plink-で-arduino-とシリアル通信">plink で Arduino とシリアル通信</h2>
+<p>以下のコマンドで Windows Terminal から plink コマンドを実行してシリアル通信を行います。</p>
+
+<pre><code class="language-ps1">plink -serial COM1 -sercfg 9600,8,1,N,N
+</code></pre>
+
+        </article>
+    </div>
+
+    <div class="index">
+        <article class="article">
             <h1 class="page-title"><a href="/2024/01/30/database-fe.html">基本情報データベースまとめ</a></h1>
             <time class="posted-date">2024-01-30</time>
             <h2 id="関係モデル">関係モデル</h2>
@@ -804,82 +836,6 @@ SSH では公開鍵認証を使って、サーバーにログインすること�
 
 <p>以上が、公開鍵認証と SSH についてのまとめです。
 公開鍵認証と SSH を使うことで、ネットワーク上で安全にコマンドやファイルをやり取りすることができます。</p>
-
-        </article>
-    </div>
-
-    <div class="index">
-        <article class="article">
-            <h1 class="page-title"><a href="/2023/10/09/grid-css.html">【初心者】CSS のグリッド (Grid) 攻略</a></h1>
-            <time class="posted-date">2023-10-09</time>
-            <h2 id="grid-を作成する">Grid を作成する</h2>
-
-<h3 id="5-行-3-列のグリッド">5 行 3 列のグリッド</h3>
-
-<p>5 行 3 列のグリッドを作成してみます。</p>
-
-<div class="language-html highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">&lt;div</span> <span class="na">id=</span><span class="s">"wrap"</span><span class="nt">&gt;</span>
-    <span class="nt">&lt;div</span> <span class="na">id=</span><span class="s">"elem"</span><span class="nt">&gt;</span>要素<span class="nt">&lt;/div&gt;</span>
-<span class="nt">&lt;/div&gt;</span>
-</code></pre></div></div>
-
-<div class="language-css highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nf">#wrap</span><span class="p">{</span>
-    <span class="nl">display</span><span class="p">:</span> <span class="n">grid</span><span class="p">;</span>
-    <span class="py">grid-template-columns</span><span class="p">:</span> <span class="nb">repeat</span><span class="p">(</span><span class="m">3</span><span class="p">,</span> <span class="m">1</span><span class="n">fr</span><span class="p">);</span>
-    <span class="py">grid-template-rows</span><span class="p">:</span> <span class="nb">repeat</span><span class="p">(</span><span class="m">5</span><span class="p">,</span> <span class="m">1</span><span class="n">fr</span><span class="p">);</span>
-<span class="p">}</span>
-</code></pre></div></div>
-
-<p><code class="language-plaintext highlighter-rouge">1fr</code> は等分した長さのことです。
-<code class="language-plaintext highlighter-rouge">repeat(3, 1fr)</code> は <code class="language-plaintext highlighter-rouge">1fr</code> を 3 回繰り返すのと同義で、
-省略せずに書くと <code class="language-plaintext highlighter-rouge">1fr 1fr 1fr</code> になります。</p>
-
-<p>また、<code class="language-plaintext highlighter-rouge">auto</code> は、グリッド内の要素にグリッドのサイズを合わせるときに用います。</p>
-
-<h2 id="要素を配置する">要素を配置する</h2>
-<p>グリッドを定義した後は、要素を配置します。
-要素の配置は、<code class="language-plaintext highlighter-rouge">grid-row</code> と <code class="language-plaintext highlighter-rouge">grid-column</code> を用いて行います。(ただし、<code class="language-plaintext highlighter-rouge">grid-row-start</code>、<code class="language-plaintext highlighter-rouge">grid-row-end</code>、<code class="language-plaintext highlighter-rouge">grid-column-start</code>、<code class="language-plaintext highlighter-rouge">grid-column-end</code> を使用しても可能です。)</p>
-
-<p>図のように要素を 4 行 2 列目に要素を配置したいとします。</p>
-
-<p><img src="/assets/img/grid-css/image.png" alt="Alt text" /></p>
-
-<p>4 行目は 4 と 5 の間なので <code class="language-plaintext highlighter-rouge">grid-row: 4 / 5;</code> とし、
-2 列目は 2 と 3 の間なので <code class="language-plaintext highlighter-rouge">grid-column: 2 / 3;</code> とします。</p>
-
-<div class="language-css highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nf">#elem</span><span class="p">{</span>
-    <span class="nl">grid-column</span><span class="p">:</span> <span class="m">2</span> <span class="p">/</span> <span class="m">3</span><span class="p">;</span>
-    <span class="nl">grid-row</span><span class="p">:</span> <span class="m">4</span> <span class="p">/</span> <span class="m">5</span><span class="p">;</span>
-<span class="p">}</span>
-</code></pre></div></div>
-
-<h3 id="列いっぱいに配置">列いっぱいに配置</h3>
-
-<p><img src="/assets/img/grid-css/image2.png" alt="Alt text" /></p>
-
-<p>4 行目に列いっぱいで配置したい場合は、
-列が 1 と -1 の間なので <code class="language-plaintext highlighter-rouge">grid-column: 1 / -1</code> とします。(このレイアウトの場合 <code class="language-plaintext highlighter-rouge">grid-column: 1 / 4</code> でもかまいませんが端なので -1 としています。)</p>
-
-<div class="language-css highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nf">#elem</span><span class="p">{</span>
-    <span class="nl">grid-column</span><span class="p">:</span> <span class="m">1</span> <span class="p">/</span> <span class="m">-1</span><span class="p">;</span> <span class="c">/* grid-column: 1 / 4; でも可*/</span>
-    <span class="nl">grid-row</span><span class="p">:</span> <span class="m">4</span> <span class="p">/</span> <span class="m">5</span><span class="p">;</span>
-<span class="p">}</span>
-</code></pre></div></div>
-
-<h3 id="span-を使用した例">span を使用した例</h3>
-<p><code class="language-plaintext highlighter-rouge">span</code> キーワードを使用すると、複数の行や列をまたがることができます。(ただし、<code class="language-plaintext highlighter-rouge">span</code> を使用せずとも可能です。)</p>
-
-<p><img src="/assets/img/grid-css/image3.png" alt="Alt text" /></p>
-
-<p>2 列目と 3 列目をまたがるように配置したい場合は、<code class="language-plaintext highlighter-rouge">grid-column: 2 / span 2;</code> とします。</p>
-
-<div class="language-css highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nf">#elem</span><span class="p">{</span>
-    <span class="nl">grid-column</span><span class="p">:</span> <span class="m">2</span> <span class="p">/</span> <span class="n">span</span> <span class="m">2</span><span class="p">;</span>
-    <span class="nl">grid-row</span><span class="p">:</span> <span class="m">4</span> <span class="p">/</span> <span class="m">5</span><span class="p">;</span>
-<span class="p">}</span>
-</code></pre></div></div>
-
-<p>以上、グリッドについての解説でした。</p>
 
         </article>
     </div>

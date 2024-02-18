@@ -157,6 +157,10 @@ table tbody tr:nth-child(odd) {
   background: rgba(160, 160, 160, 0.5333333333);
 }
 
+pre.highlight table tbody tr:nth-child(odd) {
+  background: unset;
+}
+
 @media (prefers-color-scheme: dark) {
   table {
     border: 1px solid #505050;
@@ -166,6 +170,9 @@ table tbody tr:nth-child(odd) {
   }
   table tbody tr:nth-child(odd) {
     background: rgba(80, 80, 80, 0.5333333333);
+  }
+  pre.highlight table tbody tr:nth-child(odd) {
+    background: unset;
   }
 }
 pre:not(.highlight) table {
