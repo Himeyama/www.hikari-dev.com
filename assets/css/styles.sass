@@ -75,25 +75,22 @@ body
             background-color: #2C2C2C
             color: #FFFFFF
 
-
-
 .TextBox
     border-radius: 4px
     height: 28px
     border: solid 1px rgba(0, 0, 0, 0.06)
     background-color: #FFFFFFB2
     font-size: 14px
-    padding: 2px 0 0 11px
+    padding: 2px 0 0px 11px
     border-bottom-color: #0000009B
     color: #000000
     outline: none
-    transition: .3s
     &:hover
         background-color: #F9F9F980
     &:active, &:focus
         border-bottom-width: 2px
         border-bottom-color: $accent-color
-        height: 27px
+        height: 26px
         padding-top: 3px
 @media (prefers-color-scheme: dark)
     .TextBox
@@ -111,6 +108,8 @@ body
     border: solid 1px
     border-radius: 4px
     font-family: "YU Gothic UI"
+    height: 32px
+    padding: 0 16px
     transition: .3s
     &.style-standard
         border-color: #00000024 #00000024 #00000029 #00000024 
@@ -125,13 +124,26 @@ body
         background-color: $accent-color
         border-color: #FFFFFF14 #FFFFFF14 #00000066 #FFFFFF14
         color: #FFFFFF
-        transition: .3s
         &:hover
             background-color: $accent-color-secondary-dark
         &:active
             background-color: $accent-color-tertiary-dark
             border-color: transparent
             color: #FFFFFFB3
+
+@media (prefers-color-scheme: dark)
+    .button
+        &.style-standard
+            border: solid 1px
+            border-color:  #FFFFFF18 #FFFFFF12 #FFFFFF12 #FFFFFF12
+            background-color: #FFFFFF10
+            color: #FFFFFF
+            &:hover
+                background-color: #FFFFFF15
+            &:accent
+                background-color: #FFFFFF08
+                color: #FFFFFFC8
+                border-color: #FFFFFF12
 
 table
     thead
@@ -198,22 +210,6 @@ pre:not(.highlight) table
         tbody
             tr
                 background-color: #2B2B2B
-    
-
-
-@media (prefers-color-scheme: dark)
-    .button
-        &.style-standard
-            border: solid 1px
-            border-color:  #FFFFFF18 #FFFFFF12 #FFFFFF12 #FFFFFF12
-            background-color: #FFFFFF10
-            color: #FFFFFF
-            &:hover
-                background-color: #FFFFFF15
-            &:accent
-                background-color: #FFFFFF08
-                color: #FFFFFFC8
-                border-color: #FFFFFF12
 
 .accent
     color: $accent-color
