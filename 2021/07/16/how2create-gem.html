@@ -12,8 +12,8 @@
 <meta property="og:title" content="gem 作り方" />
 <meta name="author" content="ひかり" />
 <meta property="og:locale" content="ja_JP" />
-<meta name="description" content="テンプレートの作成 ```sh bundle gem -t" />
-<meta property="og:description" content="テンプレートの作成 ```sh bundle gem -t" />
+<meta name="description" content="テンプレートの作成 bundle gem &lt;GEM 名&gt; -t cd &lt;GEM 名&gt;" />
+<meta property="og:description" content="テンプレートの作成 bundle gem &lt;GEM 名&gt; -t cd &lt;GEM 名&gt;" />
 <link rel="canonical" href="https://www.hikari-dev.com/2021/07/16/how2create-gem.html" />
 <meta property="og:url" content="https://www.hikari-dev.com/2021/07/16/how2create-gem.html" />
 <meta property="og:site_name" content="ひかりの実験室" />
@@ -22,7 +22,7 @@
 <meta name="twitter:card" content="summary" />
 <meta property="twitter:title" content="gem 作り方" />
 <script type="application/ld+json">
-{"@context":"https://schema.org","@type":"BlogPosting","author":{"@type":"Person","name":"ひかり"},"dateModified":"2021-07-16T01:54:00+00:00","datePublished":"2021-07-16T01:54:00+00:00","description":"テンプレートの作成 ```sh bundle gem -t","headline":"gem 作り方","mainEntityOfPage":{"@type":"WebPage","@id":"https://www.hikari-dev.com/2021/07/16/how2create-gem.html"},"url":"https://www.hikari-dev.com/2021/07/16/how2create-gem.html"}</script>
+{"@context":"https://schema.org","@type":"BlogPosting","author":{"@type":"Person","name":"ひかり"},"dateModified":"2021-07-16T01:54:00+00:00","datePublished":"2021-07-16T01:54:00+00:00","description":"テンプレートの作成 bundle gem &lt;GEM 名&gt; -t cd &lt;GEM 名&gt;","headline":"gem 作り方","mainEntityOfPage":{"@type":"WebPage","@id":"https://www.hikari-dev.com/2021/07/16/how2create-gem.html"},"url":"https://www.hikari-dev.com/2021/07/16/how2create-gem.html"}</script>
 <!-- End Jekyll SEO tag -->
 
 <script src="/assets/js/wareki.js"></script>
@@ -87,8 +87,7 @@
     <div id="markdown-content">
         <h2 id="テンプレートの作成">テンプレートの作成</h2>
 <div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code>bundle gem &lt;GEM 名&gt; <span class="nt">-t</span>
-
-<span class="nb">cd </span>narray-fromfile
+<span class="nb">cd</span> &lt;GEM 名&gt;
 </code></pre></div></div>
 
 <h2 id="gemspec-の編集">Gemspec の編集</h2>
