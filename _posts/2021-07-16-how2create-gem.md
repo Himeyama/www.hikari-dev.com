@@ -8,8 +8,7 @@ date: '2021-07-16 01:54'
 ## テンプレートの作成
 ```sh
 bundle gem <GEM 名> -t
-
-cd narray-fromfile
+cd <GEM 名>
 ```
 
 ## Gemspec の編集
