@@ -156,13 +156,13 @@ table
         padding: 8px
     tbody
         tr:nth-child(odd)
-            background: #A0A0A088
+            background-color: #A0A0A088
 
-pre.highlight
+code.hljs
     table
         tbody
             tr:nth-child(odd)
-                background: unset
+                background-color: unset
 
 @media (prefers-color-scheme: dark)
     table
@@ -171,15 +171,15 @@ pre.highlight
             border: 1px solid #505050
         tbody
             tr:nth-child(odd)
-                background: #50505088
+                background-color: #50505088
 
-    pre.highlight
+    code.hljs
         table
             tbody
                 tr:nth-child(odd)
-                    background: unset
+                    background-color: unset
 
-pre:not(.highlight) table
+code:not(.hljs) table
     border: solid 1px #0000000F
     border-radius: 4px
     white-space: nowrap
@@ -202,7 +202,7 @@ pre:not(.highlight) table
             &:nth-child(2n+1)
                 background-color: transparent
 @media (prefers-color-scheme: dark)
-    pre:not(.highlight) table
+    code:not(.hljs) table
         border-color: #FFFFFF0F
         thead
             tr
