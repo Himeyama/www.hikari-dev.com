@@ -170,11 +170,11 @@ table th, table td {
   padding: 8px;
 }
 table tbody tr:nth-child(odd) {
-  background: rgba(160, 160, 160, 0.5333333333);
+  background-color: rgba(160, 160, 160, 0.5333333333);
 }
 
-pre.highlight table tbody tr:nth-child(odd) {
-  background: unset;
+code.hljs table tbody tr:nth-child(odd) {
+  background-color: unset;
 }
 
 @media (prefers-color-scheme: dark) {
@@ -185,13 +185,13 @@ pre.highlight table tbody tr:nth-child(odd) {
     border: 1px solid #505050;
   }
   table tbody tr:nth-child(odd) {
-    background: rgba(80, 80, 80, 0.5333333333);
+    background-color: rgba(80, 80, 80, 0.5333333333);
   }
-  pre.highlight table tbody tr:nth-child(odd) {
-    background: unset;
+  code.hljs table tbody tr:nth-child(odd) {
+    background-color: unset;
   }
 }
-pre:not(.highlight) table {
+code:not(.hljs) table {
   border: solid 1px rgba(0, 0, 0, 0.0588235294);
   border-radius: 4px;
   white-space: nowrap;
@@ -200,32 +200,32 @@ pre:not(.highlight) table {
   border-collapse: collapse;
   overflow-x: auto;
 }
-pre:not(.highlight) table thead tr {
+code:not(.hljs) table thead tr {
   background-color: #FFFFFF;
 }
-pre:not(.highlight) table thead tr th {
+code:not(.hljs) table thead tr th {
   font-weight: bold;
   padding: 6px 13px;
 }
-pre:not(.highlight) table tbody tr {
+code:not(.hljs) table tbody tr {
   background-color: #FFFFFF;
 }
-pre:not(.highlight) table tbody tr td {
+code:not(.hljs) table tbody tr td {
   padding: 6px 13px;
   width: 1%;
 }
-pre:not(.highlight) table tbody tr:nth-child(2n+1) {
+code:not(.hljs) table tbody tr:nth-child(2n+1) {
   background-color: transparent;
 }
 
 @media (prefers-color-scheme: dark) {
-  pre:not(.highlight) table {
+  code:not(.hljs) table {
     border-color: rgba(255, 255, 255, 0.0588235294);
   }
-  pre:not(.highlight) table thead tr {
+  code:not(.hljs) table thead tr {
     background-color: #2B2B2B;
   }
-  pre:not(.highlight) table tbody tr {
+  code:not(.hljs) table tbody tr {
     background-color: #2B2B2B;
   }
 }
