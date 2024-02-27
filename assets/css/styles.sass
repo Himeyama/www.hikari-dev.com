@@ -158,10 +158,15 @@ table
             background-color: #A0A0A088
 
 code.hljs
+    text-wrap: wrap
     table
         tbody
             tr:nth-child(odd)
                 background-color: unset
+            tr
+                td.hljs-ln-numbers
+                    vertical-align: top
+                    text-wrap: nowrap
 
 @media (prefers-color-scheme: dark)
     table
