@@ -560,10 +560,17 @@ ins.adsbygoogle
             font-size: 12px
             font-weight: bold
             &:hover
-                background-color: #272727
+                background-color: #F2F2F2
             .chevrondown
                 font-family: Segoe MDL2 Assets
                 font-size: 12px
                 margin-right: 16px
                 display: inline-block
                 vertical-align: bottom
+
+@media (prefers-color-scheme: dark)
+    .tags.index
+        details
+            summary
+                &:hover
+                    background-color: #272727
