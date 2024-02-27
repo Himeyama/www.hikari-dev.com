@@ -172,8 +172,15 @@ table tbody tr:nth-child(odd) {
   background-color: rgba(160, 160, 160, 0.5333333333);
 }
 
+code.hljs {
+  text-wrap: wrap;
+}
 code.hljs table tbody tr:nth-child(odd) {
   background-color: unset;
+}
+code.hljs table tbody tr td.hljs-ln-numbers {
+  vertical-align: top;
+  text-wrap: nowrap;
 }
 
 @media (prefers-color-scheme: dark) {
