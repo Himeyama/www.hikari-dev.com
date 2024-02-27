@@ -29,15 +29,14 @@ const search = () => {
         const post_time = document.createElement("time");
         post_time.className = "post-date";
         const post_link_area = document.createElement("div");
-        post_link_area.className = "post_link_area";
-        archive_post.appendChild(post_time);
+        post_link_area.className = "post-link-area";
         archive_post.appendChild(post_link_area);
+        archive_post.appendChild(post_time);
 
         url_link_tag.href = page_info.item.url;
         post_link_area.innerText = page_info.item.title;
 
         const date = page_info.item.date;
-        const warekiDate = Wareki.date(date)
         post_time.innerText = Wareki.date(date);
         search_result.appendChild(url_link_tag);
     }
