@@ -4,15 +4,20 @@ title: タグ別
 ---
 
 {% for tag in site.tags %}
-<div class="index">
-  <article class="article">
-    <h3>{{ tag[0] }}</h3>
-    <ul>
-      {% for post in tag[1] %}
-      <li><a href="{{ post.url }}">{{ post.title }}</a></li>
-      {% endfor %}
-    </ul>
-  </article>
+<div class="index tags">
+  <details>
+    <summary><span class="chevrondown">&#xE70D;</span> {{ tag[0] }}</summary>
+    {% for post in tag[1] %}
+    <a class="post-link" href="{{ post.url | relative_url }}">
+      <div class="archive-post">
+        <div class="post-link-area">
+          {{ post.title }}
+        </div>
+        <!-- <time class="post-date">{{ post.date | date: "%Y-%m-%d" }}</time> -->
+      </div>
+    </a>
+    {% endfor %}
+  </details>
 </div>
 {% endfor %}
 
