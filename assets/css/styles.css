@@ -641,7 +641,7 @@ ins.adsbygoogle {
   font-weight: bold;
 }
 .tags.index details summary:hover {
-  background-color: #272727;
+  background-color: #F2F2F2;
 }
 .tags.index details summary .chevrondown {
   font-family: Segoe MDL2 Assets;
@@ -649,6 +649,12 @@ ins.adsbygoogle {
   margin-right: 16px;
   display: inline-block;
   vertical-align: bottom;
+}
+
+@media (prefers-color-scheme: dark) {
+  .tags.index details summary:hover {
+    background-color: #272727;
+  }
 }
 
 /*# sourceMappingURL=styles.css.map */
