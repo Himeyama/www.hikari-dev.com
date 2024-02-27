@@ -504,7 +504,7 @@ footer .footer .footer-contents {
     text-align: center;
   }
   .wrap-margin #sp-menu .NavigationView .NavigationViewItem:hover {
-    background-color: #2D2D2D;
+    background-color: #EAEAEA;
   }
   .wrap-margin #sp-menu .NavigationView .NavigationViewItem.column-0 {
     grid-column: 1/2;
@@ -531,6 +531,9 @@ footer .footer .footer-contents {
   }
 }
 @media (prefers-color-scheme: dark) and (max-width: 440px) {
+  .wrap-margin #sp-menu .NavigationView .NavigationViewItem:hover {
+    background-color: #2D2D2D;
+  }
   .wrap-margin #sp-menu .NavigationView .NavigationViewItem .active {
     background-color: #FF529F;
   }
