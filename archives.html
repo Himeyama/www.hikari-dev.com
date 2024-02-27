@@ -6,10 +6,10 @@ title: アーカイブ
 {% for post in site.posts %}
 <a class="post-link" href="{{ post.url | relative_url }}">
     <div class="archive-post">
-        <time class="post-date">{{ post.date | date: "%Y-%m-%d" }}</time>
         <div class="post-link-area">
             {{ post.title }}
         </div>
+        <time class="post-date">{{ post.date | date: "%Y-%m-%d" }}</time>
     </div>
 </a>
 {% endfor %}

@@ -470,23 +470,31 @@ ins.adsbygoogle
 
 .post-link
     word-break: break-all
-    margin-bottom: 8px
-    padding: 16px
+    margin-bottom: 4px
+    padding: 4.5px 8px
     border-radius: 4px
     display: block
-    border: solid 1px $card-border
-    background-color: $card-bg
+    /* border: solid 1px $card-border */
     color: $color
-    transition: .5s
+    transition: .2s
     .archive-post
         color: $color
         font-size: 14px
+        display: grid
+        grid-template-columns: 1fr auto
+        .post-link-area
+            grid-column: 1 / 2
+            white-space: nowrap
+            margin-top: 0px
+            text-overflow: ellipsis
+            overflow: hidden
+            max-width: 868px
+            margin-right: 16px
     .archive-date, .archive-date a
         color: $color-date
     &:hover
-        background-color: $card-bg-hover
-    .post-link-area
-        margin-top: 4px
+        background-color: #F2F2F2
+        /* background-color: $card-bg-hover */
 
 @media (prefers-color-scheme: dark)
     body
@@ -494,11 +502,10 @@ ins.adsbygoogle
         background-color: $background-color-dark
     
     .post-link
-        border: solid 1px $card-border-dark
-        background-color: $card-bg-dark
+        background-color: transparent
         color: $color-dark
         &:hover
-            background-color: $card-bg-hover-dark
+            background-color: #444444
         .archive-post
             color: $color-dark
         .archive-date, .archive-date a
