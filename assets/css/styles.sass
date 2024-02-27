@@ -349,6 +349,8 @@ footer
 
 .wrap-margin
     margin: 0 auto
+    #sp-menu
+        display: none
 
 .menu-buttons
     display: none
@@ -364,14 +366,32 @@ footer
 
 @media screen and (max-width: 440px)
     header
-        margin-bottom: 16px
+        margin-bottom: 4px
     main
         margin: 0
     .articles
         margin-top: 0
         margin-right: 16px
-        .page-title
-            margin-top: 0
+        article
+            font-size: 16px
+            .page-title
+                margin-top: 0
+                font-size: 30px
+            h2
+                font-size: 25.5px
+                margin: 32px 0px 12px 0
+            h3
+                font-size: 21px
+                margin: 30px 0px 18px 0
+            h4
+                font-size: 18px
+                margin: 36px 0px 6px 0
+            h5
+                font-size: 17.6px
+                margin: 36px 0px 6px 0
+            h6
+                font-size: 16.8px
+                margin: 36px 0px 6px 0
     .menu-wrapper.menu-buttons
         display: grid
         margin-top: 16px
@@ -398,6 +418,50 @@ footer
         display: none
     .articles
         grid-column: 1 / span 12
+    .wrap-margin
+        #sp-menu
+            margin: 0px 16px 3px 16px
+            display: block
+            .NavigationView
+                column-gap: 8px
+                display: grid
+                grid-template-columns: 1fr 1fr 1fr 1fr
+                .NavigationViewItem
+                    color: unset
+                    text-decoration: unset
+                    border-radius: 4px
+                    padding: 13px 0 4px 0
+                    text-align: center
+                    &:hover
+                        background-color: #2D2D2D
+                    &.column-0
+                        grid-column: 1 / 2
+                    &.column-1
+                        grid-column: 2 / 3
+                    &.column-2
+                        grid-column: 3 / 4
+                    &.column-3
+                        grid-column: 4 / 5
+                    .active
+                        width: 16px
+                        background: $accent-color
+                        height: 3px
+                        margin: 0px auto 0 auto
+                        border-radius: 2px
+                        visibility: collapse
+    code.hljs
+        table
+            tbody
+                tr
+                    font-size: 14px
+
+@media (prefers-color-scheme: dark) and (max-width: 440px)
+    .wrap-margin
+        #sp-menu
+            .NavigationView
+                .NavigationViewItem
+                    .active
+                        background-color: $accent-color-dark
 
 ins.adsbygoogle
     grid-row: 4
