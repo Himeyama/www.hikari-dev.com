@@ -9,15 +9,14 @@ search_button.addEventListener('click', () => {
 });
 
 const search_text = document.getElementById("search-text");
-search_text.addEventListener("keydown", () => {
+search_text.addEventListener("input", () => {
     search();
 });
 
 const search = () => {
+    const search_text = document.getElementById("search-text");
     const search_result = document.getElementById("search-result");
     search_result.innerHTML = "";
-
-    const search_text = document.getElementById("search-text");
     const fuse = new Fuse(posts_data, options);
     const result = fuse.search(search_text.value);
 
