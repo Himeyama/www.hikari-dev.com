@@ -92,6 +92,12 @@
 let posts_data = [
     
     {
+        "url": "/2024/03/09/how-to-install-dotnet-for-ubuntu.html",
+        "title": "Ubuntu (WSL2 含む) に dotnet をインストール方法",
+        "date": "2024-03-09"
+    },
+    
+    {
         "url": "/2024/02/26/ssh-localforward.html",
         "title": "WSL2 で SSH のトンネルを使用して、WSL2 上のサーバーを LAN に公開する方法",
         "date": "2024-02-26"
@@ -537,6 +543,40 @@ let posts_data = [
 
     <div class="index">
         <article class="article">
+            <h1 class="page-title"><a href="/2024/03/09/how-to-install-dotnet-for-ubuntu.html">Ubuntu (WSL2 含む) に dotnet をインストール方法</a></h1>
+            <time class="posted-date">2024-03-09</time>
+            <p>参考: 
+<a href="https://learn.microsoft.com/ja-jp/dotnet/core/install/linux-scripted-manual#scripted-install">パッケージ マネージャーを使用せずに Linux に .NET をインストールする - .NET | Microsoft Learn</a></p>
+
+<h2 id="インストールスクリプトのダウンロード">インストールスクリプトのダウンロード</h2>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>wget https://dot.net/v1/dotnet-install.sh <span class="nt">-O</span> dotnet-install.sh
+</code></pre></div></div>
+
+<h2 id="インストールスクリプトへ実行権限付与">インストールスクリプトへ実行権限付与</h2>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">chmod</span> +x ./dotnet-install.sh
+</code></pre></div></div>
+
+<h2 id="dotnet-sdk-をインストール">dotnet SDK をインストール</h2>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>./dotnet-install.sh
+</code></pre></div></div>
+
+<h3 id="最新版をインストールする場合は">最新版をインストールする場合は</h3>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>./dotnet-install.sh <span class="nt">--version</span> latest
+</code></pre></div></div>
+
+<h2 id="パスを通す">パスを通す</h2>
+<p><code class="language-plaintext highlighter-rouge">$HOME/.bashrc</code> を開き、以下を追記</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">export </span><span class="nv">DOTNET_ROOT</span><span class="o">=</span><span class="nv">$HOME</span>/.dotnet
+<span class="nb">export </span><span class="nv">PATH</span><span class="o">=</span><span class="nv">$PATH</span>:<span class="nv">$DOTNET_ROOT</span>:<span class="nv">$DOTNET_ROOT</span>/tools
+
+</code></pre></div></div>
+
+        </article>
+    </div>
+
+    <div class="index">
+        <article class="article">
             <h1 class="page-title"><a href="/2024/02/26/ssh-localforward.html">WSL2 で SSH のトンネルを使用して、WSL2 上のサーバーを LAN に公開する方法</a></h1>
             <time class="posted-date">2024-02-26</time>
             <h2 id="step1-wsl-側に-openssh-server-をインストール">Step1. WSL 側に OpenSSH Server をインストール</h2>
@@ -726,432 +766,6 @@ Arduino にシリアル通信のプログラムを書き込みます。</p>
 
 <div class="language-powershell highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">plink</span><span class="w"> </span><span class="nt">-serial</span><span class="w"> </span><span class="nx">COM1</span><span class="w"> </span><span class="nt">-sercfg</span><span class="w"> </span><span class="nx">9600</span><span class="p">,</span><span class="nx">8</span><span class="p">,</span><span class="nx">1</span><span class="p">,</span><span class="nx">N</span><span class="p">,</span><span class="nx">N</span><span class="w">
 </span></code></pre></div></div>
-
-        </article>
-    </div>
-
-    <div class="index">
-        <article class="article">
-            <h1 class="page-title"><a href="/2024/01/30/database-fe.html">基本情報データベースまとめ</a></h1>
-            <time class="posted-date">2024-01-30</time>
-            <h2 id="関係モデル">関係モデル</h2>
-<h3 id="関係モデルと関係データベースの対応">関係モデルと関係データベースの対応</h3>
-
-<table>
-  <thead>
-    <tr>
-      <th style="text-align: center">関係モデル</th>
-      <th style="text-align: center">関係データベース</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td style="text-align: center">関係</td>
-      <td style="text-align: center">表</td>
-    </tr>
-    <tr>
-      <td style="text-align: center">属性</td>
-      <td style="text-align: center">列</td>
-    </tr>
-    <tr>
-      <td style="text-align: center">タプル</td>
-      <td style="text-align: center">行</td>
-    </tr>
-    <tr>
-      <td style="text-align: center">定義域</td>
-      <td style="text-align: center">データ型。属性がとりえる値の集合。</td>
-    </tr>
-  </tbody>
-</table>
-
-<ul>
-  <li>属性に順序はない</li>
-  <li>属性名は関係内で一意</li>
-  <li>属性名には必ず名前を付ける</li>
-</ul>
-
-<p>(基本情報技術者試験平成 28 年春期午前問 26)<br />
-(基本情報技術者試験平成 31 年春期午前問 26)</p>
-
-<h2 id="関係データベース-リレーショナルデータベース-rdb-relational-database">関係データベース, リレーショナルデータベース (RDB, Relational DataBase)</h2>
-<p>関係データベースは、<strong>データを 2 次元の表によって表現する。</strong></p>
-
-<p>(基本情報技術者試験平成 23 年秋期午前問 31)</p>
-
-<h2 id="スキーマ">スキーマ</h2>
-<p>スキーマとは、<strong>データの性質、形式、ほかのデータとの関連などデータ定義の集合である。</strong></p>
-
-<p>(基本情報技術者試験平成 26 年秋期午前問 26)</p>
-
-<h3 id="3-層スキーマ">3 層スキーマ</h3>
-<p>3 層スキーマには、</p>
-<ul>
-  <li>外部スキーマ: 利用者からみえるもの</li>
-  <li>概念スキーマ: 開発者からみえるもの</li>
-  <li>内部スキーマ: 物理的な構造</li>
-</ul>
-
-<p>3 層スキーマの目的は、<strong>データの物理的な格納構造を変更しても，アプリケーションプログラムに影響が及ばないようにする。</strong></p>
-
-<p>(基本情報技術者試験平成 27 年春期午前問 26)</p>
-
-<h2 id="データベース管理システム-dbms-database-management-system">データベース管理システム (DBMS, DataBase Management System)</h2>
-<p>データベースを管理するソフトウェア。</p>
-
-<table>
-  <thead>
-    <tr>
-      <th style="text-align: center">機能</th>
-      <th style="text-align: center">概要</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td style="text-align: center">保全機能</td>
-      <td style="text-align: center">排他制御や参照制約、表制約によってデータの完全性を保つ機能</td>
-    </tr>
-    <tr>
-      <td style="text-align: center">障害回復機能</td>
-      <td style="text-align: center">ロールバック、ロールフォワード、チェックポイント、ログによってデータベース障害から回復する機能</td>
-    </tr>
-    <tr>
-      <td style="text-align: center">機密保護機能</td>
-      <td style="text-align: center">データの改ざんや漏洩を防ぐ機能</td>
-    </tr>
-  </tbody>
-</table>
-
-<p>(基本情報技術者試験平成 16 年春期午前問 70)</p>
-
-<h2 id="e-r-図-entity-relationship-diagram">E-R 図 (Entity-Relationship Diagram)</h2>
-<p>E-R 図は、<strong>エンティティ間の関連</strong>を示す。
-エンティティとは実体のこと。</p>
-
-<p>(基本情報技術者試験平成 18 年春期午前問 38)</p>
-
-<h2 id="表の設計">表の設計</h2>
-<h3 id="主キー-primary-key">主キー (Primary Key)</h3>
-<p>表中の行を一意に識別するための列。</p>
-
-<ul>
-  <li>一意制約</li>
-  <li>非 (NOT) NULL 制約</li>
-  <li>先頭でなくても OK</li>
-  <li>複数の列と合わせて主キーとしても OK (複合キー)</li>
-</ul>
-
-<p>(基本情報技術者試験平成 25 年秋期午前問 30)</p>
-
-<h3 id="外部キー-foreign-key">外部キー (Foreign Key)</h3>
-<p>他の表の主キーを参照している列。</p>
-
-<ul>
-  <li>参照制約 (参照一貫性が維持される制約)</li>
-</ul>
-
-<p>(基本情報技術者試験平成 28 年春期午前問 29)</p>
-
-<p><strong>リレーション</strong>とは、主キーと外部キーを用いた表間の関連付け。</p>
-
-<h2 id="データの正規化">データの正規化</h2>
-<p>データベースを構築する際に、<strong>データの重複や矛盾を排除</strong>する。</p>
-
-<p>(基本情報技術者試験平成 15 年春期午前問 67)<br />
-(基本情報技術者試験平成 16 年秋期午前問 67)<br />
-(基本情報技術者試験平成 18 年秋期午前問 61)</p>
-
-<h3 id="第-1-正規化">第 1 正規化</h3>
-<ul>
-  <li>繰り返しの項目をなくす</li>
-  <li>計算で求められる項目をなくす</li>
-</ul>
-
-<h3 id="第-2-正規化">第 2 正規化</h3>
-<p>主キーの一部で一意に決まるものを別表に移す</p>
-
-<ul>
-  <li>部分関数従属: 主キーの一部によって項目が一意に決定する関係</li>
-  <li>完全関数従属: 主キーによって項目が一意に決定する関係</li>
-</ul>
-
-<h3 id="第-3-正規化">第 3 正規化</h3>
-<p>主キー以外によって決まる項目を、別表に移す</p>
-
-<ul>
-  <li>推移的関数従属: 主キー以外の項目によって項目が一意に決定する関係</li>
-</ul>
-
-<p>(基本情報技術者試験平成 20 年秋期午前問 57)</p>
-
-<h2 id="トランザクション処理">トランザクション処理</h2>
-<p>一連の処理をひとまとめにしたもの。</p>
-
-<h3 id="acid-特性">ACID 特性</h3>
-<p>トランザクションの性質</p>
-
-<table>
-  <thead>
-    <tr>
-      <th style="text-align: center">特性</th>
-      <th style="text-align: center">概要</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td style="text-align: center"><strong>原子性 (Atomicity)</strong></td>
-      <td style="text-align: center">トランザクションが完了したか、してないか</td>
-    </tr>
-    <tr>
-      <td style="text-align: center">一貫性 (Consistency)</td>
-      <td style="text-align: center">データベースの内容に矛盾がない。整合性がある</td>
-    </tr>
-    <tr>
-      <td style="text-align: center">独立性 (Isolation)</td>
-      <td style="text-align: center">同時に実行した場合と順番に実行した場合で結果が同じ</td>
-    </tr>
-    <tr>
-      <td style="text-align: center">耐久性 (Durability)</td>
-      <td style="text-align: center">トランザクション正常終了後、障害時にデータが消失しない</td>
-    </tr>
-  </tbody>
-</table>
-
-<p>(基本情報技術者試験平成 24 年秋期午前問 30)<br />
-(基本情報技術者試験平成 26 年春期午前問 29)</p>
-
-<h2 id="排他制御">排他制御</h2>
-<p>データベースの一貫性を保つためにほかのトランザクションからのアクセスを制限 (<strong>ロック</strong>)</p>
-
-<p>排他制御の目的は、データの<strong>整合性を保つ</strong>こと</p>
-
-<p>(基本情報技術者試験平成 24 年春期午前問 33)<br />
-(基本情報技術者試験平成 28 年春期午前問 30)</p>
-
-<h3 id="共有ロック">共有ロック</h3>
-<p>トランザクションがデータを<strong>参照</strong>する前にかけるロック</p>
-
-<h3 id="専有ロック">専有ロック</h3>
-<p>トランザクションがデータを<strong>更新</strong>する前にかけるロック</p>
-
-<p><strong>共有ロックした後に、他のトランザクションは共有ロックすることだけが可能</strong></p>
-
-<h3 id="ロックの粒度">ロックの粒度</h3>
-<p>ロックの粒度を大きく (表単位など) すると、<strong>他のトランザクションの待ちが多く</strong>なり、<strong>全体のスループット</strong>が低下する。</p>
-
-<p>(基本情報技術者試験平成 30 年秋期午前問 29)</p>
-
-<p>表単位などロックの粒度が大きいとロックの競合が起こりやすく、
-行単位などロックの粒度が小さいとメモリ使用領域が多く必要になる。</p>
-
-<p>(基本情報技術者試験平成 30 年春期午前問 30)</p>
-
-<h2 id="デッドロック">デッドロック</h2>
-<p>複数のトランザクションが、<strong>互いに相手の専有ロックしている資源を要求して待ち状態</strong>となり、実行できなくなること。</p>
-
-<p>(基本情報技術者試験平成 16 年春期午前問 69)</p>
-
-<p>デッドロックが発生した場合は、<strong>片方</strong>のトランザクションをロールバックする。</p>
-
-<p>(基本情報技術者試験平成 18 年春期午前問 59)</p>
-
-<h2 id="2-相コミットメント">2 相コミットメント</h2>
-<p>一連のトランザクション処理を行う複数サイトに更新処理が確定可能かどうかを問い合わせ、すべてのサイトが確定可能である場合、更新処理を確定する方式。</p>
-
-<p>(基本情報技術者試験平成 17 年春期午前問 63)
-(基本情報技術者試験平成 29 年春期午前問 28)</p>
-
-<p>トランザクションの途中で障害が発生した場合はロールバックする</p>
-
-<h2 id="データベースの障害回復">データベースの障害回復</h2>
-<h3 id="ロールフォワード">ロールフォワード</h3>
-<p>フルバックアップファイルと<strong>更新後ログ</strong>を用いて復旧する</p>
-
-<h3 id="ロールバック">ロールバック</h3>
-<p><strong>更新前ログ</strong>を用いて復旧する</p>
-
-<h3 id="チェックポイント">チェックポイント</h3>
-<p><strong>データベース更新バッファの内容をデータベースに書出す。</strong></p>
-
-<h2 id="関係演算">関係演算</h2>
-<ul>
-  <li>射影: 列を取出す</li>
-  <li>選択: 行を取出す</li>
-  <li>結合: 複数の表から一つの表を生成</li>
-  <li>和: 二つの表の行を取出す。同じ行はまとめる。</li>
-  <li>積: 共通の行を取出す</li>
-  <li>差: 一つの表からもう片方の表の行を除いたものを取出す</li>
-</ul>
-
-<h2 id="sql">SQL</h2>
-<h3 id="ddl-data-definition-language-データ定義言語">DDL, Data Definition Language (データ定義言語)</h3>
-<h4 id="create-table">CREATE TABLE</h4>
-<p>テーブルを作成する。
-概念スキーマに相当。実表。</p>
-
-<div class="language-sql highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">CREATE</span> <span class="k">TABLE</span> <span class="n">TableName</span><span class="p">(</span><span class="n">ColumnName1</span> <span class="n">Type1</span><span class="p">,</span> <span class="p">...)</span>
-</code></pre></div></div>
-
-<h4 id="create-view">CREATE VIEW</h4>
-<p>ビューを定義する。
-外部スキーマに相当。仮想表。</p>
-
-<h3 id="dml-data-manipulation-language-データ操作言語">DML, Data Manipulation Language (データ操作言語)</h3>
-
-<h4 id="select">SELECT</h4>
-<p>クエリ (問合せ) を行う。</p>
-
-<div class="language-sql highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">SELECT</span> <span class="k">Column</span><span class="p">,</span> <span class="p">...</span> <span class="k">FROM</span> <span class="k">Table</span><span class="p">,</span> <span class="p">...</span> <span class="k">WHERE</span> <span class="n">Conditions</span>
-</code></pre></div></div>
-
-<ul>
-  <li>
-    <p>射影</p>
-
-    <p>列を取り出す操作</p>
-
-    <blockquote>
-      <p><code class="language-plaintext highlighter-rouge">Col</code> を取り出す場合</p>
-    </blockquote>
-
-    <div class="language-sql highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">SELECT</span> <span class="n">Col</span> <span class="k">FROM</span> <span class="k">Table</span>
-</code></pre></div>    </div>
-  </li>
-  <li>
-    <p>選択</p>
-
-    <p>行を取り出す操作</p>
-
-    <blockquote>
-      <p><code class="language-plaintext highlighter-rouge">Price</code> が 100 または 120 である行を取り出す場合</p>
-    </blockquote>
-
-    <div class="language-sql highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">SELECT</span> <span class="o">*</span> <span class="k">FROM</span> <span class="k">Table</span> <span class="k">WHERE</span> <span class="n">Price</span><span class="o">=</span><span class="mi">100</span> <span class="k">OR</span> <span class="n">Price</span><span class="o">=</span><span class="mi">120</span>
-</code></pre></div>    </div>
-
-    <div class="language-sql highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">SELECT</span> <span class="o">*</span> <span class="k">FROM</span> <span class="k">Table</span> <span class="k">WHERE</span> <span class="n">Price</span> <span class="k">IN</span> <span class="p">(</span><span class="mi">100</span><span class="p">,</span> <span class="mi">120</span><span class="p">)</span>
-</code></pre></div>    </div>
-
-    <blockquote>
-      <p><code class="language-plaintext highlighter-rouge">Price</code> が 100 以上 200 以下である行を取り出す場合</p>
-    </blockquote>
-
-    <div class="language-sql highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">SELECT</span> <span class="o">*</span> <span class="k">FROM</span> <span class="k">Table</span> <span class="k">WHERE</span> <span class="n">Price</span> <span class="o">&gt;=</span> <span class="mi">100</span> <span class="k">AND</span> <span class="n">Price</span> <span class="o">&lt;=</span> <span class="mi">200</span>
-</code></pre></div>    </div>
-
-    <div class="language-sql highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">SELECT</span> <span class="o">*</span> <span class="k">FROM</span> <span class="k">Table</span> <span class="k">WHERE</span> <span class="k">BETWEEN</span> <span class="mi">100</span> <span class="k">AND</span> <span class="mi">200</span>
-</code></pre></div>    </div>
-
-    <blockquote>
-      <p><code class="language-plaintext highlighter-rouge">Name</code> が “田” で終わる行を取り出す場合</p>
-      <div class="language-sql highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">SELECT</span> <span class="o">*</span> <span class="k">FROM</span> <span class="k">Table</span> <span class="k">WHERE</span> <span class="n">Name</span> <span class="k">LIKE</span> <span class="nv">"%田"</span>
-</code></pre></div>      </div>
-    </blockquote>
-
-    <ul>
-      <li>%: 0 文字以上にマッチ</li>
-      <li>_: 1 文字以上にマッチ</li>
-    </ul>
-  </li>
-</ul>
-
-<h3 id="結合">結合</h3>
-<ul>
-  <li>DISTINCT: 重複した行を一つにまとめる</li>
-</ul>
-
-<h3 id="並び替え-order-by">並び替え (ORDER BY)</h3>
-<h4 id="昇順-asc">昇順 (ASC)</h4>
-<div class="language-sql highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">SELECT</span> <span class="p">...</span> <span class="k">FROM</span> <span class="p">...</span> <span class="k">ORDER</span> <span class="k">BY</span> <span class="n">ColumnName</span> <span class="k">ASC</span>
-</code></pre></div></div>
-
-<p><code class="language-plaintext highlighter-rouge">ASC</code> は省略可。</p>
-
-<h4 id="降順-desc">降順 (DESC)</h4>
-<div class="language-sql highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">SELECT</span> <span class="p">...</span> <span class="k">FROM</span> <span class="p">...</span> <span class="k">ORDER</span> <span class="k">BY</span> <span class="n">ColumnName</span> <span class="k">DESC</span>
-</code></pre></div></div>
-
-<h3 id="集合関数">集合関数</h3>
-
-<table>
-  <thead>
-    <tr>
-      <th style="text-align: center">関数</th>
-      <th style="text-align: center">意味</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td style="text-align: center">AVG</td>
-      <td style="text-align: center">平均</td>
-    </tr>
-    <tr>
-      <td style="text-align: center">COUNT</td>
-      <td style="text-align: center">行数</td>
-    </tr>
-    <tr>
-      <td style="text-align: center">MIN</td>
-      <td style="text-align: center">最小値</td>
-    </tr>
-    <tr>
-      <td style="text-align: center">MAX</td>
-      <td style="text-align: center">最大値</td>
-    </tr>
-    <tr>
-      <td style="text-align: center">SUM</td>
-      <td style="text-align: center">合計</td>
-    </tr>
-  </tbody>
-</table>
-
-<h3 id="グループ化-group-by">グループ化 (GROUP BY)</h3>
-<div class="language-sql highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">SELECT</span> <span class="p">...</span> <span class="k">FROM</span> <span class="p">...</span> <span class="k">GROUP</span> <span class="k">BY</span> <span class="n">ColumnName</span>
-</code></pre></div></div>
-
-<h3 id="別名-as">別名 (AS)</h3>
-<div class="language-sql highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">SUM</span><span class="p">(</span><span class="n">ColumnName</span><span class="p">)</span> <span class="k">AS</span> <span class="n">GOUKEI</span>
-</code></pre></div></div>
-
-<h3 id="グループの条件-having">グループの条件 (HAVING)</h3>
-<div class="language-sql highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">GROUP</span> <span class="k">BY</span> <span class="n">ColumnName</span> <span class="k">HAVING</span> <span class="p">...</span>
-</code></pre></div></div>
-
-<h3 id="含まれる行を抽出-in">含まれる行を抽出 (IN)</h3>
-<div class="language-sql highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="p">...</span> <span class="k">WHERE</span> <span class="k">IN</span> <span class="p">(</span><span class="k">SELECT</span> <span class="p">...)</span>
-</code></pre></div></div>
-
-<p>含まれない行の場合は <code class="language-plaintext highlighter-rouge">NOT IN</code></p>
-
-<h3 id="相関副問合せ-exists">相関副問合せ (EXISTS)</h3>
-<p>存在する場合は真</p>
-
-<div class="language-sql highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="p">...</span> <span class="k">WHERE</span> <span class="k">EXISTS</span> <span class="p">(</span><span class="k">SELECT</span> <span class="p">...)</span>
-</code></pre></div></div>
-
-<h2 id="データベースの活用">データベースの活用</h2>
-<h3 id="データウェアハウス">データウェアハウス</h3>
-<p>企業の様々な活動を介して得られた大量のデータを整理・統合して<strong>蓄積</strong>しておき，意思決定支援などに利用するもの。</p>
-
-<p>(基本情報技術者試験平成 22 年春期午前問 33)</p>
-
-<h3 id="データマイニング">データマイニング</h3>
-<p>企業が保有する顧客や市場などの膨大なデータから，有用な情報や関係を<strong>見つけ出す</strong>手法</p>
-
-<p>(基本情報技術者試験平成 19 年秋期午前問 38)<br />
-(基本情報技術者試験平成 24 年春期午前問 64)<br />
-(基本情報技術者試験平成 29 年春期午前問 29)</p>
-
-<h3 id="ビッグデータ">ビッグデータ</h3>
-<ul>
-  <li>SNS、動画、画像、音声などの<strong>多種多様</strong>なデータ</li>
-  <li>膨大なデータ容量</li>
-  <li>リアルタイムで収集されるデータ</li>
-</ul>
-
-<p>(基本情報技術者試験平成 29 年春期午前問 63)</p>
-
-<h3 id="オープンデータ">オープンデータ</h3>
-<p>原則無償で自由に二次利用可能な官民データ</p>
-
 
         </article>
     </div>
