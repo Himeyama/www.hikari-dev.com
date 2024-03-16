@@ -92,6 +92,12 @@
 let posts_data = [
     
     {
+        "url": "/2024/03/16/pyenv-install.html",
+        "title": "Ubuntu (WSL2 含む) に pyenv と Python をインストールする方法",
+        "date": "2024-03-16"
+    },
+    
+    {
         "url": "/2024/03/09/how-to-install-dotnet-for-ubuntu.html",
         "title": "Ubuntu (WSL2 含む) に dotnet をインストール方法",
         "date": "2024-03-09"
@@ -543,6 +549,65 @@ let posts_data = [
 
     <div class="index">
         <article class="article">
+            <h1 class="page-title"><a href="/2024/03/16/pyenv-install.html">Ubuntu (WSL2 含む) に pyenv と Python をインストールする方法</a></h1>
+            <time class="posted-date">2024-03-16</time>
+            <h2 id="依存パッケージのインストール">依存パッケージのインストール</h2>
+<p>参考: <a href="https://github.com/pyenv/pyenv/wiki#suggested-build-environment">Home · pyenv/pyenv Wiki</a></p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">sudo </span>apt update
+<span class="nb">sudo </span>apt <span class="nb">install </span>build-essential libssl-dev zlib1g-dev <span class="se">\</span>
+    libbz2-dev libreadline-dev libsqlite3-dev curl <span class="se">\</span>
+    libncursesw5-dev xz-utils tk-dev libxml2-dev libxmlsec1-dev libffi-dev liblzma-dev
+</code></pre></div></div>
+
+<h2 id="pyenv-のインストール">Pyenv のインストール</h2>
+<p>参考: <a href="https://github.com/pyenv/pyenv-installer?tab=readme-ov-file">pyenv/pyenv-installer: This tool is used to install <code class="language-plaintext highlighter-rouge">pyenv</code> and friends.</a></p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>curl https://pyenv.run | bash
+</code></pre></div></div>
+
+<h2 id="bashrc-に初期化スクリプトを書き込む">~/.bashrc に初期化スクリプトを書き込む</h2>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c"># ~/.bashrc を開く</span>
+code ~/.bashrc
+</code></pre></div></div>
+
+<p>以下を書き込みます。</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">export </span><span class="nv">PYENV_ROOT</span><span class="o">=</span><span class="s2">"</span><span class="nv">$HOME</span><span class="s2">/.pyenv"</span>
+<span class="o">[[</span> <span class="nt">-d</span> <span class="nv">$PYENV_ROOT</span>/bin <span class="o">]]</span> <span class="o">&amp;&amp;</span> <span class="nb">export </span><span class="nv">PATH</span><span class="o">=</span><span class="s2">"</span><span class="nv">$PYENV_ROOT</span><span class="s2">/bin:</span><span class="nv">$PATH</span><span class="s2">"</span>
+<span class="nb">eval</span> <span class="s2">"</span><span class="si">$(</span>pyenv init -<span class="si">)</span><span class="s2">"</span>
+
+<span class="nb">eval</span> <span class="s2">"</span><span class="si">$(</span>pyenv virtualenv-init -<span class="si">)</span><span class="s2">"</span>
+
+</code></pre></div></div>
+
+<h2 id="python-のインストール">Python のインストール</h2>
+
+<h3 id="インストール可能なバージョン一覧を表示">インストール可能なバージョン一覧を表示</h3>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>pyenv <span class="nb">install</span> <span class="nt">-l</span>
+</code></pre></div></div>
+
+<h3 id="python-のインストール-1">Python のインストール</h3>
+<p>Python 3.12.2 をインストールします。</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>pyenv <span class="nb">install </span>3.12.2
+</code></pre></div></div>
+
+<h3 id="python-のバージョンを指定">Python のバージョンを指定</h3>
+<p>デフォルトのバージョンを Python 3.12.2 に設定します。</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>pyenv global 3.12.2
+
+python <span class="nt">-V</span> <span class="c"># Python 3.12.2</span>
+</code></pre></div></div>
+
+        </article>
+    </div>
+
+    <div class="index">
+        <article class="article">
             <h1 class="page-title"><a href="/2024/03/09/how-to-install-dotnet-for-ubuntu.html">Ubuntu (WSL2 含む) に dotnet をインストール方法</a></h1>
             <time class="posted-date">2024-03-09</time>
             <p>参考: 
@@ -734,38 +799,6 @@ rbenv global 3.3.0   <span class="c"># Ruby 3.3.0 を規定に設定</span>
 <ul>
   <li>https://github.com/rbenv/rbenv</li>
 </ul>
-
-        </article>
-    </div>
-
-    <div class="index">
-        <article class="article">
-            <h1 class="page-title"><a href="/2024/02/19/plink.html">Windows Terminal と plink を使ってシリアルコンソールを使う</a></h1>
-            <time class="posted-date">2024-02-19</time>
-            <h2 id="arduino-シリアル通信のプログラムを書く">Arduino シリアル通信のプログラムを書く</h2>
-<p>Windows Terminal と plink を用いたシリアル通信を試すために、
-Arduino にシリアル通信のプログラムを書き込みます。</p>
-
-<div class="language-cpp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kt">void</span> <span class="nf">setup</span><span class="p">()</span> <span class="p">{</span>
-  <span class="n">Serial</span><span class="p">.</span><span class="n">begin</span><span class="p">(</span><span class="mi">9600</span><span class="p">);</span>
-<span class="p">}</span>
-
-<span class="kt">void</span> <span class="nf">loop</span><span class="p">()</span> <span class="p">{</span>
-  <span class="k">if</span><span class="p">(</span><span class="n">Serial</span><span class="p">.</span><span class="n">available</span><span class="p">()</span> <span class="o">&lt;=</span> <span class="mi">0</span><span class="p">)</span> <span class="k">return</span><span class="p">;</span>
-  <span class="kt">char</span> <span class="n">data</span> <span class="o">=</span> <span class="n">Serial</span><span class="p">.</span><span class="n">read</span><span class="p">();</span>
-  <span class="k">if</span><span class="p">(</span><span class="n">data</span> <span class="o">==</span> <span class="sc">'\r'</span><span class="p">){</span>
-    <span class="n">Serial</span><span class="p">.</span><span class="n">print</span><span class="p">(</span><span class="s">"</span><span class="se">\n</span><span class="s">"</span><span class="p">);</span>
-  <span class="p">}</span><span class="k">else</span><span class="p">{</span>
-    <span class="n">Serial</span><span class="p">.</span><span class="n">print</span><span class="p">(</span><span class="n">data</span><span class="p">);</span>
-  <span class="p">}</span>
-<span class="p">}</span>
-</code></pre></div></div>
-
-<h2 id="plink-で-arduino-とシリアル通信">plink で Arduino とシリアル通信</h2>
-<p>以下のコマンドで Windows Terminal から plink コマンドを実行してシリアル通信を行います。</p>
-
-<div class="language-powershell highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">plink</span><span class="w"> </span><span class="nt">-serial</span><span class="w"> </span><span class="nx">COM1</span><span class="w"> </span><span class="nt">-sercfg</span><span class="w"> </span><span class="nx">9600</span><span class="p">,</span><span class="nx">8</span><span class="p">,</span><span class="nx">1</span><span class="p">,</span><span class="nx">N</span><span class="p">,</span><span class="nx">N</span><span class="w">
-</span></code></pre></div></div>
 
         </article>
     </div>
