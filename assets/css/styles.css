@@ -25,7 +25,6 @@ body .hljs table.hljs-ln tbody tr td.hljs-ln-numbers {
 
 code.hljs {
   font-family: "PlemolJP Console NF", "Cascadia Code", Consolas, "Courier New", monospace;
-  font-weight: bold;
 }
 
 code.language-plaintext.highlighter-rouge {
@@ -174,9 +173,14 @@ table tbody tr:nth-child(odd) {
 
 code.hljs {
   text-wrap: wrap;
+  word-break: break-all;
+  font-size: 14px;
 }
 code.hljs table tbody tr:nth-child(odd) {
   background-color: unset;
+}
+code.hljs table tbody tr {
+  font-size: 14px;
 }
 code.hljs table tbody tr td.hljs-ln-numbers {
   vertical-align: top;

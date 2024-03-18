@@ -210,7 +210,28 @@
             }
         }
     </script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github-dark.min.css">
+    
+    <link id="highlight-theme" rel="stylesheet">
+    <script>
+        const themeMediaQuery = window.matchMedia('(prefers-color-scheme: dark)');
+        const handleThemeChange = (event) => {
+            // let link = document.createElement("link");
+            // link.rel = "stylesheet";
+            let link = document.getElementById("highlight-theme");
+            if (event.matches) {
+                console.log("Dark theme");
+                link.href = "https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github-dark.min.css"
+            }else{
+                console.log("Light theme");
+                link.href = "https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github.min.css"
+            }
+            hljs.highlightAll();
+        }
+
+        themeMediaQuery.addListener(handleThemeChange);
+        handleThemeChange(themeMediaQuery);
+    </script>
+    
     <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/languages/powershell.min.js"></script>
     <script
