@@ -92,6 +92,18 @@
 let posts_data = [
     
     {
+        "url": "/2024/03/19/raspberrypi-locale-ja.html",
+        "title": "RaspberryPi のプロンプトを日本語化する方法",
+        "date": "2024-03-19"
+    },
+    
+    {
+        "url": "/2024/03/19/linux-locale-ja.html",
+        "title": "Linux プロンプトを日本語化する方法",
+        "date": "2024-03-19"
+    },
+    
+    {
         "url": "/2024/03/16/pyenv-install.html",
         "title": "Ubuntu (WSL2 含む) に pyenv と Python をインストールする方法",
         "date": "2024-03-16"
@@ -549,6 +561,71 @@ let posts_data = [
 
     <div class="index">
         <article class="article">
+            <h1 class="page-title"><a href="/2024/03/19/raspberrypi-locale-ja.html">RaspberryPi のプロンプトを日本語化する方法</a></h1>
+            <time class="posted-date">2024-03-19</time>
+            <p>Raspberry Pi のプロンプトを日本語化する方法を紹介します。</p>
+
+<h2 id="1-ロケールの設定">1. ロケールの設定</h2>
+
+<p>日本語のロケールを設定します。以下のコマンドを実行します。</p>
+
+<ol>
+  <li>スペースで以下のようにチェックを入れ OK する</li>
+  <li>ja_JP.UTF-8 を選択し OK する</li>
+</ol>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">sudo </span>dpkg-reconfigure locales
+
+<span class="c"># [*] ja_JP.UTF-8 UTF-8</span>
+</code></pre></div></div>
+
+<h2 id="2-再起動">2. 再起動</h2>
+
+<p>再起動します。</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">sudo </span>reboot
+</code></pre></div></div>
+
+<p>以上。</p>
+
+        </article>
+    </div>
+
+    <div class="index">
+        <article class="article">
+            <h1 class="page-title"><a href="/2024/03/19/linux-locale-ja.html">Linux プロンプトを日本語化する方法</a></h1>
+            <time class="posted-date">2024-03-19</time>
+            <p>Linux のプロンプトを日本語化する方法を紹介します。</p>
+
+<h2 id="1-日本語ロケールのインストール">1. 日本語ロケールのインストール</h2>
+
+<p>次に、日本語のロケールが存在しない場合は、それをインストールします。以下のコマンドを実行します。</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">sudo </span>apt update
+<span class="nb">sudo </span>apt <span class="nb">install </span>language-pack-ja
+</code></pre></div></div>
+
+<h2 id="2-ロケールの設定">2. ロケールの設定</h2>
+
+<p>日本語のロケールを設定します。以下のコマンドを実行します。</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">sudo </span>update-locale <span class="nv">LANG</span><span class="o">=</span>ja_JP.UTF8
+</code></pre></div></div>
+
+<h2 id="3-システムの再起動">3. システムの再起動</h2>
+
+<p>最後に、システムを再起動します。これにより、新しいロケール設定が反映されます。</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">sudo </span>reboot
+</code></pre></div></div>
+
+<p>以上で、Linux プロンプトが日本語化されます。</p>
+
+        </article>
+    </div>
+
+    <div class="index">
+        <article class="article">
             <h1 class="page-title"><a href="/2024/03/16/pyenv-install.html">Ubuntu (WSL2 含む) に pyenv と Python をインストールする方法</a></h1>
             <time class="posted-date">2024-03-16</time>
             <h2 id="依存パッケージのインストール">依存パッケージのインストール</h2>
@@ -697,108 +774,6 @@ ruby -run -e httpd . # ディレクトリ一覧が公開される
 
 <p>トンネル接続によるデメリットとしては毎回トンネルを通すのが面倒なことです。
 不安定ですが、<code class="language-plaintext highlighter-rouge">netsh interface portproxy ~</code> による設定を行っても同じようにできます。</p>
-
-        </article>
-    </div>
-
-    <div class="index">
-        <article class="article">
-            <h1 class="page-title"><a href="/2024/02/25/rightclickmenu.html">JavaScript と HTML と CSS で右クリックメニューを実装</a></h1>
-            <time class="posted-date">2024-02-25</time>
-            <h2 id="javascript">JavaScript</h2>
-<p><code class="language-plaintext highlighter-rouge">id="contextmenu"</code> がメニュー本体で、<code class="language-plaintext highlighter-rouge">id="main"</code> がメニューを表示する対象の部分。</p>
-
-<div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">const</span> <span class="nx">contextmenu</span> <span class="o">=</span> <span class="nb">document</span><span class="p">.</span><span class="nf">getElementById</span><span class="p">(</span><span class="dl">'</span><span class="s1">contextmenu</span><span class="dl">'</span><span class="p">);</span>
-<span class="kd">const</span> <span class="nx">main</span> <span class="o">=</span> <span class="nb">document</span><span class="p">.</span><span class="nf">getElementById</span><span class="p">(</span><span class="dl">"</span><span class="s2">main</span><span class="dl">"</span><span class="p">);</span>
-<span class="nx">main</span><span class="p">.</span><span class="nf">addEventListener</span><span class="p">(</span><span class="dl">'</span><span class="s1">contextmenu</span><span class="dl">'</span><span class="p">,</span> <span class="p">(</span><span class="nx">e</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="p">{</span>
-    <span class="nx">e</span><span class="p">.</span><span class="nf">preventDefault</span><span class="p">();</span>
-    <span class="nx">contextmenu</span><span class="p">.</span><span class="nx">style</span><span class="p">.</span><span class="nx">left</span> <span class="o">=</span> <span class="nx">e</span><span class="p">.</span><span class="nx">pageX</span> <span class="o">+</span> <span class="dl">'</span><span class="s1">px</span><span class="dl">'</span><span class="p">;</span>
-    <span class="nx">contextmenu</span><span class="p">.</span><span class="nx">style</span><span class="p">.</span><span class="nx">top</span> <span class="o">=</span> <span class="nx">e</span><span class="p">.</span><span class="nx">pageY</span> <span class="o">+</span> <span class="dl">'</span><span class="s1">px</span><span class="dl">'</span><span class="p">;</span>
-    <span class="nx">contextmenu</span><span class="p">.</span><span class="nx">style</span><span class="p">.</span><span class="nx">display</span> <span class="o">=</span> <span class="dl">'</span><span class="s1">block</span><span class="dl">'</span><span class="p">;</span>
-<span class="p">});</span>
-<span class="nx">main</span><span class="p">.</span><span class="nf">addEventListener</span><span class="p">(</span><span class="dl">'</span><span class="s1">click</span><span class="dl">'</span><span class="p">,</span> <span class="p">()</span> <span class="o">=&gt;</span> <span class="p">{</span>
-    <span class="nx">contextmenu</span><span class="p">.</span><span class="nx">style</span><span class="p">.</span><span class="nx">display</span> <span class="o">=</span> <span class="dl">'</span><span class="s1">none</span><span class="dl">'</span><span class="p">;</span>
-<span class="p">});</span>
-</code></pre></div></div>
-
-<h2 id="html">HTML</h2>
-<div class="language-html highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">&lt;div</span> <span class="na">id=</span><span class="s">"contextmenu"</span><span class="nt">&gt;</span>
-    <span class="nt">&lt;ul&gt;</span>
-        <span class="nt">&lt;li&gt;</span>削除<span class="nt">&lt;/li&gt;</span>
-    <span class="nt">&lt;/ul&gt;</span>
-<span class="nt">&lt;/div&gt;</span>
-</code></pre></div></div>
-
-<h2 id="css">CSS</h2>
-<div class="language-css highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nf">#contextmenu</span> <span class="p">{</span>
-    <span class="nl">display</span><span class="p">:</span> <span class="nb">none</span><span class="p">;</span>
-    <span class="nl">position</span><span class="p">:</span> <span class="nb">fixed</span><span class="p">;</span>
-    <span class="nl">left</span><span class="p">:</span> <span class="m">0</span><span class="p">;</span>
-    <span class="nl">top</span><span class="p">:</span> <span class="m">0</span><span class="p">;</span>
-    <span class="nl">border-radius</span><span class="p">:</span> <span class="m">8px</span><span class="p">;</span>
-    <span class="nl">background-color</span><span class="p">:</span> <span class="m">#F9F9F9</span><span class="p">;</span>
-    <span class="nl">border</span><span class="p">:</span> <span class="nb">solid</span> <span class="m">1px</span> <span class="m">#E3E3E3</span><span class="p">;</span>
-    <span class="nl">padding</span><span class="p">:</span> <span class="m">4px</span><span class="p">;</span>
-    <span class="nl">width</span><span class="p">:</span> <span class="m">192px</span><span class="p">;</span>
-<span class="p">}</span>
-
-<span class="nf">#contextmenu</span> <span class="nt">ul</span><span class="p">{</span>
-    <span class="nl">padding-left</span><span class="p">:</span> <span class="m">0</span><span class="p">;</span>
-    <span class="nl">margin</span><span class="p">:</span> <span class="m">0</span><span class="p">;</span>
-<span class="p">}</span>
-
-<span class="nf">#contextmenu</span> <span class="nt">li</span> <span class="p">{</span>
-    <span class="nl">cursor</span><span class="p">:</span> <span class="nb">pointer</span><span class="p">;</span>
-    <span class="nl">margin</span><span class="p">:</span> <span class="m">0</span><span class="p">;</span>
-    <span class="nl">padding</span><span class="p">:</span> <span class="m">4.75px</span> <span class="m">0</span> <span class="m">4.75px</span> <span class="m">16px</span><span class="p">;</span>
-    <span class="nl">border-radius</span><span class="p">:</span> <span class="m">4px</span><span class="p">;</span>
-    <span class="nl">list-style</span><span class="p">:</span> <span class="nb">none</span><span class="p">;</span>
-    <span class="nl">font-size</span><span class="p">:</span> <span class="m">14px</span><span class="p">;</span>
-<span class="p">}</span>
-</code></pre></div></div>
-
-<p>※クリックしたときのイベントと機能は別途作成する必要がある。</p>
-
-        </article>
-    </div>
-
-    <div class="index">
-        <article class="article">
-            <h1 class="page-title"><a href="/2024/02/24/rbenv-install.html">rbenv (WSL2 / Ubuntu) へのインストール方法</a></h1>
-            <time class="posted-date">2024-02-24</time>
-            <h2 id="依存パッケージのインストール">依存パッケージのインストール</h2>
-<ul>
-  <li>https://github.com/rbenv/ruby-build/wiki#ubuntudebianmint</li>
-</ul>
-
-<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">sudo </span>apt update
-<span class="nb">sudo </span>apt <span class="nb">install </span>autoconf patch build-essential rustc libssl-dev libyaml-dev libreadline6-dev zlib1g-dev libgmp-dev libncurses5-dev libffi-dev libgdbm6 libgdbm-dev libdb-dev uuid-dev <span class="nt">-y</span>
-</code></pre></div></div>
-
-<h2 id="rbenv-のインストール">rbenv のインストール</h2>
-<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c"># rbenv と ruby-build をインストール</span>
-curl <span class="nt">-fsSL</span> https://github.com/rbenv/rbenv-installer/raw/HEAD/bin/rbenv-installer | bash
-
-<span class="c"># 起動時に rbenv を読み込み</span>
-<span class="nb">echo</span> <span class="s1">'eval "$(/home/hikari/.rbenv/bin/rbenv init - bash)"'</span> | <span class="nb">tee</span> <span class="nt">-a</span> ~/.bashrc
-</code></pre></div></div>
-
-<h3 id="参考">参考</h3>
-<ul>
-  <li>https://github.com/rbenv/rbenv-installer</li>
-</ul>
-
-<h2 id="ruby-330-のインストール">Ruby 3.3.0 のインストール</h2>
-
-<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">source</span> ~/.bashrc     <span class="c"># rbenv を初期化 (WSL 再ログインでも可)</span>
-rbenv <span class="nb">install </span>3.3.0  <span class="c"># Ruby 3.3.0 のインストール</span>
-rbenv global 3.3.0   <span class="c"># Ruby 3.3.0 を規定に設定</span>
-</code></pre></div></div>
-
-<h3 id="参考-1">参考</h3>
-<ul>
-  <li>https://github.com/rbenv/rbenv</li>
-</ul>
 
         </article>
     </div>
