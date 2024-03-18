@@ -36,7 +36,6 @@ $table-border-color-dark: #505050
 
 code.hljs
     font-family: "PlemolJP Console NF", "Cascadia Code", Consolas, "Courier New", monospace
-    font-weight: bold
 
 code.language-plaintext.highlighter-rouge
     font-family: "PlemolJP Console NF", "Cascadia Code", Consolas, "Courier New", monospace
@@ -159,11 +158,14 @@ table
 
 code.hljs
     text-wrap: wrap
+    word-break: break-all
+    font-size: 14px
     table
         tbody
             tr:nth-child(odd)
                 background-color: unset
             tr
+                font-size: 14px
                 td.hljs-ln-numbers
                     vertical-align: top
                     text-wrap: nowrap
