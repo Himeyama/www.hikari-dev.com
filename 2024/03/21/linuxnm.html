@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+    <meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+<link rel="stylesheet" href="/assets/css/styles.css">
+<meta name="Hikari's personal website that is written information technology.">
+<!-- Begin Jekyll SEO tag v2.8.0 -->
+<title>Linux のネットワーク管理コマンド nmcli と nmtui | ひかりの実験室</title>
+<meta name="generator" content="Jekyll v4.3.3" />
+<meta property="og:title" content="Linux のネットワーク管理コマンド nmcli と nmtui" />
+<meta name="author" content="ひかり" />
+<meta property="og:locale" content="ja_JP" />
+<meta name="description" content="nmcli" />
+<meta property="og:description" content="nmcli" />
+<link rel="canonical" href="https://www.hikari-dev.com/2024/03/21/linuxnm.html" />
+<meta property="og:url" content="https://www.hikari-dev.com/2024/03/21/linuxnm.html" />
+<meta property="og:site_name" content="ひかりの実験室" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2024-03-21T00:00:00+00:00" />
+<meta name="twitter:card" content="summary" />
+<meta property="twitter:title" content="Linux のネットワーク管理コマンド nmcli と nmtui" />
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"BlogPosting","author":{"@type":"Person","name":"ひかり"},"dateModified":"2024-03-21T00:00:00+00:00","datePublished":"2024-03-21T00:00:00+00:00","description":"nmcli","headline":"Linux のネットワーク管理コマンド nmcli と nmtui","mainEntityOfPage":{"@type":"WebPage","@id":"https://www.hikari-dev.com/2024/03/21/linuxnm.html"},"url":"https://www.hikari-dev.com/2024/03/21/linuxnm.html"}</script>
+<!-- End Jekyll SEO tag -->
+
+<script src="/assets/js/wareki.js"></script>
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-6QLJRW2VM8"></script>
+<script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag() { dataLayer.push(arguments); }
+    gtag('js', new Date());
+
+    gtag('config', 'G-6QLJRW2VM8');
+</script>
+<!-- <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9005833361216146"
+    crossorigin="anonymous"></script>
+<ins class="adsbygoogle" style="display:block; text-align:center;" data-ad-layout="in-article" data-ad-format="fluid"
+    data-ad-client="ca-pub-9005833361216146" data-ad-slot="6901616621"></ins>
+<script>
+    (adsbygoogle = window.adsbygoogle || []).push({});
+</script> -->
+</head>
+
+<body>
+    <header>
+        <div class="header-panel">
+    <h1><a href="/">ひかりの実験室</a></h1>
+    <!-- <menu class="menu-buttons">
+        <a href="/" id="home-button"><button>ホーム</button></a>
+        <a href="/archives" id="archive-button"><button>アーカイブ</button></a>
+        <a href="/tags" id="tags-button"><button>タグ別</button></a>
+    </menu> -->
+</div>
+    </header>
+    <div class="wrap-margin">
+        <div>
+            <div id="sp-menu">
+    <div class="NavigationView">
+        <a href="/" class="NavigationViewItem column-0">
+            <span>ホーム</span>
+            <div class="active" id="sp-menu-home"></div>
+        </a>
+        <a href="/search" class="NavigationViewItem column-1">
+            <span>検索</span>
+            <div class="active" id="sp-menu-search"></div>
+        </a>
+        <a href="/archives" class="NavigationViewItem column-2">
+            <span>アーカイブ</span>
+            <div class="active" id="sp-menu-archive"></div>
+        </a>
+        <a href="/tags" class="NavigationViewItem column-3">
+            <span>タグ別</span>
+            <div class="active" id="sp-menu-tags"></div>
+        </a>
+    </div>
+</div>
+        </div>
+        <main>
+            <div class="articles">
+                <article>
+    <div class="page-navigation">
+        
+        <a class="prev" href="/2024/03/19/raspberrypi-locale-ja.html">
+            <button class="button style-standard">
+                前へ
+            </button>
+        </a>
+        
+        
+    </div>
+</article>
+
+<article>
+    <h1 class="page-title">Linux のネットワーク管理コマンド nmcli と nmtui</h1>
+    <time class="posted-date">2024-03-21</time>
+    <!-- <div id="table-of-contents">
+        <h2>目次</h2>
+        <ul id="toc" class="section-nav">
+<li class="toc-entry toc-h2"><a href="#nmcli">nmcli</a>
+<ul>
+<li class="toc-entry toc-h3"><a href="#nmcli-connection-すべての接続を表示">nmcli connection: すべての接続を表示</a></li>
+<li class="toc-entry toc-h3"><a href="#nmcli-device-デバイスと状態を表示">nmcli device: デバイスと状態を表示</a></li>
+<li class="toc-entry toc-h3"><a href="#nmcli-connection-show--プロパティを表示">nmcli connection show ...: プロパティを表示</a></li>
+<li class="toc-entry toc-h3"><a href="#ip-アドレスの確認">IP アドレスの確認</a></li>
+<li class="toc-entry toc-h3"><a href="#ip-アドレスの設定">IP アドレスの設定</a></li>
+<li class="toc-entry toc-h3"><a href="#dns-サーバーの確認">DNS サーバーの確認</a></li>
+<li class="toc-entry toc-h3"><a href="#dns-サーバーの設定">DNS サーバーの設定</a></li>
+<li class="toc-entry toc-h3"><a href="#接続を切断">接続を切断</a></li>
+<li class="toc-entry toc-h3"><a href="#接続">接続</a></li>
+</ul>
+</li>
+<li class="toc-entry toc-h2"><a href="#nmtui-tui-でネットワーク接続を設定">nmtui: TUI でネットワーク接続を設定</a></li>
+</ul>
+    </div> -->
+    <div id="markdown-content">
+        <h2 id="nmcli">nmcli</h2>
+
+<h3 id="nmcli-connection-すべての接続を表示"><code class="language-plaintext highlighter-rouge">nmcli connection</code>: すべての接続を表示</h3>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>pi@raspberrypi:~ $ nmcli connection
+NAME           UUID                                  TYPE      DEVICE
+preconfigured  1b29633c-51a7-42a8-8357-a23ddbb791b9  wifi      wlan0
+lo             37334688-5c87-47fc-87d3-8c4e31934dd2  loopback  lo
+有線接続 1     0df9157e-b1a9-3026-9bd5-f05234e1cf4b  ethernet  --
+</code></pre></div></div>
+
+<h3 id="nmcli-device-デバイスと状態を表示"><code class="language-plaintext highlighter-rouge">nmcli device</code>: デバイスと状態を表示</h3>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>pi@raspberrypi:~ $ nmcli device
+DEVICE         TYPE      STATE            CONNECTION
+wlan0          wifi      接続済み         preconfigured
+lo             loopback  接続済み (外部)  lo
+p2p-dev-wlan0  wifi-p2p  切断済み         --
+eth0           ethernet  利用不可         --
+</code></pre></div></div>
+
+<h3 id="nmcli-connection-show--プロパティを表示"><code class="language-plaintext highlighter-rouge">nmcli connection show ...</code>: プロパティを表示</h3>
+<p><code class="language-plaintext highlighter-rouge">nmcli connection show プロファイル名</code> を実行し、プロパティを表示できる。</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>pi@raspberrypi:~ <span class="nv">$ </span>nmcli connection show &lt;プロファイル名&gt;
+connection.id:                          &lt;プロファイル名&gt;
+connection.uuid:                        1b29633c-51a7-42a8-8357-a23ddbb791b9
+connection.stable-id:                   <span class="nt">--</span>
+connection.type:                        802-11-wireless
+connection.interface-name:              <span class="nt">--</span>
+connection.autoconnect:                 はい
+connection.autoconnect-priority:        0
+connection.autoconnect-retries:         <span class="nt">-1</span> <span class="o">(</span>default<span class="o">)</span>
+connection.multi-connect:               0 <span class="o">(</span>default<span class="o">)</span>
+connection.auth-retries:                <span class="nt">-1</span>
+connection.timestamp:                   1710955164
+connection.read-only:                   いいえ
+connection.permissions:                 <span class="nt">--</span>
+connection.zone:                        <span class="nt">--</span>
+connection.master:                      <span class="nt">--</span>
+connection.slave-type:                  <span class="nt">--</span>
+connection.autoconnect-slaves:          <span class="nt">-1</span> <span class="o">(</span>default<span class="o">)</span>
+connection.secondaries:                 <span class="nt">--</span>
+connection.gateway-ping-timeout:        0
+connection.metered:                     不明
+connection.lldp:                        default
+connection.mdns:                        <span class="nt">-1</span> <span class="o">(</span>default<span class="o">)</span>
+connection.llmnr:                       <span class="nt">-1</span> <span class="o">(</span>default<span class="o">)</span>
+connection.dns-over-tls:                <span class="nt">-1</span> <span class="o">(</span>default<span class="o">)</span>
+lines 1-24
+</code></pre></div></div>
+
+<h3 id="ip-アドレスの確認">IP アドレスの確認</h3>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>pi@raspberrypi:~ <span class="nv">$ </span>nmcli connection show &lt;プロファイル名&gt; | <span class="nb">grep </span>ipv4.addresses
+ipv4.addresses:                         192.168.10.113/24
+</code></pre></div></div>
+
+<h3 id="ip-アドレスの設定">IP アドレスの設定</h3>
+<p>以下の例では、IP アドレスを <code class="language-plaintext highlighter-rouge">192.168.10.113</code>、プレフィックス長を <code class="language-plaintext highlighter-rouge">24</code> に設定。</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">sudo </span>nmcli connection modify &lt;プロファイル名&gt; ipv4.addresses 192.168.10.113/24
+</code></pre></div></div>
+
+<h3 id="dns-サーバーの確認">DNS サーバーの確認</h3>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>pi@raspberrypi:~ <span class="nv">$ </span>nmcli connection show &lt;プロファイル名&gt; | <span class="nb">grep </span>ipv4.dns:
+ipv4.dns:                               192.168.10.1
+</code></pre></div></div>
+
+<h3 id="dns-サーバーの設定">DNS サーバーの設定</h3>
+<p>以下の例では、DNS サーバーを <code class="language-plaintext highlighter-rouge">192.168.10.1</code> に設定</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">sudo </span>nmcli connection modify &lt;プロファイル名&gt; ipv4.dns 192.168.10.1
+</code></pre></div></div>
+
+<h3 id="接続を切断">接続を切断</h3>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">sudo </span>nmcli connection down &lt;プロファイル名&gt;
+</code></pre></div></div>
+
+<h3 id="接続">接続</h3>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">sudo </span>nmcli connection up &lt;プロファイル名&gt;
+</code></pre></div></div>
+
+<h2 id="nmtui-tui-でネットワーク接続を設定">nmtui: TUI でネットワーク接続を設定</h2>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">sudo </span>nmtui
+</code></pre></div></div>
+
+<p><img src="/assets/img/screenshots/nmtui.png" alt="nmtui" /></p>
+
+
+    </div>
+</article>
+
+<article>
+    <div class="page-navigation">
+        
+        <a class="prev" href="/2024/03/19/raspberrypi-locale-ja.html">
+            <button class="button style-standard">
+                前へ
+            </button>
+        </a>
+        
+        
+    </div>
+</article>
+            </div>
+            <div class="menu-wrapper">
+                <menu>
+                    <div class="page-title">
+    <a href="/">ひかりの実験室</a>
+</div>
+<div class="profile"></div>
+<nav class="sub-menu">
+    <p class="description">
+        メニュー
+    </p>
+    <ul>
+        <li><a href="/search">記事の検索</a></li>
+        <li><a href="/archives">アーカイブ</a></li>
+        <li><a href="/tags">タグ別</a></li>
+        <li><a href="/editor">エディタ</a></li>
+    </ul>
+</nav>
+                </menu>
+            </div>
+        </main>
+    </div>
+    <footer>
+        <div class="footer">
+    <div class="footer-contents">
+        <p>
+            © 2023 Hikari
+        </p>
+        <p>
+            ひかりの実験室の著作権はひかりに属します。
+        </p>
+    </div>
+    <script>
+        let postedDates = document.getElementsByClassName("posted-date");
+        for (let i = 0; i < postedDates.length; i++) {
+            let date = postedDates[i].innerText
+            if (date != "") {
+                let warekiDate = Wareki.date(date)
+                postedDates[i].innerText = warekiDate;
+            }
+        }
+    </script>
+    
+    <link id="highlight-theme" rel="stylesheet">
+    <script>
+        const themeMediaQuery = window.matchMedia('(prefers-color-scheme: dark)');
+        const handleThemeChange = (event) => {
+            // let link = document.createElement("link");
+            // link.rel = "stylesheet";
+            let link = document.getElementById("highlight-theme");
+            if (event.matches) {
+                console.log("Dark theme");
+                link.href = "https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github-dark.min.css"
+            }else{
+                console.log("Light theme");
+                link.href = "https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github.min.css"
+            }
+            hljs.highlightAll();
+        }
+
+        themeMediaQuery.addListener(handleThemeChange);
+        handleThemeChange(themeMediaQuery);
+    </script>
+    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/languages/powershell.min.js"></script>
+    <script
+        src="https://cdnjs.cloudflare.com/ajax/libs/highlightjs-line-numbers.js/2.8.0/highlightjs-line-numbers.min.js"></script>
+    <script>hljs.highlightAll(); hljs.initLineNumbersOnLoad();</script>
+    <script src="/assets/js/fe.js"></script>
+</div>
+    </footer>
+</body>
+
+</html>
