@@ -16,7 +16,8 @@ layout: default
                     value: "",
                     language: "markdown",
                     fontSize: 16,
-                    automaticLayout: true
+                    automaticLayout: true,
+                    theme: 'vs-dark'
                 }
             );
         });
@@ -26,10 +27,10 @@ layout: default
         <button class="button style-accent" id="memo-save" style="margin-right: 8px;">保存</button>
         <button class="button style-accent" id="memo-remove">削除</button>
     </div>
-    <div style="display: grid; grid-template-columns: 100px 1fr; margin-bottom: 8px;">
+    <div id="editor-wrap" style="display: grid; grid-template-columns: 100px 1fr; margin-bottom: 8px;">
         <div id="memo-list" style="margin-right: 4px;">
         </div>
-        <div id="editor-container" style="height: 600px; margin-left: 4px"></div>
+        <div id="editor-container" style="overflow-x: hidden; height: 600px; margin-left: 4px"></div>
     </div>
     <script>
         function addMemoInstance(name){
@@ -116,5 +117,16 @@ layout: default
         for(let instance of memo){
             addMemoInstance(instance.name)
         }
+
+        const resizeObserver = new ResizeObserver((entries) => {
+            console.log("OK");
+            editor.layout({width: 0})
+        });
+
+        resizeObserver.observe(document.getElementById("editor-wrap"));
+
+        window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', event => {
+            editor._themeService.setTheme(event.matches ? "vs-dark" : "vs");
+        });
     </script>
 </article>
