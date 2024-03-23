@@ -34,8 +34,9 @@ $color-date: #00000080
 $color-date-dark: #FFFFFF80
 $table-border-color-dark: #505050
 
-code.hljs
-    font-family: "PlemolJP Console NF", "Cascadia Code", Consolas, "Courier New", monospace
+pre
+    code.hljs
+        font-family: "PlemolJP Console NF", "Cascadia Code", Consolas, "Courier New", monospace
 
 code.language-plaintext.highlighter-rouge
     font-family: "PlemolJP Console NF", "Cascadia Code", Consolas, "Courier New", monospace
@@ -157,19 +158,21 @@ table
         tr:nth-child(odd)
             background-color: #A0A0A088
 
-code.hljs
-    text-wrap: wrap
-    word-break: break-all
-    font-size: 14px
-    table
-        tbody
-            tr:nth-child(odd)
-                background-color: unset
-            tr
-                font-size: 14px
-                td.hljs-ln-numbers
-                    vertical-align: top
-                    text-wrap: nowrap
+pre
+    display: grid
+    code.hljs
+        text-wrap: wrap
+        word-break: break-all
+        font-size: 14px
+        table
+            tbody
+                tr:nth-child(odd)
+                    background-color: unset
+                tr
+                    font-size: 14px
+                    td.hljs-ln-numbers
+                        vertical-align: top
+                        text-wrap: nowrap
 
 @media (prefers-color-scheme: dark)
     table
@@ -179,12 +182,12 @@ code.hljs
         tbody
             tr:nth-child(odd)
                 background-color: #50505088
-
-    code.hljs
-        table
-            tbody
-                tr:nth-child(odd)
-                    background-color: unset
+    pre
+        code.hljs
+            table
+                tbody
+                    tr:nth-child(odd)
+                        background-color: unset
 
 code:not(.hljs) table
     border: solid 1px #0000000F
@@ -453,11 +456,12 @@ footer
                         margin: 0px auto 0 auto
                         border-radius: 2px
                         visibility: collapse
-    code.hljs
-        table
-            tbody
-                tr
-                    font-size: 14px
+    pre
+        code.hljs
+            table
+                tbody
+                    tr
+                        font-size: 14px
 
 @media (prefers-color-scheme: dark) and (max-width: 440px)
     .wrap-margin
