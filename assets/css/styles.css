@@ -106,6 +106,7 @@ body {
   }
 }
 .button {
+  white-space: nowrap;
   height: 30px;
   border: solid 1px;
   border-radius: 4px;
@@ -501,6 +502,7 @@ footer .footer .footer-contents {
     grid-template-columns: 1fr 1fr 1fr 1fr;
   }
   .wrap-margin #sp-menu .NavigationView .NavigationViewItem {
+    white-space: nowrap;
     color: unset;
     text-decoration: unset;
     border-radius: 4px;
