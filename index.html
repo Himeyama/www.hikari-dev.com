@@ -92,6 +92,12 @@
 let posts_data = [
     
     {
+        "url": "/2024/03/23/js-resizeelement.html",
+        "title": "ResizeObserver を使って要素の大きさ変更時に変更を行う",
+        "date": "2024-03-23"
+    },
+    
+    {
         "url": "/2024/03/21/linuxnm.html",
         "title": "Linux のネットワーク管理コマンド nmcli と nmtui",
         "date": "2024-03-21"
@@ -567,6 +573,41 @@ let posts_data = [
 
     <div class="index">
         <article class="article">
+            <h1 class="page-title"><a href="/2024/03/23/js-resizeelement.html">ResizeObserver を使って要素の大きさ変更時に変更を行う</a></h1>
+            <time class="posted-date">2024-03-23</time>
+            <p>要素を HTML で以下のように定義します。</p>
+
+<pre><code class="language-html">&lt;div id="element" style="height: 80px; width: 100%; background: #888; line-height: 80px; font-size: 36px; text-align: center;"&gt;
+    0
+&lt;/div&gt;</code></pre>
+
+<p>以下のように JavaScript を記述しました。この例では、要素のサイズが変更されたときにカウントアップします。</p>
+
+<pre>
+    <code>const resizeObserver = new ResizeObserver((entries) => {
+    const element = document.getElementById("element");
+    element.innerText = "" + (parseInt(element.innerText) + 1);
+});
+resizeObserver.observe(document.getElementById("element"));</code>
+</pre>
+
+<p>ウィンドウをリサイズして要素を大きく・小さくしカウントアップの動作を確認できます。</p>
+
+<div id="element" style="height: 80px; width: 100%; background: #888; line-height: 80px; font-size: 36px; text-align: center;">0</div>
+
+<script>
+    const resizeObserver = new ResizeObserver((entries) => {
+        const element = document.getElementById("element");
+        element.innerText = "" + (parseInt(element.innerText) + 1);
+    });
+    resizeObserver.observe(document.getElementById("element"));
+</script>
+
+        </article>
+    </div>
+
+    <div class="index">
+        <article class="article">
             <h1 class="page-title"><a href="/2024/03/21/linuxnm.html">Linux のネットワーク管理コマンド nmcli と nmtui</a></h1>
             <time class="posted-date">2024-03-21</time>
             <h2 id="nmcli">nmcli</h2>
@@ -780,40 +821,6 @@ code ~/.bashrc
 <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>pyenv global 3.12.2
 
 python <span class="nt">-V</span> <span class="c"># Python 3.12.2</span>
-</code></pre></div></div>
-
-        </article>
-    </div>
-
-    <div class="index">
-        <article class="article">
-            <h1 class="page-title"><a href="/2024/03/09/how-to-install-dotnet-for-ubuntu.html">Ubuntu (WSL2 含む) に dotnet をインストール方法</a></h1>
-            <time class="posted-date">2024-03-09</time>
-            <p>参考: 
-<a href="https://learn.microsoft.com/ja-jp/dotnet/core/install/linux-scripted-manual#scripted-install">パッケージ マネージャーを使用せずに Linux に .NET をインストールする - .NET | Microsoft Learn</a></p>
-
-<h2 id="インストールスクリプトのダウンロード">インストールスクリプトのダウンロード</h2>
-<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>wget https://dot.net/v1/dotnet-install.sh <span class="nt">-O</span> dotnet-install.sh
-</code></pre></div></div>
-
-<h2 id="インストールスクリプトへ実行権限付与">インストールスクリプトへ実行権限付与</h2>
-<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">chmod</span> +x ./dotnet-install.sh
-</code></pre></div></div>
-
-<h2 id="dotnet-sdk-をインストール">dotnet SDK をインストール</h2>
-<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>./dotnet-install.sh
-</code></pre></div></div>
-
-<h3 id="最新版をインストールする場合は">最新版をインストールする場合は</h3>
-<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>./dotnet-install.sh <span class="nt">--version</span> latest
-</code></pre></div></div>
-
-<h2 id="パスを通す">パスを通す</h2>
-<p><code class="language-plaintext highlighter-rouge">$HOME/.bashrc</code> を開き、以下を追記</p>
-
-<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">export </span><span class="nv">DOTNET_ROOT</span><span class="o">=</span><span class="nv">$HOME</span>/.dotnet
-<span class="nb">export </span><span class="nv">PATH</span><span class="o">=</span><span class="nv">$PATH</span>:<span class="nv">$DOTNET_ROOT</span>:<span class="nv">$DOTNET_ROOT</span>/tools
-
 </code></pre></div></div>
 
         </article>

@@ -23,7 +23,7 @@ body .hljs table.hljs-ln tbody tr td.hljs-ln-numbers {
   text-align: right;
 }
 
-code.hljs {
+pre code.hljs {
   font-family: "PlemolJP Console NF", "Cascadia Code", Consolas, "Courier New", monospace;
 }
 
@@ -172,18 +172,21 @@ table tbody tr:nth-child(odd) {
   background-color: rgba(160, 160, 160, 0.5333333333);
 }
 
-code.hljs {
+pre {
+  display: grid;
+}
+pre code.hljs {
   text-wrap: wrap;
   word-break: break-all;
   font-size: 14px;
 }
-code.hljs table tbody tr:nth-child(odd) {
+pre code.hljs table tbody tr:nth-child(odd) {
   background-color: unset;
 }
-code.hljs table tbody tr {
+pre code.hljs table tbody tr {
   font-size: 14px;
 }
-code.hljs table tbody tr td.hljs-ln-numbers {
+pre code.hljs table tbody tr td.hljs-ln-numbers {
   vertical-align: top;
   text-wrap: nowrap;
 }
@@ -198,7 +201,7 @@ code.hljs table tbody tr td.hljs-ln-numbers {
   table tbody tr:nth-child(odd) {
     background-color: rgba(80, 80, 80, 0.5333333333);
   }
-  code.hljs table tbody tr:nth-child(odd) {
+  pre code.hljs table tbody tr:nth-child(odd) {
     background-color: unset;
   }
 }
@@ -532,7 +535,7 @@ footer .footer .footer-contents {
     border-radius: 2px;
     visibility: collapse;
   }
-  code.hljs table tbody tr {
+  pre code.hljs table tbody tr {
     font-size: 14px;
   }
 }
