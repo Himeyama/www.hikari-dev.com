@@ -10,7 +10,25 @@ class I18n{
             "archive": "Archive",
             "tags": "Tags",
             "editor": "Notepad",
-            "copyright": "Copyright of Hikari Note belongs to Hikari."
+            "copyright": "Copyright of Hikari Note belongs to Hikari.",
+            "settings": "Settings",
+            "set-language": "Set a Language",
+            "set-english": "Set to English"
+        },
+        "ja": {
+            "notepad": "メモ帳",
+            "hikarinote": "ひかりの備忘録",
+            "menu": "メニュー",
+            "save": "保存",
+            "clear": "消去",
+            "search": "検索",
+            "archive": "書庫",
+            "tags": "種別",
+            "editor": "エディタ",
+            "copyright": "ひかりの備忘録の著作権はひかりに属します",
+            "settings": "設定",
+            "set-language": "言語の設定",
+            "set-english": "表示言語を英語に設定します"
         }
     };
 

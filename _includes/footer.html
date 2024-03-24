@@ -46,4 +46,10 @@
     <script>hljs.highlightAll(); hljs.initLineNumbersOnLoad();</script>
     <script src="{{ "/assets/js/fe.js" | relative_url }}"></script>
     <script src="{{ "/assets/js/i18n.js" | relative_url }}"></script>
+    <script>
+        let lang = localStorage.getItem("lang");
+        if (lang != null) {
+            I18n.i18n(lang);
+        }
+    </script>
 </div>
