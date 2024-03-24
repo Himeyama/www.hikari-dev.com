@@ -7,21 +7,21 @@
 <link rel="stylesheet" href="/assets/css/styles.css">
 <meta name="Hikari's personal website that is written information technology.">
 <!-- Begin Jekyll SEO tag v2.8.0 -->
-<title>ひかりの実験室 | Hikari’s personal website that is written information technology.</title>
+<title>ひかりの備忘録 | Hikari’s personal website that is written information technology.</title>
 <meta name="generator" content="Jekyll v4.3.3" />
-<meta property="og:title" content="ひかりの実験室" />
+<meta property="og:title" content="ひかりの備忘録" />
 <meta name="author" content="ひかり" />
 <meta property="og:locale" content="ja_JP" />
 <meta name="description" content="Hikari’s personal website that is written information technology." />
 <meta property="og:description" content="Hikari’s personal website that is written information technology." />
 <link rel="canonical" href="https://www.hikari-dev.com/" />
 <meta property="og:url" content="https://www.hikari-dev.com/" />
-<meta property="og:site_name" content="ひかりの実験室" />
+<meta property="og:site_name" content="ひかりの備忘録" />
 <meta property="og:type" content="website" />
 <meta name="twitter:card" content="summary" />
-<meta property="twitter:title" content="ひかりの実験室" />
+<meta property="twitter:title" content="ひかりの備忘録" />
 <script type="application/ld+json">
-{"@context":"https://schema.org","@type":"WebSite","author":{"@type":"Person","name":"ひかり"},"description":"Hikari’s personal website that is written information technology.","headline":"ひかりの実験室","name":"ひかりの実験室","url":"https://www.hikari-dev.com/"}</script>
+{"@context":"https://schema.org","@type":"WebSite","author":{"@type":"Person","name":"ひかり"},"description":"Hikari’s personal website that is written information technology.","headline":"ひかりの備忘録","name":"ひかりの備忘録","url":"https://www.hikari-dev.com/"}</script>
 <!-- End Jekyll SEO tag -->
 
 <script src="/assets/js/wareki.js"></script>
@@ -46,7 +46,7 @@
 <body>
     <header>
         <div class="header-panel">
-    <h1><a href="/">ひかりの実験室</a></h1>
+    <h1><a href="/" class="i18n-hikarinote">ひかりの備忘録</a></h1>
     <!-- <menu class="menu-buttons">
         <a href="/" id="home-button"><button>ホーム</button></a>
         <a href="/archives" id="archive-button"><button>アーカイブ</button></a>
@@ -83,7 +83,7 @@
 
 <div style="display: grid; grid-template-columns: 1fr auto;">
     <input id="search-text" class="TextBox" placeholder="検索..." style="margin-right: 8px;" />
-    <button class="button style-accent" id="search-button">検索</button>
+    <button class="button style-accent i18n-search" id="search-button">検索</button>
 </div>
 
 <div id="search-result" style="margin-top: 8px"></div>
@@ -834,18 +834,18 @@ python <span class="nt">-V</span> <span class="c"># Python 3.12.2</span>
             <div class="menu-wrapper">
                 <menu>
                     <div class="page-title">
-    <a href="/">ひかりの実験室</a>
+    <a href="/" class="i18n-hikarinote">ひかりの備忘録</a>
 </div>
 <div class="profile"></div>
 <nav class="sub-menu">
-    <p class="description">
+    <p class="description i18n-menu">
         メニュー
     </p>
     <ul>
-        <li><a href="/search">記事の検索</a></li>
-        <li><a href="/archives">アーカイブ</a></li>
-        <li><a href="/tags">タグ別</a></li>
-        <li><a href="/editor">エディタ</a></li>
+        <li><a href="/search" class="i18n-search">記事の検索</a></li>
+        <li><a href="/archives" class="i18n-archive">アーカイブ</a></li>
+        <li><a href="/tags" class="i18n-tags">タグ別</a></li>
+        <li><a href="/editor" class="i18n-editor">エディタ</a></li>
     </ul>
 </nav>
                 </menu>
@@ -858,8 +858,8 @@ python <span class="nt">-V</span> <span class="c"># Python 3.12.2</span>
         <p>
             © 2023 Hikari
         </p>
-        <p>
-            ひかりの実験室の著作権はひかりに属します。
+        <p class="i18n-copyright">
+            ひかりの備忘録の著作権はひかりに属します。
         </p>
     </div>
     <script>
@@ -900,6 +900,7 @@ python <span class="nt">-V</span> <span class="c"># Python 3.12.2</span>
         src="https://cdnjs.cloudflare.com/ajax/libs/highlightjs-line-numbers.js/2.8.0/highlightjs-line-numbers.min.js"></script>
     <script>hljs.highlightAll(); hljs.initLineNumbersOnLoad();</script>
     <script src="/assets/js/fe.js"></script>
+    <script src="/assets/js/i18n.js"></script>
 </div>
     </footer>
 </body>
