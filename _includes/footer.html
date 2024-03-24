@@ -3,7 +3,7 @@
         <p>
             {{ site.copyright }}
         </p>
-        <p>
+        <p class="i18n-copyright">
             {{ site.title }}の著作権は{{ site:author }}に属します。
         </p>
     </div>
@@ -45,4 +45,5 @@
         src="https://cdnjs.cloudflare.com/ajax/libs/highlightjs-line-numbers.js/2.8.0/highlightjs-line-numbers.min.js"></script>
     <script>hljs.highlightAll(); hljs.initLineNumbersOnLoad();</script>
     <script src="{{ "/assets/js/fe.js" | relative_url }}"></script>
+    <script src="{{ "/assets/js/i18n.js" | relative_url }}"></script>
 </div>

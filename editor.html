@@ -3,7 +3,7 @@ layout: default
 ---
 
 <article class="article">
-    <h2>メモ帳</h2>
+    <h2 class="i18n-notepad">メモ帳</h2>
     <p>最大 5 MiB 程度まで保存できます。ブラウザのキャッシュを削除するとデータは消えます。</p>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/monaco-editor/0.45.0/min/vs/loader.js"></script>
     <script>
@@ -24,8 +24,8 @@ layout: default
     </script>
     <div style="display: grid; grid-template-columns: 1fr auto auto; margin-bottom: 8px;">
         <input id="memo-save-name" class="TextBox" placeholder="名前" style="margin-right: 8px;" />
-        <button class="button style-accent" id="memo-save" style="margin-right: 8px;">保存</button>
-        <button class="button style-accent" id="memo-remove">削除</button>
+        <button class="button style-accent i18n-save" id="memo-save" style="margin-right: 8px;">保存</button>
+        <button class="button style-accent i18n-clear" id="memo-remove">削除</button>
     </div>
     <div id="editor-wrap" style="display: grid; grid-template-columns: 100px 1fr; margin-bottom: 8px;">
         <div id="memo-list" style="margin-right: 4px;">
