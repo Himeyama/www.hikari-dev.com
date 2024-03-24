@@ -67,7 +67,7 @@
             <div class="active" id="sp-menu-search"></div>
         </a>
         <a href="/archives" class="NavigationViewItem column-2">
-            <span>アーカイブ</span>
+            <span>書庫</span>
             <div class="active" id="sp-menu-archive"></div>
         </a>
         <a href="/tags" class="NavigationViewItem column-3">
@@ -587,11 +587,76 @@ document.getElementById("sp-menu-search").style.visibility = "visible";
     </p>
     <ul>
         <li><a href="/search" class="i18n-search">記事の検索</a></li>
-        <li><a href="/archives" class="i18n-archive">アーカイブ</a></li>
+        <li><a href="/archives" class="i18n-archive">書庫</a></li>
         <li><a href="/tags" class="i18n-tags">タグ別</a></li>
         <li><a href="/editor" class="i18n-editor">エディタ</a></li>
+        <li><a href="#" id="settings" class="i18n-settings">設定</a></li>
     </ul>
 </nav>
+
+<div id="window-content" style="display: none;">
+    <h1 class="app-content-title i18n-settings">設定</h2>
+    <div id="theme-changer" class="toggle-card">
+        <div class="card-summary">
+            <div class="card-content i18n-set-language">言語の設定</div>
+            <div class="card-description i18n-set-english">表示言語を英語に変更します</div>
+        </div>
+        <div class="toggle change-theme-toggle">
+            <div class="toggle-ball"></div>
+        </div>
+    </div>
+</div>
+
+<link rel="stylesheet" href="https://himeyama.github.io/windowJS/window_w.css">
+<link rel="stylesheet" href="https://himeyama.github.io/windowJS/assets/css/toggle.css"></style>
+<script src="https://himeyama.github.io/windowJS/window_w.js"></script>
+<style>
+    #window-content{
+        margin: 32px;
+        display: flex;
+        flex-direction: column;
+    }
+    .app-content-title{
+        font-family: "Yu Gothic UI";
+        font-size: 28px;
+    }
+</style>
+<script>
+    const settings = document.getElementById("settings");
+    settings.addEventListener("click", ev => {
+        const uuid = crypto.randomUUID();
+        const w1 = Window.create(`settings-${uuid}`)
+        w1.title = "設定"
+        const frame = document.getElementById("window-content").cloneNode(true);
+        frame.style.display = "block";
+        w1.frame = frame;
+        console.log(frame)
+        frame.parentElement.parentElement.getElementsByClassName("title")[0].classList.add("i18n-settings")
+
+        const changeThemeToggle = frame.getElementsByClassName("change-theme-toggle")[0];
+        if(lang == "en"){
+            changeThemeToggle.classList.add("isOn");
+            I18n.i18n("en");
+        }
+        changeThemeToggle.addEventListener("click", (e) => {
+            const isOn = Array.from(changeThemeToggle.classList).includes("isOn");
+            if(isOn){
+                changeThemeToggle.classList.remove("isOn");
+                I18n.i18n("ja");
+                lang = "ja";
+                localStorage.setItem("lang", "ja");
+            }else{
+                changeThemeToggle.classList.add("isOn");
+                I18n.i18n("en");
+                lang = "en";
+                localStorage.setItem("lang", "en");
+            }
+        })
+        lang.addEventListener("change", ev => {
+            console.log(ev)
+        })
+    })
+</script>
                 </menu>
             </div>
         </main>
@@ -645,6 +710,12 @@ document.getElementById("sp-menu-search").style.visibility = "visible";
     <script>hljs.highlightAll(); hljs.initLineNumbersOnLoad();</script>
     <script src="/assets/js/fe.js"></script>
     <script src="/assets/js/i18n.js"></script>
+    <script>
+        let lang = localStorage.getItem("lang");
+        if (lang != null) {
+            I18n.i18n(lang);
+        }
+    </script>
 </div>
     </footer>
 </body>
