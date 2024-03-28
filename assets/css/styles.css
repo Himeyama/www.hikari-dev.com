@@ -30,12 +30,12 @@ pre code.hljs {
 code.language-plaintext.highlighter-rouge {
   font-family: "PlemolJP Console NF", "Cascadia Code", Consolas, "Courier New", monospace;
   font-weight: bold;
-  color: #E74856;
+  color: #E17092;
 }
 
 @media (prefers-color-scheme: dark) {
   code.language-plaintext.highlighter-rouge {
-    color: #E81123;
+    color: #F695C6;
   }
 }
 body {
