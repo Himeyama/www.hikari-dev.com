@@ -18,7 +18,7 @@ sudo apt install autoconf patch build-essential rustc libssl-dev libyaml-dev lib
 curl -fsSL https://github.com/rbenv/rbenv-installer/raw/HEAD/bin/rbenv-installer | bash
 
 # 起動時に rbenv を読み込み
-echo 'eval "$(/home/hikari/.rbenv/bin/rbenv init - bash)"' | tee -a ~/.bashrc
+echo 'eval "$($HOME/.rbenv/bin/rbenv init - bash)"' | tee -a ~/.bashrc
 ```
 
 ### 参考
