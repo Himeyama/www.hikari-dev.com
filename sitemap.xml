@@ -321,12 +321,11 @@
 <lastmod>2024-03-28T00:00:00+00:00</lastmod>
 </url>
 <url>
-<loc>https://www.hikari-dev.com/2024/03/28/pcparts.html</loc>
-<lastmod>2024-03-28T00:00:00+00:00</lastmod>
-</url>
-<url>
 <loc>https://www.hikari-dev.com/2024/04/20/pyplot.html</loc>
 <lastmod>2024-04-20T00:00:00+00:00</lastmod>
+</url>
+<url>
+<loc>https://www.hikari-dev.com/assets/old/2024-03-28-pcparts.html</loc>
 </url>
 <url>
 <loc>https://www.hikari-dev.com/about.html</loc>
@@ -354,5 +353,9 @@
 </url>
 <url>
 <loc>https://www.hikari-dev.com/tags.html</loc>
+</url>
+<url>
+<loc>https://www.hikari-dev.com/assets/img/pyplot/graph.pdf</loc>
+<lastmod>2024-04-20T21:52:05+00:00</lastmod>
 </url>
 </urlset>

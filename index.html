@@ -98,12 +98,6 @@ let posts_data = [
     },
     
     {
-        "url": "/2024/03/28/pcparts.html",
-        "title": "自作歴 10 年が考えるケチってはいけない PC パーツランキング",
-        "date": "2024-03-28"
-    },
-    
-    {
         "url": "/2024/03/28/dotnetcli.html",
         "title": "よく使う dotnet コマンドまとめ",
         "date": "2024-03-28"
@@ -938,8 +932,8 @@ let posts_data = [
 <div class="language-py highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="p">.</span><span class="nf">subplots</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span>
 <span class="n">fig</span><span class="p">.</span><span class="nf">subplots_adjust</span><span class="p">(</span><span class="n">hspace</span><span class="o">=</span><span class="mf">0.2</span><span class="p">,</span> <span class="n">wspace</span><span class="o">=</span><span class="mf">0.3</span><span class="p">)</span>
 </code></pre></div></div>
-
-<p><img src="/assets/img/pyplot/031.png" alt="" /></p>
+<p>%Cpu22 :  0.0 us,  0.0 sy,  0.0 ni,100.0 id,  0.0 wa,  0.0 hi,  0.0 si,  0.0 st
+<img src="/assets/img/pyplot/031.png" alt="" /></p>
 
 <p><strong>間隔を自動に設定</strong></p>
 
@@ -949,61 +943,39 @@ let posts_data = [
 
 <p><img src="/assets/img/pyplot/032.png" alt="" /></p>
 
+<h2 id="画像を保存">画像を保存</h2>
 
-        </article>
-    </div>
+<p><strong>PNG 形式で保存</strong></p>
 
-    <div class="index">
-        <article class="article">
-            <h1 class="page-title"><a href="/2024/03/28/pcparts.html">自作歴 10 年が考えるケチってはいけない PC パーツランキング</a></h1>
-            <time class="posted-date">2024-03-28</time>
-            <p>ケチってはいけない PC パーツランキングを考えました。</p>
+<div class="language-py highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="p">.</span><span class="nf">subplots</span><span class="p">()</span>
+<span class="n">plt</span><span class="p">.</span><span class="nf">savefig</span><span class="p">(</span><span class="sh">"</span><span class="s">graph.png</span><span class="sh">"</span><span class="p">)</span>
+</code></pre></div></div>
 
-<h2 id="第1位-cpu-3万9万">第1位. CPU (3万~9万)</h2>
-<p>言わずもがな、CPU の頭脳となる部分です。
-少なくとも最新世代の Core i5 や Ryzen 5、できれば最新世代の Core i9 や Ryzen 9 を買うべきでしょう。
-基本的に高いほうが性能はいいです。</p>
+<p><img src="/assets/img/pyplot/graph.png" alt="" /></p>
 
-<h2 id="第2位-キーボード-1万4万">第2位. キーボード (1万~4万)</h2>
-<p>なんだかんだ入出力は重要です。
-少なくとも 1 万、できれば 4 万くらいのキーボードがあればいいでしょう。
-基本的に高いほうが性能はいいです。</p>
+<p><strong>SVG 形式で保存</strong></p>
 
-<h2 id="第3位-ストレージ-50002万">第3位. ストレージ (5000~2万)</h2>
-<p>ストレージは絶対に SSD にすべきです。
-さすがにもう HDD を使っている人はいないと思いますが。
-容量はできるだけ多いほうがいいですね。
-後で増やそうとするには、拡張スロットで足すか交換かしないといけないので面倒です。
-少なくとも 250GB、できれば 1TB 推奨です。
-基本的に高いほうが容量が大きいです。</p>
+<div class="language-py highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="p">.</span><span class="nf">subplots</span><span class="p">()</span>
+<span class="n">plt</span><span class="p">.</span><span class="nf">savefig</span><span class="p">(</span><span class="sh">"</span><span class="s">svg.png</span><span class="sh">"</span><span class="p">)</span>
+</code></pre></div></div>
 
-<h2 id="第4位-マザーボード-15万35万">第4位. マザーボード (1.5万~3.5万)</h2>
-<p>拡張性大事です。メモリ 2 つまでしか挿せないとか、拡張全然できないと後悔します。
-基本的に高いほうが性能がよく拡張性があります。</p>
+<p><img src="/assets/img/pyplot/graph.svg" alt="" /></p>
 
-<h2 id="第5位-メモリ-1万2万">第5位. メモリ (1万~2万)</h2>
-<p>メモリは安いので少ないと感じたなら後で買い足せばいいですが、多いに越したことはないです。
-少なくとも 8 GiB、32 GiB 推奨です。</p>
+<p><strong>PDF 形式で保存</strong></p>
 
-<h2 id="第6位-電源ユニット-5000円15万">第6位. 電源ユニット (5000円~1.5万)</h2>
-<p>電源ユニットは割と重要です。
-個人的には壊れやすい部品の中では上位のほうと考えます。
-電力が高いほうが良いに越したことはありませんが、ゲームをしなければ 500W 程度でいいでしょう。</p>
+<div class="language-py highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="p">.</span><span class="nf">subplots</span><span class="p">()</span>
+<span class="n">plt</span><span class="p">.</span><span class="nf">savefig</span><span class="p">(</span><span class="sh">"</span><span class="s">svg.pdf</span><span class="sh">"</span><span class="p">)</span>
+</code></pre></div></div>
 
-<h2 id="第7位-グラボ-5万12万">第7位. グラボ (5万~12万)</h2>
-<p>ゲームしないのであればなくてもいいです。
-あるに越したことはありませんが、高いです。
-ゲームするために買うのであれば、RTX4060～RTX4080 あたりがいいかもしれません。</p>
+<p><a href="/assets/img/pyplot/graph.pdf">graph.pdf</a></p>
 
-<h2 id="第8位-マウス-30001万">第8位. マウス (3000~1万)</h2>
-<p>正直、光学式であればなんでもいいと思っています。
-安いので自分に合ったものを買い替えて一番いいのを探すのもいいでしょう。
-ちなみに、トラックボール派です。</p>
+<p><strong>300 dpi で保存</strong></p>
 
-<h2 id="第9位-ディスプレイ-3万6万">第9位. ディスプレイ (3万~6万)</h2>
-<p>圧倒的に 27 インチの 4K ディスプレイがおすすめです。
-Windows 特有の文字のギザギザは全く見えません。</p>
+<div class="language-py highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="p">.</span><span class="nf">subplots</span><span class="p">()</span>
+<span class="n">plt</span><span class="p">.</span><span class="nf">savefig</span><span class="p">(</span><span class="sh">"</span><span class="s">graph300.png</span><span class="sh">"</span><span class="p">,</span> <span class="n">dpi</span><span class="o">=</span><span class="mi">300</span><span class="p">)</span>
+</code></pre></div></div>
 
+<p><img src="/assets/img/pyplot/graph300.png" alt="" /></p>
 
         </article>
     </div>
@@ -1193,6 +1165,38 @@ ipv4.dns:                               192.168.10.1
 
 <p><img src="/assets/img/screenshots/nmtui.png" alt="nmtui" /></p>
 
+
+        </article>
+    </div>
+
+    <div class="index">
+        <article class="article">
+            <h1 class="page-title"><a href="/2024/03/19/raspberrypi-locale-ja.html">RaspberryPi のプロンプトを日本語化する方法</a></h1>
+            <time class="posted-date">2024-03-19</time>
+            <p>Raspberry Pi のプロンプトを日本語化する方法を紹介します。</p>
+
+<h2 id="1-ロケールの設定">1. ロケールの設定</h2>
+
+<p>日本語のロケールを設定します。以下のコマンドを実行します。</p>
+
+<ol>
+  <li>スペースで以下のようにチェックを入れ OK する</li>
+  <li>ja_JP.UTF-8 を選択し OK する</li>
+</ol>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">sudo </span>dpkg-reconfigure locales
+
+<span class="c"># [*] ja_JP.UTF-8 UTF-8</span>
+</code></pre></div></div>
+
+<h2 id="2-再起動">2. 再起動</h2>
+
+<p>再起動します。</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">sudo </span>reboot
+</code></pre></div></div>
+
+<p>以上。</p>
 
         </article>
     </div>

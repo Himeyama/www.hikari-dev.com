@@ -159,17 +159,17 @@ body {
 }
 table {
   border-collapse: collapse;
-  border: 1px solid #A0A0A0;
+  border: 1px solid #D0D7DE;
 }
 table thead tr {
   font-weight: bold;
 }
 table th, table td {
-  border: 1px solid #A0A0A0;
+  border: 1px solid #D0D7DE;
   padding: 8px;
 }
 table tbody tr:nth-child(odd) {
-  background-color: rgba(160, 160, 160, 0.5333333333);
+  background-color: #F6F8FA;
 }
 
 pre {
