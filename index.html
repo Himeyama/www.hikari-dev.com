@@ -92,6 +92,12 @@
 let posts_data = [
     
     {
+        "url": "/2024/07/21/wsl-to-lan.html",
+        "title": "WSL 内のサーバーを LAN に公開する",
+        "date": "2024-07-21"
+    },
+    
+    {
         "url": "/2024/05/19/hextodec.html",
         "title": "0.248<sub>(16)</sub> を 10 進数の分数にする問題の簡単な解き方 (基本情報技術者試験)",
         "date": "2024-05-19"
@@ -588,6 +594,123 @@ let posts_data = [
 
 <script src="/assets/js/search.js"></script>
 
+
+    <div class="index">
+        <article class="article">
+            <h1 class="page-title"><a href="/2024/07/21/wsl-to-lan.html">WSL 内のサーバーを LAN に公開する</a></h1>
+            <time class="posted-date">2024-07-21</time>
+            <p>この記事では WSL 内のサーバーを LAN に公開する方法を紹介します。</p>
+
+<h2 id="サーバーを建てる">サーバーを建てる</h2>
+<p>既にサーバーがある場合は、この章は読み飛ばしてください。</p>
+
+<ol>
+  <li>
+    <p>例として、以下の内容で index.html 作成します。</p>
+
+    <div class="language-html highlighter-rouge"><div class="highlight"><pre class="highlight"><code> <span class="c">&lt;!-- index.html --&gt;</span>
+ <span class="cp">&lt;!DOCTYPE html&gt;</span>
+ <span class="nt">&lt;html</span> <span class="na">lang=</span><span class="s">"ja"</span><span class="nt">&gt;</span>
+ <span class="nt">&lt;head&gt;</span>
+     <span class="nt">&lt;meta</span> <span class="na">charset=</span><span class="s">"UTF-8"</span><span class="nt">&gt;</span>
+     <span class="nt">&lt;meta</span> <span class="na">name=</span><span class="s">"viewport"</span> <span class="na">content=</span><span class="s">"width=device-width, initial-scale=1.0"</span><span class="nt">&gt;</span>
+     <span class="nt">&lt;title&gt;</span>Hello, world!<span class="nt">&lt;/title&gt;</span>
+ <span class="nt">&lt;/head&gt;</span>
+ <span class="nt">&lt;body&gt;</span>
+     <span class="nt">&lt;h1&gt;</span>Hello, world!<span class="nt">&lt;/h1&gt;</span>
+ <span class="nt">&lt;/body&gt;</span>
+ <span class="nt">&lt;/html&gt;</span>
+</code></pre></div>    </div>
+  </li>
+  <li>
+    <p>Ruby で簡易的なサーバーを立てる</p>
+
+    <p>Ruby でサーバーのスクリプトを記述します。
+ <code class="language-plaintext highlighter-rouge">server.rb</code> に保存します。</p>
+
+    <div class="language-ruby highlighter-rouge"><div class="highlight"><pre class="highlight"><code> <span class="c1">#!/usr/bin/env ruby</span>
+
+ <span class="c1"># server.rb</span>
+
+ <span class="nb">require</span> <span class="s1">'webrick'</span>
+
+ <span class="n">server</span> <span class="o">=</span> <span class="no">WEBrick</span><span class="o">::</span><span class="no">HTTPServer</span><span class="p">.</span><span class="nf">new</span><span class="p">({</span>
+ <span class="ss">:DocumentRoot</span> <span class="o">=&gt;</span> <span class="s1">'./'</span><span class="p">,</span>
+ <span class="ss">:Port</span> <span class="o">=&gt;</span> <span class="mi">8000</span>
+ <span class="p">})</span>
+
+ <span class="nb">trap</span><span class="p">(</span><span class="s1">'INT'</span><span class="p">)</span> <span class="p">{</span> <span class="n">server</span><span class="p">.</span><span class="nf">shutdown</span> <span class="p">}</span>
+
+ <span class="n">server</span><span class="p">.</span><span class="nf">start</span>
+</code></pre></div>    </div>
+
+    <p>次に、<code class="language-plaintext highlighter-rouge">ruby server.rb</code> を実行し、サーバーを立ち上げます。</p>
+
+    <p>ブラウザで <code class="language-plaintext highlighter-rouge">localhost:8000</code> に接続すると <code class="language-plaintext highlighter-rouge">index.html</code> の内容が表示されます。
+ <code class="language-plaintext highlighter-rouge">hostname -I</code> で表示される IP アドレスでも表示できます。</p>
+  </li>
+</ol>
+
+<h2 id="lan-に公開する">LAN に公開する</h2>
+<p>最近の WSL2 の仕様では WSL で立ち上げたサーバーが localhost へ転送されます。
+しかし、WSL1 とは異なり LAN のアドレス (例えば、192.168.0.2 など) へアクセスしても、WSL2 のサーバーへアクセスすることはできません。</p>
+
+<p>したがって、ポート転送する必要があります。</p>
+
+<h3 id="ポート転送設定">ポート転送設定</h3>
+<p><code class="language-plaintext highlighter-rouge">netsh interface portproxy</code> コマンドを利用することで、ポート転送が可能です。</p>
+
+<p>以下のコマンドは、すべての NIC に割り当てられている IP アドレスの 8000 へのアクセスを、
+localhost:8000 へ転送する設定です。
+このコマンドは、<strong>管理者権限</strong>で実行する必要があります。</p>
+
+<pre><code class="language-ps1">netsh interface portproxy add v4tov4 listenport=8000 connectaddress=localhost
+</code></pre>
+
+<p>設定は <code class="language-plaintext highlighter-rouge">netsh interface portproxy show v4tov4</code> を実行することで見ることができます。</p>
+
+<pre><code class="language-ps1">PS &gt; netsh interface portproxy show v4tov4
+
+ipv4 をリッスンする:         ipv4 に接続する:
+
+Address         Port        Address         Port
+--------------- ----------  --------------- ----------
+*               8000        localhost       8000
+</code></pre>
+
+<details>
+<summary>設定の削除方法</summary>
+    <pre>
+        <code class="language-ps1 hljs language-powershell" data-highlighted="yes"><!--
+            -->netsh interface portproxy delete v4tov4 listenaddress=* listenport=<!--
+            --><span class="hljs-number">8000</span>
+        </code>
+    </pre>
+</details>
+
+<p>また、すべての NIC ではなく、特定の NIC の IP アドレスに対して行いたい場合は、以下のコマンドを実行します。</p>
+
+<pre><code class="language-ps1">netsh interface portproxy add v4tov4 listenport=8000 connectaddress=localhost listenaddress=&lt;対象 NIC の IP アドレス&gt;
+</code></pre>
+
+<h2 id="ファイアウォール設定">ファイアウォール設定</h2>
+<p>Win + R で「ファイル名を指定して実行」を開き、wf.msc と入力して「OK」し、「セキュリティが強化された Windows Defender ファイアウォール」を開きます。</p>
+
+<p><img src="/assets/img/firewall-tcp-8000.png" alt="firewall" /></p>
+
+<p>左側にある「受信の規則」をクリックし、右側の「新しい規則…」をクリックして「新規受信の規則ウィザード」を開きます。</p>
+
+<p>「ポート (O)」を選択して [次へ(N) &gt;] をクリックし、「特定のローカル ポート(S):」のところにポート番号 (今回の場合は 8000) を入力し [次へ(N) &gt;] を 3 回クリック。「名前(N):」のところに適当な設定名をつけて [完了(F)] をクリックし設定を保存します。</p>
+
+<h3 id="lan-からアクセスできるかの確認">LAN からアクセスできるかの確認</h3>
+<p><code class="language-plaintext highlighter-rouge">ipconfig</code> を入力し、LAN の IP アドレスを確かめます。
+おそらくほとんどの場合は、192.168.x.x の形式だと思います。</p>
+
+<p>このアドレス + port 番号を同じネットワーク内の端末 (スマホなど) のブラウザに入力します。
+例えば、IP アドレスが 192.168.0.2 の場合は http://192.168.0.2:8000 です。</p>
+
+        </article>
+    </div>
 
     <div class="index">
         <article class="article">
@@ -1134,102 +1257,6 @@ resizeObserver.observe(document.getElementById("element"));</code>
     });
     resizeObserver.observe(document.getElementById("element"));
 </script>
-
-        </article>
-    </div>
-
-    <div class="index">
-        <article class="article">
-            <h1 class="page-title"><a href="/2024/03/21/linuxnm.html">Linux のネットワーク管理コマンド nmcli と nmtui</a></h1>
-            <time class="posted-date">2024-03-21</time>
-            <h2 id="nmcli">nmcli</h2>
-
-<h3 id="nmcli-connection-すべての接続を表示"><code class="language-plaintext highlighter-rouge">nmcli connection</code>: すべての接続を表示</h3>
-
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>pi@raspberrypi:~ $ nmcli connection
-NAME           UUID                                  TYPE      DEVICE
-preconfigured  1b29633c-51a7-42a8-8357-a23ddbb791b9  wifi      wlan0
-lo             37334688-5c87-47fc-87d3-8c4e31934dd2  loopback  lo
-有線接続 1     0df9157e-b1a9-3026-9bd5-f05234e1cf4b  ethernet  --
-</code></pre></div></div>
-
-<h3 id="nmcli-device-デバイスと状態を表示"><code class="language-plaintext highlighter-rouge">nmcli device</code>: デバイスと状態を表示</h3>
-
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>pi@raspberrypi:~ $ nmcli device
-DEVICE         TYPE      STATE            CONNECTION
-wlan0          wifi      接続済み         preconfigured
-lo             loopback  接続済み (外部)  lo
-p2p-dev-wlan0  wifi-p2p  切断済み         --
-eth0           ethernet  利用不可         --
-</code></pre></div></div>
-
-<h3 id="nmcli-connection-show--プロパティを表示"><code class="language-plaintext highlighter-rouge">nmcli connection show ...</code>: プロパティを表示</h3>
-<p><code class="language-plaintext highlighter-rouge">nmcli connection show プロファイル名</code> を実行し、プロパティを表示できる。</p>
-
-<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>pi@raspberrypi:~ <span class="nv">$ </span>nmcli connection show &lt;プロファイル名&gt;
-connection.id:                          &lt;プロファイル名&gt;
-connection.uuid:                        1b29633c-51a7-42a8-8357-a23ddbb791b9
-connection.stable-id:                   <span class="nt">--</span>
-connection.type:                        802-11-wireless
-connection.interface-name:              <span class="nt">--</span>
-connection.autoconnect:                 はい
-connection.autoconnect-priority:        0
-connection.autoconnect-retries:         <span class="nt">-1</span> <span class="o">(</span>default<span class="o">)</span>
-connection.multi-connect:               0 <span class="o">(</span>default<span class="o">)</span>
-connection.auth-retries:                <span class="nt">-1</span>
-connection.timestamp:                   1710955164
-connection.read-only:                   いいえ
-connection.permissions:                 <span class="nt">--</span>
-connection.zone:                        <span class="nt">--</span>
-connection.master:                      <span class="nt">--</span>
-connection.slave-type:                  <span class="nt">--</span>
-connection.autoconnect-slaves:          <span class="nt">-1</span> <span class="o">(</span>default<span class="o">)</span>
-connection.secondaries:                 <span class="nt">--</span>
-connection.gateway-ping-timeout:        0
-connection.metered:                     不明
-connection.lldp:                        default
-connection.mdns:                        <span class="nt">-1</span> <span class="o">(</span>default<span class="o">)</span>
-connection.llmnr:                       <span class="nt">-1</span> <span class="o">(</span>default<span class="o">)</span>
-connection.dns-over-tls:                <span class="nt">-1</span> <span class="o">(</span>default<span class="o">)</span>
-lines 1-24
-</code></pre></div></div>
-
-<h3 id="ip-アドレスの確認">IP アドレスの確認</h3>
-<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>pi@raspberrypi:~ <span class="nv">$ </span>nmcli connection show &lt;プロファイル名&gt; | <span class="nb">grep </span>ipv4.addresses
-ipv4.addresses:                         192.168.10.113/24
-</code></pre></div></div>
-
-<h3 id="ip-アドレスの設定">IP アドレスの設定</h3>
-<p>以下の例では、IP アドレスを <code class="language-plaintext highlighter-rouge">192.168.10.113</code>、プレフィックス長を <code class="language-plaintext highlighter-rouge">24</code> に設定。</p>
-
-<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">sudo </span>nmcli connection modify &lt;プロファイル名&gt; ipv4.addresses 192.168.10.113/24
-</code></pre></div></div>
-
-<h3 id="dns-サーバーの確認">DNS サーバーの確認</h3>
-<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>pi@raspberrypi:~ <span class="nv">$ </span>nmcli connection show &lt;プロファイル名&gt; | <span class="nb">grep </span>ipv4.dns:
-ipv4.dns:                               192.168.10.1
-</code></pre></div></div>
-
-<h3 id="dns-サーバーの設定">DNS サーバーの設定</h3>
-<p>以下の例では、DNS サーバーを <code class="language-plaintext highlighter-rouge">192.168.10.1</code> に設定</p>
-
-<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">sudo </span>nmcli connection modify &lt;プロファイル名&gt; ipv4.dns 192.168.10.1
-</code></pre></div></div>
-
-<h3 id="接続を切断">接続を切断</h3>
-<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">sudo </span>nmcli connection down &lt;プロファイル名&gt;
-</code></pre></div></div>
-
-<h3 id="接続">接続</h3>
-<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">sudo </span>nmcli connection up &lt;プロファイル名&gt;
-</code></pre></div></div>
-
-<h2 id="nmtui-tui-でネットワーク接続を設定">nmtui: TUI でネットワーク接続を設定</h2>
-<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">sudo </span>nmtui
-</code></pre></div></div>
-
-<p><img src="/assets/img/screenshots/nmtui.png" alt="nmtui" /></p>
-
 
         </article>
     </div>

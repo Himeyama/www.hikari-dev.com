@@ -7,22 +7,22 @@
 <link rel="stylesheet" href="/assets/css/styles.css">
 <meta name="Hikari's personal website that is written information technology.">
 <!-- Begin Jekyll SEO tag v2.8.0 -->
-<title>0.248(16) を 10 進数の分数にする問題の簡単な解き方 (基本情報技術者試験) | ひかりの備忘録</title>
+<title>WSL 内のサーバーを LAN に公開する | ひかりの備忘録</title>
 <meta name="generator" content="Jekyll v4.3.3" />
-<meta property="og:title" content="0.248(16) を 10 進数の分数にする問題の簡単な解き方 (基本情報技術者試験)" />
+<meta property="og:title" content="WSL 内のサーバーを LAN に公開する" />
 <meta name="author" content="ひかり" />
 <meta property="og:locale" content="ja_JP" />
-<meta name="description" content="「16 進数の少数 0.248 を 10 進数の分数で表したものはどれか。」の問題について簡単に解く方法を紹介します。" />
-<meta property="og:description" content="「16 進数の少数 0.248 を 10 進数の分数で表したものはどれか。」の問題について簡単に解く方法を紹介します。" />
-<link rel="canonical" href="https://www.hikari-dev.com/2024/05/19/hextodec.html" />
-<meta property="og:url" content="https://www.hikari-dev.com/2024/05/19/hextodec.html" />
+<meta name="description" content="この記事では WSL 内のサーバーを LAN に公開する方法を紹介します。" />
+<meta property="og:description" content="この記事では WSL 内のサーバーを LAN に公開する方法を紹介します。" />
+<link rel="canonical" href="https://www.hikari-dev.com/2024/07/21/wsl-to-lan.html" />
+<meta property="og:url" content="https://www.hikari-dev.com/2024/07/21/wsl-to-lan.html" />
 <meta property="og:site_name" content="ひかりの備忘録" />
 <meta property="og:type" content="article" />
-<meta property="article:published_time" content="2024-05-19T00:00:00+00:00" />
+<meta property="article:published_time" content="2024-07-21T00:00:00+00:00" />
 <meta name="twitter:card" content="summary" />
-<meta property="twitter:title" content="0.248(16) を 10 進数の分数にする問題の簡単な解き方 (基本情報技術者試験)" />
+<meta property="twitter:title" content="WSL 内のサーバーを LAN に公開する" />
 <script type="application/ld+json">
-{"@context":"https://schema.org","@type":"BlogPosting","author":{"@type":"Person","name":"ひかり"},"dateModified":"2024-05-19T00:00:00+00:00","datePublished":"2024-05-19T00:00:00+00:00","description":"「16 進数の少数 0.248 を 10 進数の分数で表したものはどれか。」の問題について簡単に解く方法を紹介します。","headline":"0.248(16) を 10 進数の分数にする問題の簡単な解き方 (基本情報技術者試験)","mainEntityOfPage":{"@type":"WebPage","@id":"https://www.hikari-dev.com/2024/05/19/hextodec.html"},"url":"https://www.hikari-dev.com/2024/05/19/hextodec.html"}</script>
+{"@context":"https://schema.org","@type":"BlogPosting","author":{"@type":"Person","name":"ひかり"},"dateModified":"2024-07-21T00:00:00+00:00","datePublished":"2024-07-21T00:00:00+00:00","description":"この記事では WSL 内のサーバーを LAN に公開する方法を紹介します。","headline":"WSL 内のサーバーを LAN に公開する","mainEntityOfPage":{"@type":"WebPage","@id":"https://www.hikari-dev.com/2024/07/21/wsl-to-lan.html"},"url":"https://www.hikari-dev.com/2024/07/21/wsl-to-lan.html"}</script>
 <!-- End Jekyll SEO tag -->
 
 <script src="/assets/js/wareki.js"></script>
@@ -83,54 +83,133 @@
                 <article>
     <div class="page-navigation">
         
-        <a class="prev" href="/2024/04/20/pyplot.html">
+        <a class="prev" href="/2024/05/19/hextodec.html">
             <button class="button style-standard">
                 前へ
             </button>
         </a>
         
         
-        <a class="next" href="/2024/07/21/wsl-to-lan.html">
-            <button class="button style-standard">
-                次へ
-            </button>
-        </a>
-        
     </div>
 </article>
 
 <article>
-    <h1 class="page-title">0.248<sub>(16)</sub> を 10 進数の分数にする問題の簡単な解き方 (基本情報技術者試験)</h1>
-    <time class="posted-date">2024-05-19</time>
+    <h1 class="page-title">WSL 内のサーバーを LAN に公開する</h1>
+    <time class="posted-date">2024-07-21</time>
     <!-- <div id="table-of-contents">
         <h2>目次</h2>
         
     </div> -->
     <div id="markdown-content">
-        <p>「16 進数の少数 0.248 を 10 進数の分数で表したものはどれか。」の問題について簡単に解く方法を紹介します。</p>
+        <p>この記事では WSL 内のサーバーを LAN に公開する方法を紹介します。</p>
 
-<h2 id="ポイント">ポイント</h2>
-<p>16 進数の問題は 2 進数を使う</p>
+<h2 id="サーバーを建てる">サーバーを建てる</h2>
+<p>既にサーバーがある場合は、この章は読み飛ばしてください。</p>
 
-<h2 id="手順">手順</h2>
 <ol>
   <li>
-    <p>16 進数を 2 進数に変換<br />
- 0.248<sub>(16)</sub> = 0.0010 0100 1000<sub>(2)</sub></p>
+    <p>例として、以下の内容で index.html 作成します。</p>
+
+    <div class="language-html highlighter-rouge"><div class="highlight"><pre class="highlight"><code> <span class="c">&lt;!-- index.html --&gt;</span>
+ <span class="cp">&lt;!DOCTYPE html&gt;</span>
+ <span class="nt">&lt;html</span> <span class="na">lang=</span><span class="s">"ja"</span><span class="nt">&gt;</span>
+ <span class="nt">&lt;head&gt;</span>
+     <span class="nt">&lt;meta</span> <span class="na">charset=</span><span class="s">"UTF-8"</span><span class="nt">&gt;</span>
+     <span class="nt">&lt;meta</span> <span class="na">name=</span><span class="s">"viewport"</span> <span class="na">content=</span><span class="s">"width=device-width, initial-scale=1.0"</span><span class="nt">&gt;</span>
+     <span class="nt">&lt;title&gt;</span>Hello, world!<span class="nt">&lt;/title&gt;</span>
+ <span class="nt">&lt;/head&gt;</span>
+ <span class="nt">&lt;body&gt;</span>
+     <span class="nt">&lt;h1&gt;</span>Hello, world!<span class="nt">&lt;/h1&gt;</span>
+ <span class="nt">&lt;/body&gt;</span>
+ <span class="nt">&lt;/html&gt;</span>
+</code></pre></div>    </div>
   </li>
   <li>
-    <p>小数点をなくす<br />
- 0.0010 0100 1000<sub>(2)</sub><br />
- = 0.0010 0100 1000<sub>(2)</sub> × 0010 0000 0000<sub>(2)</sub> / 0010 0000 0000<sub>(2)</sub><br />
- = 0100 1001<sub>(2)</sub> / 0010 0000 0000<sub>(2)</sub></p>
-  </li>
-  <li>
-    <p>2 進数を 10 進数に変換<br />
- 0100 1001<sub>(2)</sub> / 0010 0000 0000<sub>(2)</sub><br />
- = (64 + 8 + 1) / 512<br />
- = 73 / 512</p>
+    <p>Ruby で簡易的なサーバーを立てる</p>
+
+    <p>Ruby でサーバーのスクリプトを記述します。
+ <code class="language-plaintext highlighter-rouge">server.rb</code> に保存します。</p>
+
+    <div class="language-ruby highlighter-rouge"><div class="highlight"><pre class="highlight"><code> <span class="c1">#!/usr/bin/env ruby</span>
+
+ <span class="c1"># server.rb</span>
+
+ <span class="nb">require</span> <span class="s1">'webrick'</span>
+
+ <span class="n">server</span> <span class="o">=</span> <span class="no">WEBrick</span><span class="o">::</span><span class="no">HTTPServer</span><span class="p">.</span><span class="nf">new</span><span class="p">({</span>
+ <span class="ss">:DocumentRoot</span> <span class="o">=&gt;</span> <span class="s1">'./'</span><span class="p">,</span>
+ <span class="ss">:Port</span> <span class="o">=&gt;</span> <span class="mi">8000</span>
+ <span class="p">})</span>
+
+ <span class="nb">trap</span><span class="p">(</span><span class="s1">'INT'</span><span class="p">)</span> <span class="p">{</span> <span class="n">server</span><span class="p">.</span><span class="nf">shutdown</span> <span class="p">}</span>
+
+ <span class="n">server</span><span class="p">.</span><span class="nf">start</span>
+</code></pre></div>    </div>
+
+    <p>次に、<code class="language-plaintext highlighter-rouge">ruby server.rb</code> を実行し、サーバーを立ち上げます。</p>
+
+    <p>ブラウザで <code class="language-plaintext highlighter-rouge">localhost:8000</code> に接続すると <code class="language-plaintext highlighter-rouge">index.html</code> の内容が表示されます。
+ <code class="language-plaintext highlighter-rouge">hostname -I</code> で表示される IP アドレスでも表示できます。</p>
   </li>
 </ol>
+
+<h2 id="lan-に公開する">LAN に公開する</h2>
+<p>最近の WSL2 の仕様では WSL で立ち上げたサーバーが localhost へ転送されます。
+しかし、WSL1 とは異なり LAN のアドレス (例えば、192.168.0.2 など) へアクセスしても、WSL2 のサーバーへアクセスすることはできません。</p>
+
+<p>したがって、ポート転送する必要があります。</p>
+
+<h3 id="ポート転送設定">ポート転送設定</h3>
+<p><code class="language-plaintext highlighter-rouge">netsh interface portproxy</code> コマンドを利用することで、ポート転送が可能です。</p>
+
+<p>以下のコマンドは、すべての NIC に割り当てられている IP アドレスの 8000 へのアクセスを、
+localhost:8000 へ転送する設定です。
+このコマンドは、<strong>管理者権限</strong>で実行する必要があります。</p>
+
+<pre><code class="language-ps1">netsh interface portproxy add v4tov4 listenport=8000 connectaddress=localhost
+</code></pre>
+
+<p>設定は <code class="language-plaintext highlighter-rouge">netsh interface portproxy show v4tov4</code> を実行することで見ることができます。</p>
+
+<pre><code class="language-ps1">PS &gt; netsh interface portproxy show v4tov4
+
+ipv4 をリッスンする:         ipv4 に接続する:
+
+Address         Port        Address         Port
+--------------- ----------  --------------- ----------
+*               8000        localhost       8000
+</code></pre>
+
+<details>
+<summary>設定の削除方法</summary>
+    <pre>
+        <code class="language-ps1 hljs language-powershell" data-highlighted="yes"><!--
+            -->netsh interface portproxy delete v4tov4 listenaddress=* listenport=<!--
+            --><span class="hljs-number">8000</span>
+        </code>
+    </pre>
+</details>
+
+<p>また、すべての NIC ではなく、特定の NIC の IP アドレスに対して行いたい場合は、以下のコマンドを実行します。</p>
+
+<pre><code class="language-ps1">netsh interface portproxy add v4tov4 listenport=8000 connectaddress=localhost listenaddress=&lt;対象 NIC の IP アドレス&gt;
+</code></pre>
+
+<h2 id="ファイアウォール設定">ファイアウォール設定</h2>
+<p>Win + R で「ファイル名を指定して実行」を開き、wf.msc と入力して「OK」し、「セキュリティが強化された Windows Defender ファイアウォール」を開きます。</p>
+
+<p><img src="/assets/img/firewall-tcp-8000.png" alt="firewall" /></p>
+
+<p>左側にある「受信の規則」をクリックし、右側の「新しい規則…」をクリックして「新規受信の規則ウィザード」を開きます。</p>
+
+<p>「ポート (O)」を選択して [次へ(N) &gt;] をクリックし、「特定のローカル ポート(S):」のところにポート番号 (今回の場合は 8000) を入力し [次へ(N) &gt;] を 3 回クリック。「名前(N):」のところに適当な設定名をつけて [完了(F)] をクリックし設定を保存します。</p>
+
+<h3 id="lan-からアクセスできるかの確認">LAN からアクセスできるかの確認</h3>
+<p><code class="language-plaintext highlighter-rouge">ipconfig</code> を入力し、LAN の IP アドレスを確かめます。
+おそらくほとんどの場合は、192.168.x.x の形式だと思います。</p>
+
+<p>このアドレス + port 番号を同じネットワーク内の端末 (スマホなど) のブラウザに入力します。
+例えば、IP アドレスが 192.168.0.2 の場合は http://192.168.0.2:8000 です。</p>
 
     </div>
 </article>
@@ -138,18 +217,12 @@
 <article>
     <div class="page-navigation">
         
-        <a class="prev" href="/2024/04/20/pyplot.html">
+        <a class="prev" href="/2024/05/19/hextodec.html">
             <button class="button style-standard">
                 前へ
             </button>
         </a>
         
-        
-        <a class="next" href="/2024/07/21/wsl-to-lan.html">
-            <button class="button style-standard">
-                次へ
-            </button>
-        </a>
         
     </div>
 </article>
