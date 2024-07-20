@@ -24,11 +24,12 @@ body .hljs table.hljs-ln tbody tr td.hljs-ln-numbers {
 }
 
 pre code.hljs {
-  font-family: "PlemolJP Console NF", "Cascadia Code", Consolas, "Courier New", monospace;
+  font-family: "PlemolJP Console", "PlemolJP Console NF", "Cascadia Code", Consolas, "Courier New", monospace;
+  font-weight: 600;
 }
 
 code.language-plaintext.highlighter-rouge {
-  font-family: "PlemolJP Console NF", "Cascadia Code", Consolas, "Courier New", monospace;
+  font-family: "PlemolJP Console", "PlemolJP Console NF", "Cascadia Code", Consolas, "Courier New", monospace;
   font-weight: bold;
   color: #E17092;
 }
@@ -44,7 +45,7 @@ body {
   display: grid;
   grid-template-rows: auto 1fr auto auto;
   min-height: 100vh;
-  font-family: Helvetica, Arial, "Yu Gothic UI", "BIZ UDPGothic", Meiryo;
+  font-family: Helvetica, Arial, "BIZ UDPGothic", "Yu Gothic UI", Meiryo;
   line-height: 1.5;
 }
 
@@ -178,13 +179,13 @@ pre {
 pre code.hljs {
   text-wrap: wrap;
   word-break: break-all;
-  font-size: 14px;
+  font-size: 16px;
 }
 pre code.hljs table tbody tr:nth-child(odd) {
   background-color: unset;
 }
 pre code.hljs table tbody tr {
-  font-size: 14px;
+  font-size: 16px;
 }
 pre code.hljs table tbody tr td.hljs-ln-numbers {
   vertical-align: top;
