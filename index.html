@@ -25,7 +25,7 @@ let posts_data = [
 
 <script src="/assets/js/search.js"></script>
 
-{% for post in site.posts limit: 5 %}
+{% for post in site.posts limit: 1 %}
     <div class="index">
         <article class="article">
             <h1 class="page-title"><a href="{{ post.url }}">{{ post.title }}</a></h1>
