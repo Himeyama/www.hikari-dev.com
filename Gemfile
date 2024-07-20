@@ -23,3 +23,7 @@ gem "jekyll-seo-tag", "~> 2.8"
 gem "nokogiri", "~> 1.15"
 
 gem "jekyll-toc", "~> 0.18.0"
+
+gem "base64", "~> 0.2.0"
+
+gem "csv", "~> 3.3"
