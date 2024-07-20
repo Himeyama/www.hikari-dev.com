@@ -14,9 +14,9 @@ jobs:
       with:
         ruby-version: '3.0' # Not needed with a .ruby-version file
     - name: Bundle
-      run: bundle
+      run: bundle install
     - name: Build jekyll
-      run: jekyll build
+      run: bundle exec jekyll build
     - name: Deploy to GitHub Pages
       uses: peaceiris/actions-gh-pages@v3
       with:

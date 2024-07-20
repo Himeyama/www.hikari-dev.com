@@ -146,11 +146,12 @@ body
                 border-color: #FFFFFF12
 
 table
+    border-collapse: collapse
+    border: 1px solid #D0D7DE
+
     thead
         tr
             font-weight: bold
-    border-collapse: collapse
-    border: 1px solid #D0D7DE
     th, td
         border: 1px solid #D0D7DE
         padding: 8px
@@ -230,6 +231,8 @@ code:not(.hljs) table
 .articles
     grid-column: 1 / span 9
     margin: 16px 8px 0 16px
+    word-break: break-all
+    
     a
         color: $accent-color
         text-decoration: unset
@@ -279,7 +282,6 @@ code:not(.hljs) table
         h6
             font-size: 16px
 
-    word-break: break-all
     img
         max-width: 100%
 
