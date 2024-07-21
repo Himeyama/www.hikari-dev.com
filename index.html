@@ -604,52 +604,49 @@ let posts_data = [
 <h2 id="サーバーを建てる">サーバーを建てる</h2>
 <p>既にサーバーがある場合は、この章は読み飛ばしてください。</p>
 
-<ol>
-  <li>
-    <p>例として、以下の内容で index.html 作成します。</p>
+<h3 id="indexhtml-の作成">index.html の作成</h3>
+<p>例として、以下の内容で index.html 作成します。</p>
 
-    <div class="language-html highlighter-rouge"><div class="highlight"><pre class="highlight"><code> <span class="c">&lt;!-- index.html --&gt;</span>
- <span class="cp">&lt;!DOCTYPE html&gt;</span>
- <span class="nt">&lt;html</span> <span class="na">lang=</span><span class="s">"ja"</span><span class="nt">&gt;</span>
- <span class="nt">&lt;head&gt;</span>
-     <span class="nt">&lt;meta</span> <span class="na">charset=</span><span class="s">"UTF-8"</span><span class="nt">&gt;</span>
-     <span class="nt">&lt;meta</span> <span class="na">name=</span><span class="s">"viewport"</span> <span class="na">content=</span><span class="s">"width=device-width, initial-scale=1.0"</span><span class="nt">&gt;</span>
-     <span class="nt">&lt;title&gt;</span>Hello, world!<span class="nt">&lt;/title&gt;</span>
- <span class="nt">&lt;/head&gt;</span>
- <span class="nt">&lt;body&gt;</span>
-     <span class="nt">&lt;h1&gt;</span>Hello, world!<span class="nt">&lt;/h1&gt;</span>
- <span class="nt">&lt;/body&gt;</span>
- <span class="nt">&lt;/html&gt;</span>
-</code></pre></div>    </div>
-  </li>
-  <li>
-    <p>Ruby で簡易的なサーバーを立てる</p>
+<div class="language-html highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c">&lt;!-- index.html --&gt;</span>
+<span class="cp">&lt;!DOCTYPE html&gt;</span>
+<span class="nt">&lt;html</span> <span class="na">lang=</span><span class="s">"ja"</span><span class="nt">&gt;</span>
+<span class="nt">&lt;head&gt;</span>
+    <span class="nt">&lt;meta</span> <span class="na">charset=</span><span class="s">"UTF-8"</span><span class="nt">&gt;</span>
+    <span class="nt">&lt;meta</span> <span class="na">name=</span><span class="s">"viewport"</span> <span class="na">content=</span><span class="s">"width=device-width, initial-scale=1.0"</span><span class="nt">&gt;</span>
+    <span class="nt">&lt;title&gt;</span>Hello, world!<span class="nt">&lt;/title&gt;</span>
+<span class="nt">&lt;/head&gt;</span>
+<span class="nt">&lt;body&gt;</span>
+    <span class="nt">&lt;h1&gt;</span>Hello, world!<span class="nt">&lt;/h1&gt;</span>
+<span class="nt">&lt;/body&gt;</span>
+<span class="nt">&lt;/html&gt;</span>
+</code></pre></div></div>
 
-    <p>Ruby でサーバーのスクリプトを記述します。
- <code class="language-plaintext highlighter-rouge">server.rb</code> に保存します。</p>
+<h3 id="ruby-で簡易的なサーバーを立てる">Ruby で簡易的なサーバーを立てる</h3>
 
-    <div class="language-ruby highlighter-rouge"><div class="highlight"><pre class="highlight"><code> <span class="c1">#!/usr/bin/env ruby</span>
+<p>Ruby でサーバーのスクリプトを記述します。
+<code class="language-plaintext highlighter-rouge">server.rb</code> に保存します。</p>
 
- <span class="c1"># server.rb</span>
+<div class="language-ruby highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">#!/usr/bin/env ruby</span>
 
- <span class="nb">require</span> <span class="s1">'webrick'</span>
+<span class="c1"># server.rb</span>
 
- <span class="n">server</span> <span class="o">=</span> <span class="no">WEBrick</span><span class="o">::</span><span class="no">HTTPServer</span><span class="p">.</span><span class="nf">new</span><span class="p">({</span>
- <span class="ss">:DocumentRoot</span> <span class="o">=&gt;</span> <span class="s1">'./'</span><span class="p">,</span>
- <span class="ss">:Port</span> <span class="o">=&gt;</span> <span class="mi">8000</span>
- <span class="p">})</span>
+<span class="nb">require</span> <span class="s1">'webrick'</span>
 
- <span class="nb">trap</span><span class="p">(</span><span class="s1">'INT'</span><span class="p">)</span> <span class="p">{</span> <span class="n">server</span><span class="p">.</span><span class="nf">shutdown</span> <span class="p">}</span>
+<span class="n">server</span> <span class="o">=</span> <span class="no">WEBrick</span><span class="o">::</span><span class="no">HTTPServer</span><span class="p">.</span><span class="nf">new</span><span class="p">({</span>
+<span class="ss">:DocumentRoot</span> <span class="o">=&gt;</span> <span class="s1">'./'</span><span class="p">,</span>
+<span class="ss">:Port</span> <span class="o">=&gt;</span> <span class="mi">8000</span>
+<span class="p">})</span>
 
- <span class="n">server</span><span class="p">.</span><span class="nf">start</span>
-</code></pre></div>    </div>
+<span class="nb">trap</span><span class="p">(</span><span class="s1">'INT'</span><span class="p">)</span> <span class="p">{</span> <span class="n">server</span><span class="p">.</span><span class="nf">shutdown</span> <span class="p">}</span>
 
-    <p>次に、<code class="language-plaintext highlighter-rouge">ruby server.rb</code> を実行し、サーバーを立ち上げます。</p>
+<span class="n">server</span><span class="p">.</span><span class="nf">start</span>
+</code></pre></div></div>
 
-    <p>ブラウザで <code class="language-plaintext highlighter-rouge">localhost:8000</code> に接続すると <code class="language-plaintext highlighter-rouge">index.html</code> の内容が表示されます。
- <code class="language-plaintext highlighter-rouge">hostname -I</code> で表示される IP アドレスでも表示できます。</p>
-  </li>
-</ol>
+<p>次に、<code class="language-plaintext highlighter-rouge">ruby server.rb</code> を実行し、サーバーを立ち上げます。<br />
+(ここで、エラーが発生する場合は <code class="language-plaintext highlighter-rouge">gem install webrick</code> を実行してください。)</p>
+
+<p>ブラウザで <code class="language-plaintext highlighter-rouge">localhost:8000</code> に接続すると <code class="language-plaintext highlighter-rouge">index.html</code> の内容が表示されます。
+<code class="language-plaintext highlighter-rouge">hostname -I</code> で表示される IP アドレスでも表示できます。</p>
 
 <h2 id="lan-に公開する">LAN に公開する</h2>
 <p>最近の WSL2 の仕様では WSL で立ち上げたサーバーが localhost へ転送されます。
@@ -694,19 +691,27 @@ Address         Port        Address         Port
 </code></pre>
 
 <h2 id="ファイアウォール設定">ファイアウォール設定</h2>
-<p>Win + R で「ファイル名を指定して実行」を開き、wf.msc と入力して「OK」し、「セキュリティが強化された Windows Defender ファイアウォール」を開きます。</p>
+<ol>
+  <li>Win + R で「ファイル名を指定して実行」を開き、wf.msc と入力して「OK」し、「セキュリティが強化された Windows Defender ファイアウォール」を開きます。</li>
+</ol>
 
 <p><img src="/assets/img/firewall-tcp-8000.png" alt="firewall" /></p>
 
-<p>左側にある「受信の規則」をクリックし、右側の「新しい規則…」をクリックして「新規受信の規則ウィザード」を開きます。</p>
-
-<p>「ポート (O)」を選択して [次へ(N) &gt;] をクリックし、「特定のローカル ポート(S):」のところにポート番号 (今回の場合は 8000) を入力し [次へ(N) &gt;] を 3 回クリック。「名前(N):」のところに適当な設定名をつけて [完了(F)] をクリックし設定を保存します。</p>
+<ol>
+  <li>左側にある「受信の規則」をクリックし、右側の「新しい規則…」をクリックして「新規受信の規則ウィザード」を開きます。
+    <ul>
+      <li>「ポート (O)」を選択して [次へ(N) &gt;] をクリック</li>
+      <li>「特定のローカル ポート(S):」のところにポート番号 (今回の場合は 8000) を入力し [次へ(N) &gt;] を 3 回クリック</li>
+      <li>「名前(N):」のところに適当な設定名をつけて [完了(F)] をクリックし設定を保存</li>
+    </ul>
+  </li>
+</ol>
 
 <h3 id="lan-からアクセスできるかの確認">LAN からアクセスできるかの確認</h3>
 <p><code class="language-plaintext highlighter-rouge">ipconfig</code> を入力し、LAN の IP アドレスを確かめます。
 おそらくほとんどの場合は、192.168.x.x の形式だと思います。</p>
 
-<p>このアドレス + port 番号を同じネットワーク内の端末 (スマホなど) のブラウザに入力します。
+<p>このアドレスとポート番号を同じネットワーク内の端末 (スマホなど) のブラウザに入力します。
 例えば、IP アドレスが 192.168.0.2 の場合は http://192.168.0.2:8000 です。</p>
 
         </article>
