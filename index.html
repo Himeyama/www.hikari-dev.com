@@ -92,6 +92,12 @@
 let posts_data = [
     
     {
+        "url": "/2024/07/30/fluent-listbox-scroll.html",
+        "title": "fluent-listbox のスクロールを可能にする方法 (@fluentui/web-components)",
+        "date": "2024-07-30"
+    },
+    
+    {
         "url": "/2024/07/21/wsl-to-lan.html",
         "title": "WSL 内のサーバーを LAN に公開する",
         "date": "2024-07-21"
@@ -597,122 +603,31 @@ let posts_data = [
 
     <div class="index">
         <article class="article">
-            <h1 class="page-title"><a href="/2024/07/21/wsl-to-lan.html">WSL 内のサーバーを LAN に公開する</a></h1>
-            <time class="posted-date">2024-07-21</time>
-            <p>この記事では WSL 内のサーバーを LAN に公開する方法を紹介します。</p>
+            <h1 class="page-title"><a href="/2024/07/30/fluent-listbox-scroll.html">fluent-listbox のスクロールを可能にする方法 (@fluentui/web-components)</a></h1>
+            <time class="posted-date">2024-07-30</time>
+            <h2 id="概要">概要</h2>
+<p>以下の ListBox (fluent-listbox および fluent-option) をスクロール可能にする</p>
 
-<h2 id="サーバーを建てる">サーバーを建てる</h2>
-<p>既にサーバーがある場合は、この章は読み飛ばしてください。</p>
+<table>
+  <tbody>
+    <tr>
+      <td>[Listbox</td>
+      <td>Microsoft Learn’](https://learn.microsoft.com/ja-jp/fluent-ui/web-components/components/listbox?pivots=typescript)</td>
+    </tr>
+  </tbody>
+</table>
 
-<h3 id="indexhtml-の作成">index.html の作成</h3>
-<p>例として、以下の内容で index.html 作成します。</p>
+<h2 id="解決法">解決法</h2>
+<p>fluent-listbox に対しては <code class="language-plaintext highlighter-rouge">overflow-y: auto;</code> を、fluent-option に対しては <code class="language-plaintext highlighter-rouge">flex-shrink: 0;</code> を設定</p>
 
-<div class="language-html highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c">&lt;!-- index.html --&gt;</span>
-<span class="cp">&lt;!DOCTYPE html&gt;</span>
-<span class="nt">&lt;html</span> <span class="na">lang=</span><span class="s">"ja"</span><span class="nt">&gt;</span>
-<span class="nt">&lt;head&gt;</span>
-    <span class="nt">&lt;meta</span> <span class="na">charset=</span><span class="s">"UTF-8"</span><span class="nt">&gt;</span>
-    <span class="nt">&lt;meta</span> <span class="na">name=</span><span class="s">"viewport"</span> <span class="na">content=</span><span class="s">"width=device-width, initial-scale=1.0"</span><span class="nt">&gt;</span>
-    <span class="nt">&lt;title&gt;</span>Hello, world!<span class="nt">&lt;/title&gt;</span>
-<span class="nt">&lt;/head&gt;</span>
-<span class="nt">&lt;body&gt;</span>
-    <span class="nt">&lt;h1&gt;</span>Hello, world!<span class="nt">&lt;/h1&gt;</span>
-<span class="nt">&lt;/body&gt;</span>
-<span class="nt">&lt;/html&gt;</span>
+<div class="language-css highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">fluent-listbox</span> <span class="p">{</span>
+    <span class="nl">overflow-y</span><span class="p">:</span> <span class="nb">auto</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="nt">fluent-option</span> <span class="p">{</span>
+    <span class="nl">flex-shrink</span><span class="p">:</span> <span class="m">0</span><span class="p">;</span>
+<span class="p">}</span>
 </code></pre></div></div>
-
-<h3 id="ruby-で簡易的なサーバーを立てる">Ruby で簡易的なサーバーを立てる</h3>
-
-<p>Ruby でサーバーのスクリプトを記述します。
-<code class="language-plaintext highlighter-rouge">server.rb</code> に保存します。</p>
-
-<div class="language-ruby highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">#!/usr/bin/env ruby</span>
-
-<span class="c1"># server.rb</span>
-
-<span class="nb">require</span> <span class="s1">'webrick'</span>
-
-<span class="n">server</span> <span class="o">=</span> <span class="no">WEBrick</span><span class="o">::</span><span class="no">HTTPServer</span><span class="p">.</span><span class="nf">new</span><span class="p">({</span>
-<span class="ss">:DocumentRoot</span> <span class="o">=&gt;</span> <span class="s1">'./'</span><span class="p">,</span>
-<span class="ss">:Port</span> <span class="o">=&gt;</span> <span class="mi">8000</span>
-<span class="p">})</span>
-
-<span class="nb">trap</span><span class="p">(</span><span class="s1">'INT'</span><span class="p">)</span> <span class="p">{</span> <span class="n">server</span><span class="p">.</span><span class="nf">shutdown</span> <span class="p">}</span>
-
-<span class="n">server</span><span class="p">.</span><span class="nf">start</span>
-</code></pre></div></div>
-
-<p>次に、<code class="language-plaintext highlighter-rouge">ruby server.rb</code> を実行し、サーバーを立ち上げます。<br />
-(ここで、エラーが発生する場合は <code class="language-plaintext highlighter-rouge">gem install webrick</code> を実行してください。)</p>
-
-<p>ブラウザで <code class="language-plaintext highlighter-rouge">localhost:8000</code> に接続すると <code class="language-plaintext highlighter-rouge">index.html</code> の内容が表示されます。
-<code class="language-plaintext highlighter-rouge">hostname -I</code> で表示される IP アドレスでも表示できます。</p>
-
-<h2 id="lan-に公開する">LAN に公開する</h2>
-<p>最近の WSL2 の仕様では WSL で立ち上げたサーバーが localhost へ転送されます。
-しかし、WSL1 とは異なり LAN のアドレス (例えば、192.168.0.2 など) へアクセスしても、WSL2 のサーバーへアクセスすることはできません。</p>
-
-<p>したがって、ポート転送する必要があります。</p>
-
-<h3 id="ポート転送設定">ポート転送設定</h3>
-<p><code class="language-plaintext highlighter-rouge">netsh interface portproxy</code> コマンドを利用することで、ポート転送が可能です。</p>
-
-<p>以下のコマンドは、すべての NIC に割り当てられている IP アドレスの 8000 へのアクセスを、
-localhost:8000 へ転送する設定です。
-このコマンドは、<strong>管理者権限</strong>で実行する必要があります。</p>
-
-<pre><code class="language-ps1">netsh interface portproxy add v4tov4 listenport=8000 connectaddress=localhost
-</code></pre>
-
-<p>設定は <code class="language-plaintext highlighter-rouge">netsh interface portproxy show v4tov4</code> を実行することで見ることができます。</p>
-
-<pre><code class="language-ps1">PS &gt; netsh interface portproxy show v4tov4
-
-ipv4 をリッスンする:         ipv4 に接続する:
-
-Address         Port        Address         Port
---------------- ----------  --------------- ----------
-*               8000        localhost       8000
-</code></pre>
-
-<details>
-<summary>設定の削除方法</summary>
-    <pre>
-        <code class="language-ps1 hljs language-powershell" data-highlighted="yes"><!--
-            -->netsh interface portproxy delete v4tov4 listenaddress=* listenport=<!--
-            --><span class="hljs-number">8000</span>
-        </code>
-    </pre>
-</details>
-
-<p>また、すべての NIC ではなく、特定の NIC の IP アドレスに対して行いたい場合は、以下のコマンドを実行します。</p>
-
-<pre><code class="language-ps1">netsh interface portproxy add v4tov4 listenport=8000 connectaddress=localhost listenaddress=&lt;対象 NIC の IP アドレス&gt;
-</code></pre>
-
-<h2 id="ファイアウォール設定">ファイアウォール設定</h2>
-<ol>
-  <li>Win + R で「ファイル名を指定して実行」を開き、wf.msc と入力して「OK」し、「セキュリティが強化された Windows Defender ファイアウォール」を開きます。</li>
-</ol>
-
-<p><img src="/assets/img/firewall-tcp-8000.png" alt="firewall" /></p>
-
-<ol>
-  <li>左側にある「受信の規則」をクリックし、右側の「新しい規則…」をクリックして「新規受信の規則ウィザード」を開きます。
-    <ul>
-      <li>「ポート (O)」を選択して [次へ(N) &gt;] をクリック</li>
-      <li>「特定のローカル ポート(S):」のところにポート番号 (今回の場合は 8000) を入力し [次へ(N) &gt;] を 3 回クリック</li>
-      <li>「名前(N):」のところに適当な設定名をつけて [完了(F)] をクリックし設定を保存</li>
-    </ul>
-  </li>
-</ol>
-
-<h3 id="lan-からアクセスできるかの確認">LAN からアクセスできるかの確認</h3>
-<p><code class="language-plaintext highlighter-rouge">ipconfig</code> を入力し、LAN の IP アドレスを確かめます。
-おそらくほとんどの場合は、192.168.x.x の形式だと思います。</p>
-
-<p>このアドレスとポート番号を同じネットワーク内の端末 (スマホなど) のブラウザに入力します。
-例えば、IP アドレスが 192.168.0.2 の場合は http://192.168.0.2:8000 です。</p>
 
         </article>
     </div>
