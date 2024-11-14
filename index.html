@@ -92,6 +92,12 @@
 let posts_data = [
     
     {
+        "url": "/2024/11/15/nanohana.html",
+        "title": "オープンソースのパスワード管理フリーソフト Nanohana",
+        "date": "2024-11-15"
+    },
+    
+    {
         "url": "/2024/11/12/voicevox-api.html",
         "title": "VOICEVOX の API を観察してみる",
         "date": "2024-11-12"
@@ -609,208 +615,43 @@ let posts_data = [
 
     <div class="index">
         <article class="article">
-            <h1 class="page-title"><a href="/2024/11/12/voicevox-api.html">VOICEVOX の API を観察してみる</a></h1>
-            <time class="posted-date">2024-11-12</time>
-            <p>VOICEVOX はエディターとエンジンとコアで構成されているとあります。</p>
+            <h1 class="page-title"><a href="/2024/11/15/nanohana.html">オープンソースのパスワード管理フリーソフト Nanohana</a></h1>
+            <time class="posted-date">2024-11-15</time>
+            <p>パスワード管理ソフト「Nanohana」を作成し公開しました。</p>
 
-<p>参考: <a href="https://github.com/VOICEVOX/voicevox/blob/main/docs/%E5%85%A8%E4%BD%93%E6%A7%8B%E6%88%90.md">全体構成</a></p>
+<table>
+  <thead>
+    <tr>
+      <th style="text-align: center">ダークテーマ</th>
+      <th style="text-align: center">ライトテーマ</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="text-align: center"><img src="https://github.com/Himeyama/nanohana/raw/master/docs/Dark.jpg" alt="" /></td>
+      <td style="text-align: center"><img src="https://github.com/Himeyama/nanohana/raw/master/docs/Light.jpg" alt="" /></td>
+    </tr>
+  </tbody>
+</table>
 
-<p>エディターがアプリで、エンジンが http サーバー、コアが音声合成の処理を行うモジュールになっているらしいです。</p>
+<h2 id="ダウンロード">ダウンロード</h2>
 
-<p>つまり、エディターがエンジンに対して REST API (以下 API) を叩いているというわけですね。</p>
+<h3 id="windows-10--11">Windows 10 / 11</h3>
 
-<p>というわけで、その API の内容を観察してみようという記事になります。</p>
-
-<p>API のキャプチャーには Wireshark を用いました。</p>
-
-<h2 id="起動時の通信">起動時の通信</h2>
-<p><code class="language-plaintext highlighter-rouge">http and tcp.port == 50021</code> でフィルターをかけてみた結果が、こちら。</p>
-
-<p><img src="/assets/img/voicevox-api/01.png" alt="" /></p>
-
-<p>起動時には以下の情報を読み取っているようです。</p>
-<ul>
-  <li>バージョン情報 <code class="language-plaintext highlighter-rouge">/version</code></li>
-  <li>エンジンのマニフェスト情報 <code class="language-plaintext highlighter-rouge">/engine_manifest</code></li>
-  <li>スピーカー情報 <code class="language-plaintext highlighter-rouge">/speakers</code> (ずんだもんなどのキャラクターリスト)</li>
-  <li>シンガー情報 <code class="language-plaintext highlighter-rouge">/singers</code> (〃)</li>
-</ul>
-
-<p>スピーカー・シンガー取得後は各キャラクターの情報をより詳細に取得しているようですね。(<code class="language-plaintext highlighter-rouge">/speaker_info?speaker_uuid=xxx</code>, <code class="language-plaintext highlighter-rouge">/singer_info?speaker_uuid=xxx</code>)</p>
-
-<h2 id="音声合成リクエスト時の通信">音声合成リクエスト時の通信</h2>
-<p><img src="/assets/img/voicevox-api/04.png" alt="" /></p>
-
-<p>では実際にずんだもんで音声合成のリクエストを送って、API を覗いてみました。</p>
-
-<p><img src="/assets/img/voicevox-api/02.png" alt="" /></p>
-
-<p>以下のような流れで音声が取得されているみたいです。</p>
-
-<ol>
-  <li><code class="language-plaintext highlighter-rouge">/accent_phrases</code> でアクセントの情報</li>
-  <li><code class="language-plaintext highlighter-rouge">/synthesis?speaker=3</code> でずんだもんの声を合成</li>
-</ol>
-
-<p>(2.) で送っているリクエストボディの内容は、以下のように (1.) のレスポンスと似たようなものになっています。</p>
-
-<p>したがって、(1.) でアクセントを取得し、(2.) でアクセントから音声を合成するという流れのようです。</p>
-
-<h2 id="実際に-api-を叩いてみる">実際に API を叩いてみる</h2>
-<p>httpie というツールを用いて API を叩きました。</p>
-
-<ol>
-  <li>スピーカー情報を取得</li>
-</ol>
-
-<p><img src="/assets/img/voicevox-api/05.png" alt="" /></p>
-
-<p>ずんだもん (ノーマル) の id は 3 であることがわかりました。</p>
-
-<ol>
-  <li>アクセント情報を取得</li>
-</ol>
-
-<p><code class="language-plaintext highlighter-rouge">ずんだもんなのだ</code> でアクセント情報を取得してみました。
-(スピーカー情報と異なり、POST リクエストで取得)</p>
-
-<p><img src="/assets/img/voicevox-api/06.png" alt="" /></p>
-
-<ol>
-  <li>音声合成</li>
-</ol>
-
-<p>以下のようなリクエストボディーを作成します。</p>
-
-<div class="language-json highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="p">{</span><span class="w">
-  </span><span class="nl">"accent_phrases"</span><span class="p">:</span><span class="w"> </span><span class="err">&lt;/accent_phrases</span><span class="w"> </span><span class="err">で取得したデータ&gt;</span><span class="p">,</span><span class="w">
-  </span><span class="nl">"speedScale"</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w">
-  </span><span class="nl">"pitchScale"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w">
-  </span><span class="nl">"intonationScale"</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w">
-  </span><span class="nl">"volumeScale"</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w">
-  </span><span class="nl">"prePhonemeLength"</span><span class="p">:</span><span class="w"> </span><span class="mf">0.1</span><span class="p">,</span><span class="w">
-  </span><span class="nl">"postPhonemeLength"</span><span class="p">:</span><span class="w"> </span><span class="mf">0.1</span><span class="p">,</span><span class="w">
-  </span><span class="nl">"outputSamplingRate"</span><span class="p">:</span><span class="w"> </span><span class="mi">24000</span><span class="p">,</span><span class="w">
-  </span><span class="nl">"outputStereo"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span><span class="w">
-  </span><span class="nl">"kana"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="w">
-</span><span class="p">}</span><span class="w">
-</span></code></pre></div></div>
-
-<p>httpie では wav が扱えないようなので、PowerShell でリクエストを送ります。</p>
-
-<pre><code class="language-ps1"># URLとJSONデータを定義
-$url = 'http://localhost:50021/synthesis?speaker=3'
-$jsonBody = @"
-{
-  "accent_phrases": [
-    {
-      "moras": [
-        {
-          "text": "ズ",
-          "consonant": "z",
-          "consonant_length": 0.12722788751125336,
-          "vowel": "u",
-          "vowel_length": 0.11318323761224747,
-          "pitch": 5.773037910461426
-        },
-        {
-          "text": "ン",
-          "consonant": null,
-          "consonant_length": null,
-          "vowel": "N",
-          "vowel_length": 0.09306197613477707,
-          "pitch": 6.108947277069092
-        },
-        {
-          "text": "ダ",
-          "consonant": "d",
-          "consonant_length": 0.04249810427427292,
-          "vowel": "a",
-          "vowel_length": 0.09372275322675705,
-          "pitch": 6.09743070602417
-        },
-        {
-          "text": "モ",
-          "consonant": "m",
-          "consonant_length": 0.07012023776769638,
-          "vowel": "o",
-          "vowel_length": 0.1172478124499321,
-          "pitch": 5.932623386383057
-        },
-        {
-          "text": "ン",
-          "consonant": null,
-          "consonant_length": null,
-          "vowel": "N",
-          "vowel_length": 0.06496299058198929,
-          "pitch": 5.745952129364014
-        },
-        {
-          "text": "ナ",
-          "consonant": "n",
-          "consonant_length": 0.038462959229946136,
-          "vowel": "a",
-          "vowel_length": 0.08576127141714096,
-          "pitch": 5.5794854164123535
-        }
-      ],
-      "accent": 1,
-      "pause_mora": null,
-      "is_interrogative": false
-    },
-    {
-      "moras": [
-        {
-          "text": "ノ",
-          "consonant": "n",
-          "consonant_length": 0.05504273623228073,
-          "vowel": "o",
-          "vowel_length": 0.0903041884303093,
-          "pitch": 5.551316261291504
-        },
-        {
-          "text": "ダ",
-          "consonant": "d",
-          "consonant_length": 0.05024997144937515,
-          "vowel": "a",
-          "vowel_length": 0.20450790226459503,
-          "pitch": 5.633930206298828
-        }
-      ],
-      "accent": 2,
-      "pause_mora": null,
-      "is_interrogative": false
-    }
-  ],
-  "speedScale": 1,
-  "pitchScale": 0,
-  "intonationScale": 1,
-  "volumeScale": 1,
-  "prePhonemeLength": 0.1,
-  "postPhonemeLength": 0.1,
-  "outputSamplingRate": 24000,
-  "outputStereo": false,
-  "kana": ""
-}
-"@
-
-# HTTPヘッダーを作成
-$headers = @{
-    'Content-Type' = 'application/json'
-}
-
-# POSTリクエストを送信し、レスポンスを取得
-$response = Invoke-WebRequest -Uri $url -Method Post -Headers $headers -Body $jsonBody -OutFile "output.wav"
-
-# 開いて再生
-start output.wav
-</code></pre>
-
-<audio controls="" src="/assets/wav/voicevox-api/output.wav"></audio>
-
-<p>VOICEVOX: ずんだもん</p>
-
-<p>以上！</p>
+<table>
+  <thead>
+    <tr>
+      <th style="text-align: center">アーキテクチャ</th>
+      <th style="text-align: center">ダウンロードページ</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="text-align: center">amd64</td>
+      <td style="text-align: center"><a href="https://github.com/Himeyama/nanohana/releases">Releases</a></td>
+    </tr>
+  </tbody>
+</table>
 
         </article>
     </div>
