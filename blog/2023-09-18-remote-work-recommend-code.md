@@ -1,6 +1,6 @@
 ---
 title: リモートワーク (在宅勤務) 環境におすすめな電源タップ 3 選
-layout: post
+authors: hikari
 tags: [リモートワーク]
 ---
 

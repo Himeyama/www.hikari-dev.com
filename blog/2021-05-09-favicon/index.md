@@ -1,6 +1,6 @@
 ---
 title: アイコン (.ico) の作り方
-layout: post
+authors: hikari
 date: 2021-05-09
 description: favicon などアイコンの作り方
 ---

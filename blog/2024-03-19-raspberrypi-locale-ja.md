@@ -3,6 +3,7 @@ layout: post
 tags: [RaspberryPi, 日本語化]
 toc: true
 title: RaspberryPi のプロンプトを日本語化する方法
+authors: hikari
 ---
 
 Raspberry Pi のプロンプトを日本語化する方法を紹介します。

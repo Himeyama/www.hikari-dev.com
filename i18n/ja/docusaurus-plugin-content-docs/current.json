@@ -1,18 +1,18 @@
 {
   "version.label": {
     "message": "次へ",
-    "description": "現在のバージョンのラベル"
+    "description": "The label for version current"
   },
   "sidebar.tutorialSidebar.category.Tutorial - Basics": {
     "message": "チュートリアル - 基本",
-    "description": "サイドバーのチュートリアル - 基本カテゴリのラベル"
+    "description": "The label for category Tutorial - Basics in sidebar tutorialSidebar"
   },
   "sidebar.tutorialSidebar.category.Tutorial - Basics.link.generated-index.description": {
     "message": "最も重要なDocusaurusの概念を5分で学ぶ。",
-    "description": "サイドバーのチュートリアル - 基本カテゴリの生成されたインデックスページの説明"
+    "description": "The generated-index page description for category Tutorial - Basics in sidebar tutorialSidebar"
   },
   "sidebar.tutorialSidebar.category.Tutorial - Extras": {
     "message": "チュートリアル - 追加",
-    "description": "サイドバーのチュートリアル - 追加カテゴリのラベル"
+    "description": "The label for category Tutorial - Extras in sidebar tutorialSidebar"
   }
 }

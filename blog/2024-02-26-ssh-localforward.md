@@ -2,6 +2,7 @@
 title: WSL2 で SSH のトンネルを使用して、WSL2 上のサーバーを LAN に公開する方法
 layout: post
 toc: true
+authors: hikari
 ---
 
 ## Step1. WSL 側に OpenSSH Server をインストール

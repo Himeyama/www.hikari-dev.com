@@ -1,6 +1,6 @@
 ---
 title: モニター無しで Raspberry Pi のセットアップ
-layout: post
+authors: hikari
 ---
 
 モニター不要で Raspberry Pi のセットアップ方法の説明。

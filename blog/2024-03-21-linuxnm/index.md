@@ -3,6 +3,7 @@ layout: post
 tags: [RaspberryPi, Ubuntu, WSL2, Linux, Wifi, Ethernet, ネットワーク, 管理]
 toc: true
 title: Linux のネットワーク管理コマンド nmcli と nmtui
+authors: hikari
 ---
 
 ## nmcli

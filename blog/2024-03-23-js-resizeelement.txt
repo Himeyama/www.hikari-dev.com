@@ -1,6 +1,6 @@
 ---
-layout: post
 title: ResizeObserver を使って要素の大きさ変更時に変更を行う
+authors: hikari
 tags: [JavaScript]
 ---
 

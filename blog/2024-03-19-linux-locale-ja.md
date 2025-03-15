@@ -3,6 +3,7 @@ layout: post
 tags: [Linux, Debian, Ubuntu, WSL2, 日本語化]
 toc: true
 title: Linux プロンプトを日本語化する方法
+authors: hikari
 ---
 
 Linux のプロンプトを日本語化する方法を紹介します。

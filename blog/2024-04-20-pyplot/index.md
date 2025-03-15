@@ -2,6 +2,7 @@
 layout: post
 title: Matplotlib (Pyplot) でよく使うコードの例
 tags: [Matplotlib, pyplot]
+authors: hikari
 ---
 
 よく使うものを例としてコードとグラフを紹介します。

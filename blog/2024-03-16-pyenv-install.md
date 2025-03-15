@@ -3,6 +3,7 @@ title: Ubuntu (WSL2 含む) に pyenv と Python をインストールする方�
 layout: post
 tags: [Python, pyenv, Debian, Ubuntu, WSL2, インストール]
 toc: true
+authors: hikari
 ---
 
 

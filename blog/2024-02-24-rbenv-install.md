@@ -2,6 +2,7 @@
 title: rbenv (WSL2 / Ubuntu) へのインストール方法
 layout: post
 toc: true
+authors: hikari
 ---
 
 ## 依存パッケージのインストール

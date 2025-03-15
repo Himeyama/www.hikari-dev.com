@@ -1,6 +1,7 @@
 ---
 title: アセトン転写のプリント基板をはんだ付け
 layout: post
+authors: hikari
 ---
 
 前回、エッジングした基板ではんだ付けです。

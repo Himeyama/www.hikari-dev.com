@@ -1,6 +1,7 @@
 ---
 title: Poetry を用いた Python プロジェクトの作成
 layout: post
+authors: hikari
 ---
 
 ## 環境構築

@@ -2,6 +2,7 @@
 title: Powerline のインストール方法
 layout: post
 date: '2021-09-21 06:12'
+authors: hikari
 ---
 
 # インストール

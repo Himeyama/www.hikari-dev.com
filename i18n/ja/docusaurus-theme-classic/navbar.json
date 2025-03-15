@@ -1,11 +1,11 @@
 {
   "title": {
     "message": "ひかりの備忘録",
-    "description": "ナビゲーションバーのタイトル"
+    "description": "The title in the navbar"
   },
   "logo.alt": {
     "message": "私のサイトロゴ",
-    "description": "ナビゲーションバーロゴの代替テキスト"
+    "description": "The alt text of navbar logo"
   },
   "item.label.Tutorial": {
     "message": "チュートリアル",
@@ -13,10 +13,10 @@
   },
   "item.label.Blog": {
     "message": "ブログ",
-    "description": "ラベルがブログのナビゲーションバー項目"
+    "description": "Navbar item with label Blog"
   },
   "item.label.GitHub": {
     "message": "GitHub",
-    "description": "ラベルが GitHub のナビゲーションバー項目"
+    "description": "Navbar item with label GitHub"
   }
 }

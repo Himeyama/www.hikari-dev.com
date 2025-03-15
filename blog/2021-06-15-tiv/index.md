@@ -3,6 +3,7 @@ title: ターミナル上で画像を表示するコマンド
 description: ターミナル上で画像を表示するコマンド tiv
 date: "2021-6-15"
 layout: post
+authors: hikari
 ---
 
 ターミナル上で画像を表示する `tiv` コマンドの紹介。

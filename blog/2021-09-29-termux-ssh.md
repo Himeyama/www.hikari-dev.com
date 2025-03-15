@@ -2,6 +2,7 @@
 title: termux に ssh する
 layout: post
 date: '2021-09-29 05:11'
+authors: hikari
 ---
 
 # OpenSSH のインストール

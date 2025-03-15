@@ -2,6 +2,7 @@
 title: OpenLDAP の slappasswd で生成される SSHA とは
 tags: [OpenLDAP, SHA]
 layout: post
+authors: hikari
 ---
 
 ## slappasswd コマンドとは

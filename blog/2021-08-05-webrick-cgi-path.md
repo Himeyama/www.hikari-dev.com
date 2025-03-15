@@ -1,6 +1,7 @@
 ---
 title: Webrick で rbenv 経由でインストールした Ruby の CGI が動かない場合の対処法
 layout: post
+authors: hikari
 ---
 
 # 概要

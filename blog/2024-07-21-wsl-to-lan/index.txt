@@ -1,6 +1,6 @@
 ---
-layout: post
 title: WSL 内のサーバーを LAN に公開する
+authors: hikari
 tags: [WSL, ネットワーク]
 ---
 

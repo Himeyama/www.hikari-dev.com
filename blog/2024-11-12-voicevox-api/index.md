@@ -1,6 +1,6 @@
 ---
-layout: post
 title: VOICEVOX の API を観察してみる
+authors: hikari
 tags: [VOICEVOX, API]
 ---
 

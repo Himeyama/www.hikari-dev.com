@@ -2,6 +2,7 @@
 title: 【初心者】CSS のグリッド (Grid) 攻略
 layout: post
 toc: true
+authors: hikari
 ---
 
 ## Grid を作成する

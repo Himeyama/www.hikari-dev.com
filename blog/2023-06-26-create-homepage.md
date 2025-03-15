@@ -2,6 +2,7 @@
 layout: post
 title: 個人サイトについて語る
 tag: [技術ブログ]
+authors: hikari
 ---
 
 情報発信では、Twitter、Instagram がメジャーであるが、規約や仕様によって制限され自由度が小さい。

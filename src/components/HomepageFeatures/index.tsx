@@ -2,6 +2,7 @@ import type {ReactNode} from 'react';
 import clsx from 'clsx';
 import Heading from '@theme/Heading';
 import styles from './styles.module.css';
+import Translate from '@docusaurus/Translate';
 
 
 type FeatureItem = {
@@ -12,30 +13,30 @@ type FeatureItem = {
 
 const FeatureList: FeatureItem[] = [
   {
-    title: 'Software Engineer',
+    title: "Software Engineer",
     Svg: require('@site/static/img/undraw_docusaurus_mountain.svg').default,
     description: (
-      <>
+      <Translate id="blog.softwareEngineerDescription">
         I spend my weekends writing software as a hobby. Recently, I often create desktop applications that run on Windows.
-      </>
-    ),
+      </Translate>
+    )
   },
   {
     title: 'Network System Developer',
     Svg: require('@site/static/img/undraw_docusaurus_tree.svg').default,
     description: (
-      <>
+      <Translate id="blog.networkSystemDeveloperDescription">
         My main job is network system development. At work, I'm involved in creating amazing network mechanisms.
-      </>
+      </Translate>
     ),
   },
   {
     title: 'AI Application Developer',
     Svg: require('@site/static/img/undraw_docusaurus_react.svg').default,
     description: (
-      <>
+      <Translate id="blog.aiApplicationDeveloperDescription">
         I develop AI applications both as a hobby and for work. These are application software that utilize the API of generative AI.
-      </>
+      </Translate>
     ),
   },
 ];

@@ -2,6 +2,7 @@
 title: Ubuntu で gsettings を使用し Dock の設定を行う
 tags: [Ubuntu, Ubuntu 22.04, GNOME]
 layout: post
+authors: hikari
 ---
 
 スクリプトで Dock の設定したいときや、SSH で設定したいときに使う。
