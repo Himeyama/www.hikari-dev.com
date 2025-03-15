@@ -6,7 +6,7 @@ import type * as Preset from '@docusaurus/preset-classic';
 
 const config: Config = {
   title: "Hikari's Notebook",
-  tagline: 'Dinosaurs are cool',
+  tagline: 'Hikari\'s Everyday Life and IT Technology Blog',
   favicon: 'img/favicon.ico',
 
   // Set the production url of your site here
@@ -75,7 +75,7 @@ const config: Config = {
     // Replace with your project's social card
     image: 'img/docusaurus-social-card.jpg',
     navbar: {
-      title: 'My Site',
+      title: 'Hikari\'s Notebook',
       logo: {
         alt: 'My Site Logo',
         src: 'img/logo.svg',
