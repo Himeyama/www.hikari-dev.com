@@ -14,7 +14,7 @@ type FeatureItem = {
 const FeatureList: FeatureItem[] = [
   {
     title: "Software Engineer",
-    Svg: require('@site/static/img/undraw_docusaurus_mountain.svg').default,
+    Svg: require('@site/static/img/undraw_version_control.svg').default,
     description: (
       <Translate id="blog.softwareEngineerDescription">
         I spend my weekends writing software as a hobby. Recently, I often create desktop applications that run on Windows.
@@ -23,7 +23,7 @@ const FeatureList: FeatureItem[] = [
   },
   {
     title: 'Network System Developer',
-    Svg: require('@site/static/img/undraw_docusaurus_tree.svg').default,
+    Svg: require('@site/static/img/undraw_around_the_world.svg').default,
     description: (
       <Translate id="blog.networkSystemDeveloperDescription">
         My main job is network system development. At work, I'm involved in creating amazing network mechanisms.
@@ -32,7 +32,7 @@ const FeatureList: FeatureItem[] = [
   },
   {
     title: 'AI Application Developer',
-    Svg: require('@site/static/img/undraw_docusaurus_react.svg').default,
+    Svg: require('@site/static/img/undraw_docusaurus.svg').default,
     description: (
       <Translate id="blog.aiApplicationDeveloperDescription">
         I develop AI applications both as a hobby and for work. These are application software that utilize the API of generative AI.
