@@ -1,7 +1,7 @@
 ---
 layout: post
 title: Matplotlib (Pyplot) でよく使うコードの例
-tags: [Matplotlib, pyplot]
+tags: [matplotlib, pyplot]
 authors: hikari
 ---
 

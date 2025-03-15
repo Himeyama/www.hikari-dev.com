@@ -14,7 +14,7 @@ pkg install openssh
 ## エラーが出る場合
 
 Android 版の termux で実行するとエラーが起こるので、
-既存の termux を削除し Github から termux をインストールすることをおすすめします。([GitHub から Termux をインストールする](/2021/09/29/termux-install-github.html))
+既存の termux を削除し Github から termux をインストールすることをおすすめします。
 
 
 # サーバーの起動

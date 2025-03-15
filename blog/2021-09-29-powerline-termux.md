@@ -11,7 +11,7 @@ pkg install golang
 ```
 
 # powerline のインストール
-あとは、[Powerline のインストール方法](/2021/09/29/powerline-termux.html)とほぼ同じ
+あとは、[Powerline のインストール方法](/blog/2021/09/29/powerline-termux)とほぼ同じ
 
 ```sh
 go get -u github.com/justjanne/powerline-go
