@@ -1,0 +1,22 @@
+{
+  "title": {
+    "message": "ひかりの備忘録",
+    "description": "ナビゲーションバーのタイトル"
+  },
+  "logo.alt": {
+    "message": "私のサイトロゴ",
+    "description": "ナビゲーションバーロゴの代替テキスト"
+  },
+  "item.label.Tutorial": {
+    "message": "チュートリアル",
+    "description": "ラベルがチュートリアルのナビゲーションバー項目"
+  },
+  "item.label.Blog": {
+    "message": "ブログ",
+    "description": "ラベルがブログのナビゲーションバー項目"
+  },
+  "item.label.GitHub": {
+    "message": "GitHub",
+    "description": "ラベルが GitHub のナビゲーションバー項目"
+  }
+}

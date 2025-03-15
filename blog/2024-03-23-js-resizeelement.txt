@@ -1,0 +1,33 @@
+---
+layout: post
+title: ResizeObserver を使って要素の大きさ変更時に変更を行う
+tags: [JavaScript]
+---
+
+<p>要素を HTML で以下のように定義します。</p>
+
+<pre><code class="language-html">&lt;div id="element" style="height: 80px; width: 100%; background: #888; line-height: 80px; font-size: 36px; text-align: center;"&gt;
+    0
+&lt;/div&gt;</code></pre>
+
+<p>以下のように JavaScript を記述しました。この例では、要素のサイズが変更されたときにカウントアップします。</p>
+
+<pre>
+    <code>const resizeObserver = new ResizeObserver((entries) => {
+    const element = document.getElementById("element");
+    element.innerText = "" + (parseInt(element.innerText) + 1);
+});
+resizeObserver.observe(document.getElementById("element"));</code>
+</pre>
+
+<p>ウィンドウをリサイズして要素を大きく・小さくしカウントアップの動作を確認できます。</p>
+
+<div id="element" style="height: 80px; width: 100%; background: #888; line-height: 80px; font-size: 36px; text-align: center;">0</div>
+
+<script>
+    const resizeObserver = new ResizeObserver((entries) => {
+        const element = document.getElementById("element");
+        element.innerText = "" + (parseInt(element.innerText) + 1);
+    });
+    resizeObserver.observe(document.getElementById("element"));
+</script>

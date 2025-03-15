@@ -1,0 +1,30 @@
+/**
+ * Any CSS included here will be global. The classic template
+ * bundles Infima by default. Infima is a CSS framework designed to
+ * work well for content-centric websites.
+ */
+
+/* You can override the default Infima variables here. */
+:root {
+  --ifm-color-primary: #F15EB4;  /* Base pink color */
+  --ifm-color-primary-dark: #D955A3;  /* Darker shade by reducing lightness */
+  --ifm-color-primary-darker: #CF4B9A;  /* Even darker */
+  --ifm-color-primary-darkest: #B43884;  /* Darkest shade */
+  --ifm-color-primary-light: #F375C1;  /* Lighter shade by increasing lightness */
+  --ifm-color-primary-lighter: #F58DCB;  /* Even lighter */
+  --ifm-color-primary-lightest: #F7A9D7;  /* Lightest shade */
+  --ifm-code-font-size: 95%;
+  --docusaurus-highlighted-code-line-bg: rgba(241, 94, 180, 0.1); /* Pink tint for code line highlight */
+}
+
+/* For readability concerns, you should choose a lighter palette in dark mode. */
+[data-theme='dark'] {
+  --ifm-color-primary: #F15EB4;  /* Keep the same base color in dark mode */
+  --ifm-color-primary-dark: #D955A3;  /* Slightly darker */
+  --ifm-color-primary-darker: #CF4B9A;  /* Darker */
+  --ifm-color-primary-darkest: #B43884;  /* Darkest */
+  --ifm-color-primary-light: #F375C1;  /* Light shade for contrast */
+  --ifm-color-primary-lighter: #F58DCB;  /* Lighter for better visibility */
+  --ifm-color-primary-lightest: #F7A9D7;  /* Lightest for highlights */
+  --docusaurus-highlighted-code-line-bg: rgba(241, 94, 180, 0.3);  /* Pink tint for code line highlight in dark mode */
+}
