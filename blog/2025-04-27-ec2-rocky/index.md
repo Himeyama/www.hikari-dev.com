@@ -98,7 +98,9 @@ sudo dnf install -y /tmp/ec2-instance-connect.rpm /tmp/ec2-instance-connect-seli
 ![alt text](image-5.png)
 
 ### CDK (typescript)
-CDK 作ったので載せておく。
+CDK 作ったので載せておく。参考までに。
+
+keyName (キーペア) の名前は変えておく。
 
 ```typescript
 import * as cdk from 'aws-cdk-lib';
