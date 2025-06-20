@@ -40,3 +40,12 @@ Last login: Tue Jun 10 22:50:33 2025 from 192.168.0.183
 ```
 
 なぜ？
+
+## 追記
+ダウングレードすれば接続できた。
+
+参考: https://github.com/aws/aws-cli/issues/9114
+
+```
+msiexec.exe /i https://awscli.amazonaws.com/AWSCLIV2-2.17.35.msi
+```
