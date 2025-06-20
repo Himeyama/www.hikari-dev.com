@@ -1,7 +1,7 @@
 ---
 title: RHEL 10.0 で epel-release を有効にする
 authors: hikari
-tags: RHEL
+tags: [RHEL]
 ---
 
 ```bash
