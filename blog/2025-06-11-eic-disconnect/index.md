@@ -44,6 +44,8 @@ Last login: Tue Jun 10 22:50:33 2025 from 192.168.0.183
 ## 追記
 ダウングレードすれば接続できた。
 
+治してほしいな。
+
 参考: https://github.com/aws/aws-cli/issues/9114
 
 ```
