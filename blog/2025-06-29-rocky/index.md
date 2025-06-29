@@ -1,0 +1,107 @@
+---
+title: Rocky Linux 8.10 を WSL にインストールする
+authors: hikari
+tags: [Linux, WSL]
+---
+
+## Rocky Linux 8.10 のイメージをダウンロードする
+
+```ps1
+$dest = Join-Path $env:TEMP "Rocky-8-Container-Base.latest.x86_64.tar.xz"
+Invoke-WebRequest -Uri "https://dl.rockylinux.org/pub/rocky/8/images/x86_64/Rocky-8-Container-Base.latest.x86_64.tar.xz" -OutFile $dest
+```
+
+## インポート
+
+```ps1
+wsl --import RockyLinux-8.10 $HOME $dest
+```
+
+## passwd のインストール
+```ps1
+wsl -d RockyLinux-8.10 -u root dnf update -y `&`& dnf install -y passwd
+```
+
+## ユーザーの作成
+
+```ps1
+$username = "hikari" # 好きなユーザー名を設定
+wsl -d RockyLinux-8.10 -u root useradd -mG wheel $username
+wsl -d RockyLinux-8.10 -u root passwd -d $username # ユーザーのパスワードを消去
+```
+
+## sudo のインストール
+```ps1
+wsl -d RockyLinux-8.10 -u root dnf update -y `&`& dnf install sudo -y
+```
+
+## デフォルトユーザーの設定
+```ps1
+$username = "hikari" # 好きなユーザー名を設定
+$uid = wsl -d RockyLinux-8.10 id $username -u
+if (-not $uid) {
+    Write-Error "UID の取得に失敗しました。ユーザー '$username' が存在しない可能性があります。"
+    exit 1
+}
+
+$basePath = "HKCU:\Software\Microsoft\Windows\CurrentVersion\Lxss"
+
+$targetKey = Get-ChildItem $basePath | Where-Object {
+    (Get-ItemProperty $_.PSPath).DistributionName -eq "RockyLinux-8.10"
+}
+if (-not $targetKey) {
+    Write-Error "DistributionName 'RockyLinux-8.10' が見つかりませんでした。"
+    exit 1
+}
+
+Set-ItemProperty -Path $targetKey.PSPath -Name "DefaultUid" -Value ([int]$uid)
+```
+
+## EPEL の有効化
+
+```ps1
+wsl -d RockyLinux-8.10 -u root dnf update -y `&`& dnf install -y epel-release
+```
+
+## 起動
+
+```ps1
+wsl -d RockyLinux-8.10
+```
+
+## デフォルトのディストリビューションにする場合
+
+```ps1
+wsl --set-default RockyLinux-8.10
+```
+
+## FastFetch のインストール
+
+```ps1
+wsl -d RockyLinux-8.10 -u root dnf update -y `&`& dnf install fastfetch
+```
+
+### FastFetch の実行
+```bash
+> wsl -d RockyLinux-8.10 -u root fastfetch
+          __wgliliiligw_,              root@DESKTOP-MS-7C56-B550
+       _williiiiiiliilililw,           -------------------------
+     _%iiiiiilililiiiiiiiiiii_         OS: Rocky Linux 8.10 x86_64
+   .Qliiiililiiiiiiililililiilm.       Host: Windows Subsystem for Linux (2.0.14.0)
+  _iiiiiliiiiiililiiiiiiiiiiliil,      Kernel: 5.15.133.1-microsoft-standard-WSL2
+ .lililiiilililiiiilililililiiiii,     Uptime: 8 mins
+_liiiiiiliiiiiiiliiiiiF{iiiiiilili,    Packages: 285 (rpm)
+jliililiiilililiiili@`  ~ililiiiiiL    Shell: bash 4.4.20
+iiiliiiiliiiiiiili>`      ~liililii    Display 1: 1920x1080 @ 60Hz
+liliiiliiilililii`         -9liiiil    Display 2: 1920x1080 @ 60Hz
+iiiiiliiliiiiii~             "4lili    WM: WSLg (Wayland)
+4ililiiiiilil~|      -w,       )4lf    Terminal: Windows Terminal
+-liiiiililiF'       _liig,       )'    CPU: AMD Ryzen 9 3900X (24) @ 3.800018 GHz
+ )iiiliii@`       _QIililig,           GPU: Microsoft Corporation Basic Render Driver
+  )iiii>`       .Qliliiiililw          Memory: 458.57 MiB / 62.76 GiB (0%)
+   )<>~       .mliiiiiliiiiiil,        Disk (/): 51.72 GiB / 1007 GiB (5%)
+            _gllilililiililii~         Locale: C.UTF-8
+           giliiiiiiiiiiiiT`
+          -^~$ililili@~~'              ████████████████████████
+                                       ████████████████████████
+```
