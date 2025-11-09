@@ -23,7 +23,9 @@
     "@docusaurus/preset-classic": "^3.8.1",
     "@docusaurus/theme-mermaid": "^3.8.1",
     "@mdx-js/react": "^3.0.0",
+    "axios": "^1.13.2",
     "clsx": "^2.0.0",
+    "commander": "^14.0.2",
     "prism-react-renderer": "^2.3.0",
     "react": "^19.0.0",
     "react-dom": "^19.0.0"
@@ -32,6 +34,7 @@
     "@docusaurus/module-type-aliases": "3.7.0",
     "@docusaurus/tsconfig": "3.7.0",
     "@docusaurus/types": "3.7.0",
+    "@types/commander": "^2.12.5",
     "typescript": "~5.6.2"
   },
   "browserslist": {
