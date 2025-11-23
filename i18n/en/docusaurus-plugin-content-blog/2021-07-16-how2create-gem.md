@@ -1,6 +1,5 @@
 ---
 title: How to create a gem
-layout: post
 date: '2021-07-16 01:54'
 authors: hikari
 ---

@@ -1,0 +1,14 @@
+---
+title: Exposing a Server in WSL to the LAN
+authors: hikari
+tags: [WSL, Network]
+---
+
+This article introduces how to expose a server running inside WSL to the local area network (LAN).
+
+## Setting up a Server
+If you already have a server running, you can skip this section.
+
+### Creating `index.html`
+As an example, create an `index.html` file with the following content:
+

@@ -1,6 +1,5 @@
 ---
 title: Dot product with Numo::NArray
-layout: post
 date: '2021-06-04 00:20'
 authors: hikari
 ---

@@ -1,5 +1,4 @@
 ---
-layout: post
 title: よく使う dotnet コマンドまとめ
 authors: hikari
 tags: [dotnet]

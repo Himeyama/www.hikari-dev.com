@@ -1,6 +1,5 @@
 ---
 title: Windows の OpenSSH で Permission denied が出る原因
-layout: post
 date: '2021-10-06 07:27'
 authors: hikari
 ---

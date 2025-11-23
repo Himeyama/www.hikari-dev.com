@@ -1,7 +1,5 @@
 ---
 title: JavaScript と HTML と CSS で右クリックメニューを実装
-layout: post
-toc: true
 authors: hikari
 ---
 

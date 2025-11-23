@@ -1,0 +1,11 @@
+---
+title: RHEL 10.0 で epel-release を有効にする
+authors: hikari
+tags: [RHEL]
+---
+
+```bash
+sudo dnf update -y
+sudo subscription-manager repos --enable codeready-builder-for-rhel-10-x86_64-rpms
+sudo dnf install https://dl.fedoraproject.org/pub/epel/epel-release-latest-10.noarch.rpm
+```

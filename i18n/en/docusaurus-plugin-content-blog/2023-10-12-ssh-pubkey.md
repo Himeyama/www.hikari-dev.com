@@ -1,7 +1,5 @@
 ---
 title: Public Key Authentication and SSH
-layout: post
-toc: true
 authors: hikari
 ---
 

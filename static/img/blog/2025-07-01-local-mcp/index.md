@@ -1,0 +1,120 @@
+---
+title: コマンドを叩いてローカル MCP の動きを見てみる
+authors: hikari
+tags: [LLM, MCP]
+---
+
+## 処理の流れ
+MCP を使用した場合、LLM クライアントでどのような流れで処理が行われるかを Copilot くんに聞きました。
+
+以下、シーケンス図です。
+
+```mermaid
+sequenceDiagram
+    autonumber
+    participant User as ユーザー
+    participant Client as LLMクライアント
+    participant LLM as LLM（大規模言語モデル）
+    participant MCP as MCP（Model Context Protocol）
+    participant Tool as 外部ツール（API / Shell / DB）
+
+    %% 初期化フェーズ
+    Client->>MCP: ツール定義一覧を要求
+    MCP-->>Client: ツール定義（関数名・引数・説明など）
+
+    %% 対話フェーズ
+    User->>Client: 入力を送信
+    Client->>LLM: ユーザー入力 + ツール定義 を送信
+    LLM->>LLM: プロンプト解析・意図理解
+    LLM->>LLM: ツール呼び出しが必要か判定
+
+    alt ツール呼び出しが必要
+        LLM->>Client: ツール呼び出し要求（関数名・引数）
+        Client->>MCP: ツール呼び出しを依頼
+        MCP->>Tool: 外部ツールを実行
+        Tool-->>MCP: 実行結果を返却
+        MCP-->>Client: 結果を返却
+        Client->>LLM: 実行結果を送信（function result）
+        LLM->>LLM: 応答を生成
+    else ツール呼び出し不要
+        LLM->>LLM: 応答を直接生成
+    end
+
+    LLM-->>Client: 応答を返す
+    Client-->>User: 応答を表示
+```
+
+ここで重要なのは、
+
+1. ①② ツール定義の取得
+2. ④ ツール定義の送信
+3. ⑦ ツール呼び出し要求
+4. ⑧⑨⑩⑪ ツール呼び出し
+5. ⑫ 実行結果の送信
+
+です。
+
+MCP にかかわる部分は、1. と 4. で、
+Function calling とほぼ同じ部分が 2. と 3. と 5. です。
+
+## コマンドを叩いて呼び出してみる
+
+ローカル MCP を標準入力で使用してみましょう。
+
+Windows PowerShell を用いてコマンドをたたきます。
+
+### ツール一覧を取得
+例として `@modelcontextprotocol/server-filesystem` のツール一覧を取得します。
+
+```ps1
+> @{ jsonrpc = "2.0"; method = "tools/list"; id = 1 } | ConvertTo-Json -Compress | npx @modelcontextprotocol/server-filesystem $HOME | ConvertFrom-Json | ConvertTo-Json -Depth 10
+Secure MCP Filesystem Server running on stdio
+Allowed directories: [ 'C:\\Users\\hikari' ]
+{
+  "result": {
+    "tools": [
+      {
+        "name": "read_file",
+        "description": "Read the complete contents of a file from the file system. Handles various text encodings and provides detailed error messages if the file cannot be read. Use this tool when you need to examine the contents of a single file. Only works within allowed directories.",
+        "inputSchema": {
+          "type": "object",
+          "properties": {
+            "path": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "path"
+          ],
+          "additionalProperties": false,
+          "$schema": "http://json-schema.org/draft-07/schema#"
+        }
+      },
+      ...
+    ]
+  }
+}
+```
+
+`tools/list` を標準入力で与えることで、ツール一覧を JSON 形式で取得できます。
+
+### ツール呼び出し
+ツールの情報をもとに呼び出してみます。
+
+```ps1
+> @{ jsonrpc = "2.0"; method = "tools/call"; params = @{name = "read_file"; arguments = @{path = ".gitconfig"}}; id = 2 } | ConvertTo-Json -Compress -Depth 10 | npx @modelcontextprotocol/server-filesystem $HOME | ConvertFrom-Json | ConvertTo-Json -Depth 10
+Secure MCP Filesystem Server running on stdio
+Allowed directories: [ 'C:\\Users\\hikari' ]
+{
+  "result": {
+    "content": [
+      {
+        "type": "text",
+        "text": "..."
+      }
+    ]
+  },
+  "jsonrpc": "2.0",
+  "id": 2
+}
+```

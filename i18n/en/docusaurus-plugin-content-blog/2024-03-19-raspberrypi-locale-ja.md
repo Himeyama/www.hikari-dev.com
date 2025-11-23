@@ -1,7 +1,5 @@
 ---
-layout: post
 tags: [Linux, Debian, Ubuntu, WSL2, 日本語化]
-toc: true
 title: How to change the Linux prompt to Japanese
 authors: hikari
 ---

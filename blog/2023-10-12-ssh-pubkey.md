@@ -1,7 +1,5 @@
 ---
 title: 公開鍵認証と SSH
-layout: post
-toc: true
 authors: hikari
 ---
 

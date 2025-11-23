@@ -2,7 +2,6 @@
 title: ImageMagick のインストール方法 (Ubuntu)
 description: ImageMagick のインストール方法
 date: "2021-6-13"
-layout: post
 authors: hikari
 ---
 

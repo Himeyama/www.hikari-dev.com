@@ -1,6 +1,5 @@
 ---
 title: termux に powerline をインストールする
-layout: post
 date: '2021-09-29 08:11'
 authors: hikari
 ---

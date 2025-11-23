@@ -1,7 +1,5 @@
 ---
 title: Installation Guide for rbenv (WSL2 / Ubuntu)
-layout: post
-toc: true
 authors: hikari
 ---
 

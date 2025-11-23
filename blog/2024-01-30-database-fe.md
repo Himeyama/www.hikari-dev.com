@@ -1,7 +1,5 @@
 ---
 title: 基本情報データベースまとめ
-layout: post
-toc: true
 authors: hikari
 ---
 

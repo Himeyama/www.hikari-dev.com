@@ -1,7 +1,6 @@
 ---
 title: How to Create a Custom Gem
 tag: [Ruby, gem]
-layout: post
 authors: hikari
 ---
 

@@ -1,7 +1,5 @@
 ---
-layout: post
 tags: [Linux, Debian, Ubuntu, WSL2, Japanese]
-toc: true
 title: How to Japanese the Linux Prompt
 authors: hikari
 ---

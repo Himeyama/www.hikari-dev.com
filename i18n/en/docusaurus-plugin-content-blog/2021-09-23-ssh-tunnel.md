@@ -1,6 +1,5 @@
 ---
 title: SSH Tunnel
-layout: post
 date: '2021-09-23 15:48'
 authors: hikari
 ---

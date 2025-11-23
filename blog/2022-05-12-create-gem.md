@@ -1,7 +1,6 @@
 ---
 title: 自作 gem の作り方
 tag: [Ruby, gem]
-layout: post
 authors: hikari
 ---
 

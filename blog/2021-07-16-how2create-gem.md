@@ -1,6 +1,5 @@
 ---
 title: gem 作り方
-layout: post
 date: '2021-07-16 01:54'
 authors: hikari
 ---

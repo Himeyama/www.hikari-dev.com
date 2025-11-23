@@ -1,7 +1,6 @@
 ---
 title: Arduino で delay() を使わない
 tags: [Arduino]
-layout: post
 authors: hikari
 ---
 

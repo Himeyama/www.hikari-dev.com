@@ -1,5 +1,4 @@
 ---
-layout: post
 title: Summary of frequently used dotnet commands
 authors: hikari
 tags: [dotnet]

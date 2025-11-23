@@ -1,7 +1,5 @@
 ---
 title: Basic Information Database Summary
-layout: post
-toc: true
 authoors: hikari
 ---
 

@@ -1,7 +1,5 @@
 ---
 title: How to expose a server on WSL2 to the LAN using SSH tunneling
-layout: post
-toc: true
 authors: hikari
 ---
 

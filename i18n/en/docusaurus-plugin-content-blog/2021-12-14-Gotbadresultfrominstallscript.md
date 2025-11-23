@@ -1,6 +1,5 @@
 ---
 title: Troubleshooting "Got bad result from install script." error in Visual Studio Code
-layout: post
 date: '2021-12-14 04:08'
 authors: hikari
 ---

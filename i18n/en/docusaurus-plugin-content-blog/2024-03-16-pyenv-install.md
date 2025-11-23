@@ -1,8 +1,6 @@
 ---
 title: How to install pyenv and Python on Ubuntu (including WSL2)
-layout: post
 tags: [Python, pyenv, Debian, Ubuntu, WSL2, Install]
-toc: true
 authors: hikari
 ---
 

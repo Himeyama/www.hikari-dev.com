@@ -1,7 +1,6 @@
 ---
 title: Install Firefox Build
 tags: [Ubuntu, Ubuntu 22.04, Firefox]
-layout: post
 authors: hikari
 ---
 

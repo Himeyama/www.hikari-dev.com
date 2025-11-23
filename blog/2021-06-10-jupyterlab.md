@@ -1,7 +1,6 @@
 ---
 title: Jupyter Lab のインストールと設定
 date: "2021-6-10"
-layout: post
 authors: hikari
 ---
 

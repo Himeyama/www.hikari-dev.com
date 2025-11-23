@@ -1,7 +1,6 @@
 ---
 title: Avoid using delay() in Arduino
 tags: [Arduino]
-layout: post
 authors: hikari
 ---
 

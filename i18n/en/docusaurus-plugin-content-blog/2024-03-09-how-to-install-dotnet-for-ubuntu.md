@@ -1,8 +1,6 @@
 ---
 title: How to install .NET on Ubuntu (including WSL2)
-layout: post
 tags: [dotnet, Debian, Ubuntu, WSL2, install]
-toc: true
 authors: hikari
 ---
 

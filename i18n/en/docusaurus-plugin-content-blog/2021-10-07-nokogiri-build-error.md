@@ -1,6 +1,5 @@
 ---
 title: When nokogiri cannot be installed under brew
-layout: post
 date: '2021-10-07 01:32'
 authors: hikari
 ---

@@ -1,6 +1,5 @@
 ---
 title: brew 環境下で nokogiri をインストールできないとき
-layout: post
 date: '2021-10-07 01:32'
 authors: hikari
 ---

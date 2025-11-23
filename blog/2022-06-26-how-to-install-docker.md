@@ -1,7 +1,6 @@
 ---
 title: Ubuntu に Docker をインストールする
 tags: [Ubuntu, Linux, Docker, 日本語訳]
-layout: post
 authors: hikari
 ---
 
