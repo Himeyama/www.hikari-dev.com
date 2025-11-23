@@ -1,5 +1,5 @@
 ---
-title: Ubuntu で gsettings を使用し Dock の設定を行う
+title: Configure the Dock using gsettings on Ubuntu
 tags: [Ubuntu, Ubuntu 22.04, GNOME]
 authors: hikari
 ---
@@ -29,7 +29,7 @@ Stretches the Dock to the edge of the screen.
 |true|Do not stretch|
 |false|Stretch|
 
-> Example: Do not stretch the panel
+> Example: Do not stretch the Dock
 ```bash
 # Current setting
 $ gssettings get org.gnome.shell.extensions.dash-to-dock extend-height
