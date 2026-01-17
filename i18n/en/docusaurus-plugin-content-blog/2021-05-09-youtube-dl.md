@@ -1,7 +1,6 @@
 ---
 title: youtube-dl のインストールと使い方
 date: 2021-05-09
-authors: hikari
 ---
 
 ## 注意

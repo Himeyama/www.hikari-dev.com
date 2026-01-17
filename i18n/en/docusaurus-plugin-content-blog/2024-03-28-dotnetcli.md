@@ -1,7 +1,5 @@
 ---
 title: Summary of frequently used dotnet commands
-authors: hikari
-tags: [dotnet]
 ---
 
 |Command|Function|

@@ -28,3 +28,12 @@
   --ifm-color-primary-lightest: #F7A9D7;  /* Lightest for highlights */
   --docusaurus-highlighted-code-line-bg: rgba(241, 94, 180, 0.3);  /* Pink tint for code line highlight in dark mode */
 }
+
+.button.button--secondary {
+  border: solid 1px #edeceb;
+  border-bottom: solid 1px #d3d3d3;
+  background: #ffffff;
+  border-radius: 16px;
+  box-shadow: rgba(0, 0, 0, 0.08) 0px 16px 24px 0px;
+}
+

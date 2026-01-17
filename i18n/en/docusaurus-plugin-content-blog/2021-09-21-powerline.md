@@ -1,7 +1,6 @@
 ---
 title: How to Install Powerline
 date: '2021-09-21 06:12'
-authors: hikari
 ---
 
 # Installation

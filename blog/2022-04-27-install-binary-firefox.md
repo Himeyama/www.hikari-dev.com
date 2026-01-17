@@ -1,6 +1,5 @@
 ---
 title: Firefox のビルドをインストール
-tags: [Ubuntu, Ubuntu 22.04, Firefox]
 authors: hikari
 ---
 

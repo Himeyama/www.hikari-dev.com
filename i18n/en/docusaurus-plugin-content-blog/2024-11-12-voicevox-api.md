@@ -1,7 +1,5 @@
 ---
 title: Observing the VOICEVOX API
-authors: hikari
-tags: [VOICEVOX, API]
 ---
 
 

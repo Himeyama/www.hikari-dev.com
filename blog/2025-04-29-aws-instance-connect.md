@@ -1,7 +1,6 @@
 ---
 title: EC2 Instance Connect まとめ
 authors: hikari
-tags: [AWS, EC2]
 ---
 
 ## EC2 Instance Connect とは

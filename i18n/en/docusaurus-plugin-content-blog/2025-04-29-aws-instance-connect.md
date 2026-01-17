@@ -1,7 +1,5 @@
 ---
 title: EC2 Instance Connect Summary
-authors: hikari
-tags: [AWS, EC2]
 ---
 
 ## What is EC2 Instance Connect?

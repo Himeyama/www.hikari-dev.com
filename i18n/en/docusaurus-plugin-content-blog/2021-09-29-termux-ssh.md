@@ -1,7 +1,6 @@
 ---
 title: SSH to termux
 date: '2021-09-29 05:11'
-authors: hikari
 ---
 
 # Install OpenSSH

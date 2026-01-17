@@ -9,6 +9,13 @@ const config: Config = {
   tagline: 'Hikari\'s Everyday Life and IT Technology Blog',
   favicon: 'img/favicon.ico',
 
+  markdown: {
+    hooks: {
+      onBrokenMarkdownLinks: 'ignore', // または 'throw' / 'ignore'
+    },
+    mermaid: true,
+  },
+
   // Set the production url of your site here
   url: 'https://www.hikari-dev.com',
   // Set the /<baseUrl>/ pathname under which your site is served
@@ -19,13 +26,9 @@ const config: Config = {
   // If you aren't using GitHub pages, you don't need these.
   organizationName: 'himeyama', // Usually your GitHub org/user name.
   projectName: 'www.hikari-dev.com', // Usually your repo name.
-
+  onBrokenAnchors: 'ignore',
   onBrokenLinks: 'throw',
-  onBrokenMarkdownLinks: 'warn',
 
-  markdown: {
-    mermaid: true
-  },
   themes: [
     '@docusaurus/theme-mermaid',
   ],
@@ -69,7 +72,7 @@ const config: Config = {
           // Useful options to enforce blogging best practices
           onInlineTags: 'warn',
           onInlineAuthors: 'warn',
-          onUntruncatedBlogPosts: 'warn',
+          onUntruncatedBlogPosts: 'ignore'
         },
         theme: {
           customCss: './src/css/custom.css',

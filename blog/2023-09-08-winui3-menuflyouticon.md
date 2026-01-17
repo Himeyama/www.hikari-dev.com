@@ -1,6 +1,5 @@
 ---
 title: Windows App SDK の MenuFlyoutItem でアイコンを使う方法 Microsoft.UI.Xaml.Controls, WinUI3)
-tags: [Microsoft.UI.Xaml.Controls, WinUI3, Windows App SDK, MenuFlyoutItem, icon]
 authors: hikari
 ---
 

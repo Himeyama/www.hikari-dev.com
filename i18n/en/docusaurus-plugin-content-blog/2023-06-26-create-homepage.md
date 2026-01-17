@@ -1,7 +1,6 @@
 ---
 title: About My Personal Site
 tag: [Technical Blog]
-authors: hikari
 ---
 
 While Twitter and Instagram are major platforms for information dissemination, they are limited by terms of service and regulations, restricting freedom of expression. Returning to a personal website is a viable option. This site is user-friendly as it does not utilize W○X and therefore lacks advertising or promotion.

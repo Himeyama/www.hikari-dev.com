@@ -1,7 +1,6 @@
 ---
 title: SSH Tunnel
 date: '2021-09-23 15:48'
-authors: hikari
 ---
 
 # SSH Tunneling

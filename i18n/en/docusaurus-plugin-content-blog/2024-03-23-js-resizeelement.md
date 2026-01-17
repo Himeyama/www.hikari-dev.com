@@ -1,7 +1,5 @@
 ---
 title: Use ResizeObserver to run when an element is resized
-authors: hikari
-tags: [JavaScript]
 ---
 
 <p>Define the element in your HTML as follows:</p>

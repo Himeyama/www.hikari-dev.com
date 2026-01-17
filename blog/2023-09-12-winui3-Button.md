@@ -1,6 +1,5 @@
 ---
 title: Windows App SDK (WinUI3) の Button コンポーネントとサンプル
-tags: [Microsoft.UI.Xaml.Component, WinUI3, Windows App SDK]
 authors: hikari
 ---
 

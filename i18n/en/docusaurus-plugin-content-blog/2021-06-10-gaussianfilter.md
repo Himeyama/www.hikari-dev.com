@@ -1,6 +1,5 @@
 ---
 title: Denoising with a Gaussian Filter (Python / Scipy)
-authors: hikari
 description: Denoise with scipy's gaussian_filter1d
 date: "2021-6-10"
 ---

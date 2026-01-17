@@ -1,6 +1,5 @@
 ---
 title: Applying a Bilateral Filter with ImageMagick
-authors: hikari
 description: Use ImageMagick's bilateral filter to clean up images
 date: "2021-6-13"
 ---

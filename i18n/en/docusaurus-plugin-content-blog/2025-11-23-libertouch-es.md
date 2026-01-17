@@ -1,6 +1,5 @@
 ---
 title: Libertouch ES (JP) Review
-authors: hikari
 ---
 
 ## Libertouch ES

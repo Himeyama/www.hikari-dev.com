@@ -1,7 +1,5 @@
 ---
 title: Installing Docker on Ubuntu
-tags: [Ubuntu, Linux, Docker, Japanese translation]
-authors: hikari
 ---
 
 This is a translation of the Docker installation guide for Ubuntu.

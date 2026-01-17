@@ -1,7 +1,6 @@
 ---
 title: WSL 内のサーバーを LAN に公開する
 authors: hikari
-tags: [WSL, ネットワーク]
 ---
 
 この記事では WSL 内のサーバーを LAN に公開する方法を紹介します。

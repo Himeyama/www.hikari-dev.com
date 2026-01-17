@@ -1,7 +1,5 @@
 ---
-tags: [Linux, Debian, Ubuntu, WSL2, 日本語化]
 title: How to change the Linux prompt to Japanese
-authors: hikari
 ---
 
 This post explains how to localize the prompt on Raspberry Pi.

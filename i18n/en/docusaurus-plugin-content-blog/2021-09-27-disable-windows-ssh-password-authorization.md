@@ -1,7 +1,6 @@
 ---
 title: Disable Password Authentication in OpenSSH on Windows
 date: '2021-09-27 05:21'
-authors: hikari
 ---
 
 ## Open an elevated terminal

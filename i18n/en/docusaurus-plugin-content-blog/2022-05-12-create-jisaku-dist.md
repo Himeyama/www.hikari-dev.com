@@ -1,6 +1,5 @@
 ---
 title: How to Create a Custom Linux Distribution Based on Ubuntu
-authors: hikari
 ---
 
 ## Overview

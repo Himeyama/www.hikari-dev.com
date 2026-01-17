@@ -1,7 +1,5 @@
 ---
 title: Configure the Dock using gsettings on Ubuntu
-tags: [Ubuntu, Ubuntu 22.04, GNOME]
-authors: hikari
 ---
 
 This is useful when you want to configure the Dock with a script or when configuring via SSH.

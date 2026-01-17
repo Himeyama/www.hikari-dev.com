@@ -1,7 +1,6 @@
 ---
 title: Installing and Configuring Jupyter Lab
 date: "2021-6-10"
-authors: hikari
 ---
 
 # Installing Jupyter Lab

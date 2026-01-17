@@ -1,6 +1,5 @@
 ---
 title: Implementing a right-click menu with JavaScript, HTML, and CSS
-authors: hikari
 ---
 
 ## JavaScript

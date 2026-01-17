@@ -1,7 +1,5 @@
 ---
 title: EC2 Instance Connect fails to connect from Windows without a key
-authors: hikari
-tags: [AWS, EC2]
 ---
 
 ## Unable to connect to Instance Connect on Windows

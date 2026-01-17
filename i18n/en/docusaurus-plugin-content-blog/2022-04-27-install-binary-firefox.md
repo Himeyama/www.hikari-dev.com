@@ -1,7 +1,5 @@
 ---
 title: Install Firefox Build
-tags: [Ubuntu, Ubuntu 22.04, Firefox]
-authors: hikari
 ---
 
 Ubuntu 22.04 seems to have the snap version of Firefox installed, and it wasn't launching in some environments, so I'm documenting how to install the pre-built Firefox.

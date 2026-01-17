@@ -1,5 +1,4 @@
 ---
-tags: [RaspberryPi, 日本語化]
 title: RaspberryPi のプロンプトを日本語化する方法
 authors: hikari
 ---

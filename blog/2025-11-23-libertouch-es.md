@@ -3,6 +3,8 @@ title: Libertouc ES (日本語版) レビュー
 authors: hikari
 ---
 
+<!--truncate-->
+
 ## Libertouch ES
 Libertouch ES 日本語配列 (NC07902-B281-ES) を入手しました。
 

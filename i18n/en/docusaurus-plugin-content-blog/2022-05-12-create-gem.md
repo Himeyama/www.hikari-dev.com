@@ -1,7 +1,6 @@
 ---
 title: How to Create a Custom Gem
 tag: [Ruby, gem]
-authors: hikari
 ---
 
 ## Create a gem (using `bundle gem`)

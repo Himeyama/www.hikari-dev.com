@@ -1,6 +1,5 @@
 ---
 title: Installation Guide for rbenv (WSL2 / Ubuntu)
-authors: hikari
 ---
 
 ## Installing Dependencies

@@ -1,7 +1,6 @@
 ---
 title: Installing Powermline on Termux
 date: '2021-09-29 08:11'
-authors: hikari
 ---
 
 # Go Installation

@@ -1,7 +1,5 @@
 ---
-tags: [Linux, Debian, Ubuntu, WSL2, Japanese]
 title: How to Japanese the Linux Prompt
-authors: hikari
 ---
 
 This post introduces how to Japanese the Linux prompt.

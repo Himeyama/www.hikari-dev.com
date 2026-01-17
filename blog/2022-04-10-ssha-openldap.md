@@ -1,6 +1,5 @@
 ---
 title: OpenLDAP の slappasswd で生成される SSHA とは
-tags: [OpenLDAP, SHA]
 authors: hikari
 ---
 

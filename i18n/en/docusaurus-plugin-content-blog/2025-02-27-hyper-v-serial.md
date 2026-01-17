@@ -1,6 +1,5 @@
 ---
 title: How to Connect to Ubuntu in Hyper-V via Serial Console
-authors: hikari
 ---
 
 ## VM Settings

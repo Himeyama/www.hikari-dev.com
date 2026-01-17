@@ -1,6 +1,5 @@
 --
 title: Generating Realistic Terrain in Unity
-authors: hikari
 ---
 
 I tried creating realistic terrain in Unity.
