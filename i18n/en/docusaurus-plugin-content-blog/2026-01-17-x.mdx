@@ -1,0 +1,360 @@
+---
+title: Investigation into the Best Compression Method
+authors: hikari
+---
+
+## Conclusion
+To start with the conclusion.
+
+I measured the time and size when compressing and extracting a large set of files totaling 34 GiB.
+
+## Compression / Archive Creation
+
+| Method | Command | real | user | sys | Compressed size |
+|------|----------|------|------|------|------|
+| **tar** | `tar cf large-pkg.tar large-pkg` | 1m19.449s | 0m6.702s | 0m48.121s | 26 GiB |
+| **tar.gz** | `tar czf large-pkg.tar.gz large-pkg` | 11m33.942s | 11m18.811s | 0m55.573s | 5.5 GiB |
+| **LZ4** | `tar cf - large-pkg \| lz4 > large-pkg.tar.lz4` | 3m33.187s | 0m53.958s | 2m57.122s | 8.6 GiB |
+| **zstd** | `tar cf - large-pkg \| zstd -T0 -o large-pkg.tar.zst` | 9m13.819s | 1m45.049s | 2m43.609s | 4.8 GiB |
+| **bzip2** | `tar cf - large-pkg.1 \| bzip2 > large-pkg.tar.bz2` | 37m22.743s | 28m40.329s | 3m31.000s | 4.3 GiB |
+| **xz** | `tar cf - large-pkg \| xz > large-pkg.tar.xz` | 125m31.447s | 124m10.523s | 5m18.330s | 3.3 GiB |
+
+## Extraction (Decompression)
+
+| Method | Command | real | user | sys |
+|------|----------|------|------|------|
+| **tar** | `tar xf large-pkg.tar` | 2m11.793s | 0m6.906s | 2m4.183s |
+| **tar.gz** | `tar xf large-pkg.tar.gz` | 3m39.544s | 2m1.189s | 2m58.317s |
+| **tar.gz (gzip)** | `gzip -dc large-pkg.tar.gz \| tar xf -` | 3m40.416s | 2m0.272s | 3m0.043s |
+| **tar.gz (pigz)** | `pigz -dc large-pkg.tar.gz \| tar xf -` | 3m53.711s | 1m38.147s | 4m42.893s |
+| **LZ4** | `lz4 -dc large-pkg.tar.lz4 \| tar xf -` | 4m46.576s | 0m32.174s | 4m36.055s |
+| **zstd** | `zstd -dc large-pkg.tar.zst \| tar xf -` | 3m46.419s | 0m46.533s | 3m34.668s |
+| **bzip2** | `bzip2 -dc large-pkg.tar.bz2 \| tar xf -` | 11m31.287s | 9m52.644s | 4m17.974s |
+| **xz** | `xz -dc large-pkg.tar.xz \| tar xf -` | 8m11.527s | 3m45.562s | 7m15.109s |
+
+---
+
+## Preparing many small files
+First, I decided to use node_modules as many small files.
+
+I set package.json as below. The packages are arbitrary.
+
+<details>
+  <summary>package.json</summary>
+  ```js
+  {
+    "name": "large-pkg",
+    "version": "1.0.0",
+    "description": "",
+    "author": "",
+    "type": "commonjs",
+    "main": "index.js",
+    "scripts": {
+      "test": "echo \"Error: no test specified\" && exit 1"
+    },
+    "dependencies": {
+      "async": "^3.2.6",
+      "axios": "^1.13.2",
+      "bcryptjs": "^3.0.3",
+      "bluebird": "^3.7.2",
+      "body-parser": "^2.2.2",
+      "chalk": "^5.6.2",
+      "chalk-template": "^1.1.2",
+      "cheerio": "^1.1.2",
+      "chokidar": "^5.0.0",
+      "commander": "^14.0.2",
+      "cookie": "^1.1.1",
+      "core-js": "^3.47.0",
+      "cors": "^2.8.5",
+      "debug": "^4.4.3",
+      "dotenv": "^17.2.3",
+      "express": "^5.2.1",
+      "fast-glob": "^3.3.3",
+      "form-data": "^4.0.5",
+      "glob": "^13.0.0",
+      "got": "^14.6.6",
+      "inquirer": "^13.2.0",
+      "jsonwebtoken": "^9.0.3",
+      "lodash": "^4.17.21",
+      "mime": "^4.1.0",
+      "minimist": "^1.2.8",
+      "mkdirp": "^3.0.1",
+      "mkdirp-classic": "^0.5.3",
+      "mongoose": "^9.1.4",
+      "ms": "^2.1.3",
+      "node-fetch": "^3.3.2",
+      "ora": "^9.0.0",
+      "passport": "^0.7.0",
+      "prop-types": "^15.8.1",
+      "qs": "^6.14.1",
+      "react": "^19.2.3",
+      "react-dom": "^19.2.3",
+      "request": "^2.88.2",
+      "rimraf": "^6.1.2",
+      "semver": "^7.7.3",
+      "sharp": "^0.34.5",
+      "socket.io": "^4.8.3",
+      "supports-color": "^10.2.2",
+      "tslib": "^2.8.1",
+      "uuid": "^13.0.0",
+      "ws": "^8.19.0",
+      "xml2js": "^0.6.2",
+      "yargs": "^18.0.0"
+    },
+    "devDependencies": {
+      "@babel/cli": "^7.28.6",
+      "@babel/plugin-transform-runtime": "^7.28.5",
+      "@babel/preset-env": "^7.28.6",
+      "@babel/runtime": "^7.28.6",
+      "autoprefixer": "^10.4.23",
+      "ava": "^6.4.1",
+      "babel-core": "^6.26.3",
+      "babel-loader": "^10.0.0",
+      "chai": "^6.2.2",
+      "commitlint": "^20.3.1",
+      "concurrently": "^9.2.1",
+      "conventional-changelog": "^7.1.1",
+      "cross-env": "^10.1.0",
+      "css-loader": "^7.1.2",
+      "dotenv-expand": "^12.0.3",
+      "eslint": "^8.57.1",
+      "eslint-config-prettier": "^10.1.8",
+      "eslint-config-standard": "^17.1.0",
+      "eslint-plugin-import": "^2.32.0",
+      "eslint-plugin-jsx-a11y": "^6.10.2",
+      "eslint-plugin-node": "^11.1.0",
+      "eslint-plugin-prettier": "^5.5.5",
+      "eslint-plugin-react": "^7.37.5",
+      "husky": "^9.1.7",
+      "jest": "^30.2.0",
+      "less": "^4.5.1",
+      "lint-staged": "^16.2.7",
+      "mocha": "^11.7.5",
+      "nodemon": "^3.1.11",
+      "playwright": "^1.57.0",
+      "pm2": "^6.0.14",
+      "postcss": "^8.5.6",
+      "prettier": "^3.8.0",
+      "puppeteer": "^24.35.0",
+      "rollup": "^4.55.1",
+      "rxjs": "^7.8.2",
+      "sass": "^1.97.2",
+      "semantic-release": "^25.0.2",
+      "sinon": "^21.0.1",
+      "style-loader": "^4.0.0",
+      "stylus": "^0.64.0",
+      "supertest": "^7.2.2",
+      "tailwindcss": "^4.1.18",
+      "ts-loader": "^9.5.4",
+      "ts-node": "^10.9.2",
+      "typescript": "^5.9.3",
+      "vite": "^7.3.1",
+      "vitest": "^4.0.17",
+      "webpack": "^5.104.1",
+      "webpack-cli": "^6.0.1",
+      "webpack-dev-server": "^5.2.3",
+      "zx": "^8.8.5"
+    }
+  }
+  ```
+</details>
+
+From here, create node_modules with the following command.
+
+```sh
+npm i
+```
+
+Check the size.
+
+```sh
+$ du -h -d1
+566M    ./node_modules
+567M    .
+```
+
+This shows that many small files were created.
+
+Copy node_modules to create even more files.
+
+```sh
+for i in {1..59}; do
+    echo "node_modules.${i} をコピー中..."
+    cp -r node_modules "node_modules.${i}"
+done
+```
+
+Check the size.
+
+```sh
+$ du -h -d1
+...
+34G     .
+```
+
+This becomes a fairly large size.
+
+## tarball
+Let's see the speed of creating a tarball.
+
+### Archive
+```sh
+$ time tar cf large-pkg.tar large-pkg
+
+real    1m19.449s
+user    0m6.702s
+sys     0m48.121s
+```
+
+After archiving: 26 GiB
+
+### Extraction
+```sh
+$ time tar xf large-pkg.tar
+
+real    2m11.793s
+user    0m6.906s
+sys     2m4.183s
+```
+
+Archiving and extraction are reasonably fast.
+
+## tar.gz
+Next, try tar.gz.
+
+The tar command creates an archive, and gzip is a command to compress a single file. Combined, they create a tar.gz file. Nowadays the tar command alone can compress and extract tar.gz files. (The same applies to other compression formats.)
+
+### Compression
+```sh
+$ time tar czf large-pkg.tar.gz large-pkg
+
+real    11m33.942s
+user    11m18.811s
+sys     0m55.573s
+```
+
+After compression: 5.5 GiB
+
+### Extraction
+```sh
+$ time tar xf large-pkg.tar.gz
+
+real    3m39.544s
+user    2m1.189s
+sys     2m58.317s
+```
+
+### Extracting with tar and gzip
+```sh
+$ time sh -c 'gzip -dc large-pkg.tar.gz | tar xf -'
+
+real    3m40.416s
+user    2m0.272s
+sys     3m0.043s
+```
+
+Speed is almost the same.
+
+### Parallel extraction (pigz)
+```sh
+$ time sh -c 'pigz -dc large-pkg.tar.gz | tar xf -'
+
+real    3m53.711s
+user    1m38.147s
+sys     4m42.893s
+```
+
+Not much change. It seems disk I/O is the bottleneck.
+
+## bzip2
+### Compression
+```sh
+$ time sh -c 'tar cf - large-pkg.1 | bzip2 > large-pkg.tar.bz2'
+
+real    37m22.743s
+user    28m40.329s
+sys     3m31.000s
+```
+
+After compression: 4.3 GiB
+
+Compression takes long, but the compression ratio is fairly good.
+
+### Extraction
+```sh
+$ time sh -c 'bzip2 -dc large-pkg.tar.bz2 | tar xf -'
+
+real    11m31.287s
+user    9m52.644s
+sys     4m17.974s
+```
+
+Extraction also takes time, but the decompression ratio is fairly good.
+
+## xz
+### Compression
+```sh
+$ time sh -c 'tar cf - large-pkg | xz > large-pkg.tar.xz'
+
+real    125m31.447s
+user    124m10.523s
+sys     5m18.330s
+```
+
+After compression: 3.3 GiB
+
+Compression ratio is excellent, but it takes too long.
+
+If your network is extremely slow, storage costs are high, and you use it only rarely (e.g., once every few years), it might be acceptable.
+
+### Extraction
+```sh
+$ time sh -c 'xz -dc large-pkg.tar.xz | tar xf -'
+
+real    8m11.527s
+user    3m45.562s
+sys     7m15.109s
+```
+
+## LZ4
+
+### Compression
+```sh
+$ time sh -c 'tar cf - large-pkg | lz4 > large-pkg.tar.lz4'
+
+real    3m33.187s
+user    0m53.958s
+sys     2m57.122s
+```
+
+### Extraction
+```sh
+$ time sh -c 'lz4 -dc large-pkg.tar.lz4 | tar xf -'
+
+real    4m46.576s
+user    0m32.174s
+sys     4m36.055s
+```
+
+## zstd
+zstd is a fast compression method developed by Meta (formerly Facebook).
+
+### Compression
+```sh
+$ time sh -c 'tar cf - large-pkg | zstd -T0 -o large-pkg.tar.zst'
+/*stdin*\            : 18.57%   (27492075520 => 5106239218 bytes, large-pkg.tar.zst)
+
+real    9m13.819s
+user    1m45.049s
+sys     2m43.609s
+```
+
+### Extraction
+```sh
+$ time sh -c 'zstd -dc large-pkg.tar.zst | tar xf -'
+large-pkg.tar.zst   : 27492075520 bytes
+
+real    3m46.419s
+user    0m46.533s
+sys     3m34.668s
+```
