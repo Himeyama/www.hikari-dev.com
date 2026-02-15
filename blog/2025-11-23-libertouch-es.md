@@ -8,9 +8,9 @@ authors: hikari
 ## Libertouch ES
 Libertouch ES 日本語配列 (NC07902-B281-ES) を入手しました。
 
-![Libertouch ES](/img/blog/20251123_093730.jpg)
+![](/img/blog/2025-11-23-libertouch-es/20251123_093730.jpg)
 
-![Libertouch ES](/img/blog/20251123_093405.jpg)
+![](/img/blog/2025-11-23-libertouch-es/20251123_093405.jpg)
 
 忖度なし、約 1 カ月使っての感想です。
 
