@@ -5,9 +5,9 @@ title: Libertouch ES (JP) Review
 ## Libertouch ES
 I got the Libertouch ES Japanese Layout (NC07902-B281-ES).
 
-![Libertouch ES](/img/blog/20251123_093730.jpg)
+![Libertouch ES](/img/blog/2025-11-23-libertouch-es/20251123_093730.jpg)
 
-![Libertouch ES](/img/blog/20251123_093405.jpg)
+![Libertouch ES](/img/blog/2025-11-23-libertouch-es/20251123_093405.jpg)
 
 Here are my honest impressions after about one month of use.
 
