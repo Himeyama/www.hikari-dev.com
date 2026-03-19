@@ -34,27 +34,16 @@
 }
 
 /* ブログ: 本文・タイトル・見出し・年号のフォント */
-article.blog-post-page .markdown,
-article.blog-post-page .markdown h1,
-article.blog-post-page .markdown h2,
-article.blog-post-page .markdown h3,
-article.blog-post-page .markdown h4,
-article.blog-post-page .markdown h5,
-article.blog-post-page .markdown h6,
-.blog-post-title,
-.blog-post-date {
+article,
+article h1,
+article h2,
+article h3,
+article h4,
+article h5,
+article h6 {
   font-family: Georgia, "Times New Roman", serif;
 }
 
-.navbar__items--left .navbar__link {
-  font-weight: 700;
+main time {
+  font-family: Georgia, "Times New Roman", serif;
 }
-
-.button.button--secondary {
-  border: solid 1px #edeceb;
-  border-bottom: solid 1px #d3d3d3;
-  background: #ffffff;
-  border-radius: 16px;
-  box-shadow: rgba(0, 0, 0, 0.08) 0px 16px 24px 0px;
-}
-
