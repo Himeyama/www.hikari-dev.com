@@ -4,8 +4,12 @@
  * work well for content-centric websites.
  */
 
+@import url('https://fonts.googleapis.com/css2?family=LINE+Seed+JP:wght@400;700&display=swap');
+
 /* You can override the default Infima variables here. */
 :root {
+  --ifm-font-family-base: 'LINE Seed JP', system-ui, -apple-system, sans-serif;
+  --ifm-font-weight-base: 700;
   --ifm-color-primary: #F15EB4;  /* Base pink color */
   --ifm-color-primary-dark: #D955A3;  /* Darker shade by reducing lightness */
   --ifm-color-primary-darker: #CF4B9A;  /* Even darker */
@@ -27,6 +31,10 @@
   --ifm-color-primary-lighter: #F58DCB;  /* Lighter for better visibility */
   --ifm-color-primary-lightest: #F7A9D7;  /* Lightest for highlights */
   --docusaurus-highlighted-code-line-bg: rgba(241, 94, 180, 0.3);  /* Pink tint for code line highlight in dark mode */
+}
+
+.navbar__items--left .navbar__link {
+  font-weight: 700;
 }
 
 .button.button--secondary {
