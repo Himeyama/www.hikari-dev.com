@@ -42,7 +42,7 @@ function CommentItem({ comment }: { key?: React.Key; comment: CommentData }) {
   return (
     <div className={styles.comment}>
       <div className={styles.commentHeader}>
-        <span className={styles.commentName}>{comment.name}</span>
+        <span className={styles.commentName}>{comment.name || '匿名'}</span>
         {comment.rating > 0 && <StarRating value={comment.rating} />}
         <span className={styles.commentDate}>{comment.date}</span>
       </div>
