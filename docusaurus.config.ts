@@ -89,6 +89,19 @@ const config: Config = {
         anonymizeIP: true,
       },
     ],
+    [
+      '@docusaurus/plugin-content-blog',
+      {
+        id: 'sukisuki-club',
+        routeBasePath: 'sukisuki',
+        path: './sukisuki',
+        blogSidebarCount: 'ALL',
+        showReadingTime: true,
+        onUntruncatedBlogPosts: 'ignore',
+        onInlineTags: 'warn',
+        onInlineAuthors: 'warn',
+      },
+    ],
   ],
 
   themeConfig: {
@@ -108,6 +121,7 @@ const config: Config = {
         //   label: 'Tutorial',
         // },
         {to: '/blog', label: 'Blog', position: 'left'},
+        {to: '/sukisuki', label: '好き好きクラブ', position: 'left'},
         {
           href: 'https://github.com/himeyama',
           label: 'GitHub',
