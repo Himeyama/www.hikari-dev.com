@@ -81,6 +81,6 @@ For the admin endpoint (`PATCH /comment/{id}`), setting `ApiKeyRequired: true` i
 
 ## Wrap-up
 
-The main reason I built this instead of using an existing solution was to keep full control over the data. The serverless setup means no server management, and DynamoDB's on-demand billing keeps costs minimal for a low-traffic personal blog.
+The serverless setup means no server management, and DynamoDB's on-demand billing keeps costs minimal for a low-traffic personal blog.
 
 The whole thing is packaged with SAM + TypeScript + esbuild, and deploying is as simple as `sam build && sam deploy`.
