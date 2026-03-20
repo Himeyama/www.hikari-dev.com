@@ -62,15 +62,25 @@
   gap: 2px;
 }
 
-.star {
+.star,
+.starFilled {
   font-size: 1.1rem;
-  color: var(--ifm-color-primary-lightest);
-  transition: color 0.1s;
   user-select: none;
+  transition: color 0.1s, transform 0.15s;
+}
+
+.star {
+  color: var(--ifm-color-primary-lightest);
 }
 
 .starFilled {
   color: var(--ifm-color-primary);
+  transform: scale(1.2);
+}
+
+.starsInteractive .star,
+.starsInteractive .starFilled {
+  cursor: pointer;
 }
 
 /* 投稿フォーム */

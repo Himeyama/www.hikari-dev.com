@@ -20,16 +20,17 @@ function StarRating({
   onChange?: (v: number) => void;
 }) {
   const [hover, setHover] = useState(0);
+  const displayValue = onChange && hover > 0 ? hover : value;
+
   return (
-    <span className={styles.stars}>
+    <span className={`${styles.stars} ${onChange ? styles.starsInteractive : ''}`}>
       {[1, 2, 3, 4, 5].map((star) => (
         <span
           key={star}
-          className={`${styles.star} ${star <= (onChange ? hover || value : value) ? styles.starFilled : ''}`}
+          className={star <= displayValue ? styles.starFilled : styles.star}
           onClick={() => onChange?.(star)}
           onMouseEnter={() => onChange && setHover(star)}
           onMouseLeave={() => onChange && setHover(0)}
-          style={{ cursor: onChange ? 'pointer' : 'default' }}
         >
           ★
         </span>
