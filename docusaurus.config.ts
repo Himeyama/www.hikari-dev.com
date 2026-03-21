@@ -121,7 +121,7 @@ const config: Config = {
         //   label: 'Tutorial',
         // },
         {to: '/blog', label: 'Blog', position: 'left'},
-        {to: '/sukisuki', label: '好き好きクラブ', position: 'left'},
+        {to: '/sukisuki', label: 'Like', position: 'left'},
         {
           href: 'https://github.com/himeyama',
           label: 'GitHub',

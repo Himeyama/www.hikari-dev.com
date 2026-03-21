@@ -28,8 +28,12 @@
     "description": "The label of footer link with label=X linking to https://x.com/ptrqr"
   },
   "link.item.label.Blog": {
-    "message": "ブログ",
+    "message": "技術ブログ",
     "description": "The label of footer link with label=Blog linking to /blog"
+  },
+  "item.label.Like": {
+    "message": "趣味部屋",
+    "description": "The label of footer link with label=Like linking to /sukisuki"
   },
   "link.item.label.GitHub": {
     "message": "GitHub",

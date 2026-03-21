@@ -12,7 +12,11 @@
     "description": "ラベルがチュートリアルのナビゲーションバー項目"
   },
   "item.label.Blog": {
-    "message": "ブログ",
+    "message": "技術ブログ",
+    "description": "Navbar item with label Blog"
+  },
+  "item.label.Like": {
+    "message": "趣味部屋",
     "description": "Navbar item with label Blog"
   },
   "item.label.GitHub": {
