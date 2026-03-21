@@ -1,5 +1,6 @@
 ---
 title: Publishing a Website Using Raspberry Pi as a Server
+tags: [Network]
 ---
 
 ## Setting up nginx on Raspberry Pi

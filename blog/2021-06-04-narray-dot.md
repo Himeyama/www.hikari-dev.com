@@ -2,6 +2,7 @@
 title: Numo::NArray でドット積
 date: '2021-06-04 00:20'
 authors: hikari
+tags: [Ruby]
 ---
 
 ```rb

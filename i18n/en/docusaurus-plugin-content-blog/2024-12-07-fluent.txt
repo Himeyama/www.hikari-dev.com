@@ -1,5 +1,6 @@
 ---
 title: Segoe Fluent Icons
+tags: [Fluent UI]
 ---
 
 <!-- <style>

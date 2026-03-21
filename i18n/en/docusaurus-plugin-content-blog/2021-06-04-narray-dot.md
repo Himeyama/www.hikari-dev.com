@@ -1,5 +1,6 @@
 ---
 title: Dot product with Numo::NArray
+tags: [Ruby]
 date: '2021-06-04 00:20'
 ---
 

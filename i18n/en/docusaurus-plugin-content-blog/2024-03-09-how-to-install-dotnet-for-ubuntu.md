@@ -1,5 +1,6 @@
 ---
 title: How to install .NET on Ubuntu (including WSL2)
+tags: [Linux, .NET, WSL]
 ---
 
 Reference:

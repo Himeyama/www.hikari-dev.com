@@ -1,5 +1,6 @@
 ---
 title: Exposing a Server in WSL to the LAN
+tags: [WSL]
 ---
 
 This article introduces how to expose a server running inside WSL to the local area network (LAN).

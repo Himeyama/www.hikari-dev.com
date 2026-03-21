@@ -1,5 +1,6 @@
 ---
 title: EC2 Instance Connect Summary
+tags: [AWS]
 ---
 
 ## What is EC2 Instance Connect?

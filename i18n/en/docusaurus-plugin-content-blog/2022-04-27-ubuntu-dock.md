@@ -1,5 +1,6 @@
 ---
 title: Configure the Dock using gsettings on Ubuntu
+tags: [Linux]
 ---
 
 This is useful when you want to configure the Dock with a script or when configuring via SSH.

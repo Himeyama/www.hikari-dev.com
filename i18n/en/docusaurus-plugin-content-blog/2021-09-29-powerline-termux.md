@@ -1,5 +1,6 @@
 ---
 title: Installing Powermline on Termux
+tags: [CLI]
 date: '2021-09-29 08:11'
 ---
 

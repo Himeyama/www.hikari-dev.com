@@ -2,6 +2,7 @@
 title: Jupyter Lab のインストールと設定
 date: "2021-6-10"
 authors: hikari
+tags: [Python]
 ---
 
 # Jupyter Lab のインストール

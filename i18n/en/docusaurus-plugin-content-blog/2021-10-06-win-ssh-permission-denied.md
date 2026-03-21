@@ -1,5 +1,6 @@
 ---
 title: Windows OpenSSH Permission denied issue
+tags: [SSH]
 date: '2021-10-06 07:27'
 ---
 

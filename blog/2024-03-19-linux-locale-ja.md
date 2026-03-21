@@ -1,6 +1,7 @@
 ---
 title: Linux プロンプトを日本語化する方法
 authors: hikari
+tags: [Linux, Security]
 ---
 
 Linux のプロンプトを日本語化する方法を紹介します。

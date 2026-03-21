@@ -1,6 +1,7 @@
 ---
 title: ガウシアンフィルターでノイズ除去 (Python / Scipy)
 authors: hikari
+tags: [Image Processing]
 description: scipy の gaussian_filter1d でノイズ除去
 date: "2021-6-10"
 ---

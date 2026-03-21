@@ -21,3 +21,164 @@
   align-items: center;
   justify-content: center;
 }
+
+/* ---- Layout ---- */
+
+.mainContent {
+  max-width: 1200px;
+  width: 100%;
+  margin: 16px auto 0 auto;
+  padding: 0 1.5rem;
+  display: grid;
+  grid-template-columns: auto 320px;
+  gap: 2rem;
+  align-items: start;
+}
+
+@media screen and (max-width: 996px) {
+  .mainContent {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* ---- Section ---- */
+
+.section {
+  margin-bottom: 1.5rem;
+  padding: 1.25rem 1.5rem;
+  border-radius: 8px;
+  border: 1px solid var(--ifm-color-emphasis-200);
+  background: var(--ifm-background-surface-color);
+}
+
+.sectionTitle {
+  font-size: 1.1rem !important;
+  border-bottom: 2px solid var(--ifm-color-primary);
+  padding-bottom: 0.4rem;
+  margin-bottom: 1rem !important;
+}
+
+/* ---- Latest Posts ---- */
+
+.postList {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.postItem {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  padding: 0.5rem 0;
+  border-bottom: 1px solid var(--ifm-color-emphasis-200);
+  gap: 0.75rem;
+}
+
+.postItem:last-child {
+  border-bottom: none;
+}
+
+.postLink {
+  flex: 1;
+  font-size: 0.95rem;
+  text-decoration: none;
+}
+
+.postLink:hover {
+  text-decoration: underline;
+}
+
+.postDate {
+  font-size: 0.8rem;
+  color: var(--ifm-color-emphasis-600);
+  white-space: nowrap;
+}
+
+.viewAllLink {
+  display: block;
+  margin-top: 0.75rem;
+  text-align: right;
+  font-size: 0.9rem;
+}
+
+/* ---- Categories ---- */
+
+.categoryList {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.categoryItem {
+  padding: 0.4rem 0;
+  border-bottom: 1px solid var(--ifm-color-emphasis-200);
+}
+
+.categoryItem:last-child {
+  border-bottom: none;
+}
+
+.categoryItem a {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  text-decoration: none;
+}
+
+.categoryCount {
+  background: var(--ifm-color-primary);
+  color: white;
+  border-radius: 12px;
+  padding: 0 0.5rem;
+  font-size: 0.75rem;
+  min-width: 24px;
+  text-align: center;
+}
+
+/* ---- Access Ranking ---- */
+
+.comingSoon {
+  color: var(--ifm-color-emphasis-600);
+  text-align: center;
+  padding: 0.75rem 0;
+  margin: 0;
+}
+
+/* ---- Author Profile ---- */
+
+.authorCard {
+  display: flex;
+  gap: 1rem;
+  align-items: flex-start;
+}
+
+.authorAvatar {
+  width: 64px;
+  height: 64px;
+  border-radius: 50%;
+  object-fit: cover;
+  flex-shrink: 0;
+}
+
+.authorInfo {
+  flex: 1;
+}
+
+.authorName {
+  font-weight: bold;
+  font-size: 1rem;
+  margin: 0 0 0.25rem 0;
+}
+
+.authorBio {
+  font-size: 0.875rem;
+  color: var(--ifm-color-emphasis-700);
+  margin: 0 0 0.5rem 0;
+}
+
+.authorLinks {
+  display: flex;
+  gap: 0.75rem;
+  font-size: 0.875rem;
+}

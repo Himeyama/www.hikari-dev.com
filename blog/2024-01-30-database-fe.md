@@ -1,6 +1,7 @@
 ---
 title: 基本情報データベースまとめ
 authors: hikari
+tags: [Database]
 ---
 
 ## 関係モデル

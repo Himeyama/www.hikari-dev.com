@@ -1,5 +1,6 @@
 ---
 title: Basic Information Database Summary
+tags: [Database]
 authoors: hikari
 ---
 

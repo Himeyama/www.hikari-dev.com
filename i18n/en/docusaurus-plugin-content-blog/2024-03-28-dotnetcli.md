@@ -1,5 +1,6 @@
 ---
 title: Summary of frequently used dotnet commands
+tags: [.NET]
 ---
 
 |Command|Function|

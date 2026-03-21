@@ -1,5 +1,6 @@
 ---
 title: How to Japanese the Linux Prompt
+tags: [Linux, Security]
 ---
 
 This post introduces how to Japanese the Linux prompt.

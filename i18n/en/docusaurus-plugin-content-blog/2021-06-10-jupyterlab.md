@@ -1,5 +1,6 @@
 ---
 title: Installing and Configuring Jupyter Lab
+tags: [Python]
 date: "2021-6-10"
 ---
 

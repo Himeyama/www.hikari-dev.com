@@ -1,6 +1,7 @@
 ---
 title: rbenv (WSL2 / Ubuntu) へのインストール方法
 authors: hikari
+tags: [Linux, Ruby, WSL]
 ---
 
 ## 依存パッケージのインストール

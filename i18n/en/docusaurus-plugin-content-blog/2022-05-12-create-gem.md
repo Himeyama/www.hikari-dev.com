@@ -1,5 +1,6 @@
 ---
 title: How to Create a Custom Gem
+tags: [Ruby]
 tag: [Ruby, gem]
 ---
 

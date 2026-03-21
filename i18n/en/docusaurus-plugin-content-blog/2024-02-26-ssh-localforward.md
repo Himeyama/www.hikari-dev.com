@@ -1,5 +1,6 @@
 ---
 title: How to expose a server on WSL2 to the LAN using SSH tunneling
+tags: [SSH, WSL, Security]
 ---
 
 ## Step1. Install OpenSSH Server on WSL

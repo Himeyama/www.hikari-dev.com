@@ -1,6 +1,7 @@
 ---
 title: Unity でリアルな地形を生成
 authors: hikari
+tags: [Unity]
 ---
 
 Unity でリアルな地形を作ってみた。

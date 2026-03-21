@@ -2,6 +2,7 @@
 title: 自作 gem の作り方
 tag: [Ruby, gem]
 authors: hikari
+tags: [Ruby]
 ---
 
 ## gem を作成 (`bundle gem`)

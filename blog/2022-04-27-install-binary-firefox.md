@@ -1,6 +1,7 @@
 ---
 title: Firefox のビルドをインストール
 authors: hikari
+tags: [Web]
 ---
 
 Ubuntu 22.04 は snap 版の Firefox がインストールされているらしく、

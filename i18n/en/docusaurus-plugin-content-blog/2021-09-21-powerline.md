@@ -1,5 +1,6 @@
 ---
 title: How to Install Powerline
+tags: [CLI]
 date: '2021-09-21 06:12'
 ---
 

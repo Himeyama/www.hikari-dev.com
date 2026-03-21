@@ -1,6 +1,7 @@
 ---
 title: Segoe Fluent Icons
 authors: hikari
+tags: [Fluent UI]
 ---
 
 <!-- <style>

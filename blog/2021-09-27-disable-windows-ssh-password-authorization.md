@@ -2,6 +2,7 @@
 title: Windows の OpenSSH でパスワード認証を無効にする
 date: '2021-09-27 05:21'
 authors: hikari
+tags: [SSH]
 ---
 
 ## 管理者権限でターミナルを開く

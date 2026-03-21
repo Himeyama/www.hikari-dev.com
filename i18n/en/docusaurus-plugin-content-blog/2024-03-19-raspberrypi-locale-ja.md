@@ -1,5 +1,6 @@
 ---
 title: How to change the Linux prompt to Japanese
+tags: [Raspberry Pi, Security]
 ---
 
 This post explains how to localize the prompt on Raspberry Pi.

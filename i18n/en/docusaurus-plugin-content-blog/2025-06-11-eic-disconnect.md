@@ -1,5 +1,6 @@
 ---
 title: EC2 Instance Connect fails to connect from Windows without a key
+tags: [AWS]
 ---
 
 ## Unable to connect to Instance Connect on Windows

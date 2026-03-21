@@ -1,5 +1,6 @@
 ---
 title: How to use icons with MenuFlyoutItem in Windows App SDK (Microsoft.UI.Xaml.Controls, WinUI3)
+tags: [WinUI 3]
 ---
 
 ## Conclusion Use `<MenuFlyoutItem.Icon>`

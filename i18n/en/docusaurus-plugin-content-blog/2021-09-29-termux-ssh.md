@@ -1,5 +1,6 @@
 ---
 title: SSH to termux
+tags: [SSH]
 date: '2021-09-29 05:11'
 ---
 

@@ -1,5 +1,6 @@
 ---
 title: Installing ImageMagick (Ubuntu)
+tags: [Image Processing, Ruby, Linux]
 description: How to install ImageMagick
 date: "2021-6-13"
 ---

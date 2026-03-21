@@ -1,5 +1,6 @@
 ---
 title: Troubleshooting CGI not working with Ruby installed via rbenv on Webrick
+tags: [Ruby]
 ---
 
 # Overview

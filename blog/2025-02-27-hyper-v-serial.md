@@ -1,6 +1,7 @@
 ---
 title: Hyper-V の Ubuntu にシリアルコンソールで接続する方法
 authors: hikari
+tags: [Linux, Windows]
 ---
 
 ## VM の設定

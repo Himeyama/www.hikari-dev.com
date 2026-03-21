@@ -1,5 +1,6 @@
 ---
 title: How to Create a Custom Linux Distribution Based on Ubuntu
+tags: [Linux]
 ---
 
 ## Overview

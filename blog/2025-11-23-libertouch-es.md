@@ -1,6 +1,7 @@
 ---
 title: Libertouc ES (日本語版) レビュー
 authors: hikari
+tags: [Hardware]
 ---
 
 <!--truncate-->

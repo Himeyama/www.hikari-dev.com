@@ -1,6 +1,7 @@
 ---
 title: よく使う dotnet コマンドまとめ
 authors: hikari
+tags: [.NET]
 ---
 
 |コマンド|機能|

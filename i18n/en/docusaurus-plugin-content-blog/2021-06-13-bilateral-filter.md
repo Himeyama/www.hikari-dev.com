@@ -1,5 +1,6 @@
 ---
 title: Applying a Bilateral Filter with ImageMagick
+tags: [Image Processing, Ruby]
 description: Use ImageMagick's bilateral filter to clean up images
 date: "2021-6-13"
 ---

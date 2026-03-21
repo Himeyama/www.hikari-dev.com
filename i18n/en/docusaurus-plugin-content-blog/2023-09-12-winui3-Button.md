@@ -1,5 +1,6 @@
 ---
 title: Windows App SDK (WinUI3) Button Component and Samples
+tags: [WinUI 3]
 ---
 
 ## Namespace

@@ -1,5 +1,6 @@
 ---
 title: Observing the VOICEVOX API
+tags: [VoiceVox]
 ---
 
 

@@ -1,5 +1,6 @@
 ---
 title: Disable Password Authentication in OpenSSH on Windows
+tags: [SSH]
 date: '2021-09-27 05:21'
 ---
 

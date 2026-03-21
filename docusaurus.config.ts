@@ -82,6 +82,7 @@ const config: Config = {
   ],
 
   plugins: [
+    './plugins/recent-blog-posts.js',
     [
       '@docusaurus/plugin-google-gtag',
       {

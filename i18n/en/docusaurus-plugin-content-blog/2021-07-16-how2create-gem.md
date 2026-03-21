@@ -1,5 +1,6 @@
 ---
 title: How to create a gem
+tags: [Ruby]
 date: '2021-07-16 01:54'
 ---
 

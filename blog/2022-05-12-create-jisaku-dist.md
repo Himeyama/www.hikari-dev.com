@@ -1,6 +1,7 @@
 ---
 title: Ubuntu 系の Linux ディストリビューションの自作方法
 authors: hikari
+tags: [Linux]
 ---
 
 ## 概要

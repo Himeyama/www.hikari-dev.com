@@ -2,6 +2,7 @@
 title: SSH トンネル
 date: '2021-09-23 15:48'
 authors: hikari
+tags: [SSH, Network]
 ---
 
 # SSH のトンネル

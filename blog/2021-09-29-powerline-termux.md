@@ -2,6 +2,7 @@
 title: termux に powerline をインストールする
 date: '2021-09-29 08:11'
 authors: hikari
+tags: [CLI]
 ---
 
 # Go のインストール
