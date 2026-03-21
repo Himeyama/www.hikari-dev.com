@@ -333,5 +333,26 @@
   "theme.tags.tagsPageTitle": {
     "message": "Tags",
     "description": "The title of the tag list page"
+  },
+  "homepage.latestPosts": {
+    "message": "Latest Posts"
+  },
+  "homepage.viewAllPosts": {
+    "message": "View all posts →"
+  },
+  "homepage.categories": {
+    "message": "Categories"
+  },
+  "homepage.accessRanking": {
+    "message": "Access Ranking"
+  },
+  "homepage.comingSoon": {
+    "message": "Coming Soon"
+  },
+  "homepage.authorProfile": {
+    "message": "Author Profile"
+  },
+  "homepage.authorBio": {
+    "message": "I write a blog about everyday life and IT technology."
   }
 }
