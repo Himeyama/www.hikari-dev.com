@@ -83,6 +83,7 @@ const config: Config = {
 
   plugins: [
     './plugins/recent-blog-posts.js',
+    './plugins/ga-ranking.js',
     [
       '@docusaurus/plugin-google-gtag',
       {

@@ -145,6 +145,33 @@
   margin: 0;
 }
 
+.rankingList {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  counter-reset: none;
+}
+
+.rankingItem {
+  display: flex;
+  align-items: baseline;
+  gap: 0.75rem;
+  padding: 0.5rem 0;
+  border-bottom: 1px solid var(--ifm-color-emphasis-200);
+}
+
+.rankingItem:last-child {
+  border-bottom: none;
+}
+
+.rankingNumber {
+  font-weight: bold;
+  color: var(--ifm-color-primary);
+  min-width: 1.5rem;
+  text-align: center;
+  flex-shrink: 0;
+}
+
 /* ---- Author Profile ---- */
 
 .authorCard {

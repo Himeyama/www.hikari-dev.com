@@ -86,14 +86,30 @@ function CategoriesList() {
 }
 
 function AccessRanking() {
+  const data = usePluginData('ga-ranking-plugin') as {ranking: Array<{title: string; permalink: string; pageviews: number}>};
+  const ranking = data?.ranking ?? [];
+
   return (
     <section className={styles.section}>
       <Heading as="h2" className={styles.sectionTitle}>
         <Translate id="homepage.accessRanking">アクセスランキング</Translate>
       </Heading>
-      <p className={styles.comingSoon}>
-        <Translate id="homepage.comingSoon">準備中</Translate>
-      </p>
+      {ranking.length === 0 ? (
+        <p className={styles.comingSoon}>
+          <Translate id="homepage.comingSoon">準備中</Translate>
+        </p>
+      ) : (
+        <ol className={styles.rankingList}>
+          {ranking.map((post, i) => (
+            <li key={post.permalink} className={styles.rankingItem}>
+              <span className={styles.rankingNumber}>{i + 1}</span>
+              <Link to={post.permalink} className={styles.postLink}>
+                {post.title}
+              </Link>
+            </li>
+          ))}
+        </ol>
+      )}
     </section>
   );
 }
