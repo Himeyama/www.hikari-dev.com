@@ -1,6 +1,7 @@
 // @ts-check
 const fs = require('fs');
 const path = require('path');
+const _ = require('lodash');
 
 /** @type {import('@docusaurus/types').PluginModule} */
 module.exports = function recentBlogPostsPlugin(context) {
@@ -58,7 +59,7 @@ module.exports = function recentBlogPostsPlugin(context) {
 
           // Aggregate tags
           tags.forEach((label) => {
-            const tagPermalink = `/blog/tags/${label.toLowerCase().replace(/\s+/g, '-')}`;
+            const tagPermalink = `/blog/tags/${_.kebabCase(label)}`;
             if (!tagsMap[label]) {
               tagsMap[label] = {label, permalink: tagPermalink, count: 0};
             }
@@ -74,7 +75,7 @@ module.exports = function recentBlogPostsPlugin(context) {
               formattedDate: `${year}/${month}/${day}`,
               tags: tags.map((label) => ({
                 label,
-                permalink: `/blog/tags/${label.toLowerCase().replace(/\s+/g, '-')}`,
+                permalink: `/blog/tags/${_.kebabCase(label)}`,
               })),
             },
           };
