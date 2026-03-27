@@ -1,10 +1,10 @@
 ---
-title: Rocky Linux に TeX Live 2026 をインストールする
+title: Linux に TeX Live 2026 をインストールする
 authors: hikari
 tags: [Linux, TeX, LaTeX]
 ---
 
-Rocky Linux 8.10 に ISO イメージを使って TeX Live 2026 をインストールする手順をまとめた。RHEL 系全般に適用できる。
+Linux (RHEL 系) に ISO イメージを使って TeX Live 2026 をインストールする手順をまとめた。RHEL 系全般に適用できる。
 
 <!-- truncate -->
 
@@ -19,13 +19,13 @@ Rocky Linux 8.10 に ISO イメージを使って TeX Live 2026 をインスト�
 理化学研究所のミラーサイトから ISO をダウンロードする。
 
 ```bash
-cd ~
+cd
 curl -C - -O --progress-bar https://ftp.riken.jp/CTAN/systems/texlive/Images/texlive2026.iso
 ```
 
 `-C -` はダウンロードが途中で止まった場合の再開オプションである。
 
-ダウンロード完了後、ファイルサイズを確認する（約 6.4 GB）：
+ダウンロード完了後、ファイルサイズを確認する (約 6.4 GiB):
 
 ```bash
 ls -lh ~/texlive2026.iso
@@ -40,7 +40,7 @@ sudo mkdir -p /mnt/texlive
 sudo mount -o loop,ro ~/texlive2026.iso /mnt/texlive
 ```
 
-マウント確認：
+マウント確認:
 
 ```bash
 ls /mnt/texlive
@@ -85,9 +85,9 @@ echo 'export PATH="/usr/local/texlive/2026/bin/x86_64-linux:$PATH"' >> ~/.bashrc
 source ~/.bashrc
 ```
 
-## Step 5: ロケールの修正（Rocky Linux / RHEL 系）
+## Step 5: ロケールの修正 (RHEL 系)
 
-Rocky Linux では locale が未設定の場合、`lualatex` 実行時にエラーが発生する。以下を実行する。
+RHEL 系 Linux では locale が未設定の場合、`lualatex` 実行時にエラーが発生する。以下を実行する。
 
 ```bash
 sudo dnf install -y glibc-langpack-en
@@ -102,7 +102,7 @@ source ~/.bashrc
 
 ## Step 6: 動作確認
 
-各コマンドのバージョンを確認する：
+各コマンドのバージョンを確認する:
 
 ```bash
 tex --version
@@ -110,7 +110,7 @@ lualatex --version
 platex --version
 ```
 
-期待される出力例：
+期待される出力例:
 
 ```
 TeX 3.141592653 (TeX Live 2026)
@@ -120,7 +120,7 @@ e-upTeX 3.141592653-p4.1.2-u2.02 (TeX Live 2026)
 
 ## Step 7: 日本語コンパイルのテスト
 
-テスト ファイルを作成する：
+テスト ファイルを作成する:
 
 ```bash
 cat > /tmp/test.tex << 'EOF'
@@ -131,7 +131,7 @@ cat > /tmp/test.tex << 'EOF'
 EOF
 ```
 
-コンパイルする：
+コンパイルする:
 
 ```bash
 cd /tmp && lualatex test.tex
@@ -141,7 +141,7 @@ cd /tmp && lualatex test.tex
 
 ## Step 8: 後片付け（任意）
 
-インストール完了後、ISO とマウントポイントを削除できる：
+インストール完了後、ISO とマウントポイントを削除できる:
 
 ```bash
 sudo umount /mnt/texlive
@@ -150,7 +150,7 @@ rm ~/texlive2026.iso
 
 ## ミラーサイト一覧
 
-ダウンロードが遅い場合は他のミラーを試す：
+ダウンロードが遅い場合は他のミラーを試す:
 
 | ミラー | URL |
 |---|---|

@@ -1,10 +1,10 @@
 ---
-title: Installing TeX Live 2026 on Rocky Linux
+title: Installing TeX Live 2026 on Linux
 authors: hikari
 tags: [Linux, TeX, LaTeX]
 ---
 
-A step-by-step guide to installing TeX Live 2026 on Rocky Linux 8.10 using an ISO image. The instructions apply to RHEL-based distributions in general.
+A step-by-step guide to installing TeX Live 2026 on RHEL-based Linux using an ISO image. These steps apply to RHEL-based distributions in general.
 
 <!-- truncate -->
 
@@ -19,13 +19,13 @@ A step-by-step guide to installing TeX Live 2026 on Rocky Linux 8.10 using an IS
 Download the ISO from the RIKEN mirror site.
 
 ```bash
-cd ~
+cd
 curl -C - -O --progress-bar https://ftp.riken.jp/CTAN/systems/texlive/Images/texlive2026.iso
 ```
 
 The `-C -` option resumes the download if it is interrupted.
 
-After the download completes, verify the file size (~6.4 GB):
+After the download completes, verify the file size (~6.4 GiB):
 
 ```bash
 ls -lh ~/texlive2026.iso
@@ -85,9 +85,9 @@ echo 'export PATH="/usr/local/texlive/2026/bin/x86_64-linux:$PATH"' >> ~/.bashrc
 source ~/.bashrc
 ```
 
-## Step 5: Fix Locale (Rocky Linux / RHEL)
+## Step 5: Fix Locale (RHEL-based Systems)
 
-On Rocky Linux, `lualatex` may fail with an error if the locale is not configured. Run the following:
+On RHEL-based Linux, `lualatex` may fail with an error if the locale is not configured. Run the following:
 
 ```bash
 sudo dnf install -y glibc-langpack-en
