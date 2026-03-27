@@ -33,15 +33,62 @@
   --docusaurus-highlighted-code-line-bg: rgba(241, 94, 180, 0.3);  /* Pink tint for code line highlight in dark mode */
 }
 
+article header h1 {
+  font-size: 28px !important;
+  text-align: center;
+}
+
 /* ブログ: 本文・タイトル・見出し・年号のフォント */
-article,
 article h1,
 article h2,
 article h3,
 article h4,
 article h5,
 article h6 {
+  font-family: Georgia, "Times New Roman", 'LINE Seed JP', sans-serif;
+}
+
+article .avatar a {
+  font-size: 20px;
+  color: unset;
   font-family: Georgia, "Times New Roman", serif;
+}
+
+article h1 {
+  font-size: 24px !important;
+}
+
+article h2 {
+  font-size: 22px !important;
+}
+
+article h3 {
+  font-size: 20px !important;
+}
+
+article h4 {
+  font-size: 18px !important;
+}
+
+article h5 {
+  font-size: 16px !important;
+}
+
+article h6 {
+  font-size: 14px !important;
+}
+
+article {
+  font-family: Georgia, "Times New Roman", serif;
+}
+
+article header div {
+  text-align: center;
+}
+
+article header time {
+  font-size: 20px;
+  text-align: center;
 }
 
 main time {
