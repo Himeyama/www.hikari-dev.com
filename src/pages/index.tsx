@@ -29,6 +29,8 @@ function LatestPosts() {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const blogData = usePluginData('recent-blog-posts-plugin') as any;
   const recentPosts = (blogData?.blogPosts ?? []).slice(0, 8);
+  const {i18n} = useDocusaurusContext();
+  const isEn = i18n.currentLocale === 'en';
 
   return (
     <section className={styles.section}>
@@ -36,10 +38,10 @@ function LatestPosts() {
         <Translate id="homepage.latestPosts">最新記事</Translate>
       </Heading>
       <ul className={styles.postList}>
-        {recentPosts.map((post: {id: string; metadata: {permalink: string; title: string; formattedDate: string}}) => (
+        {recentPosts.map((post: {id: string; metadata: {permalink: string; title: string; titleEn: string; formattedDate: string}}) => (
           <li key={post.id} className={styles.postItem}>
             <Link to={post.metadata.permalink} className={styles.postLink}>
-              {post.metadata.title}
+              {isEn ? post.metadata.titleEn : post.metadata.title}
             </Link>
             <span className={styles.postDate}>{post.metadata.formattedDate}</span>
           </li>

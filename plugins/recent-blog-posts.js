@@ -10,6 +10,24 @@ module.exports = function recentBlogPostsPlugin(context) {
 
     async loadContent() {
       const blogDir = path.join(context.siteDir, 'blog');
+      const enBlogDir = path.join(context.siteDir, 'i18n', 'en', 'docusaurus-plugin-content-blog');
+
+      // Build English title map from i18n files
+      /** @type {Record<string, string>} */
+      const enTitleMap = {};
+      if (fs.existsSync(enBlogDir)) {
+        fs.readdirSync(enBlogDir)
+          .filter((f) => (f.endsWith('.md') || f.endsWith('.mdx')) && /^\d{4}-\d{2}-\d{2}-/.test(f))
+          .forEach((filename) => {
+            const content = fs.readFileSync(path.join(enBlogDir, filename), 'utf-8');
+            const titleMatch = content.match(/^title:\s*(.+)$/m);
+            if (titleMatch) {
+              const key = filename.replace(/\.(mdx?)$/, '');
+              enTitleMap[key] = titleMatch[1].trim().replace(/^['"]|['"]$/g, '');
+            }
+          });
+      }
+
       const files = fs
         .readdirSync(blogDir)
         .filter(
@@ -28,6 +46,7 @@ module.exports = function recentBlogPostsPlugin(context) {
           const match = filename.match(/^(\d{4})-(\d{2})-(\d{2})-(.+)\.(mdx?)$/);
           if (!match) return null;
           const [, year, month, day, slug] = match;
+          const fileKey = `${year}-${month}-${day}-${slug}`;
 
           const filePath = path.join(blogDir, filename);
           const content = fs.readFileSync(filePath, 'utf-8');
@@ -70,6 +89,7 @@ module.exports = function recentBlogPostsPlugin(context) {
             id: filename,
             metadata: {
               title,
+              titleEn: enTitleMap[fileKey] ?? title,
               permalink: `/blog/${year}/${month}/${day}/${slug}`,
               date: `${year}-${month}-${day}`,
               formattedDate: `${year}/${month}/${day}`,
