@@ -16,6 +16,11 @@ export default function Root({children}: {children: React.ReactNode}) {
     <>
       <Head>
         <link rel="alternate" hreflang="x-default" href={xDefaultUrl} />
+        <link
+          rel="stylesheet"
+          media="screen and (max-width: 768px)"
+          href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;700&family=Noto+Serif+JP:wght@400;700&display=swap"
+        />
       </Head>
       {children}
     </>
