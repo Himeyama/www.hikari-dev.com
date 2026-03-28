@@ -14,7 +14,11 @@
   image: /img/blog/YYYY-MM-DD-slug/thumbnail.png
   ---
   ```
-- パスに括弧 `()` を含む画像は OGP 用途には不向きのため別の画像を選ぶこと。
+- `image:` が未設定の場合、タグベースのグラデーション PNG (`/img/ogp/SLUG.png`) が使われる。
+  - 画像は `scripts/generate-ogp.js` で生成済み（外部ライブラリ不要）。
+  - 新記事を追加して `image:` を設定しない場合は `node scripts/generate-ogp.js` を再実行すること。
+  - タグと色の対応は同スクリプト内の `TAG_COLORS` を編集して変更できる。
+- パスに括弧 `()` を含む画像も YAML フロントマターには直接記述できる（Markdown リンク構文とは異なる）。
 
 ## JSON-LD (構造化データ)
 - BlogPosting の JSON-LD は Docusaurus 標準の `BlogPostPage/StructuredData` が出力する。
