@@ -11,6 +11,14 @@ const config: Config = {
 
   headTags: [
     {
+      tagName: 'link',
+      attributes: {rel: 'preconnect', href: 'https://avatars.githubusercontent.com'},
+    },
+    {
+      tagName: 'link',
+      attributes: {rel: 'dns-prefetch', href: 'https://github.com'},
+    },
+    {
       tagName: 'script',
       attributes: {type: 'application/ld+json'},
       innerHTML: JSON.stringify({
@@ -171,6 +179,8 @@ const config: Config = {
       logo: {
         alt: 'My Site Logo',
         src: 'img/logo.svg',
+        width: 32,
+        height: 32,
       },
       items: [
         // {
