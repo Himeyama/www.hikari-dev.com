@@ -147,6 +147,7 @@ const config: Config = {
     image: 'img/docusaurus-social-card.png',
     metadata: [
       {name: 'description', content: 'ひかりの技術備忘録。Linux、AWS、Python、Dockerなどインフラ・開発ツールに関する記事を発信中。'},
+      {property: 'og:type', content: 'website'},
       {property: 'og:locale', content: 'ja_JP'},
       {name: 'twitter:card', content: 'summary_large_image'},
       {name: 'twitter:site', content: '@ptrqr'},
