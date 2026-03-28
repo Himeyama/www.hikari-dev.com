@@ -30,8 +30,6 @@ export default function Root({children}: {children: React.ReactNode}) {
     <>
       <Head>
         <link rel="alternate" hreflang="x-default" href={xDefaultUrl} />
-        <link rel="preconnect" href="https://fonts.googleapis.com" />
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
       </Head>
       {children}
     </>

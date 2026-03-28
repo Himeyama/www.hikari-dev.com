@@ -91,7 +91,7 @@
 
 .postDate {
   font-size: 0.8rem;
-  color: var(--ifm-color-emphasis-600);
+  color: var(--post-date-color);
   white-space: nowrap;
 }
 

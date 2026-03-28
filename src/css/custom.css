@@ -8,27 +8,30 @@
 :root {
   --ifm-font-family-base: 'Noto Sans JP', system-ui, -apple-system, sans-serif;
   --ifm-font-weight-base: 700;
-  --ifm-color-primary: #F15EB4;  /* Base pink color */
-  --ifm-color-primary-dark: #D955A3;  /* Darker shade by reducing lightness */
-  --ifm-color-primary-darker: #CF4B9A;  /* Even darker */
-  --ifm-color-primary-darkest: #B43884;  /* Darkest shade */
-  --ifm-color-primary-light: #F375C1;  /* Lighter shade by increasing lightness */
-  --ifm-color-primary-lighter: #F58DCB;  /* Even lighter */
-  --ifm-color-primary-lightest: #F7A9D7;  /* Lightest shade */
+  /* ライトモード: 白背景でコントラスト比 5.3:1 (WCAG AA 適合) */
+  --ifm-color-primary: #C82273;
+  --ifm-color-primary-dark: #B41E67;
+  --ifm-color-primary-darker: #A81C5F;
+  --ifm-color-primary-darkest: #8C164F;
+  --ifm-color-primary-light: #D33A82;
+  --ifm-color-primary-lighter: #DA528F;
+  --ifm-color-primary-lightest: #E47EAD;
   --ifm-code-font-size: 95%;
-  --docusaurus-highlighted-code-line-bg: rgba(241, 94, 180, 0.1); /* Pink tint for code line highlight */
+  --docusaurus-highlighted-code-line-bg: rgba(200, 34, 115, 0.1);
+  --post-date-color: #595959;
 }
 
-/* For readability concerns, you should choose a lighter palette in dark mode. */
+/* ダークモード: 暗背景でコントラスト比 7.0:1 (WCAG AA 適合) */
 [data-theme='dark'] {
-  --ifm-color-primary: #F15EB4;  /* Keep the same base color in dark mode */
-  --ifm-color-primary-dark: #D955A3;  /* Slightly darker */
-  --ifm-color-primary-darker: #CF4B9A;  /* Darker */
-  --ifm-color-primary-darkest: #B43884;  /* Darkest */
-  --ifm-color-primary-light: #F375C1;  /* Light shade for contrast */
-  --ifm-color-primary-lighter: #F58DCB;  /* Lighter for better visibility */
-  --ifm-color-primary-lightest: #F7A9D7;  /* Lightest for highlights */
-  --docusaurus-highlighted-code-line-bg: rgba(241, 94, 180, 0.3);  /* Pink tint for code line highlight in dark mode */
+  --ifm-color-primary: #F36AB2;
+  --ifm-color-primary-dark: #F055A5;
+  --ifm-color-primary-darker: #EE489F;
+  --ifm-color-primary-darkest: #E91D8A;
+  --ifm-color-primary-light: #F57FBD;
+  --ifm-color-primary-lighter: #F794C8;
+  --ifm-color-primary-lightest: #FAB2D9;
+  --docusaurus-highlighted-code-line-bg: rgba(243, 106, 178, 0.3);
+  --post-date-color: #9e9e9e;
 }
 
 article header h1 {
