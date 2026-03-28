@@ -2,6 +2,7 @@
 title: Webrick で rbenv 経由でインストールした Ruby の CGI が動かない場合の対処法
 authors: hikari
 tags: [Ruby]
+image: /img/ogp/2021-08-05-webrick-cgi-path.png
 ---
 
 # 概要

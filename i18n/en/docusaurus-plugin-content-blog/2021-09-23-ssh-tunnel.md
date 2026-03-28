@@ -2,6 +2,7 @@
 title: SSH Tunnel
 tags: [SSH, Network]
 date: '2021-09-23 15:48'
+image: /img/ogp/2021-09-23-ssh-tunnel.png
 ---
 
 # SSH Tunneling

@@ -3,6 +3,7 @@ title: termux に ssh する
 date: '2021-09-29 05:11'
 authors: hikari
 tags: [SSH]
+image: /img/ogp/2021-09-29-termux-ssh.png
 ---
 
 # OpenSSH のインストール

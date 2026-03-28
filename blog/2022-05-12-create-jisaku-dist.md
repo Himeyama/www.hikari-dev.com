@@ -2,6 +2,7 @@
 title: Ubuntu 系の Linux ディストリビューションの自作方法
 authors: hikari
 tags: [Linux]
+image: /img/ogp/2022-05-12-create-jisaku-dist.png
 ---
 
 ## 概要

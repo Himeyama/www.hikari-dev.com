@@ -2,6 +2,7 @@
 title: How to install Mozc on AlmaLinux 10 (Raspberry Pi 5 / GNOME / aarch64)
 tags: [Linux]
 authoors: hikari
+image: /img/ogp/2025-10-21-almalinux-mozc.png
 ---
 
 ## Download the rpm files

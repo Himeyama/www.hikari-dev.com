@@ -3,6 +3,7 @@ title: Powerline のインストール方法
 date: '2021-09-21 06:12'
 authors: hikari
 tags: [CLI]
+image: /img/ogp/2021-09-21-powerline.png
 ---
 
 # インストール

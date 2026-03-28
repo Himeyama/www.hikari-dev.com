@@ -2,6 +2,7 @@
 title: How to Create a Custom Gem
 tags: [Ruby]
 tag: [Ruby, gem]
+image: /img/ogp/2022-05-12-create-gem.png
 ---
 
 ## Create a gem (using `bundle gem`)

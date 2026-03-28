@@ -1,6 +1,7 @@
 ---
 title: リモートワーク (在宅勤務) 環境におすすめな電源タップ 3 選
 authors: hikari
+image: /img/ogp/2023-09-18-remote-work-recommend-code.png
 ---
 
 リモートワーク環境には電源タップ選びは重要要素の一つである。そこで、おすすめの電源タップを紹介する。

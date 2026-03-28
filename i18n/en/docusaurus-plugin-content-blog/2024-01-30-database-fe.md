@@ -2,6 +2,7 @@
 title: Basic Information Database Summary
 tags: [Database]
 authoors: hikari
+image: /img/ogp/2024-01-30-database-fe.png
 ---
 
 ## Relational Model

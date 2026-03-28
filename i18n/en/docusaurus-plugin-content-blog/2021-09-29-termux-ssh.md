@@ -2,6 +2,7 @@
 title: SSH to termux
 tags: [SSH]
 date: '2021-09-29 05:11'
+image: /img/ogp/2021-09-29-termux-ssh.png
 ---
 
 # Install OpenSSH

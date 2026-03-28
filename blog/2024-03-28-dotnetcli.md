@@ -2,6 +2,7 @@
 title: よく使う dotnet コマンドまとめ
 authors: hikari
 tags: [.NET]
+image: /img/ogp/2024-03-28-dotnetcli.png
 ---
 
 |コマンド|機能|

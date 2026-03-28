@@ -2,6 +2,7 @@
 title: Ubuntu (WSL2 含む) に dotnet をインストール方法
 authors: hikari
 tags: [Linux, .NET, WSL]
+image: /img/ogp/2024-03-09-how-to-install-dotnet-for-ubuntu.png
 ---
 
 参考: 

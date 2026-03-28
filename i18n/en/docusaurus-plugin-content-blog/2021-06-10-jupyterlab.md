@@ -2,6 +2,7 @@
 title: Installing and Configuring Jupyter Lab
 tags: [Python]
 date: "2021-6-10"
+image: /img/ogp/2021-06-10-jupyterlab.png
 ---
 
 # Installing Jupyter Lab

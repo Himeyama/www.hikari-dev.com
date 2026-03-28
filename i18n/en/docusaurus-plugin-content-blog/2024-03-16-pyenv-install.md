@@ -1,6 +1,7 @@
 ---
 title: How to install pyenv and Python on Ubuntu (including WSL2)
 tags: [Python, Linux, WSL]
+image: /img/ogp/2024-03-16-pyenv-install.png
 ---
 
 

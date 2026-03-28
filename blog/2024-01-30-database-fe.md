@@ -2,6 +2,7 @@
 title: 基本情報データベースまとめ
 authors: hikari
 tags: [Database]
+image: /img/ogp/2024-01-30-database-fe.png
 ---
 
 ## 関係モデル

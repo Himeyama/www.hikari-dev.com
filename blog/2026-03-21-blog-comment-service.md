@@ -2,6 +2,7 @@
 title: AWS サーバーレスでブログのコメント API を自作した
 authors: hikari
 tags: [AWS, Web]
+image: /img/ogp/2026-03-21-blog-comment-service.png
 ---
 
 このブログにコメント機能を追加したくなり、AWS サーバーレスで API を自作しました。その設計と実装について紹介します。

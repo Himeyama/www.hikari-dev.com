@@ -2,6 +2,7 @@
 title: Ubuntu に Docker をインストールする
 authors: hikari
 tags: [Linux, Docker]
+image: /img/ogp/2022-06-26-how-to-install-docker.png
 ---
 
 https://docs.docker.com/engine/install/ubuntu/#set-up-the-repository の日本語訳です。

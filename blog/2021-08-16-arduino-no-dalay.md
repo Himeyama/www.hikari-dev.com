@@ -2,6 +2,7 @@
 title: Arduino で delay() を使わない
 authors: hikari
 tags: [Arduino]
+image: /img/ogp/2021-08-16-arduino-no-dalay.png
 ---
 
 Arduino で `delay()` を使うと、待機時間中に何もできない。

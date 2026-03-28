@@ -1,6 +1,7 @@
 ---
 title: Installing Docker on Ubuntu
 tags: [Linux, Docker]
+image: /img/ogp/2022-06-26-how-to-install-docker.png
 ---
 
 This is a translation of the Docker installation guide for Ubuntu.

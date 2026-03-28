@@ -1,6 +1,7 @@
 ---
 title: When nokogiri cannot be installed under brew
 date: '2021-10-07 01:32'
+image: /img/ogp/2021-10-07-nokogiri-build-error.png
 ---
 
 # Problem

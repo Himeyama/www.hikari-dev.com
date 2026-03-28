@@ -2,6 +2,7 @@
 title: Ubuntu (WSL2 含む) に pyenv と Python をインストールする方法
 authors: hikari
 tags: [Python, Linux, WSL]
+image: /img/ogp/2024-03-16-pyenv-install.png
 ---
 
 

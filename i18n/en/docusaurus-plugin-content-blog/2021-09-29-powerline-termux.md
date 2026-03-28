@@ -2,6 +2,7 @@
 title: Installing Powermline on Termux
 tags: [CLI]
 date: '2021-09-29 08:11'
+image: /img/ogp/2021-09-29-powerline-termux.png
 ---
 
 # Go Installation
