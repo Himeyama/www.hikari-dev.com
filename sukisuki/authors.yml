@@ -2,7 +2,7 @@ hikari:
   name: ひかり
   title: Main bloger
   url: https://www.hikari-dev.com/
-  image_url: https://github.com/himeyama.png
+  image_url: /img/avatar.png
   socials:
     x: ptrqr
     github: himeyama

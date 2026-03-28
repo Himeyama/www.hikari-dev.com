@@ -141,16 +141,11 @@ const config: Config = {
     ],
   ],
 
+  clientModules: ['./src/clientModules/gtag.js'],
+
   plugins: [
     './plugins/recent-blog-posts.js',
     './plugins/ga-ranking.js',
-    [
-      '@docusaurus/plugin-google-gtag',
-      {
-        trackingID: 'G-6QLJRW2VM8',
-        anonymizeIP: true,
-      },
-    ],
     [
       '@docusaurus/plugin-content-blog',
       {
