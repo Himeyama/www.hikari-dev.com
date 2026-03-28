@@ -47,13 +47,13 @@ article h4,
 article h5,
 article h6,
 article strong {
-  font-family: Georgia, "Times New Roman", 'Noto Sans JP', serif;
+  font-family: Georgia, "Times New Roman", 'Noto Sans JP', 'ヒラギノ角ゴ ProN', serif;
 }
 
 article .avatar a {
   font-size: 20px;
   color: unset;
-  font-family: Georgia, "Times New Roman", 'Noto Serif JP', serif;
+  font-family: Georgia, "Times New Roman", 'Noto Serif JP', 'ヒラギノ明朝 ProN', serif;
 }
 
 article h1 {
@@ -81,7 +81,7 @@ article h6 {
 }
 
 article {
-  font-family: Georgia, "Times New Roman", 'Noto Serif JP', serif;
+  font-family: Georgia, "Times New Roman", 'Noto Serif JP', 'ヒラギノ明朝 ProN', serif;
 }
 
 article header div {
@@ -94,5 +94,5 @@ article header time {
 }
 
 main time {
-  font-family: Georgia, "Times New Roman", 'Noto Serif JP', serif;
+  font-family: Georgia, "Times New Roman", 'Noto Serif JP', 'ヒラギノ明朝 ProN', serif;
 }

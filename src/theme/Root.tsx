@@ -15,11 +15,14 @@ export default function Root({children}: {children: React.ReactNode}) {
   const defaultPath = pathname.replace(/^\/en(?=\/|$)/, '') || '/';
   const xDefaultUrl = `${siteConfig.url}${defaultPath}`;
 
-  // モバイルのみフォントを読み込む（デスクトップでは不要なため）
-  // <link media="..."> は PageSpeed が静的 HTML を評価する際にダウンロードされてしまうため
-  // useEffect で実行時に matchMedia で判定してから動的注入する
+  // モバイルかつ Noto フォント未搭載の端末のみ Google Fonts を読み込む
+  // iOS・Pixel・Samsung は Noto 系フォントをプリインストールしているため除外
   useEffect(() => {
     if (!window.matchMedia('(max-width: 768px)').matches) return;
+    const ua = navigator.userAgent;
+    if (/iPhone|iPad|iPod/i.test(ua)) return;
+    if (/Pixel/i.test(ua)) return;
+    if (/Samsung/i.test(ua)) return;
     const link = document.createElement('link');
     link.rel = 'stylesheet';
     link.href = FONTS_URL;
