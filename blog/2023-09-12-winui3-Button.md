@@ -2,6 +2,7 @@
 title: Windows App SDK (WinUI3) の Button コンポーネントとサンプル
 authors: hikari
 tags: [WinUI 3]
+image: /img/blog/2023-09-12-winui3-Button/Button.png
 ---
 
 ## 名前空間

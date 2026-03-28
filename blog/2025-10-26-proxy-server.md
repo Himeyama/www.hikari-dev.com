@@ -2,6 +2,7 @@
 title: Raspberry Pi をサーバー代わりにしてサイトへ公開する
 authors: hikari
 tags: [Network]
+image: /img/blog/2025-10-26-proxy-server/image.png
 ---
 
 ## Raspberry Pi で nginx をセットアップ

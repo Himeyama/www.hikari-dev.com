@@ -1,6 +1,7 @@
 ---
 title: EC2 Instance Connect Summary
 tags: [AWS]
+image: /img/blog/2025-04-29-aws-instance-connect/InstanceConnect.drawio.png
 ---
 
 ## What is EC2 Instance Connect?

@@ -1,6 +1,7 @@
 ---
 title: Publishing a Website Using Raspberry Pi as a Server
 tags: [Network]
+image: /img/blog/2025-10-26-proxy-server/image.png
 ---
 
 ## Setting up nginx on Raspberry Pi

@@ -2,6 +2,7 @@
 title: Unity でリアルな地形を生成
 authors: hikari
 tags: [Unity]
+image: /img/blog/2021-03-12-unity-terrain-shimabara/shimabara.webp
 ---
 
 Unity でリアルな地形を作ってみた。

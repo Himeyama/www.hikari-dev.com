@@ -3,6 +3,7 @@ title: Applying a Bilateral Filter with ImageMagick
 tags: [Image Processing, Ruby]
 description: Use ImageMagick's bilateral filter to clean up images
 date: "2021-6-13"
+image: /img/blog/2021-06-13-bilateral-filter/Parrots.jpg
 ---
 
 An attempt to apply a bilateral filter using ImageMagick.

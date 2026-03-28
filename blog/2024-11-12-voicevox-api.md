@@ -2,6 +2,7 @@
 title: VOICEVOX の API を観察してみる
 authors: hikari
 tags: [VoiceVox]
+image: /img/blog/2024-11-12-voicevox-api/01.png
 ---
 
 

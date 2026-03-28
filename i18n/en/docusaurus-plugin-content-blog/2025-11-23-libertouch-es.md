@@ -1,6 +1,7 @@
 ---
 title: Libertouch ES (JP) Review
 tags: [Hardware]
+image: /img/blog/2025-11-23-libertouch-es/20251123_093730.jpg
 ---
 
 ## Libertouch ES

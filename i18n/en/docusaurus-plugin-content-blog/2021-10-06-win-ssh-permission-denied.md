@@ -2,6 +2,7 @@
 title: Windows OpenSSH Permission denied issue
 tags: [SSH]
 date: '2021-10-06 07:27'
+image: https://user-images.githubusercontent.com/39254183/136111516-3059460f-1c9c-4168-9650-204017ed8419.png
 ---
 
 # Situation

@@ -2,6 +2,7 @@
 title: EC2 Instance Connect まとめ
 authors: hikari
 tags: [AWS]
+image: /img/blog/2025-04-29-aws-instance-connect/InstanceConnect.drawio.png
 ---
 
 ## EC2 Instance Connect とは

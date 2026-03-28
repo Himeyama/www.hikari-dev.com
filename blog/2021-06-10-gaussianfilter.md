@@ -4,6 +4,7 @@ authors: hikari
 tags: [Image Processing]
 description: scipy の gaussian_filter1d でノイズ除去
 date: "2021-6-10"
+image: /img/blog/2021-06-10-gaussianfilter/1.svg
 ---
 
 例として、1[Hz] の sin 波を信号とする。

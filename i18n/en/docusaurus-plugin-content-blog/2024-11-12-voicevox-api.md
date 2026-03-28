@@ -1,6 +1,7 @@
 ---
 title: Observing the VOICEVOX API
 tags: [VoiceVox]
+image: /img/blog/2024-11-12-voicevox-api/01.png
 ---
 
 

@@ -4,6 +4,7 @@ authors: hikari
 tags: [Image Processing, Ruby]
 description: ImageMagick でバイラテラルフィルターをかけて画像をきれいにする
 date: "2021-6-13"
+image: /img/blog/2021-06-13-bilateral-filter/Parrots.jpg
 ---
 
 ImageMagick でバイラテラルフィルターをかける試み。

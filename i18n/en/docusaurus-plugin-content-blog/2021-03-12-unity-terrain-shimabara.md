@@ -1,6 +1,7 @@
 ---
 title: Generating Realistic Terrain in Unity
 tags: [Unity]
+image: /img/blog/2021-03-12-unity-terrain-shimabara/shimabara.webp
 ---
 
 I tried creating realistic terrain in Unity.

@@ -2,6 +2,7 @@
 title: Libertouc ES (日本語版) レビュー
 authors: hikari
 tags: [Hardware]
+image: /img/blog/2025-11-23-libertouch-es/20251123_093730.jpg
 ---
 
 <!--truncate-->
