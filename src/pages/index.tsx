@@ -124,7 +124,7 @@ function AuthorProfile() {
       </Heading>
       <div className={styles.authorCard}>
         <img
-          src="https://github.com/himeyama.png?size=64"
+          src="/img/avatar.png"
           alt="ひかり"
           className={styles.authorAvatar}
           width={64}

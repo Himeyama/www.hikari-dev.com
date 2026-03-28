@@ -12,10 +12,6 @@ const config: Config = {
   headTags: [
     {
       tagName: 'link',
-      attributes: {rel: 'preconnect', href: 'https://avatars.githubusercontent.com'},
-    },
-    {
-      tagName: 'link',
       attributes: {rel: 'dns-prefetch', href: 'https://github.com'},
     },
     {
@@ -51,6 +47,11 @@ const config: Config = {
   onBrokenAnchors: 'ignore',
   onBrokenLinks: 'throw',
 
+  future: {
+    v4: true,
+    experimental_faster: true,
+  },
+
   themes: [
     '@docusaurus/theme-mermaid',
   ],
@@ -73,13 +74,7 @@ const config: Config = {
     [
       'classic',
       {
-        docs: {
-          sidebarPath: './sidebars.ts',
-          // Please change this to your repo.
-          // Remove this to remove the "edit this page" links.
-          editUrl:
-            'https://github.com/himeyama/www.hikari-dev.com/',
-        },
+        docs: false,
         sitemap: {
           changefreq: 'weekly',
           priority: 0.5,
