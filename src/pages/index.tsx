@@ -124,7 +124,7 @@ function AuthorProfile() {
       </Heading>
       <div className={styles.authorCard}>
         <img
-          src="/img/avatar.png"
+          src="/img/avatar.webp"
           alt="ひかり"
           className={styles.authorAvatar}
           width={64}

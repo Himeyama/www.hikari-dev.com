@@ -21,11 +21,19 @@ function loadGtag() {
   gtag('event', 'page_view', {page_path: window.location.pathname});
 }
 
+function deferLoadGtag() {
+  if (typeof requestIdleCallback === 'function') {
+    requestIdleCallback(loadGtag, {timeout: 3000});
+  } else {
+    setTimeout(loadGtag, 2000);
+  }
+}
+
 if (typeof window !== 'undefined') {
   if (document.readyState === 'complete') {
-    loadGtag();
+    deferLoadGtag();
   } else {
-    window.addEventListener('load', loadGtag, {once: true});
+    window.addEventListener('load', deferLoadGtag, {once: true});
   }
 }
 
