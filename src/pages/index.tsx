@@ -146,11 +146,13 @@ function AuthorProfile() {
 }
 
 export default function Home(): ReactNode {
-  const {siteConfig} = useDocusaurusContext();
+  const {siteConfig, i18n} = useDocusaurusContext();
+  const description =
+    i18n.currentLocale === 'en'
+      ? "Hikari's tech notebook — articles on Linux, AWS, Python, Docker, and infrastructure & development tools."
+      : 'ひかりの技術備忘録。Linux、AWS、Python、Dockerなどインフラ・開発ツールに関する記事を発信中。';
   return (
-    <Layout
-      title={`${siteConfig.title}`}
-      description="ひかりの技術備忘録。Linux、AWS、Python、Dockerなどインフラ・開発ツールに関する記事を発信中。">
+    <Layout title={`${siteConfig.title}`} description={description}>
       <HomepageHeader />
       <main className={styles.mainContent}>
         <div className={styles.mainColumn}>

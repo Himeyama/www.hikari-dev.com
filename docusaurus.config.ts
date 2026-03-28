@@ -79,19 +79,34 @@ const config: Config = {
             const {defaultCreateSitemapItems} = params;
             const items = await defaultCreateSitemapItems(params);
             return items.map((item) => {
+              let result = item;
+
+              // priority 設定
               if (
                 item.url === 'https://www.hikari-dev.com/' ||
                 item.url === 'https://www.hikari-dev.com/en/'
               ) {
-                return {...item, priority: 1.0};
-              }
-              if (
+                result = {...result, priority: 1.0};
+              } else if (
                 /\/blog\/[0-9]/.test(item.url) ||
                 /\/sukisuki\/[0-9]/.test(item.url)
               ) {
-                return {...item, priority: 0.8};
+                result = {...result, priority: 0.8};
               }
-              return item;
+
+              // ブログ記事 URL から日付を抽出して lastmod に設定
+              // 例: /blog/2026/03/18/storage → lastmod: "2026-03-18"
+              const dateMatch = item.url.match(
+                /\/(?:blog|sukisuki)\/(\d{4})\/(\d{2})\/(\d{2})\//,
+              );
+              if (dateMatch) {
+                result = {
+                  ...result,
+                  lastmod: `${dateMatch[1]}-${dateMatch[2]}-${dateMatch[3]}`,
+                };
+              }
+
+              return result;
             });
           },
         },
@@ -146,7 +161,6 @@ const config: Config = {
   themeConfig: {
     image: 'img/docusaurus-social-card.png',
     metadata: [
-      {name: 'description', content: 'ひかりの技術備忘録。Linux、AWS、Python、Dockerなどインフラ・開発ツールに関する記事を発信中。'},
       {property: 'og:type', content: 'website'},
       {property: 'og:locale', content: 'ja_JP'},
       {name: 'twitter:card', content: 'summary_large_image'},
