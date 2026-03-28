@@ -1,32 +1,32 @@
 ---
-title: "How I Achieved Near-Perfect PageSpeed Insights Scores on a Docusaurus Blog — SEO, Performance & Accessibility"
+title: "Docusaurus ブログで PageSpeed Insights ほぼ満点を達成した方法 — SEO・パフォーマンス・アクセシビリティ"
 authors: hikari
 tags: [Web, SEO]
 image: /img/ogp/2026-03-28-pagespeed-insights-seo-performance.png
 ---
 
-I improved this blog's mobile PageSpeed Insights scores to **Performance 99, Accessibility 100, Best Practices 100, and SEO 100**. Here's a breakdown of the changes across SEO, performance, and accessibility.
+このブログのモバイル PageSpeed Insights スコアを **Performance 99、Accessibility 100、Best Practices 100、SEO 100** まで改善した。SEO・パフォーマンス・アクセシビリティの各観点から、実施した変更をまとめる。
 
 <!-- truncate -->
 
-## Problems Before the Improvements
+## 改善前の課題
 
-Running PageSpeed Insights on a stock Docusaurus blog revealed several issues:
+素の Docusaurus ブログで PageSpeed Insights を実行すると、いくつかの問題が見つかった。
 
-- **SEO**: No meta description, no OGP/Twitter Cards, no structured data, no sitemap priority
-- **Performance**: Synchronous Google Tag Manager (GTM) loading causing large unused JS, external CDN avatar fetching as a bottleneck
-- **Accessibility**: Primary color contrast ratio failing WCAG AA requirements
+- **SEO**: meta description なし、OGP/Twitter Cards なし、構造化データなし、サイトマップの priority 未設定
+- **パフォーマンス**: Google Tag Manager (GTM) の同期読み込みによる未使用 JS の肥大化、外部 CDN からのアバター取得がボトルネック
+- **アクセシビリティ**: プライマリカラーのコントラスト比が WCAG AA 基準を未達
 
-## SEO Improvements
+## SEO の改善
 
-### Adding meta description, OGP & Twitter Cards
+### meta description・OGP・Twitter Cards の追加
 
-Added default site-wide metadata to `themeConfig.metadata` in `docusaurus.config.ts`:
+`docusaurus.config.ts` の `themeConfig.metadata` にサイト共通のメタデータを追加した。
 
 ```ts
 themeConfig: {
   metadata: [
-    { name: 'description', content: "Hikari's tech notebook..." },
+    { name: 'description', content: "ひかりの技術メモ..." },
     { property: 'og:locale', content: 'ja_JP' },
     { name: 'twitter:card', content: 'summary_large_image' },
     { name: 'twitter:site', content: '@ptrqr' },
@@ -34,21 +34,21 @@ themeConfig: {
 }
 ```
 
-I also swizzled `src/theme/Layout/index.tsx` to provide locale-specific fallback descriptions for pages without their own description (blog listing, tag pages, etc.).
+また、`src/theme/Layout/index.tsx` を Swizzle して、独自の description を持たないページ（ブログ一覧、タグページなど）にロケール別のフォールバック description を設定している。
 
-### Adding robots.txt
+### robots.txt の追加
 
-Added `static/robots.txt` to explicitly point crawlers to the sitemap.
+`static/robots.txt` を追加し、クローラーにサイトマップの場所を明示した。
 
-### BlogPosting JSON-LD (Structured Data)
+### BlogPosting JSON-LD（構造化データ）
 
-Swizzled `src/theme/BlogPostItem/index.tsx` to output `BlogPosting` JSON-LD on article pages with `headline`, `datePublished`, `dateModified`, and `author`.
+`src/theme/BlogPostItem/index.tsx` を Swizzle して、記事ページに `headline`・`datePublished`・`dateModified`・`author` を含む `BlogPosting` JSON-LD を出力していた。
 
-Later, I discovered that Docusaurus's built-in `BlogPostPage/StructuredData` already outputs equivalent data. I removed the custom JSON-LD and instead added a `keywords` fallback (`frontMatter.keywords` → `tags`) to the built-in component. Duplicate structured data can hurt SEO, so this cleanup was important.
+しかし、Docusaurus 組み込みの `BlogPostPage/StructuredData` が同等のデータを出力していることが判明。カスタム JSON-LD を削除し、代わりに組み込みコンポーネントに `keywords` のフォールバック（`frontMatter.keywords` → `tags`）を追加した。構造化データの重複は SEO に悪影響を与えるため、この整理は重要であった。
 
 ### WebSite JSON-LD
 
-Added `WebSite` type JSON-LD in `docusaurus.config.ts`'s `headTags` to help Google correctly identify the site name:
+`docusaurus.config.ts` の `headTags` に `WebSite` タイプの JSON-LD を追加し、Google がサイト名を正しく認識できるようにした。
 
 ```ts
 headTags: [
@@ -65,17 +65,17 @@ headTags: [
 ],
 ```
 
-### Auto-Generated OGP Images for All Posts
+### 全記事への OGP 画像自動生成
 
-Created `scripts/generate-ogp.js` to automatically generate OGP images with tag-based gradient backgrounds. This ensures every post has an eye-catching image when shared on social media. All posts now have an `image:` field in their frontmatter, with article-specific images taking priority when available.
+`scripts/generate-ogp.js` を作成し、タグに応じたグラデーション背景の OGP 画像を自動生成するようにした。これにより、SNS でシェアされた際にすべての記事が目を引く画像付きで表示される。全記事のフロントマターに `image:` フィールドを設定し、記事固有の画像がある場合はそちらを優先する。
 
-### Sitemap Improvements
+### サイトマップの改善
 
-Used the `createSitemapItems` callback to set the homepage priority to `1.0` and blog posts to `0.8`. Also added automatic `lastmod` extraction from the date in each URL.
+`createSitemapItems` コールバックを使って、トップページの priority を `1.0`、ブログ記事を `0.8` に設定した。また、URL に含まれる日付から `lastmod` を自動抽出している。
 
 ### hreflang x-default
 
-In `src/theme/Root.tsx`, I inject an `hreflang="x-default"` `<link>` tag on every page, mapping English pages (`/en/...`) back to the default (Japanese) URL. This helps search engines correctly identify language variants.
+`src/theme/Root.tsx` で、すべてのページに `hreflang="x-default"` の `<link>` タグを注入し、英語ページ（`/en/...`）をデフォルト（日本語）の URL にマッピングしている。これにより、検索エンジンが言語バリアントを正しく識別できる。
 
 ```tsx
 const defaultPath = pathname.replace(/^\/en(?=\/|$)/, '') || '/';
@@ -86,11 +86,11 @@ const xDefaultUrl = `${siteConfig.url}${defaultPath}`;
 </Head>
 ```
 
-## Performance Improvements
+## パフォーマンスの改善
 
-### Lazy-Loading GTM
+### GTM の遅延読み込み
 
-Replaced `@docusaurus/plugin-google-gtag` with a custom `src/clientModules/gtag.js` that dynamically injects the GTM script after the `window.load` event. This significantly reduced unused JS blocking initial render.
+`@docusaurus/plugin-google-gtag` を廃止し、`src/clientModules/gtag.js` で `window.load` イベント後に GTM スクリプトを動的注入するようにした。これにより、初期レンダリングをブロックする未使用 JS を大幅に削減できた。
 
 ```js
 function loadGtag() {
@@ -103,23 +103,23 @@ function loadGtag() {
 window.addEventListener('load', loadGtag, { once: true });
 ```
 
-SPA page transitions use Docusaurus's `onRouteDidUpdate` hook to manually call `window.gtag`. A further improvement defers loading to `requestIdleCallback` for better idle-time utilization.
+SPA のページ遷移では Docusaurus の `onRouteDidUpdate` フックを使い、手動で `window.gtag` を呼び出している。さらに `requestIdleCallback` を利用してアイドル時に読み込むよう改善した。
 
-### Self-Hosting & WebP Avatar
+### アバターのセルフホスト化と WebP 変換
 
-Moved the avatar image from GitHub's CDN (`avatars.githubusercontent.com`) to self-hosted. GitHub CDN has a 5-minute cache TTL, which PageSpeed Insights flagged on every run as an external request.
+アバター画像を GitHub CDN（`avatars.githubusercontent.com`）からセルフホストに移行した。GitHub CDN はキャッシュ TTL が 5 分と短く、PageSpeed Insights で毎回外部リクエストとして指摘されていた。
 
-Converted the avatar to WebP format, reducing file size from 34 KB (PNG) to 3.5 KB — roughly a 90% reduction.
+アバターを WebP 形式に変換し、ファイルサイズを 34 KB（PNG）から 3.5 KB へ、約 90% 削減した。
 
-### Image Size Optimization & CLS Fix
+### 画像サイズの最適化と CLS の修正
 
-- Added `?size=64` to the GitHub avatar URL, shrinking from 460 px to 64 px (saving 33 KB)
-- Added `width`/`height` attributes to the navbar logo to fix CLS (Cumulative Layout Shift)
-- Added `loading="lazy"` to `<img>` tags
+- GitHub アバター URL に `?size=64` を追加し、460 px → 64 px に縮小（33 KB 削減）
+- ナビバーのロゴに `width`/`height` 属性を追加して CLS（Cumulative Layout Shift）を修正
+- `<img>` タグに `loading="lazy"` を追加
 
-### rspack / SWC
+### rspack / SWC の導入
 
-Introduced `@docusaurus/faster`, replacing webpack with rspack + SWC + lightningCSS:
+`@docusaurus/faster` を導入し、webpack を rspack + SWC + lightningCSS に置き換えた。
 
 ```ts
 future: {
@@ -128,45 +128,45 @@ future: {
 },
 ```
 
-This improved both build speed and bundle size.
+ビルド速度とバンドルサイズの両方が改善された。
 
-### Disabling Unused Plugins
+### 未使用プラグインの無効化
 
-Disabled the unused docs plugin to prevent unnecessary JS from being shipped to clients.
+使用していない docs プラグインを無効化し、不要な JS がクライアントに配信されないようにした。
 
-### Mobile-Only Google Fonts
+### モバイル限定の Google Fonts 読み込み
 
-Google Fonts (Noto Sans JP) was only needed on mobile. Using `matchMedia`, the font stylesheet is now dynamically injected only on mobile devices, saving approximately 130 KB of unused CSS on desktop.
+Google Fonts（Noto Sans JP）はモバイルでのみ必要であった。`matchMedia` を使い、モバイル端末でのみフォントのスタイルシートを動的注入するようにしたことで、デスクトップで約 130 KB の未使用 CSS を削減した。
 
-## Accessibility Improvements
+## アクセシビリティの改善
 
-### Fixing Contrast Ratios
+### コントラスト比の修正
 
-Changed the primary color from `#F15EB4` to `#C82273`, achieving a **contrast ratio of 5.3:1** against white (WCAG AA compliant). Dark mode uses `#F36AB2` (7.0:1 against the dark background).
+プライマリカラーを `#F15EB4` から `#C82273` に変更し、白背景に対して**コントラスト比 5.3:1** を達成した（WCAG AA 準拠）。ダークモードでは `#F36AB2`（暗背景に対して 7.0:1）を使用している。
 
-Post date text color is now managed via the `--post-date-color` CSS variable: `#595959` (7.0:1) in light mode, `#9e9e9e` in dark mode.
+記事の日付テキストの色は CSS 変数 `--post-date-color` で管理し、ライトモードは `#595959`（7.0:1）、ダークモードは `#9e9e9e` とした。
 
-### Font Unification
+### フォントの統一
 
-Changed heading and `<strong>` fonts from Noto Serif JP to Noto Sans JP for consistency with body text.
+見出しと `<strong>` のフォントを Noto Serif JP から Noto Sans JP に変更し、本文との統一感を持たせた。
 
-## Results
+## 結果
 
-| Category | Score |
-|----------|-------|
+| カテゴリ | スコア |
+|----------|--------|
 | Performance | **99** |
 | Accessibility | **100** |
 | Best Practices | **100** |
 | SEO | **100** |
 
-Near-perfect scores on mobile.
+モバイルでほぼ満点を達成した。
 
-## Summary
+## まとめ
 
-The three most impactful changes were:
+最もインパクトが大きかった変更は以下の 3 つである。
 
-1. **Lazy-loading GTM**: Dramatically reduced unused JS, resulting in a significant performance score boost
-2. **OGP & structured data**: Achieved SEO 100 and improved social media sharing appearance
-3. **Contrast ratio fixes**: WCAG AA compliance brought accessibility to 100
+1. **GTM の遅延読み込み**: 未使用 JS を大幅に削減し、パフォーマンススコアが大きく向上した
+2. **OGP・構造化データの整備**: SEO 100 を達成し、SNS シェア時の見栄えも改善された
+3. **コントラスト比の修正**: WCAG AA 準拠によりアクセシビリティが 100 になった
 
-Docusaurus generates high-quality sites by default, but achieving near-perfect PageSpeed Insights scores requires fine-tuning GTM loading strategy, metadata, and accessibility details. I hope this helps others working on similar improvements.
+Docusaurus はデフォルトでも高品質なサイトを生成するが、PageSpeed Insights でほぼ満点を目指すには GTM の読み込み戦略、メタデータ、アクセシビリティの細部を調整する必要がある。同じような改善に取り組む方の参考になれば幸いである。
