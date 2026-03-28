@@ -9,6 +9,20 @@ const config: Config = {
   tagline: 'Hikari\'s Everyday Life and IT Technology Blog',
   favicon: 'img/favicon.ico',
 
+  headTags: [
+    {
+      tagName: 'script',
+      attributes: {type: 'application/ld+json'},
+      innerHTML: JSON.stringify({
+        '@context': 'https://schema.org',
+        '@type': 'WebSite',
+        name: 'ひかりの備忘録',
+        url: 'https://www.hikari-dev.com/',
+        description: 'ひかりの技術備忘録。Linux、AWS、Python、Dockerなどインフラ・開発ツールに関する記事を発信中。',
+      }),
+    },
+  ],
+
   markdown: {
     hooks: {
       onBrokenMarkdownLinks: 'ignore', // または 'throw' / 'ignore'
@@ -57,6 +71,29 @@ const config: Config = {
           // Remove this to remove the "edit this page" links.
           editUrl:
             'https://github.com/himeyama/www.hikari-dev.com/',
+        },
+        sitemap: {
+          changefreq: 'weekly',
+          priority: 0.5,
+          createSitemapItems: async (params) => {
+            const {defaultCreateSitemapItems} = params;
+            const items = await defaultCreateSitemapItems(params);
+            return items.map((item) => {
+              if (
+                item.url === 'https://www.hikari-dev.com/' ||
+                item.url === 'https://www.hikari-dev.com/en/'
+              ) {
+                return {...item, priority: 1.0};
+              }
+              if (
+                /\/blog\/[0-9]/.test(item.url) ||
+                /\/sukisuki\/[0-9]/.test(item.url)
+              ) {
+                return {...item, priority: 0.8};
+              }
+              return item;
+            });
+          },
         },
         blog: {
           blogSidebarCount: 'ALL',
@@ -107,8 +144,13 @@ const config: Config = {
   ],
 
   themeConfig: {
-    // Replace with your project's social card
-    image: 'img/docusaurus-social-card.jpg',
+    image: 'img/docusaurus-social-card.png',
+    metadata: [
+      {name: 'description', content: 'ひかりの技術備忘録。Linux、AWS、Python、Dockerなどインフラ・開発ツールに関する記事を発信中。'},
+      {property: 'og:locale', content: 'ja_JP'},
+      {name: 'twitter:card', content: 'summary_large_image'},
+      {name: 'twitter:site', content: '@ptrqr'},
+    ],
     navbar: {
       title: 'Hikari\'s Notebook',
       logo: {

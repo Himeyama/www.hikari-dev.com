@@ -150,7 +150,7 @@ export default function Home(): ReactNode {
   return (
     <Layout
       title={`${siteConfig.title}`}
-      description="Description will go into a meta tag in <head />">
+      description="ひかりの技術備忘録。Linux、AWS、Python、Dockerなどインフラ・開発ツールに関する記事を発信中。">
       <HomepageHeader />
       <main className={styles.mainContent}>
         <div className={styles.mainColumn}>
