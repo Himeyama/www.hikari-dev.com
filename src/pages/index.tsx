@@ -47,7 +47,7 @@ function LatestPosts() {
           </li>
         ))}
       </ul>
-      <Link to="/blog" className={styles.viewAllLink}>
+      <Link to="/articles" className={styles.viewAllLink}>
         <Translate id="homepage.viewAllPosts">全記事を見る →</Translate>
       </Link>
     </section>
