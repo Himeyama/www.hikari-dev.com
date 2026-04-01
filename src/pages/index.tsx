@@ -57,6 +57,7 @@ function LatestPosts() {
 function CategoriesList() {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const blogData = usePluginData('recent-blog-posts-plugin') as any;
+  const {i18n} = useDocusaurusContext();
   const tags = Object.values(blogData?.blogTags ?? {}) as Array<{
     label: string;
     permalink: string;
@@ -64,7 +65,7 @@ function CategoriesList() {
     items?: string[];
   }>;
 
-  if (tags.length === 0) return null;
+  if (tags.length === 0 || i18n.currentLocale !== 'ja') return null;
 
   return (
     <section className={styles.section}>
