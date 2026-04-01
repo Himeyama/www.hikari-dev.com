@@ -61,10 +61,18 @@ const config: Config = {
   // may want to replace "en" with "zh-Hans".
   i18n: {
     defaultLocale: 'ja',
-    locales: ['ja', 'en'],
+    locales: ['ja', 'en', 'zh-TW'],
     localeConfigs: {
       ja: {
         label: '日本語',
+        direction: 'ltr',
+      },
+      en: {
+        label: 'English',
+        direction: 'ltr',
+      },
+      'zh-TW': {
+        label: '繁體中文',
         direction: 'ltr',
       },
     },

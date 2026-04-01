@@ -1,0 +1,117 @@
+---
+title: 在 WSL 內的伺服器公開到 LAN
+authors: hikari
+tags: [WSL]
+---
+
+本文將介紹如何將 WSL 內的伺服器公開到 LAN。
+
+## 建立伺服器
+如果您已經有伺服器，則可以跳過這一章。
+
+### 創建 index.html
+作為範例，創建一個內容如下的 index.html。
+
+```html
+<!-- index.html -->
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>你好，世界！</title>
+</head>
+<body>
+    <h1>你好，世界！</h1>
+</body>
+</html>
+```
+
+### 使用 Ruby 建立簡易伺服器
+
+使用 Ruby 編寫伺服器的腳本。
+將其保存為 `server.rb`。
+
+```ruby
+#!/usr/bin/env ruby
+
+# server.rb
+
+require 'webrick'
+
+server = WEBrick::HTTPServer.new({
+:DocumentRoot => './',
+:Port => 8000
+})
+
+trap('INT') { server.shutdown }
+
+server.start
+```
+
+接下來，執行 `ruby server.rb` 來啟動伺服器。  
+（如果出現錯誤，請執行 `gem install webrick`。）
+
+在瀏覽器中連接 `localhost:8000`，將顯示 `index.html` 的內容。  
+也可以使用 `hostname -I` 顯示的 IP 地址進行訪問。
+
+## 公開到 LAN
+根據最近的 WSL2 規範，WSL 啟動的伺服器會轉發到 localhost。  
+然而，與 WSL1 不同的是，無法通過 LAN 地址（例如 192.168.0.2 等）訪問 WSL2 的伺服器。
+
+因此，需要進行端口轉發。
+
+### 端口轉發設定
+可以使用 `netsh interface portproxy` 命令來進行端口轉發。
+
+以下命令將所有 NIC 分配的 IP 地址的 8000 端口的訪問轉發到 localhost:8000。  
+此命令需要以 **管理員權限** 執行。
+
+```ps1
+netsh interface portproxy add v4tov4 listenport=8000 connectaddress=localhost
+```
+
+可以通過執行 `netsh interface portproxy show v4tov4` 來查看設定。
+
+```ps1
+PS > netsh interface portproxy show v4tov4
+
+正在監聽 ipv4:         連接到 ipv4:
+
+地址             端口        地址             端口
+--------------- ----------  --------------- ----------
+*               8000        localhost       8000
+```
+
+<details>
+<summary>如何刪除設定</summary>
+    <pre>
+        <code class="language-ps1 hljs language-powershell" data-highlighted="yes"><!--
+            -->netsh interface portproxy delete v4tov4 listenaddress=* listenport=<!--
+            --><span class="hljs-number">8000</span>
+        </code>
+    </pre>
+</details>
+
+如果您希望針對特定 NIC 的 IP 地址進行設定，而不是所有 NIC，則可以執行以下命令。
+
+```ps1
+netsh interface portproxy add v4tov4 listenport=8000 connectaddress=localhost listenaddress=<目標 NIC 的 IP 地址>
+```
+
+## 防火牆設定
+1. 按 Win + R 開啟「執行」，輸入 wf.msc 並按「確定」，打開「增強安全的 Windows Defender 防火牆」。
+
+![firewall](/img/blog/2024-07-21-wsl-to-lan/firewall-tcp-8000.png)
+
+2. 點擊左側的「入站規則」，然後點擊右側的「新規則...」，打開「新建入站規則嚮導」。
+    - 選擇「端口 (O)」，然後點擊 [下一步(N) >]
+    - 在「特定的本地端口(S):」輸入端口號（此次為 8000），然後點擊 [下一步(N) >] 三次
+    - 在「名稱(N):」處輸入適當的設定名稱，然後點擊 [完成(F)] 保存設定
+
+### 確認是否可以從 LAN 訪問
+輸入 `ipconfig` 以確認 LAN 的 IP 地址。  
+通常情況下，這個地址的格式應該是 192.168.x.x。
+
+將此地址和端口號輸入同一網路內的設備（如手機等）的瀏覽器中。  
+例如，如果 IP 地址是 192.168.0.2，則輸入 http://192.168.0.2:8000。

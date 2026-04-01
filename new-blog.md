@@ -41,19 +41,35 @@ description: 新しいブログ記事を作成する。トピックを受け取�
 7. **完了報告**
    - 作成したファイルのパスと内容の概要をユーザーに伝える
 
-## 英語記事の作成
+## 多言語版記事の作成
 
-日本語記事と同時に英語版も作成する。
+各言語版はすべて日本語版と **同じファイル名** を使用する。`tags` は日本語版と同じ値を使用する。コードブロックはそのまま流用する。
 
-### 英語版ファイルの配置先
-
+## 翻訳スクリプトの実行
+> 翻訳ツールのインストール
+```ps1
+uv tool install git+https://github.com/Himeyama/translate-mcp
 ```
-i18n/en/docusaurus-plugin-content-blog/YYYY-MM-DD-slug.md
+
+> 例: 日本語 -> 台湾語
+```ps1
+translate `
+  --input blog/2024-04-20-pyplot.md --from Japanese --to Taiwanese >`
+  i18n/zh-TW/docusaurus-plugin-content-blog/2024-04-20-pyplot.md
 ```
 
-日本語版と **同じファイル名** を使用する。
+> 例: 日本語 -> 英語
+```ps1
+translate `
+  --input blog/2024-04-20-pyplot.md --from Japanese --to English >`
+  i18n/en/docusaurus-plugin-content-blog/2024-04-20-pyplot.md
+```
 
-### 英語版フロントマター
+### 英語版
+
+- **配置先**: `i18n/en/docusaurus-plugin-content-blog/YYYY-MM-DD-slug.md`
+- **タイトル**: 日本語タイトルを英語に翻訳する
+- **本文**: 日本語版の内容を英語に翻訳する
 
 ```yaml
 ---
@@ -63,15 +79,21 @@ tags: [tag1, tag2]
 ---
 ```
 
-- `tags` は日本語版と同じ値を使用する
-- `title` は日本語タイトルを英語に翻訳する
+### 台湾版（繁体字中国語）
 
-### 英語版本文
+- **配置先**: `i18n/zh-TW/docusaurus-plugin-content-blog/YYYY-MM-DD-slug.md`
+- **タイトル**: 日本語タイトルを繁体字中国語に翻訳する
+- **本文**: 日本語版の内容を繁体字中国語（台湾）に翻訳する。台湾で一般的に使われる表現・用語を使用する
 
-- 日本語版の内容を英語に翻訳する
-- コードブロックはそのまま流用する
+```yaml
+---
+title: （繁體中文標題）
+authors: hikari
+tags: [tag1, tag2]
+---
+```
 
 ## 注意事項
-- 日本語記事は `blog/` に、英語記事は `i18n/en/docusaurus-plugin-content-blog/` に作成する
+- 日本語記事は `blog/` に、英語記事は `i18n/en/docusaurus-plugin-content-blog/` に、台湾版は `i18n/zh-TW/docusaurus-plugin-content-blog/` に作成する
 - コマンドや技術用語は英語のまま使用する
 - フロントマターに `description` や `image` は不要（既存スタイルに合わせる）
