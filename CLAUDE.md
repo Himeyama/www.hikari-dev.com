@@ -1,9 +1,8 @@
 # ブログ作成
+- 新しいブログ記事を作成する場合は [new-blog.md](new-blog.md) の手順に従うこと！
+- ブログの気泡については [style-guide.md](style-guide.md) の手順に従うこと！
 
-- 新しいブログ記事を作成する場合は [new-blog.md](new-blog.md) の手順に従うこと。
-- ブログの気泡については [style-guide.md](style-guide.md) の手順に従うこと。
-
-# SEO
+**new-blog.md と style-guide.md の手順を必ず実施すること**
 
 ## OGP 画像
 - Docusaurus はフロントマターの `image:` から記事ごとの OGP 画像を自動設定する。
