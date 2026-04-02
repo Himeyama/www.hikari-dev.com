@@ -83,6 +83,7 @@
   flex: 1;
   font-size: 0.95rem;
   text-decoration: none;
+  min-width: 0;
 }
 
 .postLink:hover {
@@ -169,6 +170,13 @@
   color: var(--ifm-color-primary);
   min-width: 1.5rem;
   text-align: center;
+  flex-shrink: 0;
+}
+
+.pageviews {
+  font-size: 0.8rem;
+  color: var(--ifm-color-emphasis-600);
+  white-space: nowrap;
   flex-shrink: 0;
 }
 

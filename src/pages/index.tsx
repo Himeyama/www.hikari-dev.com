@@ -111,6 +111,7 @@ function AccessRanking() {
               <Link to={post.permalink} className={styles.postLink}>
                 {isEn ? post.titleEn : post.title}
               </Link>
+              <span className={styles.pageviews}>{post.pageviews.toLocaleString()}</span>
             </li>
           ))}
         </ol>
