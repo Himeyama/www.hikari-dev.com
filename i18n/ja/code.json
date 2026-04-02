@@ -383,5 +383,37 @@
   "comment.item.anonymous": {
     "message": "匿名",
     "description": "The text for anonymous commenter"
+  },
+  "articles.title": {
+    "message": "記事一覧",
+    "description": "The title of the articles page"
+  },
+  "articles.description": {
+    "message": "ひかりの備忘録の記事一覧",
+    "description": "The description of the articles page"
+  },
+  "articles.filterByTag": {
+    "message": "カテゴリーで絞り込む",
+    "description": "The heading for the tag filter section"
+  },
+  "articles.allPosts": {
+    "message": "全て",
+    "description": "The label for showing all posts"
+  },
+  "articles.allArticles": {
+    "message": "記事一覧",
+    "description": "The heading for all articles section"
+  },
+  "articles.itemCount": {
+    "message": "件",
+    "description": "The suffix for item count"
+  },
+  "articles.noResults": {
+    "message": "該当する記事がありません",
+    "description": "The message when no articles match the filter"
+  },
+  "homepage.description": {
+    "message": "ひかりの技術備忘録。Linux、AWS、Python、Dockerなどインフラ・開発ツールに関する記事を発信中。",
+    "description": "The description of the homepage"
   }
 }

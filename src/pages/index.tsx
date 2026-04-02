@@ -4,10 +4,23 @@ import Link from '@docusaurus/Link';
 import useDocusaurusContext from '@docusaurus/useDocusaurusContext';
 import Layout from '@theme/Layout';
 import Heading from '@theme/Heading';
-import Translate from '@docusaurus/Translate';
+import Translate, { translate } from '@docusaurus/Translate';
 import {usePluginData} from '@docusaurus/useGlobalData';
 
 import styles from './index.module.css';
+
+// Utility function to get localized post title
+function getPostTitle(
+  post: {title: string; titleEn: string; titleZhTw: string},
+  currentLocale: string
+): string {
+  const localeMap: Record<string, keyof typeof post> = {
+    en: 'titleEn',
+    'zh-TW': 'titleZhTw',
+  };
+  const key = localeMap[currentLocale] ?? 'title';
+  return post[key];
+}
 
 function HomepageHeader() {
   const {siteConfig} = useDocusaurusContext();
@@ -31,17 +44,6 @@ function LatestPosts() {
   const recentPosts = (blogData?.blogPosts ?? []).slice(0, 8);
   const {i18n} = useDocusaurusContext();
 
-  const getPostTitle = (post: {metadata: {title: string; titleEn: string; titleZhTw: string}}) => {
-    switch (i18n.currentLocale) {
-      case 'en':
-        return post.metadata.titleEn;
-      case 'zh-TW':
-        return post.metadata.titleZhTw;
-      default:
-        return post.metadata.title;
-    }
-  };
-
   return (
     <section className={styles.section}>
       <Heading as="h2" className={styles.sectionTitle}>
@@ -51,7 +53,7 @@ function LatestPosts() {
         {recentPosts.map((post: {id: string; metadata: {permalink: string; title: string; titleEn: string; titleZhTw: string; formattedDate: string}}) => (
           <li key={post.id} className={styles.postItem}>
             <Link to={post.metadata.permalink} className={styles.postLink}>
-              {getPostTitle(post)}
+              {getPostTitle(post.metadata, i18n.currentLocale)}
             </Link>
             <span className={styles.postDate}>{post.metadata.formattedDate}</span>
           </li>
@@ -103,17 +105,6 @@ function AccessRanking() {
   const ranking = data?.ranking ?? [];
   const {i18n} = useDocusaurusContext();
 
-  const getPostTitle = (post: {title: string; titleEn: string; titleZhTw: string}) => {
-    switch (i18n.currentLocale) {
-      case 'en':
-        return post.titleEn;
-      case 'zh-TW':
-        return post.titleZhTw;
-      default:
-        return post.title;
-    }
-  };
-
   return (
     <section className={styles.section}>
       <Heading as="h2" className={styles.sectionTitle}>
@@ -129,7 +120,7 @@ function AccessRanking() {
             <li key={post.permalink} className={styles.rankingItem}>
               <span className={styles.rankingNumber}>{i + 1}</span>
               <Link to={post.permalink} className={styles.postLink}>
-                {getPostTitle(post)}
+                {getPostTitle(post, i18n.currentLocale)}
               </Link>
               <span className={styles.pageviews}>{post.pageviews.toLocaleString()}</span>
             </li>
@@ -173,11 +164,11 @@ function AuthorProfile() {
 }
 
 export default function Home(): ReactNode {
-  const {siteConfig, i18n} = useDocusaurusContext();
-  const description =
-    i18n.currentLocale === 'en'
-      ? "Hikari's tech notebook — articles on Linux, AWS, Python, Docker, and infrastructure & development tools."
-      : 'ひかりの技術備忘録。Linux、AWS、Python、Dockerなどインフラ・開発ツールに関する記事を発信中。';
+  const {siteConfig} = useDocusaurusContext();
+  const description = translate({
+    id: 'homepage.description',
+    message: "Hikari's tech notebook — articles on Linux, AWS, Python, Docker, and infrastructure & development tools.",
+  });
   return (
     <Layout title={`${siteConfig.title}`} description={description}>
       <HomepageHeader />

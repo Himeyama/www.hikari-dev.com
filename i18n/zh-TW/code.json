@@ -378,5 +378,37 @@
   "comment.item.anonymous": {
     "message": "匿名",
     "description": "The text for anonymous commenter"
+  },
+  "articles.title": {
+    "message": "文章列表",
+    "description": "The title of the articles page"
+  },
+  "articles.description": {
+    "message": "光的筆記本的所有文章",
+    "description": "The description of the articles page"
+  },
+  "articles.filterByTag": {
+    "message": "按類別篩選",
+    "description": "The heading for the tag filter section"
+  },
+  "articles.allPosts": {
+    "message": "全部",
+    "description": "The label for showing all posts"
+  },
+  "articles.allArticles": {
+    "message": "文章列表",
+    "description": "The heading for all articles section"
+  },
+  "articles.itemCount": {
+    "message": "個",
+    "description": "The suffix for item count"
+  },
+  "articles.noResults": {
+    "message": "找不到相關文章",
+    "description": "The message when no articles match the filter"
+  },
+  "homepage.description": {
+    "message": "光的技術筆記本——關於 Linux、AWS、Python、Docker 和基礎設施與開發工具的文章。",
+    "description": "The description of the homepage"
   }
 }

@@ -5,7 +5,7 @@ import Link from '@docusaurus/Link';
 import useDocusaurusContext from '@docusaurus/useDocusaurusContext';
 import Layout from '@theme/Layout';
 import Heading from '@theme/Heading';
-import Translate from '@docusaurus/Translate';
+import Translate, { translate } from '@docusaurus/Translate';
 import {usePluginData} from '@docusaurus/useGlobalData';
 
 import indexStyles from './index.module.css';
@@ -147,15 +147,19 @@ function ArticlesList() {
 }
 
 export default function Articles(): ReactNode {
-  const {siteConfig, i18n} = useDocusaurusContext();
-  const title =
-    i18n.currentLocale === 'en'
-      ? 'Articles'
-      : '記事一覧';
-  const description =
-    i18n.currentLocale === 'en'
-      ? 'All articles from Hikari\'s Notebook'
-      : 'ひかりの備忘録の記事一覧';
+  const {siteConfig} = useDocusaurusContext();
+
+  // Get title and description from i18n, with fallbacks
+  const title = translate({
+    id: 'articles.title',
+    message: 'Articles',
+  });
+
+  const description = translate({
+    id: 'articles.description',
+    message: 'All articles from Hikari\'s Notebook',
+  });
+
   return (
     <Layout title={`${title} | ${siteConfig.title}`} description={description}>
       <ArticlesHeader />

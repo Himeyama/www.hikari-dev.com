@@ -410,5 +410,37 @@
   "comment.item.anonymous": {
     "message": "Anonymous",
     "description": "The text for anonymous commenter"
+  },
+  "articles.title": {
+    "message": "Articles",
+    "description": "The title of the articles page"
+  },
+  "articles.description": {
+    "message": "All articles from Hikari's Notebook",
+    "description": "The description of the articles page"
+  },
+  "articles.filterByTag": {
+    "message": "Filter by Category",
+    "description": "The heading for the tag filter section"
+  },
+  "articles.allPosts": {
+    "message": "All",
+    "description": "The label for showing all posts"
+  },
+  "articles.allArticles": {
+    "message": "Articles",
+    "description": "The heading for all articles section"
+  },
+  "articles.itemCount": {
+    "message": "items",
+    "description": "The suffix for item count"
+  },
+  "articles.noResults": {
+    "message": "No articles found",
+    "description": "The message when no articles match the filter"
+  },
+  "homepage.description": {
+    "message": "Hikari's tech notebook — articles on Linux, AWS, Python, Docker, and infrastructure & development tools.",
+    "description": "The description of the homepage"
   }
 }

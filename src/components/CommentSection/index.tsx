@@ -1,59 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { useBlogPost } from '@docusaurus/plugin-content-blog/client';
 import useDocusaurusContext from '@docusaurus/useDocusaurusContext';
+import { translate } from '@docusaurus/Translate';
 import styles from './styles.module.css';
-
-// Translation strings
-const translations = {
-  ja: {
-    'section.title': 'コメント',
-    'form.title': 'コメントを投稿する',
-    'form.name.label': 'お名前',
-    'form.name.placeholder': '匿名',
-    'form.rating.label': '評価',
-    'form.body.label': 'コメント',
-    'form.body.placeholder': 'コメントを入力してください',
-    'form.required': '*',
-    'form.submit': '送信する',
-    'form.submitting': '送信中...',
-    'form.success': 'コメントを送信しました。ありがとうございます！',
-    'list.loading': '読み込み中...',
-    'list.empty': 'まだコメントはありません。',
-    'item.anonymous': '匿名',
-  },
-  en: {
-    'section.title': 'Comments',
-    'form.title': 'Post a Comment',
-    'form.name.label': 'Name',
-    'form.name.placeholder': 'Anonymous',
-    'form.rating.label': 'Rating',
-    'form.body.label': 'Comment',
-    'form.body.placeholder': 'Enter your comment',
-    'form.required': '*',
-    'form.submit': 'Submit',
-    'form.submitting': 'Submitting...',
-    'form.success': 'Thank you for your comment!',
-    'list.loading': 'Loading...',
-    'list.empty': 'No comments yet.',
-    'item.anonymous': 'Anonymous',
-  },
-  'zh-TW': {
-    'section.title': '評論',
-    'form.title': '發表評論',
-    'form.name.label': '名稱',
-    'form.name.placeholder': '匿名',
-    'form.rating.label': '評分',
-    'form.body.label': '評論',
-    'form.body.placeholder': '請輸入您的評論',
-    'form.required': '*',
-    'form.submit': '送出',
-    'form.submitting': '送出中...',
-    'form.success': '感謝您的評論！',
-    'list.loading': '載入中...',
-    'list.empty': '還沒有評論。',
-    'item.anonymous': '匿名',
-  },
-} as const;
 
 type CommentData = {
   id: string;
@@ -107,10 +56,13 @@ function CommentItem({ comment, tAnonymous }: { key?: React.Key; comment: Commen
 
 export default function CommentSection() {
   const { metadata } = useBlogPost();
-  const { i18n } = useDocusaurusContext();
-  const locale = i18n.currentLocale as keyof typeof translations;
-  const t = (key: keyof (typeof translations)['ja']) => {
-    return translations[locale]?.[key] ?? translations['ja'][key];
+
+  // Translation getter using i18n JSON
+  const t = (id: string, message: string): string => {
+    return translate({
+      id: `comment.${id}`,
+      message,
+    });
   };
 
   const postId = metadata.permalink.replace(/^\/en\//, '/');
@@ -152,49 +104,49 @@ export default function CommentSection() {
 
   return (
     <section className={styles.section}>
-      <h2 className={styles.sectionTitle}>{t('section.title')}</h2>
+      <h2 className={styles.sectionTitle}>{t('section.title', 'Comments')}</h2>
 
       <div className={styles.commentList}>
         {fetchLoading ? (
-          <p className={styles.loadingMessage}>{t('list.loading')}</p>
+          <p className={styles.loadingMessage}>{t('list.loading', 'Loading...')}</p>
         ) : comments.length === 0 ? (
-          <p className={styles.emptyMessage}>{t('list.empty')}</p>
+          <p className={styles.emptyMessage}>{t('list.empty', 'No comments yet.')}</p>
         ) : (
-          comments.map((c: CommentData) => <CommentItem key={c.id} comment={c} tAnonymous={t('item.anonymous')} />)
+          comments.map((c: CommentData) => <CommentItem key={c.id} comment={c} tAnonymous={t('item.anonymous', 'Anonymous')} />)
         )}
       </div>
 
       <div className={styles.formContainer}>
-        <h3 className={styles.formTitle}>{t('form.title')}</h3>
+        <h3 className={styles.formTitle}>{t('form.title', 'Post a Comment')}</h3>
         {submitted ? (
           <p className={styles.successMessage}>
-            {t('form.success')}
+            {t('form.success', 'Thank you for your comment!')}
           </p>
         ) : (
           <form onSubmit={handleSubmit} className={styles.form}>
             <div className={styles.field}>
-              <label className={styles.label}>{t('form.name.label')}</label>
+              <label className={styles.label}>{t('form.name.label', 'Name')}</label>
               <input
                 type="text"
                 className={styles.input}
                 value={name}
                 onChange={(e) => setName(e.target.value)}
-                placeholder={t('form.name.placeholder')}
+                placeholder={t('form.name.placeholder', 'Anonymous')}
               />
             </div>
             <div className={styles.field}>
-              <label className={styles.label}>{t('form.rating.label')}</label>
+              <label className={styles.label}>{t('form.rating.label', 'Rating')}</label>
               <StarRating value={rating} onChange={setRating} />
             </div>
             <div className={styles.field}>
               <label className={styles.label}>
-                {t('form.body.label')} <span className={styles.required}>{t('form.required')}</span>
+                {t('form.body.label', 'Comment')} <span className={styles.required}>{t('form.required', '*')}</span>
               </label>
               <textarea
                 className={styles.textarea}
                 value={body}
                 onChange={(e) => setBody(e.target.value)}
-                placeholder={t('form.body.placeholder')}
+                placeholder={t('form.body.placeholder', 'Enter your comment')}
                 required
                 rows={4}
               />
@@ -204,7 +156,7 @@ export default function CommentSection() {
               className={styles.submitButton}
               disabled={submitLoading}
             >
-              {submitLoading ? t('form.submitting') : t('form.submit')}
+              {submitLoading ? t('form.submitting', 'Submitting...') : t('form.submit', 'Submit')}
             </button>
           </form>
         )}
