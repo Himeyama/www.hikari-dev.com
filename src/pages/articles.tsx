@@ -33,6 +33,7 @@ function ArticlesList() {
       permalink: string;
       title: string;
       titleEn: string;
+      titleZhTw: string;
       formattedDate: string;
       tags: Array<{label: string; permalink: string}>;
     };
@@ -44,7 +45,17 @@ function ArticlesList() {
   }>;
 
   const {i18n} = useDocusaurusContext();
-  const isEn = i18n.currentLocale === 'en';
+
+  const getPostTitle = (post: {metadata: {title: string; titleEn: string; titleZhTw: string}}) => {
+    switch (i18n.currentLocale) {
+      case 'en':
+        return post.metadata.titleEn;
+      case 'zh-TW':
+        return post.metadata.titleZhTw;
+      default:
+        return post.metadata.title;
+    }
+  };
 
   const [selectedTag, setSelectedTag] = useState<string | null>(null);
 
@@ -122,7 +133,7 @@ function ArticlesList() {
               {filteredPosts.map((post) => (
                 <li key={post.id} className={indexStyles.postItem}>
                   <Link to={post.metadata.permalink} className={indexStyles.postLink}>
-                    {isEn ? post.metadata.titleEn : post.metadata.title}
+                    {getPostTitle(post)}
                   </Link>
                   <span className={indexStyles.postDate}>{post.metadata.formattedDate}</span>
                 </li>

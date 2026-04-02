@@ -11,6 +11,7 @@ module.exports = function recentBlogPostsPlugin(context) {
     async loadContent() {
       const blogDir = path.join(context.siteDir, 'blog');
       const enBlogDir = path.join(context.siteDir, 'i18n', 'en', 'docusaurus-plugin-content-blog');
+      const zhTwBlogDir = path.join(context.siteDir, 'i18n', 'zh-TW', 'docusaurus-plugin-content-blog');
 
       // Build English title map from i18n files
       /** @type {Record<string, string>} */
@@ -24,6 +25,22 @@ module.exports = function recentBlogPostsPlugin(context) {
             if (titleMatch) {
               const key = filename.replace(/\.(mdx?)$/, '');
               enTitleMap[key] = titleMatch[1].trim().replace(/^['"]|['"]$/g, '');
+            }
+          });
+      }
+
+      // Build Traditional Chinese title map from i18n files
+      /** @type {Record<string, string>} */
+      const zhTwTitleMap = {};
+      if (fs.existsSync(zhTwBlogDir)) {
+        fs.readdirSync(zhTwBlogDir)
+          .filter((f) => (f.endsWith('.md') || f.endsWith('.mdx')) && /^\d{4}-\d{2}-\d{2}-/.test(f))
+          .forEach((filename) => {
+            const content = fs.readFileSync(path.join(zhTwBlogDir, filename), 'utf-8');
+            const titleMatch = content.match(/^title:\s*(.+)$/m);
+            if (titleMatch) {
+              const key = filename.replace(/\.(mdx?)$/, '');
+              zhTwTitleMap[key] = titleMatch[1].trim().replace(/^['"]|['"]$/g, '');
             }
           });
       }
@@ -90,6 +107,7 @@ module.exports = function recentBlogPostsPlugin(context) {
             metadata: {
               title,
               titleEn: enTitleMap[fileKey] ?? title,
+              titleZhTw: zhTwTitleMap[fileKey] ?? title,
               permalink: `/blog/${year}/${month}/${day}/${slug}`,
               date: `${year}-${month}-${day}`,
               formattedDate: `${year}/${month}/${day}`,

@@ -134,6 +134,7 @@ module.exports = function gaRankingPlugin(context) {
 
       const blogDir = path.join(context.siteDir, 'blog');
       const enBlogDir = path.join(context.siteDir, 'i18n', 'en', 'docusaurus-plugin-content-blog');
+      const zhTwBlogDir = path.join(context.siteDir, 'i18n', 'zh-TW', 'docusaurus-plugin-content-blog');
 
       // Build English title map from i18n files
       /** @type {Record<string, string>} */
@@ -147,6 +148,22 @@ module.exports = function gaRankingPlugin(context) {
             if (titleMatch) {
               const key = filename.replace(/\.(mdx?)$/, '');
               enTitleMap[key] = titleMatch[1].trim().replace(/^['"]|['"]$/g, '');
+            }
+          });
+      }
+
+      // Build Traditional Chinese title map from i18n files
+      /** @type {Record<string, string>} */
+      const zhTwTitleMap = {};
+      if (fs.existsSync(zhTwBlogDir)) {
+        fs.readdirSync(zhTwBlogDir)
+          .filter((f) => (f.endsWith('.md') || f.endsWith('.mdx')) && /^\d{4}-\d{2}-\d{2}-/.test(f))
+          .forEach((filename) => {
+            const content = fs.readFileSync(path.join(zhTwBlogDir, filename), 'utf-8');
+            const titleMatch = content.match(/^title:\s*(.+)$/m);
+            if (titleMatch) {
+              const key = filename.replace(/\.(mdx?)$/, '');
+              zhTwTitleMap[key] = titleMatch[1].trim().replace(/^['"]|['"]$/g, '');
             }
           });
       }
@@ -169,7 +186,7 @@ module.exports = function gaRankingPlugin(context) {
         const rawTitle = titleMatch ? titleMatch[1].trim() : slug;
         const title = rawTitle.replace(/^['"]|['"]$/g, '');
 
-        ranking.push({ title, titleEn: enTitleMap[fileBase] ?? title, permalink: pagePath, pageviews });
+        ranking.push({ title, titleEn: enTitleMap[fileBase] ?? title, titleZhTw: zhTwTitleMap[fileBase] ?? title, permalink: pagePath, pageviews });
         if (ranking.length >= 10) break;
       }
 

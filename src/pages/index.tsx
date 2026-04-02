@@ -30,7 +30,17 @@ function LatestPosts() {
   const blogData = usePluginData('recent-blog-posts-plugin') as any;
   const recentPosts = (blogData?.blogPosts ?? []).slice(0, 8);
   const {i18n} = useDocusaurusContext();
-  const isEn = i18n.currentLocale === 'en';
+
+  const getPostTitle = (post: {metadata: {title: string; titleEn: string; titleZhTw: string}}) => {
+    switch (i18n.currentLocale) {
+      case 'en':
+        return post.metadata.titleEn;
+      case 'zh-TW':
+        return post.metadata.titleZhTw;
+      default:
+        return post.metadata.title;
+    }
+  };
 
   return (
     <section className={styles.section}>
@@ -38,10 +48,10 @@ function LatestPosts() {
         <Translate id="homepage.latestPosts">最新記事</Translate>
       </Heading>
       <ul className={styles.postList}>
-        {recentPosts.map((post: {id: string; metadata: {permalink: string; title: string; titleEn: string; formattedDate: string}}) => (
+        {recentPosts.map((post: {id: string; metadata: {permalink: string; title: string; titleEn: string; titleZhTw: string; formattedDate: string}}) => (
           <li key={post.id} className={styles.postItem}>
             <Link to={post.metadata.permalink} className={styles.postLink}>
-              {isEn ? post.metadata.titleEn : post.metadata.title}
+              {getPostTitle(post)}
             </Link>
             <span className={styles.postDate}>{post.metadata.formattedDate}</span>
           </li>
@@ -89,10 +99,20 @@ function CategoriesList() {
 }
 
 function AccessRanking() {
-  const data = usePluginData('ga-ranking-plugin') as {ranking: Array<{title: string; titleEn: string; permalink: string; pageviews: number}>};
+  const data = usePluginData('ga-ranking-plugin') as {ranking: Array<{title: string; titleEn: string; titleZhTw: string; permalink: string; pageviews: number}>};
   const ranking = data?.ranking ?? [];
   const {i18n} = useDocusaurusContext();
-  const isEn = i18n.currentLocale === 'en';
+
+  const getPostTitle = (post: {title: string; titleEn: string; titleZhTw: string}) => {
+    switch (i18n.currentLocale) {
+      case 'en':
+        return post.titleEn;
+      case 'zh-TW':
+        return post.titleZhTw;
+      default:
+        return post.title;
+    }
+  };
 
   return (
     <section className={styles.section}>
@@ -109,7 +129,7 @@ function AccessRanking() {
             <li key={post.permalink} className={styles.rankingItem}>
               <span className={styles.rankingNumber}>{i + 1}</span>
               <Link to={post.permalink} className={styles.postLink}>
-                {isEn ? post.titleEn : post.title}
+                {getPostTitle(post)}
               </Link>
               <span className={styles.pageviews}>{post.pageviews.toLocaleString()}</span>
             </li>
