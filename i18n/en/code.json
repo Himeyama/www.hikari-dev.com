@@ -354,5 +354,61 @@
   },
   "homepage.authorBio": {
     "message": "I write a blog about everyday life and IT technology."
+  },
+  "comment.section.title": {
+    "message": "Comments",
+    "description": "The title of the comments section"
+  },
+  "comment.form.title": {
+    "message": "Post a Comment",
+    "description": "The title of the comment form"
+  },
+  "comment.form.name.label": {
+    "message": "Name",
+    "description": "The label for the name field"
+  },
+  "comment.form.name.placeholder": {
+    "message": "Anonymous",
+    "description": "The placeholder for the name field"
+  },
+  "comment.form.rating.label": {
+    "message": "Rating",
+    "description": "The label for the rating field"
+  },
+  "comment.form.body.label": {
+    "message": "Comment",
+    "description": "The label for the body field"
+  },
+  "comment.form.body.placeholder": {
+    "message": "Enter your comment",
+    "description": "The placeholder for the body field"
+  },
+  "comment.form.required": {
+    "message": "*",
+    "description": "The required field indicator"
+  },
+  "comment.form.submit": {
+    "message": "Submit",
+    "description": "The submit button label"
+  },
+  "comment.form.submitting": {
+    "message": "Submitting...",
+    "description": "The submit button label while submitting"
+  },
+  "comment.form.success": {
+    "message": "Thank you for your comment!",
+    "description": "The success message after submitting a comment"
+  },
+  "comment.list.loading": {
+    "message": "Loading...",
+    "description": "The loading message for comments"
+  },
+  "comment.list.empty": {
+    "message": "No comments yet.",
+    "description": "The empty message when no comments"
+  },
+  "comment.item.anonymous": {
+    "message": "Anonymous",
+    "description": "The text for anonymous commenter"
   }
 }

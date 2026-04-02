@@ -322,5 +322,61 @@
   },
   "homepage.authorBio": {
     "message": "我撰寫關於日常生活與 IT 技術的部落格。"
+  },
+  "comment.section.title": {
+    "message": "評論",
+    "description": "The title of the comments section"
+  },
+  "comment.form.title": {
+    "message": "發表評論",
+    "description": "The title of the comment form"
+  },
+  "comment.form.name.label": {
+    "message": "名稱",
+    "description": "The label for the name field"
+  },
+  "comment.form.name.placeholder": {
+    "message": "匿名",
+    "description": "The placeholder for the name field"
+  },
+  "comment.form.rating.label": {
+    "message": "評分",
+    "description": "The label for the rating field"
+  },
+  "comment.form.body.label": {
+    "message": "評論",
+    "description": "The label for the body field"
+  },
+  "comment.form.body.placeholder": {
+    "message": "請輸入您的評論",
+    "description": "The placeholder for the body field"
+  },
+  "comment.form.required": {
+    "message": "*",
+    "description": "The required field indicator"
+  },
+  "comment.form.submit": {
+    "message": "送出",
+    "description": "The submit button label"
+  },
+  "comment.form.submitting": {
+    "message": "送出中...",
+    "description": "The submit button label while submitting"
+  },
+  "comment.form.success": {
+    "message": "感謝您的評論！",
+    "description": "The success message after submitting a comment"
+  },
+  "comment.list.loading": {
+    "message": "載入中...",
+    "description": "The loading message for comments"
+  },
+  "comment.list.empty": {
+    "message": "還沒有評論。",
+    "description": "The empty message when no comments"
+  },
+  "comment.item.anonymous": {
+    "message": "匿名",
+    "description": "The text for anonymous commenter"
   }
 }
