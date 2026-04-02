@@ -137,12 +137,16 @@ function ArticlesList() {
 
 export default function Articles(): ReactNode {
   const {siteConfig, i18n} = useDocusaurusContext();
+  const title =
+    i18n.currentLocale === 'en'
+      ? 'Articles'
+      : '記事一覧';
   const description =
     i18n.currentLocale === 'en'
       ? 'All articles from Hikari\'s Notebook'
-      : 'ひかりの備忘録の記事一覧一覧';
+      : 'ひかりの備忘録の記事一覧';
   return (
-    <Layout title={`${'記事一覧'} | ${siteConfig.title}`} description={description}>
+    <Layout title={`${title} | ${siteConfig.title}`} description={description}>
       <ArticlesHeader />
       <ArticlesList />
     </Layout>
