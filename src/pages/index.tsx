@@ -89,8 +89,10 @@ function CategoriesList() {
 }
 
 function AccessRanking() {
-  const data = usePluginData('ga-ranking-plugin') as {ranking: Array<{title: string; permalink: string; pageviews: number}>};
+  const data = usePluginData('ga-ranking-plugin') as {ranking: Array<{title: string; titleEn: string; permalink: string; pageviews: number}>};
   const ranking = data?.ranking ?? [];
+  const {i18n} = useDocusaurusContext();
+  const isEn = i18n.currentLocale === 'en';
 
   return (
     <section className={styles.section}>
@@ -107,7 +109,7 @@ function AccessRanking() {
             <li key={post.permalink} className={styles.rankingItem}>
               <span className={styles.rankingNumber}>{i + 1}</span>
               <Link to={post.permalink} className={styles.postLink}>
-                {post.title}
+                {isEn ? post.titleEn : post.title}
               </Link>
             </li>
           ))}

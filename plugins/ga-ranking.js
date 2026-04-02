@@ -133,6 +133,24 @@ module.exports = function gaRankingPlugin(context) {
       const rows = await fetchPageRanking(accessToken, '320051022');
 
       const blogDir = path.join(context.siteDir, 'blog');
+      const enBlogDir = path.join(context.siteDir, 'i18n', 'en', 'docusaurus-plugin-content-blog');
+
+      // Build English title map from i18n files
+      /** @type {Record<string, string>} */
+      const enTitleMap = {};
+      if (fs.existsSync(enBlogDir)) {
+        fs.readdirSync(enBlogDir)
+          .filter((f) => (f.endsWith('.md') || f.endsWith('.mdx')) && /^\d{4}-\d{2}-\d{2}-/.test(f))
+          .forEach((filename) => {
+            const content = fs.readFileSync(path.join(enBlogDir, filename), 'utf-8');
+            const titleMatch = content.match(/^title:\s*(.+)$/m);
+            if (titleMatch) {
+              const key = filename.replace(/\.(mdx?)$/, '');
+              enTitleMap[key] = titleMatch[1].trim().replace(/^['"]|['"]$/g, '');
+            }
+          });
+      }
+
       const ranking = [];
 
       for (const { pagePath, pageviews } of rows) {
@@ -151,7 +169,7 @@ module.exports = function gaRankingPlugin(context) {
         const rawTitle = titleMatch ? titleMatch[1].trim() : slug;
         const title = rawTitle.replace(/^['"]|['"]$/g, '');
 
-        ranking.push({ title, permalink: pagePath, pageviews });
+        ranking.push({ title, titleEn: enTitleMap[fileBase] ?? title, permalink: pagePath, pageviews });
         if (ranking.length >= 10) break;
       }
 
