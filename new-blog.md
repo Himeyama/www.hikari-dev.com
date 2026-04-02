@@ -54,15 +54,17 @@ uv tool install git+https://github.com/Himeyama/translate-mcp
 > 例: 日本語 -> 台湾語
 ```ps1
 translate `
-  --input blog/2024-04-20-pyplot.md --from Japanese --to Taiwanese >`
-  i18n/zh-TW/docusaurus-plugin-content-blog/2024-04-20-pyplot.md
+  --input blog/2024-04-20-pyplot.md --from Japanese --to Taiwanese `
+  --model gpt-5-mini `
+  --output i18n/zh-TW/docusaurus-plugin-content-blog/2024-04-20-pyplot.md
 ```
 
 > 例: 日本語 -> 英語
 ```ps1
 translate `
-  --input blog/2024-04-20-pyplot.md --from Japanese --to English >`
-  i18n/en/docusaurus-plugin-content-blog/2024-04-20-pyplot.md
+  --input blog/2024-04-20-pyplot.md --from Japanese --to English `
+  --model gpt-5-mini `
+  --output i18n/en/docusaurus-plugin-content-blog/2024-04-20-pyplot.md
 ```
 
 ### 英語版
