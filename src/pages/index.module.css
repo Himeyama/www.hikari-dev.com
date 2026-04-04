@@ -8,6 +8,38 @@
   text-align: center;
   position: relative;
   overflow: hidden;
+  aspect-ratio: 1920 / 886;
+  margin-top: calc(-1 * var(--ifm-navbar-height));
+  padding-top: calc(4rem + var(--ifm-navbar-height));
+}
+
+/* 鏡像ぼかし背景: scaleX(-1) で左右を反転させ、blur ですりガラスに */
+.heroBanner::before {
+  content: '';
+  position: absolute;
+  inset: 0 -40px;
+  background-image: url('/img/thumbnail.webp');
+  background-size: auto 100%;
+  background-position: center top;
+  transform: scaleX(-1);
+  filter: blur(24px);
+}
+
+/* 中央にシャープな画像を重ねる */
+.heroBanner::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-image: url('/img/thumbnail.webp');
+  background-size: auto 100%;
+  background-position: center top;
+  background-repeat: no-repeat;
+}
+
+@media screen and (min-width: 997px) {
+  .heroBanner {
+    max-height: 50vh;
+  }
 }
 
 @media screen and (max-width: 996px) {
