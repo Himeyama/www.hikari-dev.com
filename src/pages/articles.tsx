@@ -14,7 +14,7 @@ import styles from './articles.module.css';
 function ArticlesHeader() {
   const {siteConfig} = useDocusaurusContext();
   return (
-    <header className={clsx('hero hero--primary', indexStyles.heroBanner)}>
+    <header className={clsx('hero', indexStyles.heroBanner)}>
       <div className="container">
         <Heading as="h1" className="hero__title">
           <Translate id="articles.title">記事一覧</Translate>
