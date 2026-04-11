@@ -109,16 +109,24 @@ async function fetchPageRanking(accessToken, propertyId) {
   });
 }
 
+/** @type {{ranking: Array<{title: string; titleEn: string; titleZhTw: string; permalink: string; pageviews: number}>} | null} */
+let cachedContent = null;
+
 /** @type {import('@docusaurus/types').PluginModule} */
 module.exports = function gaRankingPlugin(context) {
   return {
     name: 'ga-ranking-plugin',
 
     async loadContent() {
+      if (cachedContent) {
+        return cachedContent;
+      }
+
       const credentialsJson = process.env.GA_CREDENTIALS;
       if (!credentialsJson) {
         console.warn('[ga-ranking-plugin] GA_CREDENTIALS not set, skipping.');
-        return { ranking: [] };
+        cachedContent = { ranking: [] };
+        return cachedContent;
       }
 
       let credentials;
@@ -126,7 +134,8 @@ module.exports = function gaRankingPlugin(context) {
         credentials = JSON.parse(credentialsJson);
       } catch {
         console.warn('[ga-ranking-plugin] Failed to parse GA_CREDENTIALS.');
-        return { ranking: [] };
+        cachedContent = { ranking: [] };
+        return cachedContent;
       }
 
       const accessToken = await getAccessToken(credentials);
@@ -190,7 +199,8 @@ module.exports = function gaRankingPlugin(context) {
         if (ranking.length >= 10) break;
       }
 
-      return { ranking };
+      cachedContent = { ranking };
+      return cachedContent;
     },
 
     async contentLoaded({ content, actions }) {
