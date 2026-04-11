@@ -2,6 +2,7 @@
 title: Amazon Cognito でパスキー (WebAuthn) を設定してみた
 authors: hikari
 tags: [AWS, Cognito, WebAuthn, セキュリティ]
+image: /img/ogp/2026-04-05-cognito-passkey.png
 ---
 
 AWS SAM で構築したファイルストレージ API のユーザー認証に Amazon Cognito を使っている。先日、パスキー (WebAuthn) によるログインを追加したので、設定内容をまとめる。

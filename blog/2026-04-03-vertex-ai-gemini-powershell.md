@@ -2,6 +2,7 @@
 title: PowerShell で Vertex AI Gemini API を叩く
 authors: hikari
 tags: [AI, PowerShell, GCP]
+image: /img/ogp/2026-04-03-vertex-ai-gemini-powershell.png
 ---
 
 Google Cloud の Vertex AI 経由で Gemini モデルを PowerShell から呼び出す方法をまとめる。OpenAI 互換エンドポイントとネイティブ Gemini エンドポイントの 2 種類を紹介する。
