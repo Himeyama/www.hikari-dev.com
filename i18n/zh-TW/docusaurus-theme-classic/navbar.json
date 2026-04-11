@@ -18,5 +18,9 @@
   "item.label.本日の雑学": {
     "message": "今日冷知識",
     "description": "Navbar item with label 本日の雑学"
+  },
+  "item.label.ハノイの塔": {
+    "message": "河內塔",
+    "description": "Navbar item with label ハノイの塔"
   }
 }

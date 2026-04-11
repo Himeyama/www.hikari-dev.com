@@ -462,5 +462,81 @@
   "trivia.notFound": {
     "message": "No trivia found for today.",
     "description": "Not found message on the trivia page"
+  },
+  "hanoi.title": {
+    "message": "Tower of Hanoi",
+    "description": "Title of the Tower of Hanoi page"
+  },
+  "hanoi.description": {
+    "message": "Tower of Hanoi mini-game. Click a peg to select and move disks.",
+    "description": "Description of the Tower of Hanoi page"
+  },
+  "hanoi.subtitle": {
+    "message": "Move all disks from peg A to peg C!",
+    "description": "Subtitle on the Tower of Hanoi page"
+  },
+  "hanoi.diskCount": {
+    "message": "Disks",
+    "description": "Label for disk count selector"
+  },
+  "hanoi.moves": {
+    "message": "Moves",
+    "description": "Label for move counter"
+  },
+  "hanoi.movesUnit": {
+    "message": "moves",
+    "description": "Unit for number of moves"
+  },
+  "hanoi.optimal": {
+    "message": "Min",
+    "description": "Label for optimal moves"
+  },
+  "hanoi.time": {
+    "message": "Time",
+    "description": "Label for timer"
+  },
+  "hanoi.best": {
+    "message": "Best",
+    "description": "Label for best moves record"
+  },
+  "hanoi.win": {
+    "message": "Cleared!",
+    "description": "Win message"
+  },
+  "hanoi.perfect": {
+    "message": "★ Perfect!",
+    "description": "Perfect/optimal solve badge"
+  },
+  "hanoi.hintSelect": {
+    "message": "Click a peg to select",
+    "description": "Hint: select a peg"
+  },
+  "hanoi.hintMove": {
+    "message": "Click the destination peg",
+    "description": "Hint: choose destination peg"
+  },
+  "hanoi.reset": {
+    "message": "Reset",
+    "description": "Reset button label"
+  },
+  "hanoi.rulesTitle": {
+    "message": "Rules",
+    "description": "Title of the rules section"
+  },
+  "hanoi.rule1": {
+    "message": "Only one disk can be moved at a time.",
+    "description": "Hanoi rule 1"
+  },
+  "hanoi.rule2": {
+    "message": "Only the top disk of a peg can be moved.",
+    "description": "Hanoi rule 2"
+  },
+  "hanoi.rule3": {
+    "message": "A larger disk may not be placed on top of a smaller disk.",
+    "description": "Hanoi rule 3"
+  },
+  "hanoi.formulaLabel": {
+    "message": "Minimum moves",
+    "description": "Label before the minimum moves formula"
   }
 }
