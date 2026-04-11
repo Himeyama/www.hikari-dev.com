@@ -1,5 +1,6 @@
 .pageWrapper {
-  max-width: 720px;
+  width: 100%;
+  max-width: var(--ifm-container-width-xl, 1280px);
   margin: 3rem auto;
   padding: 0 1.5rem 4rem;
   font-family: var(--article-serif-font);
@@ -31,14 +32,52 @@
   text-align: left;
 }
 
-.loading,
 .error {
   text-align: center;
   padding: 3rem 0;
-  color: var(--ifm-color-emphasis-600);
+  color: var(--ifm-color-danger);
   font-size: 1rem;
 }
 
-.error {
-  color: var(--ifm-color-danger);
+/* ── Skeleton ──────────────────────────────────── */
+@keyframes shimmer {
+  0%   { background-position: 200% 0; }
+  100% { background-position: -100% 0; }
+}
+
+.skeletonDate,
+.skeletonLine {
+  border-radius: 6px;
+  background-color: var(--ifm-color-emphasis-200);
+  background-image: linear-gradient(
+    90deg,
+    var(--ifm-color-emphasis-200) 25%,
+    var(--ifm-color-emphasis-100) 50%,
+    var(--ifm-color-emphasis-200) 75%
+  );
+  background-size: 200% 100%;
+  background-repeat: no-repeat;
+  animation: shimmer 1.4s infinite linear;
+}
+
+.skeletonDate {
+  /* .dateLabel: font-size 0.85rem, margin-bottom 1.5rem */
+  width: 9rem;
+  height: 0.85rem;
+  margin: 0 auto 1.5rem;
+}
+
+.skeletonLine {
+  /* .fact: font-size 1.25rem, line-height 1.9 → gap = 0.9 × 1.25rem = 1.125rem */
+  width: 100%;
+  height: 1.25rem;
+  margin-bottom: 1.125rem;
+}
+
+.skeletonLine:last-child {
+  margin-bottom: 0;
+}
+
+.skeletonLineShort {
+  width: 72%;
 }

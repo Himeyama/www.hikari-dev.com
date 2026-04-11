@@ -35,9 +35,14 @@ function TriviaCard(): ReactNode {
 
   if (loading) {
     return (
-      <p className={styles.loading}>
-        <Translate id="trivia.loading">読み込み中...</Translate>
-      </p>
+      <div className={styles.card}>
+        <div className={styles.skeletonDate} />
+        <div className={styles.skeletonLine} />
+        <div className={styles.skeletonLine} />
+        <div className={styles.skeletonLine} />
+        <div className={styles.skeletonLine} />
+        <div className={`${styles.skeletonLine} ${styles.skeletonLineShort}`} />
+      </div>
     );
   }
 
