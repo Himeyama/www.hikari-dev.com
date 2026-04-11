@@ -1,0 +1,44 @@
+.pageWrapper {
+  max-width: 720px;
+  margin: 3rem auto;
+  padding: 0 1.5rem 4rem;
+  font-family: var(--article-serif-font);
+}
+
+.pageWrapper :global(strong) {
+  font-family: var(--article-serif-bold-font);
+}
+
+.card {
+  border: 1px solid var(--ifm-color-emphasis-200);
+  border-radius: 12px;
+  background: var(--ifm-background-surface-color);
+  padding: 2.5rem 2rem;
+  text-align: center;
+}
+
+.dateLabel {
+  font-size: 0.85rem;
+  color: var(--post-date-color);
+  margin-bottom: 1.5rem;
+  letter-spacing: 0.04em;
+}
+
+.fact {
+  font-size: 1.25rem;
+  line-height: 1.9;
+  margin: 0;
+  text-align: left;
+}
+
+.loading,
+.error {
+  text-align: center;
+  padding: 3rem 0;
+  color: var(--ifm-color-emphasis-600);
+  font-size: 1rem;
+}
+
+.error {
+  color: var(--ifm-color-danger);
+}

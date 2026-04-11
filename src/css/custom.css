@@ -93,3 +93,8 @@ article header time {
 [data-theme='dark'] .navbar {
   background: rgba(24, 24, 27, 0.7);
 }
+
+/* 日本語以外のロケールでは非表示 */
+html:not([lang="ja"]) .navbar__item--ja-only {
+  display: none;
+}

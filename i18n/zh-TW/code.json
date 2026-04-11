@@ -410,5 +410,25 @@
   "homepage.description": {
     "message": "光的技術筆記本——關於 Linux、AWS、Python、Docker 和基礎設施與開發工具的文章。",
     "description": "The description of the homepage"
+  },
+  "trivia.title": {
+    "message": "今日冷知識",
+    "description": "The title of the trivia page"
+  },
+  "trivia.description": {
+    "message": "每日更新的冷知識頁面。",
+    "description": "The description of the trivia page"
+  },
+  "trivia.loading": {
+    "message": "載入中...",
+    "description": "Loading message on the trivia page"
+  },
+  "trivia.error": {
+    "message": "無法取得今日冷知識。",
+    "description": "Error message on the trivia page"
+  },
+  "trivia.notFound": {
+    "message": "今日冷知識不存在。",
+    "description": "Not found message on the trivia page"
   }
 }

@@ -442,5 +442,25 @@
   "homepage.description": {
     "message": "Hikari's tech notebook — articles on Linux, AWS, Python, Docker, and infrastructure & development tools.",
     "description": "The description of the homepage"
+  },
+  "trivia.title": {
+    "message": "Today's Trivia",
+    "description": "The title of the trivia page"
+  },
+  "trivia.description": {
+    "message": "A daily trivia fact updated every day.",
+    "description": "The description of the trivia page"
+  },
+  "trivia.loading": {
+    "message": "Loading...",
+    "description": "Loading message on the trivia page"
+  },
+  "trivia.error": {
+    "message": "Failed to fetch today's trivia.",
+    "description": "Error message on the trivia page"
+  },
+  "trivia.notFound": {
+    "message": "No trivia found for today.",
+    "description": "Not found message on the trivia page"
   }
 }

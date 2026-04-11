@@ -189,6 +189,7 @@ const config: Config = {
         // },
         {to: '/', label: 'Blog', position: 'left'},
         {to: '/sukisuki', label: 'Like', position: 'left'},
+        {to: '/trivia', label: '本日の雑学', position: 'left', className: 'navbar__item--ja-only'},
         {
           href: 'https://github.com/himeyama',
           label: 'GitHub',
