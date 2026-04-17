@@ -98,3 +98,8 @@ article header time {
 html:not([lang="ja"]) .navbar__item--ja-only {
   display: none;
 }
+
+/* チャットページではフッターを非表示 */
+.chat-page-wrapper ~ footer {
+  display: none;
+}
