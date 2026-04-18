@@ -173,9 +173,9 @@ export default function Home(): ReactNode {
       <main className={styles.mainContent}>
         <div className={styles.mainColumn}>
           {ranking.length > 0 && <Carousel items={ranking} />}
+          <AccessRanking />
           <LatestPosts />
           <CategoriesList />
-          <AccessRanking />
         </div>
         <aside className={styles.sidebar}>
           <AuthorProfile />
