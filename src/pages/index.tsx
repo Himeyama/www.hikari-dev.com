@@ -8,6 +8,7 @@ import Translate, { translate } from '@docusaurus/Translate';
 import {usePluginData} from '@docusaurus/useGlobalData';
 
 import styles from './index.module.css';
+import Carousel from '@site/src/components/Carousel';
 
 // Utility function to get localized post title
 function getPostTitle(
@@ -95,7 +96,7 @@ function CategoriesList() {
 }
 
 function AccessRanking() {
-  const data = usePluginData('ga-ranking-plugin') as {ranking: Array<{title: string; titleEn: string; titleZhTw: string; permalink: string; pageviews: number}>};
+  const data = usePluginData('ga-ranking-plugin') as {ranking: Array<{title: string; titleEn: string; titleZhTw: string; permalink: string; pageviews: number; image: string}>};
   const ranking = data?.ranking ?? [];
   const {i18n} = useDocusaurusContext();
 
@@ -159,6 +160,9 @@ function AuthorProfile() {
 
 export default function Home(): ReactNode {
   const {siteConfig} = useDocusaurusContext();
+  const data = usePluginData('ga-ranking-plugin') as {ranking: Array<{title: string; titleEn: string; titleZhTw: string; permalink: string; pageviews: number; image: string}>};
+  const ranking = (data?.ranking ?? []).slice(0, 6);
+
   const description = translate({
     id: 'homepage.description',
     message: "Hikari's tech notebook — articles on Linux, AWS, Python, Docker, and infrastructure & development tools.",
@@ -168,6 +172,7 @@ export default function Home(): ReactNode {
       <HomepageHeader />
       <main className={styles.mainContent}>
         <div className={styles.mainColumn}>
+          {ranking.length > 0 && <Carousel items={ranking} />}
           <LatestPosts />
           <CategoriesList />
           <AccessRanking />

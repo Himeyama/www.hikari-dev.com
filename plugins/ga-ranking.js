@@ -195,7 +195,17 @@ module.exports = function gaRankingPlugin(context) {
         const rawTitle = titleMatch ? titleMatch[1].trim() : slug;
         const title = rawTitle.replace(/^['"]|['"]$/g, '');
 
-        ranking.push({ title, titleEn: enTitleMap[fileBase] ?? title, titleZhTw: zhTwTitleMap[fileBase] ?? title, permalink: pagePath, pageviews });
+        const imageMatch = content.match(/^image:\s*(.+)$/m);
+        const image = imageMatch ? imageMatch[1].trim().replace(/^['"]|['"]$/g, '') : '/img/docusaurus-social-card.png';
+
+        ranking.push({
+          title,
+          titleEn: enTitleMap[fileBase] ?? title,
+          titleZhTw: zhTwTitleMap[fileBase] ?? title,
+          permalink: pagePath,
+          pageviews,
+          image,
+        });
         if (ranking.length >= 10) break;
       }
 
