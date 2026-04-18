@@ -51,7 +51,6 @@ const MODELS: { id: string; label: string }[] = [
 const DEFAULT_MODEL = 'gpt-4o-mini';
 const LS_API_KEY = 'hikari-chat-api-key';
 const LS_MODEL = 'hikari-chat-model';
-
 const SYSTEM_PROMPT = `You are Hikari, a friendly and knowledgeable AI assistant on hikari-dev.com — a personal tech blog about programming, web development, and software engineering.
 
 You help users with:
@@ -255,13 +254,17 @@ function MessageBubble({ message, isStreaming }: { message: Message; isStreaming
       <div className={`${styles.messageBubble} ${isUser ? styles.bubbleUser : styles.bubbleAssistant}`}>
         {isUser ? (
           <p className={styles.userText}>{message.content}</p>
-        ) : message.content ? (
-          <>
-            <MarkdownContent content={message.content} isStreaming={isStreaming} />
-            {isStreaming && <span className={styles.cursor} aria-hidden="true">▍</span>}
-          </>
         ) : (
-          <TypingIndicator />
+          <>
+            {message.content ? (
+              <>
+                <MarkdownContent content={message.content} isStreaming={isStreaming} />
+                {isStreaming && <span className={styles.cursor} aria-hidden="true">▍</span>}
+              </>
+            ) : (
+              <TypingIndicator />
+            )}
+          </>
         )}
       </div>
     </div>
@@ -316,6 +319,7 @@ export default function HikariChat(): ReactNode {
 
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const textareaRef = useRef<HTMLTextAreaElement>(null);
+  const historyRef = useRef<OpenAI.Chat.Completions.ChatCompletionMessageParam[]>([]);
 
   useEffect(() => {
     const savedKey = localStorage.getItem(LS_API_KEY) ?? '';
@@ -353,6 +357,7 @@ export default function HikariChat(): ReactNode {
     setError(null);
     setStreamingId(null);
     setInput('');
+    historyRef.current = [];
     if (textareaRef.current) textareaRef.current.style.height = 'auto';
   };
 
@@ -367,10 +372,6 @@ export default function HikariChat(): ReactNode {
     }
 
     const assistantId = `a-${Date.now()}`;
-    const messagesForApi = [
-      ...messages.map((m) => ({ role: m.role as 'user' | 'assistant', content: m.content })),
-      { role: 'user' as const, content: trimmed },
-    ];
 
     setMessages((prev) => [
       ...prev,
@@ -384,31 +385,43 @@ export default function HikariChat(): ReactNode {
 
     if (textareaRef.current) textareaRef.current.style.height = 'auto';
 
+    const historySnapshot = historyRef.current;
+    historyRef.current = [...historyRef.current, { role: 'user', content: trimmed }];
+
     try {
       const openai = new OpenAI({ apiKey, dangerouslyAllowBrowser: true });
+
       const stream = await openai.chat.completions.create({
         model: selectedModel,
-        messages: [{ role: 'system', content: SYSTEM_PROMPT }, ...messagesForApi],
+        messages: [{ role: 'system', content: SYSTEM_PROMPT }, ...historyRef.current],
         stream: true,
       });
 
       let accumulated = '';
       for await (const chunk of stream) {
-        const delta = chunk.choices[0]?.delta?.content ?? '';
-        accumulated += delta;
-        setMessages((prev) =>
-          prev.map((m) => (m.id === assistantId ? { ...m, content: accumulated } : m))
-        );
+        const delta = chunk.choices[0]?.delta;
+        if (delta?.content) {
+          accumulated += delta.content;
+          setMessages((prev) =>
+            prev.map((m) => m.id === assistantId ? { ...m, content: accumulated } : m)
+          );
+        }
       }
+
+      historyRef.current = [
+        ...historyRef.current,
+        { role: 'assistant', content: accumulated },
+      ];
     } catch (err: unknown) {
       const errMsg = err instanceof Error ? err.message : String(err);
       setError(errMsg);
       setMessages((prev) => prev.filter((m) => m.id !== assistantId));
+      historyRef.current = historySnapshot;
     } finally {
       setIsLoading(false);
       setStreamingId(null);
     }
-  }, [input, isLoading, apiKey, messages, selectedModel]);
+  }, [input, isLoading, apiKey, selectedModel]);
 
   const handleKeyDown = (e: React.KeyboardEvent<HTMLTextAreaElement>) => {
     if (e.key === 'Enter' && !e.shiftKey) {
@@ -517,6 +530,12 @@ export default function HikariChat(): ReactNode {
                 API キーはブラウザの localStorage にのみ保存されます。
               </Translate>
             </p>
+            {maskedKey && (
+              <p className={styles.apiKeyHint}>
+                <Translate id="chat.apiKey.current">現在のキー: </Translate>
+                <span className={styles.maskedKey}>{maskedKey}</span>
+              </p>
+            )}
           </div>
         )}
 
