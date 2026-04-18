@@ -21,3 +21,6 @@ yarn-error.log*
 
 .env
 .claude
+
+# OGP フォントキャッシュ (node scripts/generate-ogp.js で自動ダウンロード)
+/scripts/fonts/
