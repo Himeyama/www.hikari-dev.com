@@ -217,7 +217,6 @@ const config: Config = {
         // },
         {to: '/', label: 'Blog', position: 'left'},
         {to: '/sukisuki', label: 'Like', position: 'left'},
-        {to: '/trivia', label: '本日の雑学', position: 'left', className: 'navbar__item--ja-only'},
         {to: '/hanoi', label: 'ハノイの塔', position: 'left'},
         {to: '/chat', label: 'Chat', position: 'right'},
         {
