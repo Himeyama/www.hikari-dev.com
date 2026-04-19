@@ -23,7 +23,7 @@ The static files are generated in the `build` folder.
 Test your production build locally:
 
 ```bash
-npm run serve
+pnpm serve
 ```
 
 The `build` folder is now served at [http://localhost:3000/](http://localhost:3000/).

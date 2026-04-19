@@ -25,6 +25,20 @@ const config: Config = {
         description: 'ひかりの技術備忘録。Linux、AWS、Python、Dockerなどインフラ・開発ツールに関する記事を発信中。',
       }),
     },
+    {
+      tagName: 'script',
+      attributes: {},
+      innerHTML: `
+        (function() {
+          try {
+            const font = localStorage.getItem('theme-font');
+            if (font && font !== 'default') {
+              document.documentElement.setAttribute('data-font', font);
+            }
+          } catch (e) {}
+        })();
+      `,
+    },
   ],
 
   markdown: {
@@ -49,7 +63,7 @@ const config: Config = {
 
   future: {
     v4: true,
-    experimental_faster: true,
+    faster: true,
   },
 
   themes: [
@@ -162,6 +176,21 @@ const config: Config = {
         onInlineAuthors: 'warn',
       },
     ],
+    () => ({
+      name: 'suppress-warnings-plugin',
+      configureWebpack(config, isServer) {
+        if (isServer) {
+          return {
+            externals: [
+              {
+                'vscode-languageserver-types': 'commonjs vscode-languageserver-types',
+              },
+            ],
+          };
+        }
+        return {};
+      },
+    }),
   ],
 
   themeConfig: {
@@ -195,6 +224,10 @@ const config: Config = {
         {
           href: 'https://github.com/himeyama',
           label: 'GitHub',
+          position: 'right',
+        },
+        {
+          type: 'custom-fontSwitcher',
           position: 'right',
         },
         {

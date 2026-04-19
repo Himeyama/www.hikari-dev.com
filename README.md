@@ -5,13 +5,13 @@
 ### インストール
 
 ```
-npm i
+pnpm i
 ```
 
 ### ローカル開発
 
 ```
-npm run start
+pnpm start
 ```
 
 このコマンドはローカル開発サーバーを起動し、ブラウザウィンドウを開きます。ほとんどの変更はサーバーを再起動せずにライブで反映されます。
@@ -19,7 +19,7 @@ npm run start
 ### ビルド
 
 ```
-npm run build
+pnpm build
 ```
 
 このコマンドは `build` ディレクトリに静的コンテンツを生成し、どの静的コンテンツホスティングサービスでも提供することができます。
@@ -29,13 +29,13 @@ npm run build
 SSH を使用する場合:
 
 ```
-USE_SSH=true npm run deploy
+USE_SSH=true pnpm deploy
 ```
 
 SSH を使用しない場合:
 
 ```
-GIT_USER=<あなたのGitHubユーザー名> npm run deploy
+GIT_USER=<あなたのGitHubユーザー名> pnpm deploy
 ```
 
 GitHub Pages を使用してホスティングしている場合、このコマンドはウェブサイトをビルドし、`gh-pages` ブランチにプッシュするための便利な方法です。
