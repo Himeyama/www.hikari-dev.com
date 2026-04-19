@@ -7,7 +7,7 @@ image: /img/ogp/2026-04-18-gpt-54-pricing-comparison.png
 
 本文比較 OpenAI 目前可用的 API 模型——GPT-5.4、GPT-5.4 nano、GPT-5.4 mini、GPT-4o、GPT-4o mini 的費用、規格與效能，並整理各使用情境下的選擇建議。
 
-<!-- truncate -->
+{/**/}
 
 > 單位：USD / 100 萬 Token（MTok）。資訊以 2026 年 4 月為準。
 

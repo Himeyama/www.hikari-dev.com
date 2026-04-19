@@ -7,7 +7,7 @@ image: /img/ogp/2026-04-02-translate-mcp.png
 
 translate-mcp is a translation tool that utilizes OpenAI's API. It supports both CLI mode and MCP server usage. It is useful in a wide range of scenarios, from translating an entire file to being integrated into AI tools.
 
-<!-- truncate -->
+{/**/}
 
 ## What is translate-mcp
 

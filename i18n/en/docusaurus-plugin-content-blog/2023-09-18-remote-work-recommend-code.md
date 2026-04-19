@@ -14,7 +14,7 @@ Currently, I have AC adapters connected for Alexa, Nintendo Switch, a circulator
 
 For such situations, ELECOM's AC adapter power extension cord is recommended.
 
-<!-- <iframe sandbox="allow-popups allow-scripts allow-modals allow-forms allow-same-origin" style="width:120px;height:240px;" marginwidth="0" marginheight="0" scrolling="no" frameborder="0" src="//rcm-fe.amazon-adsystem.com/e/cm?lt1=_blank&bc1=000000&IS2=1&bg1=FFFFFF&fc1=000000&lc1=0000FF&t=hikari0e5-22&language=ja_JP&o=9&p=8&l=as4&m=amazon&f=ifr&ref=as_ss_li_til&asins=B00B5LOOFK&linkId=9c398b7b8369e644ccedb08f9ddba8be"></iframe> -->
+{/**/}
 
 The outlets are branched, allowing AC adapters and other plugs to be used without interference.
 
@@ -27,7 +27,7 @@ Next, I recommend ELECOM's 3-prong, 4-outlet power strip with an earth terminal.
 
 However, the earth wire from this earth terminal might not reach if your plug is too far from the terminal. Therefore, for "2-prong + earth wire" plugs, it's safer to assume only 3 outlets can be actually used. (This doesn't apply to 3-prong plugs.)
 
-<!-- <iframe sandbox="allow-popups allow-scripts allow-modals allow-forms allow-same-origin" style="width:120px;height:240px;" marginwidth="0" marginheight="0" scrolling="no" frameborder="0" src="//rcm-fe.amazon-adsystem.com/e/cm?lt1=_blank&bc1=000000&IS2=1&bg1=FFFFFF&fc1=000000&lc1=0000FF&t=hikari0e5-22&language=ja_JP&o=9&p=8&l=as4&m=amazon&f=ifr&ref=as_ss_li_til&asins=B0010P69O0&linkId=d84a455a1e2a45a4f35c22aaa8585f68"></iframe> -->
+{/**/}
 
 Here are the specifications of this power strip:
 
@@ -46,7 +46,7 @@ The magnet and mounting holes are good for temporary fixing. (Note: screw-based 
 ## Desk-mounted Power Strips
 The next recommendation is a desk-mounted power strip.
 
-<!-- <iframe sandbox="allow-popups allow-scripts allow-modals allow-forms allow-same-origin" style="width:120px;height:240px;" marginwidth="0" marginheight="0" scrolling="no" frameborder="0" src="//rcm-fe.amazon-adsystem.com/e/cm?lt1=_blank&bc1=000000&IS2=1&bg1=FFFFFF&fc1=000000&lc1=0000FF&t=hikari0e5-22&language=ja_JP&o=9&p=8&l=as4&m=amazon&f=ifr&ref=as_ss_li_til&asins=B0009NTOO6&linkId=56c79432ac8cb420bad28dad2fb78bb5"></iframe> -->
+{/**/}
 
 - 2-prong
 - 3 outlets

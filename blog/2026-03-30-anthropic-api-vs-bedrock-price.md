@@ -7,7 +7,7 @@ image: /img/ogp/2026-03-30-anthropic-api-vs-bedrock-price.png
 
 Claude を API 経由で使う場合、Anthropic API 直接のほかに **AWS Bedrock**、**Google Vertex AI**、**Microsoft Azure (Azure AI Foundry)** 経由でも利用できる。基本料金はどの経路もほぼ同額だが、バッチ処理やクラウドエコシステムとの統合面で差がある。
 
-<!-- truncate -->
+{/* truncate */}
 
 > 単位: USD / 1M トークン (MTok) 。2026 年 3 月時点の情報。
 

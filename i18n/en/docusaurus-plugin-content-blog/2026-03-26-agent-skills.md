@@ -7,7 +7,7 @@ image: /img/ogp/2026-03-26-agent-skills.png
 
 Adding "skills" to an AI agent lets you extend its capabilities, just like installing a plugin for an app. This article explains how Agent Skills work and what an agent actually does internally when using them.
 
-<!-- truncate -->
+{/**/}
 
 ## What Is an AI Agent?
 

@@ -7,7 +7,7 @@ image: /img/ogp/2026-03-28-pagespeed-insights-seo-performance.png
 
 このブログのモバイル PageSpeed Insights スコアを **Performance 99、Accessibility 100、Best Practices 100、SEO 100** まで改善した。SEO・パフォーマンス・アクセシビリティの各観点から、実施した変更をまとめる。
 
-<!-- truncate -->
+{/* truncate */}
 
 ## 改善前の課題
 

@@ -6,7 +6,7 @@ tags: [AI, API]
 
 透過將 mitmproxy 設定為中間人代理，可以即時查看 AI 程式碼工具在背後進行的 API 通訊內容。
 
-<!-- truncate -->
+{/**/}
 
 ## 運作原理
 

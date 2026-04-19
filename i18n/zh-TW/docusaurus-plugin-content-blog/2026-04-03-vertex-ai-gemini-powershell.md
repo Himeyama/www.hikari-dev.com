@@ -6,7 +6,7 @@ tags: [AI, PowerShell, GCP]
 
 介紹如何從 PowerShell 經由 Google Cloud 的 Vertex AI 呼叫 Gemini 模型。涵蓋 OpenAI 相容端點與原生 Gemini 端點兩種方式。
 
-<!-- truncate -->
+{/**/}
 
 ## 認證方式
 

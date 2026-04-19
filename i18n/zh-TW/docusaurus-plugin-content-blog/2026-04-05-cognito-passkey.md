@@ -6,7 +6,7 @@ tags: [AWS, Cognito, WebAuthn, 安全性]
 
 在使用 AWS SAM 建立的檔案儲存 API 的使用者認證中，我使用了 Amazon Cognito。最近我新增了透過密碼金鑰 (WebAuthn) 登入的功能，因此總結一下設定內容。
 
-<!-- truncate -->
+{/**/}
 
 ## 前提條件：使用密碼金鑰所需的 Cognito 設定
 

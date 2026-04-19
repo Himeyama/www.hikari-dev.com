@@ -7,7 +7,7 @@ image: /img/ogp/2026-04-02-cors-security.png
 
 Web ブラウザーのセキュリティ機能である **CORS (Cross-Origin Resource Sharing)** について、「なぜ必要なのか」「何が危険なのか」を初心者向けに解説する。正しく理解することで、セキュアな Web 開発が可能になる。
 
-<!-- truncate -->
+{/* truncate */}
 
 ## CORS が必要になった背景: 同一オリジンポリシー
 

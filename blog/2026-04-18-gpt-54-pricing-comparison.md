@@ -7,7 +7,7 @@ image: /img/ogp/2026-04-18-gpt-54-pricing-comparison.png
 
 OpenAI の現行 API モデルである GPT-5.4、GPT-5.4 nano、GPT-5.4 mini、GPT-4o、GPT-4o mini の料金・スペック・性能を比較した。用途に応じてどのモデルを選ぶべきかをまとめる。
 
-<!-- truncate -->
+{/* truncate */}
 
 > 単位: USD / 1M トークン (MTok)。2026 年 4 月時点の情報。
 

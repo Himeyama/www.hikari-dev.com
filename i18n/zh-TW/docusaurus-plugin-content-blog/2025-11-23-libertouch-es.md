@@ -5,7 +5,7 @@ tags: [硬體]
 image: /img/blog/2025-11-23-libertouch-es/20251123_093730.jpg
 ---
 
-<!--truncate-->
+{/**/}
 
 ## Libertouch ES
 我入手了 Libertouch ES 的日文配列 (NC07902-B281-ES)。

@@ -120,7 +120,7 @@ cd my-website
     你可以在 `docs/` 目錄下創建 Markdown 文件作為關於你的頁面。
 
     ```markdown
-    <!-- docs/about.md -->
+    {/**/}
     ---
     sidebar_position: 1
     ---

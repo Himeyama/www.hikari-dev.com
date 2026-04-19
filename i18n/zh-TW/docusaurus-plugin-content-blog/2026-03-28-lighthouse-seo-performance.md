@@ -7,7 +7,7 @@ image: /img/ogp/2026-03-28-pagespeed-insights-seo-performance.png
 
 我把這個部落格的行動版 PageSpeed Insights 分數改善到 **Performance 99、Accessibility 100、Best Practices 100、SEO 100**。從 SEO、效能、可及性 三個面向整理我做過的改動。
 
-<!-- truncate -->
+{/**/}
 
 ## 改善前的問題
 

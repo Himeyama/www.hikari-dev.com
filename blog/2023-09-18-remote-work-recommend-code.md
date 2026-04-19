@@ -15,7 +15,7 @@ AC アダプターを OA タップに挿すと、隣の差込口と干渉し、�
 
 そんなときにおすすめなのがエレコムの AC アダプタ用電源延長コード。
 
-<!-- <iframe sandbox="allow-popups allow-scripts allow-modals allow-forms allow-same-origin" style="width:120px;height:240px;" marginwidth="0" marginheight="0" scrolling="no" frameborder="0" src="//rcm-fe.amazon-adsystem.com/e/cm?lt1=_blank&bc1=000000&IS2=1&bg1=FFFFFF&fc1=000000&lc1=0000FF&t=hikari0e5-22&language=ja_JP&o=9&p=8&l=as4&m=amazon&f=ifr&ref=as_ss_li_til&asins=B00B5LOOFK&linkId=9c398b7b8369e644ccedb08f9ddba8be"></iframe> -->
+{/**/}
 
 差込口が枝分かれしているので、AC アダプターと他のプラグが干渉することなく使用できる。
 
@@ -29,7 +29,7 @@ AC アダプターを OA タップに挿すと、隣の差込口と干渉し、�
 
 ただ、このアース端子は距離的に一番端のプラグから出ているアース線に届かない可能性があるので、「2 極 + アース線」のプラグで実際に使用できるのは 3 個口分と考えて良い。(3 極プラグの場合は関係ない。)
 
-<!-- <iframe sandbox="allow-popups allow-scripts allow-modals allow-forms allow-same-origin" style="width:120px;height:240px;" marginwidth="0" marginheight="0" scrolling="no" frameborder="0" src="//rcm-fe.amazon-adsystem.com/e/cm?lt1=_blank&bc1=000000&IS2=1&bg1=FFFFFF&fc1=000000&lc1=0000FF&t=hikari0e5-22&language=ja_JP&o=9&p=8&l=as4&m=amazon&f=ifr&ref=as_ss_li_til&asins=B0010P69O0&linkId=d84a455a1e2a45a4f35c22aaa8585f68"></iframe> -->
+{/**/}
 
 この電源タップの仕様について以下にまとめる
 
@@ -48,7 +48,7 @@ AC アダプターを OA タップに挿すと、隣の差込口と干渉し、�
 ## デスク用タップ
 次に紹介するのはデスク用の電源タップ。
 
-<!-- <iframe sandbox="allow-popups allow-scripts allow-modals allow-forms allow-same-origin" style="width:120px;height:240px;" marginwidth="0" marginheight="0" scrolling="no" frameborder="0" src="//rcm-fe.amazon-adsystem.com/e/cm?lt1=_blank&bc1=000000&IS2=1&bg1=FFFFFF&fc1=000000&lc1=0000FF&t=hikari0e5-22&language=ja_JP&o=9&p=8&l=as4&m=amazon&f=ifr&ref=as_ss_li_til&asins=B0009NTOO6&linkId=56c79432ac8cb420bad28dad2fb78bb5"></iframe> -->
+{/**/}
 
 - 2 極
 - 3 個口

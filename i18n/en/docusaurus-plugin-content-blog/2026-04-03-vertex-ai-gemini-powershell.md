@@ -7,7 +7,7 @@ image: /img/ogp/2026-04-03-vertex-ai-gemini-powershell.png
 
 This covers how to call Gemini models via Google Cloud's Vertex AI from PowerShell. Both the OpenAI-compatible endpoint and the native Gemini endpoint are explained.
 
-<!-- truncate -->
+{/**/}
 
 ## Authentication
 

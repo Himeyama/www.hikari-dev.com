@@ -7,7 +7,7 @@ image: /img/ogp/2026-04-02-cors-security.png
 
 説明 Web 瀏覽器的安全功能 **CORS (Cross-Origin Resource Sharing)**，涵蓋「為什麼需要」和「有什麼風險」，為初學者量身打造的解説。正確理解 CORS 能夠實現安全的 Web 開發。
 
-<!-- truncate -->
+{/**/}
 
 ## CORS 出現的背景：同源政策 (Same-Origin Policy)
 

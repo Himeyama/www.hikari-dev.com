@@ -7,7 +7,7 @@ image: /img/ogp/2026-04-02-translate-mcp.png
 
 translate-mcp 是一個使用 OpenAI API 的翻譯工具。它支援 CLI 模式和 MCP 伺服器的兩種使用方式，能夠應對從想要翻譯整個文件到希望與 AI 工具整合的各種場合。
 
-<!-- truncate -->
+{/**/}
 
 ## translate-mcp 是什麼
 

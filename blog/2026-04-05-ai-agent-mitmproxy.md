@@ -7,7 +7,7 @@ image: /img/ogp/2026-04-05-ai-agent-mitmproxy.png
 
 mitmproxy を中間プロキシとして設定することで、AI コーディングツールが裏側で行っている API 通信をリアルタイムで確認できる。
 
-<!-- truncate -->
+{/* truncate */}
 
 ## 仕組み
 

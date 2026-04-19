@@ -24,18 +24,18 @@ image: /img/ogp/2023-09-08-winui3-menuflyouticon.png
 <MenuFlyout>
     <MenuFlyoutItem Text="新建檔案">
         <MenuFlyoutItem.Icon>
-            <FontIcon Glyph="&#xE7C3;" /> <!-- &#xE7C3; 是檔案圖標的 Unicode -->
+            <FontIcon Glyph="&#xE7C3;" /> {/**/}
         </MenuFlyoutItem.Icon>
     </MenuFlyadItem>
     <MenuFlyoutItem Text="開啟檔案">
         <MenuFlyoutItem.Icon>
-            <FontIcon Glyph="&#xE8E5;" /> <!-- &#xE8E5; 是資料夾圖標的 Unicode -->
+            <FontIcon Glyph="&#xE8E5;" /> {/**/}
         </MenuFlyoutItem.Icon>
     </MenuFlyoutItem>
     <MenuFlyoutSeparator />
     <MenuFlyoutItem Text="儲存">
         <MenuFlyoutItem.Icon>
-            <FontIcon Glyph="&#xE74E;" /> <!-- &#xE74E; 是儲存圖標的 Unicode -->
+            <FontIcon Glyph="&#xE74E;" /> {/**/}
         </MenuFlyoutItem.Icon>
     </MenuFlyoutItem>
 </MenuFlyout>
@@ -88,7 +88,7 @@ image: /img/ogp/2023-09-08-winui3-menuflyouticon.png
 <MenuFlyout>
     <MenuFlyoutItem Text="自定義圖標">
         <MenuFlyoutItem.Icon>
-            <PathIcon Data="M10,10 L20,20 M10,20 L20,10" /> <!-- 簡單的交叉圖案 -->
+            <PathIcon Data="M10,10 L20,20 M10,20 L20,10" /> {/**/}
         </MenuFlyoutItem.Icon>
     </MenuFlyoutItem>
 </MenuFlyout>

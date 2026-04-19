@@ -7,7 +7,7 @@ image: /img/ogp/2026-04-05-ai-agent-mitmproxy.png
 
 By setting up mitmproxy as a man-in-the-middle proxy, you can monitor the API traffic that AI coding tools make in real time.
 
-<!-- truncate -->
+{/**/}
 
 ## How It Works
 

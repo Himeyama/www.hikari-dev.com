@@ -7,7 +7,7 @@ image: /img/ogp/2026-03-28-lighthouse-seo-performance.png
 
 I improved this blog's mobile Lighthouse scores to **Performance 99, Accessibility 100, Best Practices 100, and SEO 100**. Here's what I did, broken down into SEO, performance, and accessibility improvements.
 
-<!-- truncate -->
+{/**/}
 
 ## Problems Before the Improvements
 

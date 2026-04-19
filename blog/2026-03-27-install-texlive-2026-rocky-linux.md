@@ -7,7 +7,7 @@ image: /img/ogp/2026-03-27-install-texlive-2026-rocky-linux.png
 
 Linux (RHEL 系) に ISO イメージを使って TeX Live 2026 をインストールする手順をまとめた。RHEL 系全般に適用できる。
 
-<!-- truncate -->
+{/* truncate */}
 
 ## 前提条件
 

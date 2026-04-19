@@ -99,6 +99,24 @@ html:not([lang="ja"]) .navbar__item--ja-only {
   display: none;
 }
 
+/* フォント切り替え */
+[data-font='ud-digi'] {
+  --ifm-font-family-base: "UD Digi Kyokasho NK", "UD デジタル 教科書体 NK", sans-serif;
+  --article-serif-font: "UD Digi Kyokasho NK", "UD デジタル 教科書体 NK", sans-serif;
+  --article-serif-bold-font: "UD Digi Kyokasho NK-B", "UD デジタル 教科書体 NK-B", sans-serif;
+}
+
+[data-font='ud-digi'] article strong,
+[data-font='ud-digi'] article b,
+[data-font='ud-digi'] article h1,
+[data-font='ud-digi'] article h2,
+[data-font='ud-digi'] article h3,
+[data-font='ud-digi'] article h4,
+[data-font='ud-digi'] article h5,
+[data-font='ud-digi'] article h6 {
+  font-family: "UD Digi Kyokasho NK-B", "UD デジタル 教科書体 NK-B", sans-serif;
+}
+
 /* チャットページではフッターを非表示 */
 .chat-page-wrapper ~ footer {
   display: none;

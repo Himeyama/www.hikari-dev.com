@@ -7,7 +7,7 @@ image: /img/ogp/2026-03-29-japanese-bold-serif-gothic.png
 
 Even when body text uses Mincho (serif) typeface, **bold text typically renders in Gothic (sans-serif)**. This is an intentional design choice rooted in readability, visual clarity, and historical printing conventions.
 
-<!-- truncate -->
+{/**/}
 
 ## Readability
 

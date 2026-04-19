@@ -7,7 +7,7 @@ image: /img/ogp/2026-03-30-anthropic-api-vs-bedrock-price.png
 
 When using Claude via API, you have more than two options: in addition to calling the **Anthropic API directly**, you can also use it via **AWS Bedrock**, **Google Vertex AI**, or **Microsoft Azure (Azure AI Foundry)**. Base pricing is the same across all routes, but there are differences in batch processing and cloud ecosystem integration.
 
-<!-- truncate -->
+{/**/}
 
 > Unit: USD / 1M tokens (MTok). Information as of March 2026.
 

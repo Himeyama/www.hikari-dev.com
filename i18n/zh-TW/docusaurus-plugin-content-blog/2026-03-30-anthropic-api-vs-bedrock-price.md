@@ -7,7 +7,7 @@ image: /img/ogp/2026-03-30-anthropic-api-vs-bedrock-price.png
 
 Claude 若要透過 API 使用，除了直接使用 Anthropic API 外，也能經由 **AWS Bedrock**、**Google Vertex AI**、**Microsoft Azure (Azure AI Foundry)** 使用。基本價格各路徑幾乎相同，但在批次處理與與雲端生態系統整合面會有差異。
 
-<!-- truncate -->
+{/**/}
 
 > 單位：USD / 1M 代幣 (MTok)。資料截至 2026 年 3 月。
 
