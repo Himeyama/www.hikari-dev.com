@@ -1,5 +1,8 @@
 name: Deploy to Cloudflare Pages
 on:
+  push:
+    branches:
+      - docusaurus
   workflow_dispatch:
 
 jobs:
