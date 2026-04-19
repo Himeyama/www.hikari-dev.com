@@ -38,6 +38,7 @@ jobs:
         with:
           apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
           accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
-          projectName: www-hikari-dev-com # Cloudflare Pages のプロジェクト名に合わせて変更してください
+          projectName: www-hikari-dev-com
           directory: build
           gitHubToken: ${{ secrets.GITHUB_TOKEN }}
+          branch: docusaurus
