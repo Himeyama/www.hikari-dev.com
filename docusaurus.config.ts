@@ -78,6 +78,14 @@ const config: Config = {
 
   future: {
     v4: true,
+    faster: {
+      swcJsLoader: true,
+      swcJsMinimizer: true,
+      swcHtmlMinimizer: true,
+      lightningCssMinimizer: true,
+      rspackBundler: true,
+      mdxCrossCompilerCache: true,
+    },
   },
 
   themes: [
