@@ -172,7 +172,7 @@ function makeOGPElement(title, tags) {
               fontSize: 22,
               fontWeight: 700,
             },
-            children: 'hikari.dev',
+            children: 'hikari-dev.com',
           },
         },
       ],
