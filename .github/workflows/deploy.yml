@@ -1,12 +1,10 @@
-name: Deploy to S3
+name: Deploy to Cloudflare Pages
 on:
-  push:
-    branches:
-      - docusaurus
+  workflow_dispatch:
 
 jobs:
   build-and-deploy:
-    name: Build and Deploy to S3
+    name: Build and Deploy to Cloudflare Pages
     runs-on: ubuntu-latest
     environment: production
     
@@ -34,14 +32,12 @@ jobs:
         run: pnpm run build
         env:
           GA_CREDENTIALS: ${{ secrets.GA_CREDENTIALS }}
-
-      - name: Configure AWS credentials
-        uses: aws-actions/configure-aws-credentials@v4
-        with:
-          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
-          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          aws-region: ap-northeast-1
       
-      - name: Deploy to S3
-        run: |
-          aws s3 sync ./build s3://${{ secrets.S3_BUCKET }} --delete
+      - name: Deploy to Cloudflare Pages
+        uses: cloudflare/pages-action@v1
+        with:
+          apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+          projectName: www-hikari-dev-com # Cloudflare Pages のプロジェクト名に合わせて変更してください
+          directory: build
+          gitHubToken: ${{ secrets.GITHUB_TOKEN }}
