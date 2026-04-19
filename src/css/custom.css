@@ -117,6 +117,42 @@ html:not([lang="ja"]) .navbar__item--ja-only {
   font-family: "UD Digi Kyokasho NK", "UD デジタル 教科書体 NK", sans-serif;
 }
 
+/* BIZ UDP ゴシック */
+[data-font='biz-gothic'] {
+  --ifm-font-family-base: 'BIZ UDPGothic', sans-serif;
+  --article-serif-font: 'BIZ UDPGothic', sans-serif;
+  --article-serif-bold-font: 'BIZ UDPGothic', sans-serif;
+}
+
+[data-font='biz-gothic'] article strong,
+[data-font='biz-gothic'] article b,
+[data-font='biz-gothic'] article h1,
+[data-font='biz-gothic'] article h2,
+[data-font='biz-gothic'] article h3,
+[data-font='biz-gothic'] article h4,
+[data-font='biz-gothic'] article h5,
+[data-font='biz-gothic'] article h6 {
+  font-family: 'BIZ UDPGothic', sans-serif;
+}
+
+/* BIZ UDP 明朝 (本文: 明朝、見出し・強調: ゴシック) */
+[data-font='biz-mincho'] {
+  --ifm-font-family-base: 'BIZ UDPMincho', serif;
+  --article-serif-font: 'BIZ UDPMincho', serif;
+  --article-serif-bold-font: 'BIZ UDPGothic', sans-serif;
+}
+
+[data-font='biz-mincho'] strong,
+[data-font='biz-mincho'] b,
+[data-font='biz-mincho'] h1,
+[data-font='biz-mincho'] h2,
+[data-font='biz-mincho'] h3,
+[data-font='biz-mincho'] h4,
+[data-font='biz-mincho'] h5,
+[data-font='biz-mincho'] h6 {
+  font-family: 'BIZ UDPGothic', sans-serif;
+}
+
 /* チャットページではフッターを非表示 */
 .chat-page-wrapper ~ footer {
   display: none;

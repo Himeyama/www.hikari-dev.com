@@ -68,6 +68,32 @@ export default function FontSwitcher(): JSX.Element | null {
             <Translate id="theme.fontSwitcher.udDigi">UD デジタル 教科書体</Translate>
           </a>
         </li>
+        <li>
+          <a
+            className={clsx('dropdown__link', {
+              'dropdown__link--active': font === 'biz-gothic',
+            })}
+            href="#"
+            onClick={(e) => {
+              e.preventDefault();
+              changeFont('biz-gothic');
+            }}>
+            <Translate id="theme.fontSwitcher.bizGothic">BIZ UDP ゴシック</Translate>
+          </a>
+        </li>
+        <li>
+          <a
+            className={clsx('dropdown__link', {
+              'dropdown__link--active': font === 'biz-mincho',
+            })}
+            href="#"
+            onClick={(e) => {
+              e.preventDefault();
+              changeFont('biz-mincho');
+            }}>
+            <Translate id="theme.fontSwitcher.bizMincho">BIZ UDP 明朝</Translate>
+          </a>
+        </li>
       </ul>
     </div>
   );
