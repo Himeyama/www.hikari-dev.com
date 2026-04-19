@@ -159,7 +159,7 @@ const config: Config = {
         },
         blog: {
           blogSidebarCount: 'ALL',
-          showReadingTime: true,
+          showReadingTime: false,
           feedOptions: {
             type: ['rss', 'atom'],
             xslt: true,
@@ -188,7 +188,7 @@ const config: Config = {
         routeBasePath: 'sukisuki',
         path: './sukisuki',
         blogSidebarCount: 'ALL',
-        showReadingTime: true,
+        showReadingTime: false,
         onUntruncatedBlogPosts: 'ignore',
         onInlineTags: 'warn',
         onInlineAuthors: 'warn',
