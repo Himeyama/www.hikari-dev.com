@@ -491,5 +491,14 @@
   "hanoi.formulaLabel": {
     "message": "最小手数",
     "description": "Label before the minimum moves formula"
+  },
+  "theme.fontSwitcher.label": {
+    "message": "フォント"
+  },
+  "theme.fontSwitcher.default": {
+    "message": "標準"
+  },
+  "theme.fontSwitcher.udDigi": {
+    "message": "UD デジタル 教科書体"
   }
 }

@@ -507,24 +507,73 @@
     "message": "最少步數",
     "description": "Label before the minimum moves formula"
   },
-  "chat.title": { "message": "光輝聊天" },
-  "chat.description": { "message": "與 AI 對話" },
-  "chat.settings": { "message": "設定" },
-  "chat.model.label": { "message": "模型" },
-  "chat.apiKey.label": { "message": "OpenAI API 金鑰" },
-  "chat.apiKey.placeholder": { "message": "sk-..." },
-  "chat.apiKey.save": { "message": "儲存" },
-  "chat.apiKey.show": { "message": "顯示" },
-  "chat.apiKey.hide": { "message": "隱藏" },
-  "chat.apiKey.current": { "message": "已設定：" },
-  "chat.apiKey.note": { "message": "API 金鑰僅儲存在您的瀏覽器 localStorage 中。" },
-  "chat.reset": { "message": "重置" },
-  "chat.send": { "message": "傳送" },
-  "chat.input.placeholder": { "message": "傳送訊息... (Ctrl+Enter 傳送)" },
-  "chat.input.note": { "message": "Ctrl+Enter 傳送。關閉頁面後對話記錄會重置。" },
-  "chat.error.noApiKey": { "message": "請設定您的 OpenAI API 金鑰。" },
-  "chat.welcome": { "message": "您好！請隨時提問。" },
-  "chat.welcome.noKey": { "message": "請先在上方設定中填入 API 金鑰。" },
-  "chat.code.copy": { "message": "複製" },
-  "chat.code.copied": { "message": "已複製！" }
+  "chat.title": {
+    "message": "光輝聊天"
+  },
+  "chat.description": {
+    "message": "與 AI 對話"
+  },
+  "chat.settings": {
+    "message": "設定"
+  },
+  "chat.model.label": {
+    "message": "模型"
+  },
+  "chat.apiKey.label": {
+    "message": "OpenAI API 金鑰"
+  },
+  "chat.apiKey.placeholder": {
+    "message": "sk-..."
+  },
+  "chat.apiKey.save": {
+    "message": "儲存"
+  },
+  "chat.apiKey.show": {
+    "message": "顯示"
+  },
+  "chat.apiKey.hide": {
+    "message": "隱藏"
+  },
+  "chat.apiKey.current": {
+    "message": "已設定："
+  },
+  "chat.apiKey.note": {
+    "message": "API 金鑰僅儲存在您的瀏覽器 localStorage 中。"
+  },
+  "chat.reset": {
+    "message": "重置"
+  },
+  "chat.send": {
+    "message": "傳送"
+  },
+  "chat.input.placeholder": {
+    "message": "傳送訊息... (Ctrl+Enter 傳送)"
+  },
+  "chat.input.note": {
+    "message": "Ctrl+Enter 傳送。關閉頁面後對話記錄會重置。"
+  },
+  "chat.error.noApiKey": {
+    "message": "請設定您的 OpenAI API 金鑰。"
+  },
+  "chat.welcome": {
+    "message": "您好！請隨時提問。"
+  },
+  "chat.welcome.noKey": {
+    "message": "請先在上方設定中填入 API 金鑰。"
+  },
+  "chat.code.copy": {
+    "message": "複製"
+  },
+  "chat.code.copied": {
+    "message": "已複製！"
+  },
+  "theme.fontSwitcher.label": {
+    "message": "字體"
+  },
+  "theme.fontSwitcher.default": {
+    "message": "預設"
+  },
+  "theme.fontSwitcher.udDigi": {
+    "message": "UD 數位教科書體"
+  }
 }

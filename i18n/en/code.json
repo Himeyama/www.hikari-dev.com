@@ -539,24 +539,73 @@
     "message": "Minimum moves",
     "description": "Label before the minimum moves formula"
   },
-  "chat.title": { "message": "Hikari Chat" },
-  "chat.description": { "message": "Chat with AI" },
-  "chat.settings": { "message": "Settings" },
-  "chat.model.label": { "message": "Model" },
-  "chat.apiKey.label": { "message": "OpenAI API Key" },
-  "chat.apiKey.placeholder": { "message": "sk-..." },
-  "chat.apiKey.save": { "message": "Save" },
-  "chat.apiKey.show": { "message": "Show" },
-  "chat.apiKey.hide": { "message": "Hide" },
-  "chat.apiKey.current": { "message": "Saved:" },
-  "chat.apiKey.note": { "message": "Your API key is stored only in your browser's localStorage." },
-  "chat.reset": { "message": "Reset" },
-  "chat.send": { "message": "Send" },
-  "chat.input.placeholder": { "message": "Send a message... (Ctrl+Enter to send)" },
-  "chat.input.note": { "message": "Ctrl+Enter to send. History resets when you close the page." },
-  "chat.error.noApiKey": { "message": "Please set your OpenAI API key." },
-  "chat.welcome": { "message": "Hello! Ask me anything." },
-  "chat.welcome.noKey": { "message": "Please set your API key in the settings above." },
-  "chat.code.copy": { "message": "Copy" },
-  "chat.code.copied": { "message": "Copied!" }
+  "chat.title": {
+    "message": "Hikari Chat"
+  },
+  "chat.description": {
+    "message": "Chat with AI"
+  },
+  "chat.settings": {
+    "message": "Settings"
+  },
+  "chat.model.label": {
+    "message": "Model"
+  },
+  "chat.apiKey.label": {
+    "message": "OpenAI API Key"
+  },
+  "chat.apiKey.placeholder": {
+    "message": "sk-..."
+  },
+  "chat.apiKey.save": {
+    "message": "Save"
+  },
+  "chat.apiKey.show": {
+    "message": "Show"
+  },
+  "chat.apiKey.hide": {
+    "message": "Hide"
+  },
+  "chat.apiKey.current": {
+    "message": "Saved:"
+  },
+  "chat.apiKey.note": {
+    "message": "Your API key is stored only in your browser's localStorage."
+  },
+  "chat.reset": {
+    "message": "Reset"
+  },
+  "chat.send": {
+    "message": "Send"
+  },
+  "chat.input.placeholder": {
+    "message": "Send a message... (Ctrl+Enter to send)"
+  },
+  "chat.input.note": {
+    "message": "Ctrl+Enter to send. History resets when you close the page."
+  },
+  "chat.error.noApiKey": {
+    "message": "Please set your OpenAI API key."
+  },
+  "chat.welcome": {
+    "message": "Hello! Ask me anything."
+  },
+  "chat.welcome.noKey": {
+    "message": "Please set your API key in the settings above."
+  },
+  "chat.code.copy": {
+    "message": "Copy"
+  },
+  "chat.code.copied": {
+    "message": "Copied!"
+  },
+  "theme.fontSwitcher.label": {
+    "message": "Font"
+  },
+  "theme.fontSwitcher.default": {
+    "message": "Default"
+  },
+  "theme.fontSwitcher.udDigi": {
+    "message": "UD Digi Kyokasho"
+  }
 }
