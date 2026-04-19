@@ -103,7 +103,7 @@ html:not([lang="ja"]) .navbar__item--ja-only {
 [data-font='ud-digi'] {
   --ifm-font-family-base: "UD Digi Kyokasho NK", "UD デジタル 教科書体 NK", sans-serif;
   --article-serif-font: "UD Digi Kyokasho NK", "UD デジタル 教科書体 NK", sans-serif;
-  --article-serif-bold-font: "UD Digi Kyokasho NK-B", "UD デジタル 教科書体 NK-B", sans-serif;
+  --article-serif-bold-font: "UD Digi Kyokasho NK", "UD デジタル 教科書体 NK", sans-serif;
 }
 
 [data-font='ud-digi'] article strong,
@@ -114,7 +114,7 @@ html:not([lang="ja"]) .navbar__item--ja-only {
 [data-font='ud-digi'] article h4,
 [data-font='ud-digi'] article h5,
 [data-font='ud-digi'] article h6 {
-  font-family: "UD Digi Kyokasho NK-B", "UD デジタル 教科書体 NK-B", sans-serif;
+  font-family: "UD Digi Kyokasho NK", "UD デジタル 教科書体 NK", sans-serif;
 }
 
 /* チャットページではフッターを非表示 */
