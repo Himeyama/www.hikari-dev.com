@@ -181,6 +181,11 @@ function makeOGPElement(title, tags) {
 }
 
 async function main() {
+  const fileArg = (() => {
+    const i = process.argv.indexOf('--file');
+    return i !== -1 ? path.basename(process.argv[i + 1]) : null;
+  })();
+
   const { default: satori } = await import('satori');
   fs.mkdirSync(OGP_DIR, { recursive: true });
   const fonts = await loadFonts();
@@ -190,7 +195,8 @@ async function main() {
 
   for (const { dir, prefix } of BLOG_DIRS) {
     if (!fs.existsSync(dir)) continue;
-    const files = fs.readdirSync(dir).filter(f => f.endsWith('.md') || f.endsWith('.mdx'));
+    let files = fs.readdirSync(dir).filter(f => f.endsWith('.md') || f.endsWith('.mdx'));
+    if (fileArg) files = files.filter(f => f === fileArg);
 
     for (const file of files) {
       const filePath = path.join(dir, file);

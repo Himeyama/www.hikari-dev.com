@@ -17,6 +17,7 @@
 - `image:` が未設定の場合、タグベースのグラデーション PNG (`/img/ogp/SLUG.png`) が使われる。
   - 画像は `scripts/generate-ogp.js` で生成済み（外部ライブラリ不要）。
   - 新記事を追加して `image:` を設定しない場合は `node scripts/generate-ogp.js` を再実行すること。
+  - 特定記事のみ生成する場合は `--file` オプションを使う: `node scripts/generate-ogp.js --file 2026-04-20-slug.md`
   - タグと色の対応は同スクリプト内の `TAG_COLORS` を編集して変更できる。
 - パスに括弧 `()` を含む画像も YAML フロントマターには直接記述できる（Markdown リンク構文とは異なる）。
 
