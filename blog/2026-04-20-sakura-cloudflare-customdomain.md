@@ -1,7 +1,7 @@
 ---
 title: Cloudflare Workers で独自ドメインをさくらサーバーのサブパスに割り当てた
 authors: [hikari]
-tags: [AWS, Cloudflare, さくらのレンタルサーバー]
+tags: [Cloudflare, さくらのレンタルサーバー]
 image: /img/ogp/2026-04-20-sakura-cloudflare-customdomain.png
 ---
 
