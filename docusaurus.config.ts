@@ -235,7 +235,6 @@ const config: Config = {
         //   label: 'Tutorial',
         // },
         {to: '/', label: 'Blog', position: 'left'},
-        {to: '/sukisuki', label: 'Like', position: 'left'},
         {to: '/hanoi', label: 'ハノイの塔', position: 'left'},
         {to: '/chat', label: 'Chat', position: 'right'},
         {
