@@ -139,7 +139,18 @@ module.exports = function gaRankingPlugin(context) {
       }
 
       const accessToken = await getAccessToken(credentials);
-      const rows = await fetchPageRanking(accessToken, '320051022');
+      const rawRows = await fetchPageRanking(accessToken, '320051022');
+
+      // 末尾スラッシュの有無を統一してページビューを合算する
+      /** @type {Map<string, number>} */
+      const pageviewMap = new Map();
+      for (const { pagePath, pageviews } of rawRows) {
+        const normalizedPath = pagePath.replace(/\/$/, '') || '/';
+        pageviewMap.set(normalizedPath, (pageviewMap.get(normalizedPath) ?? 0) + pageviews);
+      }
+      const rows = Array.from(pageviewMap.entries())
+        .map(([pagePath, pageviews]) => ({ pagePath, pageviews }))
+        .sort((a, b) => b.pageviews - a.pageviews);
 
       const blogDir = path.join(context.siteDir, 'blog');
       const enBlogDir = path.join(context.siteDir, 'i18n', 'en', 'docusaurus-plugin-content-blog');
@@ -202,7 +213,7 @@ module.exports = function gaRankingPlugin(context) {
           title,
           titleEn: enTitleMap[fileBase] ?? title,
           titleZhTw: zhTwTitleMap[fileBase] ?? title,
-          permalink: pagePath,
+          permalink: pagePath.replace(/\/$/, ''),
           pageviews,
           image,
         });
