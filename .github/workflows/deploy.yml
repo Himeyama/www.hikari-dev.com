@@ -47,15 +47,8 @@ jobs:
         env:
           GA_CREDENTIALS: ${{ secrets.GA_CREDENTIALS }}
       
-      - name: Copy Pages Functions to build
-        run: cp -r functions build/
-
       - name: Deploy to Cloudflare Pages
-        uses: cloudflare/pages-action@v1
-        with:
-          apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
-          accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
-          projectName: www-hikari-dev-com
-          directory: build
-          gitHubToken: ${{ secrets.GITHUB_TOKEN }}
-          branch: docusaurus
+        run: npx wrangler pages deploy build --project-name=www-hikari-dev-com --branch=docusaurus
+        env:
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
