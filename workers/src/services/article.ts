@@ -12,24 +12,18 @@ export class ArticleService {
   constructor(private github: GitHubClient) {}
 
   async list(lang: Lang): Promise<ArticleMeta[]> {
-    const files = await this.github.listDirectory(listPath(lang));
+    const files = await this.github.listDirectoryWithContent(listPath(lang));
     const articles: ArticleMeta[] = [];
 
-    await Promise.all(
-      files.map(async (file) => {
-        if (!file.name.endsWith(".md") && !file.name.endsWith(".mdx")) return;
-        const parsedName = parseFilename(file.name);
-        if (!parsedName) return;
+    for (const file of files) {
+      const parsedName = parseFilename(file.name);
+      if (!parsedName) continue;
 
-        const raw = await this.github.getFile(file.path);
-        if (!raw) return;
+      const parsed = parseFrontmatter(file.content);
+      if (!parsed) continue;
 
-        const parsed = parseFrontmatter(raw.content);
-        if (!parsed) return;
-
-        articles.push(metaFromFrontmatter(parsedName, lang, parsed.meta));
-      }),
-    );
+      articles.push(metaFromFrontmatter(parsedName, lang, parsed.meta));
+    }
 
     return articles.sort((a, b) => b.date.localeCompare(a.date));
   }

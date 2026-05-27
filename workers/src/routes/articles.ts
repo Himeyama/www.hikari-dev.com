@@ -34,7 +34,8 @@ articlesRouter.get("/", async (c) => {
   try {
     const articles = await getService(c).list(lang);
     return ok(articles, requestId);
-  } catch {
+  } catch (e) {
+    console.error("[articles.list]", e);
     return internalError(requestId);
   }
 });

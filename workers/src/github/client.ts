@@ -23,8 +23,8 @@ export class GitHubClient {
 
   constructor(
     private token: string,
-    owner: string,
-    repo: string,
+    private owner: string,
+    private repo: string,
     private branch: string,
   ) {
     this.baseUrl = `https://api.github.com/repos/${owner}/${repo}`;
@@ -111,6 +111,53 @@ export class GitHubClient {
 
     const data = (await res.json()) as GitHubListItem[];
     return data.filter((f) => f.type === "file");
+  }
+
+  async listDirectoryWithContent(prefix: string): Promise<{ name: string; path: string; content: string }[]> {
+    const query = `
+      query($owner: String!, $repo: String!, $expr: String!) {
+        repository(owner: $owner, name: $repo) {
+          object(expression: $expr) {
+            ... on Tree {
+              entries {
+                name
+                object {
+                  ... on Blob { text }
+                }
+              }
+            }
+          }
+        }
+      }
+    `;
+    const res = await fetch("https://api.github.com/graphql", {
+      method: "POST",
+      headers: this.headers(),
+      body: JSON.stringify({
+        query,
+        variables: {
+          owner: this.owner,
+          repo: this.repo,
+          expr: `${this.branch}:${prefix}`,
+        },
+      }),
+    });
+    if (!res.ok) throw new Error(`GitHub GraphQL error: ${res.status} ${await res.text()}`);
+
+    const json = (await res.json()) as {
+      data?: {
+        repository?: {
+          object?: {
+            entries?: { name: string; object?: { text?: string } }[];
+          };
+        };
+      };
+    };
+
+    const entries = json.data?.repository?.object?.entries ?? [];
+    return entries
+      .filter((e) => e.object?.text !== undefined && (e.name.endsWith(".md") || e.name.endsWith(".mdx")))
+      .map((e) => ({ name: e.name, path: `${prefix}/${e.name}`, content: e.object!.text! }));
   }
 
   async exists(path: string): Promise<boolean> {
