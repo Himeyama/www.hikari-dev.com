@@ -47,6 +47,9 @@ jobs:
         env:
           GA_CREDENTIALS: ${{ secrets.GA_CREDENTIALS }}
       
+      - name: Copy Pages Functions to build
+        run: cp -r functions build/
+
       - name: Deploy to Cloudflare Pages
         uses: cloudflare/pages-action@v1
         with:
