@@ -21,7 +21,7 @@ const lightTheme = EditorView.theme(
     },
     ".cm-content": {
       caretColor: "#24292e",
-      fontFamily: "'BIZ UDPGothic', monospace",
+      fontFamily: "'Cascadia Code', 'BIZ UDGothic', monospace",
       fontSize: "14px",
     },
     "&.cm-focused .cm-selectionBackground, .cm-selectionBackground": {
