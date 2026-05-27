@@ -10,7 +10,8 @@ import type {
 import { normalizeSlug, todayDate } from "../../lib/admin/slug";
 import { clearDraft, loadDraft, useAutoSave } from "../../lib/admin/useAutoSave";
 import {
-  generateOutline,
+  generateFromPrompt,
+  editWithPrompt,
   translateToOtherLangs,
   type AiModel,
   type TranslationResult,
@@ -19,7 +20,7 @@ import { Editor } from "./Editor";
 import { Preview } from "./Preview";
 import { ArticleList } from "./ArticleList";
 import { FrontmatterForm, type FrontmatterFormState } from "./FrontmatterForm";
-import { AiPanel, type AiTask } from "./AiPanel";
+import { AiSidePanel, type AiTask } from "./AiSidePanel";
 import { TranslationModal } from "./TranslationModal";
 import { ApiKeyModal } from "./ApiKeyModal";
 import { AdminSecretModal } from "./AdminSecretModal";
@@ -78,6 +79,7 @@ export function AdminApp() {
   const [saving, setSaving] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [showPreview, setShowPreview] = useState(true);
+  const [showAiPanel, setShowAiPanel] = useState(true);
 
   const [aiModel, setAiModel] = useState<AiModel>("gpt-5-mini");
   const [aiTask, setAiTask] = useState<AiTask>(null);
@@ -258,17 +260,15 @@ export function AdminApp() {
     }
   }
 
-  async function handleGenerateOutline() {
+  async function handleAiGenerate(prompt: string, mode: "create" | "edit") {
     if (!editState) return;
-    if (editState.body && !confirm("現在の本文を AI 生成内容で置き換えますか?")) return;
-    setAiTask("outline");
+    setAiTask("ai");
     setError(null);
     try {
-      const result = await generateOutline(
-        editState.form.title,
-        editState.form.tags,
-        aiModel,
-      );
+      const result =
+        mode === "create"
+          ? await generateFromPrompt(prompt, aiModel)
+          : await editWithPrompt(editState.body, prompt, aiModel);
       patchBody(result);
     } catch (e) {
       handleError(e);
@@ -380,15 +380,15 @@ export function AdminApp() {
                 削除
               </button>
             )}
-            <AiPanel
-              model={aiModel}
-              onModelChange={setAiModel}
-              onGenerateOutline={handleGenerateOutline}
-              onTranslate={handleTranslate}
-              onOpenSettings={() => setShowApiKeyModal(true)}
-              task={aiTask}
-              disabled={false}
-            />
+            <span className="admin-toolbar-divider" />
+            <button
+              type="button"
+              className={`admin-btn admin-btn-secondary${showAiPanel ? " admin-btn-active" : ""}`}
+              onClick={() => setShowAiPanel((v: boolean) => !v)}
+              title="AI パネルの表示/非表示"
+            >
+              AI
+            </button>
             <button
               type="button"
               className="admin-btn admin-btn-secondary"
@@ -440,6 +440,19 @@ export function AdminApp() {
                 </div>
               )}
             </aside>
+            {showAiPanel && (
+              <aside className="admin-ai-col">
+                <AiSidePanel
+                  body={editState.body}
+                  model={aiModel}
+                  onModelChange={setAiModel}
+                  onGenerate={handleAiGenerate}
+                  onTranslate={handleTranslate}
+                  onOpenSettings={() => setShowApiKeyModal(true)}
+                  task={aiTask}
+                />
+              </aside>
+            )}
           </div>
         </div>
       ) : (

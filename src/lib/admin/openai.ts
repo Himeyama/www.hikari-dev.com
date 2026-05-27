@@ -67,6 +67,48 @@ async function translateOne(
   return res.choices[0]?.message?.content ?? "";
 }
 
+export async function generateFromPrompt(
+  prompt: string,
+  model: AiModel,
+): Promise<string> {
+  const client = createClient();
+  const res = await client.chat.completions.create({
+    model,
+    messages: [
+      {
+        role: "system",
+        content:
+          "あなたはブログ記事のライターです。指定された内容に基づいて、読みやすく構造化された Markdown 形式のブログ記事を日本語で書いてください。文体は「である調」で統一し、見出しは ## から始めてください。コードブロックには言語を指定してください。前置きや説明は不要です。記事本文のみ出力してください。",
+      },
+      { role: "user", content: prompt },
+    ],
+  });
+  return res.choices[0]?.message?.content ?? "";
+}
+
+export async function editWithPrompt(
+  content: string,
+  instruction: string,
+  model: AiModel,
+): Promise<string> {
+  const client = createClient();
+  const res = await client.chat.completions.create({
+    model,
+    messages: [
+      {
+        role: "system",
+        content:
+          "あなたはブログ記事の編集者です。与えられた Markdown 記事を指示に従って編集してください。Markdown の形式と構造を保ちながら、指示された変更を加えてください。編集後の記事全体を出力してください。前置きや説明は不要です。",
+      },
+      {
+        role: "user",
+        content: `以下の記事を編集してください。\n\n---\n${content}\n---\n\n指示: ${instruction}`,
+      },
+    ],
+  });
+  return res.choices[0]?.message?.content ?? "";
+}
+
 export async function translateToOtherLangs(
   content: string,
   model: AiModel,
