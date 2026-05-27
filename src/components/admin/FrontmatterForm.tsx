@@ -17,6 +17,7 @@ interface FrontmatterFormProps {
   disableSlug: boolean;
   disableDate: boolean;
   onChange: (patch: Partial<FrontmatterFormState>) => void;
+  onImageUpload?: (file: File) => void;
 }
 
 export function FrontmatterForm({
@@ -24,6 +25,7 @@ export function FrontmatterForm({
   disableSlug,
   disableDate,
   onChange,
+  onImageUpload,
 }: FrontmatterFormProps) {
   return (
     <div className="admin-meta">
@@ -81,14 +83,40 @@ export function FrontmatterForm({
 
       <div className="admin-field">
         <label>image (OGP 画像パス)</label>
-        <input
-          type="text"
-          value={value.image}
-          onChange={(e: ChangeEvent<HTMLInputElement>) =>
-            onChange({ image: e.target.value })
-          }
-          placeholder="/img/blog/2026-05-27-foo/thumb.png"
-        />
+        <div className="admin-field-row">
+          <input
+            type="text"
+            value={value.image}
+            onChange={(e: ChangeEvent<HTMLInputElement>) =>
+              onChange({ image: e.target.value })
+            }
+            placeholder="/img/blog/2026-05-27-foo/thumb.png"
+          />
+          {onImageUpload && (
+            <label
+              className="admin-btn admin-btn-secondary admin-btn-sm admin-upload-icon-btn"
+              title="OGP 画像をアップロード"
+            >
+              <input
+                type="file"
+                accept="image/*"
+                style={{ display: "none" }}
+                onChange={(e: ChangeEvent<HTMLInputElement>) => {
+                  const file = e.target.files?.[0];
+                  if (file) {
+                    onImageUpload(file);
+                    e.target.value = "";
+                  }
+                }}
+              />
+              <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+                <polyline points="17 8 12 3 7 8"/>
+                <line x1="12" y1="3" x2="12" y2="15"/>
+              </svg>
+            </label>
+          )}
+        </div>
       </div>
 
       <div className="admin-field">

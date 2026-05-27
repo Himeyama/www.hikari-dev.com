@@ -260,6 +260,22 @@ export function AdminApp() {
     }
   }
 
+  async function handleOgpImageUpload(file: File) {
+    if (!editState) return;
+    const date = editState.form.date;
+    const slug = normalizeSlug(editState.form.slug) || normalizeSlug(editState.form.title);
+    if (!date || !slug) {
+      setError("画像アップロード前に日付とスラッグを設定してください");
+      return;
+    }
+    try {
+      const result = await api.images.upload(file, date, slug, file.name);
+      patchForm({ image: result.url });
+    } catch (e) {
+      handleError(e);
+    }
+  }
+
   async function handleAiGenerate(prompt: string, mode: "create" | "edit") {
     if (!editState) return;
     setAiTask("ai");
@@ -380,6 +396,30 @@ export function AdminApp() {
                 削除
               </button>
             )}
+            <label
+              className="admin-btn admin-btn-secondary"
+              title="画像をアップロードして本文に挿入 (ドラッグ&ドロップも可)"
+              style={{ cursor: "pointer", display: "inline-flex", alignItems: "center", gap: "0.3rem" }}
+            >
+              <input
+                type="file"
+                accept="image/*"
+                style={{ display: "none" }}
+                onChange={(e) => {
+                  const file = e.target.files?.[0];
+                  if (file) {
+                    void handleImageDrop(file);
+                    e.target.value = "";
+                  }
+                }}
+              />
+              <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                <rect x="3" y="3" width="18" height="18" rx="2" ry="2"/>
+                <circle cx="9" cy="9" r="2"/>
+                <path d="m21 15-3.086-3.086a2 2 0 0 0-2.828 0L6 21"/>
+              </svg>
+              画像
+            </label>
             <span className="admin-toolbar-divider" />
             <button
               type="button"
@@ -431,6 +471,7 @@ export function AdminApp() {
                 disableSlug={editState.existing !== null}
                 disableDate={editState.existing !== null}
                 onChange={patchForm}
+                onImageUpload={handleOgpImageUpload}
               />
               {editState.existing && (
                 <div className="admin-meta-info">
