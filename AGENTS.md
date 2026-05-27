@@ -227,3 +227,104 @@ tags: [tag1, tag2]
 
 ## Git
 - プッシュ前に必ず `pnpm run build` を実行し、ビルドが成功することを確認すること。
+
+---
+
+## 管理画面 (CMS) — `/admin`
+
+ブログ記事を編集する Web エディタを `/admin` に配置している。
+
+### 構成
+
+| 場所 | 役割 |
+|---|---|
+| `src/pages/admin/index.tsx` | Docusaurus ページ (BrowserOnly ラッパー) |
+| `src/components/admin/` | エディタ UI (React 19) |
+| `src/lib/admin/` | API クライアント・OpenAI 連携・ユーティリティ |
+| `src/css/admin.css` | 管理画面 CSS (全クラスに `admin-` プレフィックス) |
+| `workers/` | Cloudflare Workers (CMS API、別デプロイ) |
+
+### エディタ機能
+
+- 言語切り替え (ja / en / 繁體中文) — サイドバーで切替
+- CodeMirror 6 エディタ (markdown、ライトテーマ、画像 D&D 対応)
+- markdown-it + DOMPurify ライブプレビュー
+- localStorage オートセーブ (2 秒デバウンス)
+- Frontmatter フォーム (title / slug / date / tags / image / keywords / draft / authors)
+- AI 機能 (OpenAI):
+  - **AI 本文生成** — タイトル + タグから記事本文を Markdown で生成
+  - **EN/繁中翻訳** — ja 本文から英語・繁體中文に並列翻訳。タブで確認後、各言語別の記事ファイルとして保存
+- 画像アップロード — `static/img/blog/{date}-{slug}/` に GitHub Contents API 経由で push
+
+### Workers API
+
+`workers/` 配下に Cloudflare Workers がある。`api.hikari-dev.com` 等の別ドメインでデプロイし、Cloudflare Access で `/admin/*` と `api.*/api/*` を保護する。
+
+#### エンドポイント
+
+| メソッド | パス | 説明 |
+|---|---|---|
+| GET | `/health` | ヘルスチェック (認証不要) |
+| GET | `/api/articles?lang={ja\|en\|zh-TW}` | 記事一覧 |
+| GET | `/api/articles/{filename}?lang=...` | 個別取得 |
+| POST | `/api/articles` | 作成 (body: `{lang, date, slug, title, ...}`) |
+| PUT | `/api/articles/{filename}?lang=...` | 更新 (sha 必須) |
+| DELETE | `/api/articles/{filename}?lang=...&sha=...` | 削除 |
+| POST | `/api/images?date=...&slug=...&filename=...` | 画像アップロード (body: 生バイナリ) |
+
+`filename` は `{date}-{slug}` (拡張子なし、例: `2026-05-27-foo`)。
+
+#### 保存パス (Docusaurus 規約)
+
+- ja: `blog/{date}-{slug}.md`
+- en: `i18n/en/docusaurus-plugin-content-blog/{date}-{slug}.md`
+- zh-TW: `i18n/zh-TW/docusaurus-plugin-content-blog/{date}-{slug}.md`
+- 画像: `static/img/blog/{date}-{slug}/{filename}` (URL は `/img/blog/{date}-{slug}/{filename}`)
+
+#### 環境変数 (`workers/wrangler.toml` および `workers/.dev.vars`)
+
+| 変数 | 種別 | 説明 |
+|---|---|---|
+| `GITHUB_TOKEN` | Secret | GitHub PAT or App (contents:write) |
+| `GITHUB_OWNER` | Var | リポジトリオーナー (例: `himeyama`) |
+| `GITHUB_REPO` | Var | リポジトリ名 (例: `www.hikari-dev.com`) |
+| `GITHUB_BRANCH` | Var | コミット先ブランチ (例: `docusaurus`) |
+| `ALLOWED_ORIGINS` | Var | CORS 許可オリジン (カンマ区切り) |
+| `CF_ACCESS_TEAM_DOMAIN` | Var | Cloudflare Access チームドメイン |
+| `CF_ACCESS_AUD` | Var | Cloudflare Access Audience Tag |
+
+シークレットは `wrangler secret put GITHUB_TOKEN` で登録する。
+
+### デプロイ手順
+
+1. **GitHub PAT を発行** — `contents:write` 権限付きで本リポジトリへの書き込みを許可
+2. **Cloudflare Access** で `/admin/*` と Workers のドメインを保護 (Audience Tag を控える)
+3. `workers/wrangler.toml` の vars を本番値に書き換える
+4. `cd workers && wrangler secret put GITHUB_TOKEN` でシークレット登録
+5. `cd workers && wrangler deploy` で Workers デプロイ
+6. 管理画面側 (Cloudflare Pages) で `_routes.json` または `_redirects` を使い、`/api/*` を Workers の URL にプロキシする (もしくは `window.__ADMIN_API_URL__` をセットする `<script>` を出す)
+
+### 開発コマンド
+
+```sh
+# 管理画面ローカル (Docusaurus 内 /admin)
+pnpm start
+# → http://localhost:3000/admin
+
+# Workers ローカル (別ターミナル)
+cd workers
+echo 'GITHUB_TOKEN=ghp_xxxxx' > .dev.vars
+pnpm dev
+# → http://localhost:8787
+```
+
+ローカル開発時は Cloudflare Access が無いため、`workers/src/middleware/auth.ts` の認証をスキップする条件分岐を一時的に入れるか、`/api/*` を直接叩く前提で構成すること。
+
+### AI 機能 (OpenAI)
+
+- OpenAI API キーはブラウザの localStorage に保存される (サーバーには送信しない)
+- ツールバーの「設定」ボタンから API キーを設定
+- モデル: `gpt-5-nano` / `gpt-5-mini` / `gpt-5` から選択
+- 翻訳結果は別ファイルとして言語別パスに保存される
+- 既存 ja 記事と同じ slug/date でしか翻訳記事を作成できない (ファイル名整合性のため)
+

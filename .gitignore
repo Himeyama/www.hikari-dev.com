@@ -1,5 +1,5 @@
 # Dependencies
-/node_modules
+node_modules
 
 # Production
 /build
@@ -21,6 +21,7 @@ yarn-error.log*
 
 .env
 .claude
+workers/.dev.vars
 
 # OGP フォントキャッシュ (node scripts/generate-ogp.js で自動ダウンロード)
 /scripts/fonts/

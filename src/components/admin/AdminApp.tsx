@@ -1,0 +1,439 @@
+import { useCallback, useEffect, useState } from "react";
+import { api } from "../../lib/admin/api";
+import type {
+  ArticleContent,
+  ArticleMeta,
+  CreateArticleRequest,
+  Lang,
+  UpdateArticleRequest,
+} from "../../lib/admin/types";
+import { normalizeSlug, todayDate } from "../../lib/admin/slug";
+import { clearDraft, loadDraft, useAutoSave } from "../../lib/admin/useAutoSave";
+import {
+  generateOutline,
+  translateToOtherLangs,
+  type AiModel,
+  type TranslationResult,
+} from "../../lib/admin/openai";
+import { Editor } from "./Editor";
+import { Preview } from "./Preview";
+import { ArticleList } from "./ArticleList";
+import { FrontmatterForm, type FrontmatterFormState } from "./FrontmatterForm";
+import { AiPanel, type AiTask } from "./AiPanel";
+import { TranslationModal } from "./TranslationModal";
+import { ApiKeyModal } from "./ApiKeyModal";
+
+interface EditState {
+  existing: ArticleContent | null;
+  lang: Lang;
+  form: FrontmatterFormState;
+  body: string;
+  dirty: boolean;
+}
+
+function emptyForm(): FrontmatterFormState {
+  return {
+    title: "新しい記事",
+    slug: "",
+    date: todayDate(),
+    tags: "",
+    image: "",
+    keywords: "",
+    draft: true,
+    authors: "hikari",
+  };
+}
+
+function formFromArticle(article: ArticleContent): FrontmatterFormState {
+  return {
+    title: article.title,
+    slug: article.slug,
+    date: article.date,
+    tags: article.tags.join(", "),
+    image: article.image ?? "",
+    keywords: (article.keywords ?? []).join(", "),
+    draft: article.draft ?? false,
+    authors: article.authors,
+  };
+}
+
+function draftKey(lang: Lang, filename: string | null): string {
+  return `${lang}:${filename ?? "new"}`;
+}
+
+function splitCsv(s: string): string[] {
+  return s
+    .split(",")
+    .map((t) => t.trim())
+    .filter(Boolean);
+}
+
+export function AdminApp() {
+  const [lang, setLang] = useState<Lang>("ja");
+  const [articles, setArticles] = useState<ArticleMeta[]>([]);
+  const [selectedFilename, setSelectedFilename] = useState<string | null>(null);
+  const [editState, setEditState] = useState<EditState | null>(null);
+  const [loading, setLoading] = useState(false);
+  const [saving, setSaving] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+  const [showPreview, setShowPreview] = useState(true);
+
+  const [aiModel, setAiModel] = useState<AiModel>("gpt-5-mini");
+  const [aiTask, setAiTask] = useState<AiTask>(null);
+  const [translationResult, setTranslationResult] = useState<TranslationResult | null>(
+    null,
+  );
+  const [showApiKeyModal, setShowApiKeyModal] = useState(false);
+
+  useAutoSave(draftKey(lang, selectedFilename), editState?.body ?? "");
+
+  const loadArticles = useCallback(async (l: Lang) => {
+    setLoading(true);
+    setError(null);
+    try {
+      const list = await api.articles.list(l);
+      setArticles(list);
+    } catch (e) {
+      setError(e instanceof Error ? e.message : "Failed to load articles");
+    } finally {
+      setLoading(false);
+    }
+  }, []);
+
+  useEffect(() => {
+    void loadArticles(lang);
+  }, [lang, loadArticles]);
+
+  async function selectArticle(filename: string) {
+    setSelectedFilename(filename);
+    setLoading(true);
+    setError(null);
+    try {
+      const article = await api.articles.get(filename, lang);
+      const draft = loadDraft(draftKey(lang, filename));
+      setEditState({
+        existing: article,
+        lang,
+        form: formFromArticle(article),
+        body: draft ?? article.body,
+        dirty: draft !== null,
+      });
+    } catch (e) {
+      setError(e instanceof Error ? e.message : "Failed to load article");
+    } finally {
+      setLoading(false);
+    }
+  }
+
+  function newArticle() {
+    setSelectedFilename(null);
+    setEditState({
+      existing: null,
+      lang,
+      form: emptyForm(),
+      body: "",
+      dirty: false,
+    });
+  }
+
+  function handleLangChange(next: Lang) {
+    if (editState?.dirty) {
+      if (!confirm("未保存の変更があります。言語を切り替えますか?")) return;
+    }
+    setLang(next);
+    setSelectedFilename(null);
+    setEditState(null);
+  }
+
+  function patchForm(patch: Partial<FrontmatterFormState>) {
+    setEditState((prev) => {
+      if (!prev) return null;
+      return { ...prev, form: { ...prev.form, ...patch }, dirty: true };
+    });
+  }
+
+  function patchBody(body: string) {
+    setEditState((prev) => (prev ? { ...prev, body, dirty: true } : null));
+  }
+
+  async function handleSave() {
+    if (!editState) return;
+    const { form, body, existing } = editState;
+    const slug = normalizeSlug(form.slug) || normalizeSlug(form.title);
+    if (!slug) {
+      setError("スラッグまたはタイトルを入力してください");
+      return;
+    }
+    if (!/^\d{4}-\d{2}-\d{2}$/.test(form.date)) {
+      setError("日付を YYYY-MM-DD 形式で入力してください");
+      return;
+    }
+    setSaving(true);
+    setError(null);
+    try {
+      const tags = splitCsv(form.tags);
+      const keywords = splitCsv(form.keywords);
+      const common = {
+        title: form.title,
+        authors: form.authors,
+        tags,
+        ...(form.image ? { image: form.image } : {}),
+        ...(keywords.length > 0 ? { keywords } : {}),
+        ...(form.draft ? { draft: true as const } : {}),
+        body,
+      };
+      let saved: ArticleContent;
+      if (existing) {
+        const req: UpdateArticleRequest = {
+          ...common,
+          sha: existing.sha,
+        };
+        saved = await api.articles.update(existing.filename, existing.lang, req);
+      } else {
+        const req: CreateArticleRequest = {
+          lang: editState.lang,
+          date: form.date,
+          slug,
+          ...common,
+        };
+        saved = await api.articles.create(req);
+      }
+      clearDraft(draftKey(editState.lang, existing?.filename ?? null));
+      setSelectedFilename(saved.filename);
+      setEditState({
+        existing: saved,
+        lang: saved.lang,
+        form: formFromArticle(saved),
+        body: saved.body,
+        dirty: false,
+      });
+      await loadArticles(editState.lang);
+    } catch (e) {
+      setError(e instanceof Error ? e.message : "保存に失敗しました");
+    } finally {
+      setSaving(false);
+    }
+  }
+
+  async function handleDelete() {
+    if (!editState?.existing) return;
+    const { existing } = editState;
+    if (!confirm(`「${existing.title}」(${existing.lang}) を削除しますか?`)) return;
+    try {
+      await api.articles.delete(existing.filename, existing.lang, existing.sha);
+      clearDraft(draftKey(existing.lang, existing.filename));
+      setSelectedFilename(null);
+      setEditState(null);
+      await loadArticles(lang);
+    } catch (e) {
+      setError(e instanceof Error ? e.message : "削除に失敗しました");
+    }
+  }
+
+  async function handleImageDrop(file: File) {
+    if (!editState) return;
+    const date = editState.form.date;
+    const slug = normalizeSlug(editState.form.slug) || normalizeSlug(editState.form.title);
+    if (!date || !slug) {
+      setError("画像アップロード前に日付とスラッグを設定してください");
+      return;
+    }
+    try {
+      const result = await api.images.upload(file, date, slug, file.name);
+      const md = `\n![${file.name}](${result.url})\n`;
+      setEditState((prev) =>
+        prev ? { ...prev, body: prev.body + md, dirty: true } : null,
+      );
+    } catch (e) {
+      setError(e instanceof Error ? e.message : "画像アップロードに失敗しました");
+    }
+  }
+
+  async function handleGenerateOutline() {
+    if (!editState) return;
+    if (editState.body && !confirm("現在の本文を AI 生成内容で置き換えますか?")) return;
+    setAiTask("outline");
+    setError(null);
+    try {
+      const result = await generateOutline(
+        editState.form.title,
+        editState.form.tags,
+        aiModel,
+      );
+      patchBody(result);
+    } catch (e) {
+      setError(e instanceof Error ? e.message : "AI 生成に失敗しました");
+    } finally {
+      setAiTask(null);
+    }
+  }
+
+  async function handleTranslate() {
+    if (!editState?.body) return;
+    if (editState.lang !== "ja") {
+      setError("翻訳は ja 記事からのみ実行できます");
+      return;
+    }
+    setAiTask("translate");
+    setError(null);
+    try {
+      const result = await translateToOtherLangs(editState.body, aiModel);
+      setTranslationResult(result);
+    } catch (e) {
+      setError(e instanceof Error ? e.message : "翻訳に失敗しました");
+    } finally {
+      setAiTask(null);
+    }
+  }
+
+  async function handleApplyTranslation(targetLang: "en" | "zh-TW", content: string) {
+    if (!editState?.existing) {
+      setError("先に ja 記事を保存してください");
+      return;
+    }
+    const src = editState.existing;
+    setSaving(true);
+    setError(null);
+    try {
+      const req: CreateArticleRequest = {
+        lang: targetLang,
+        date: src.date,
+        slug: src.slug,
+        title: src.title,
+        authors: src.authors,
+        tags: src.tags,
+        ...(src.image ? { image: src.image } : {}),
+        ...(src.keywords ? { keywords: src.keywords } : {}),
+        ...(src.draft ? { draft: true as const } : {}),
+        body: content,
+      };
+      await api.articles.create(req);
+      if (lang === targetLang) await loadArticles(targetLang);
+    } catch (e) {
+      setError(e instanceof Error ? e.message : "翻訳記事の作成に失敗しました");
+    } finally {
+      setSaving(false);
+    }
+  }
+
+  return (
+    <div className="admin-root">
+      <aside className="admin-sidebar">
+        <div className="admin-sidebar-header">
+          <span className="admin-sidebar-title">CMS</span>
+          <button
+            type="button"
+            className="admin-btn admin-btn-primary admin-btn-sm"
+            onClick={newArticle}
+            title="新規作成"
+          >
+            +
+          </button>
+        </div>
+        {loading && !editState && (
+          <div className="admin-sidebar-empty">読み込み中...</div>
+        )}
+        <ArticleList
+          articles={articles}
+          selectedFilename={selectedFilename}
+          lang={lang}
+          onLangChange={handleLangChange}
+          onSelect={selectArticle}
+        />
+      </aside>
+
+      {editState ? (
+        <div className="admin-editor-pane">
+          <div className="admin-toolbar">
+            <button
+              type="button"
+              className="admin-btn admin-btn-primary"
+              onClick={handleSave}
+              disabled={saving}
+            >
+              {saving ? "保存中..." : editState.existing ? "保存" : "作成"}
+            </button>
+            <button
+              type="button"
+              className="admin-btn admin-btn-secondary"
+              onClick={() => setShowPreview((v) => !v)}
+            >
+              {showPreview ? "プレビュー非表示" : "プレビュー表示"}
+            </button>
+            {editState.existing && (
+              <button
+                type="button"
+                className="admin-btn admin-btn-danger"
+                onClick={handleDelete}
+              >
+                削除
+              </button>
+            )}
+            <AiPanel
+              model={aiModel}
+              onModelChange={setAiModel}
+              onGenerateOutline={handleGenerateOutline}
+              onTranslate={handleTranslate}
+              onOpenSettings={() => setShowApiKeyModal(true)}
+              task={aiTask}
+              disabled={false}
+            />
+            <span className="admin-toolbar-status">
+              {error ? (
+                <span className="admin-toolbar-error">{error}</span>
+              ) : editState.dirty ? (
+                "未保存"
+              ) : (
+                ""
+              )}
+            </span>
+          </div>
+
+          <div className="admin-editor-body">
+            <div className="admin-editor-col">
+              <Editor
+                value={editState.body}
+                onChange={patchBody}
+                onImageDrop={handleImageDrop}
+              />
+            </div>
+            {showPreview && (
+              <div className="admin-preview-col">
+                <Preview content={editState.body} />
+              </div>
+            )}
+            <aside className="admin-meta-col">
+              <FrontmatterForm
+                value={editState.form}
+                disableSlug={editState.existing !== null}
+                disableDate={editState.existing !== null}
+                onChange={patchForm}
+              />
+              {editState.existing && (
+                <div className="admin-meta-info">
+                  <div>filename: {editState.existing.filename}</div>
+                  <div>lang: {editState.existing.lang}</div>
+                  <div>sha: {editState.existing.sha.slice(0, 8)}</div>
+                </div>
+              )}
+            </aside>
+          </div>
+        </div>
+      ) : (
+        <div className="admin-empty-state">
+          記事を選択、または「+」で新規作成
+        </div>
+      )}
+
+      {translationResult && (
+        <TranslationModal
+          result={translationResult}
+          onApply={handleApplyTranslation}
+          onClose={() => setTranslationResult(null)}
+        />
+      )}
+
+      {showApiKeyModal && <ApiKeyModal onClose={() => setShowApiKeyModal(false)} />}
+    </div>
+  );
+}

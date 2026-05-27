@@ -15,6 +15,11 @@
     "typecheck": "tsc"
   },
   "dependencies": {
+    "@codemirror/commands": "^6.7.1",
+    "@codemirror/lang-markdown": "^6.3.1",
+    "@codemirror/language": "^6.12.3",
+    "@codemirror/state": "^6.4.1",
+    "@codemirror/view": "^6.35.0",
     "@docusaurus/core": "^3.10.0",
     "@docusaurus/faster": "^3.10.0",
     "@docusaurus/plugin-content-blog": "^3.10.0",
@@ -29,6 +34,8 @@
     "axios": "^1.13.6",
     "clsx": "^2.1.1",
     "commander": "^14.0.3",
+    "dompurify": "^3.2.2",
+    "markdown-it": "^14.1.0",
     "mermaid": "^11.14.0",
     "openai": "^6.34.0",
     "prism-react-renderer": "^2.4.1",
@@ -42,6 +49,7 @@
     "@docusaurus/tsconfig": "^3.10.0",
     "@docusaurus/types": "^3.10.0",
     "@resvg/resvg-js": "^2.6.2",
+    "@types/markdown-it": "^14.1.2",
     "satori": "^0.26.0",
     "typescript": "~6.0.2"
   },

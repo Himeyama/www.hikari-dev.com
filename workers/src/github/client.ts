@@ -1,0 +1,152 @@
+export class ConflictError extends Error {
+  constructor(message: string) {
+    super(message);
+    this.name = "ConflictError";
+  }
+}
+
+export interface GitHubFile {
+  sha: string;
+  content: string;
+  path: string;
+}
+
+export interface GitHubListItem {
+  path: string;
+  name: string;
+  sha: string;
+  type: string;
+}
+
+export class GitHubClient {
+  private baseUrl: string;
+
+  constructor(
+    private token: string,
+    owner: string,
+    repo: string,
+    private branch: string,
+  ) {
+    this.baseUrl = `https://api.github.com/repos/${owner}/${repo}`;
+  }
+
+  async getFile(path: string): Promise<GitHubFile | null> {
+    const url = `${this.baseUrl}/contents/${path}?ref=${encodeURIComponent(this.branch)}`;
+    const res = await fetch(url, { headers: this.headers() });
+    if (res.status === 404) return null;
+    if (!res.ok) throw new Error(`GitHub API error: ${res.status} ${await res.text()}`);
+
+    const data = (await res.json()) as { sha: string; content: string; path: string };
+    return {
+      sha: data.sha,
+      content: utf8Decode(data.content.replace(/\n/g, "")),
+      path: data.path,
+    };
+  }
+
+  async putFile(
+    path: string,
+    content: string,
+    message: string,
+    sha?: string,
+  ): Promise<{ sha: string }> {
+    const body: Record<string, unknown> = {
+      message,
+      content: utf8EncodeBase64(content),
+      branch: this.branch,
+    };
+    if (sha) body.sha = sha;
+
+    const res = await fetch(`${this.baseUrl}/contents/${path}`, {
+      method: "PUT",
+      headers: this.headers(),
+      body: JSON.stringify(body),
+    });
+
+    if (res.status === 409) throw new ConflictError("File was modified concurrently");
+    if (!res.ok) throw new Error(`GitHub API error: ${res.status} ${await res.text()}`);
+
+    const data = (await res.json()) as { content: { sha: string } };
+    return { sha: data.content.sha };
+  }
+
+  async putBinaryFile(
+    path: string,
+    data: ArrayBuffer,
+    message: string,
+  ): Promise<{ sha: string }> {
+    const body: Record<string, unknown> = {
+      message,
+      content: arrayBufferToBase64(data),
+      branch: this.branch,
+    };
+
+    const res = await fetch(`${this.baseUrl}/contents/${path}`, {
+      method: "PUT",
+      headers: this.headers(),
+      body: JSON.stringify(body),
+    });
+
+    if (res.status === 409) throw new ConflictError("File was modified concurrently");
+    if (!res.ok) throw new Error(`GitHub API error: ${res.status} ${await res.text()}`);
+
+    const result = (await res.json()) as { content: { sha: string } };
+    return { sha: result.content.sha };
+  }
+
+  async deleteFile(path: string, message: string, sha: string): Promise<void> {
+    const res = await fetch(`${this.baseUrl}/contents/${path}`, {
+      method: "DELETE",
+      headers: this.headers(),
+      body: JSON.stringify({ message, sha, branch: this.branch }),
+    });
+    if (!res.ok) throw new Error(`GitHub API error: ${res.status} ${await res.text()}`);
+  }
+
+  async listDirectory(prefix: string): Promise<GitHubListItem[]> {
+    const url = `${this.baseUrl}/contents/${prefix}?ref=${encodeURIComponent(this.branch)}`;
+    const res = await fetch(url, { headers: this.headers() });
+    if (res.status === 404) return [];
+    if (!res.ok) throw new Error(`GitHub API error: ${res.status} ${await res.text()}`);
+
+    const data = (await res.json()) as GitHubListItem[];
+    return data.filter((f) => f.type === "file");
+  }
+
+  async exists(path: string): Promise<boolean> {
+    const url = `${this.baseUrl}/contents/${path}?ref=${encodeURIComponent(this.branch)}`;
+    const res = await fetch(url, { headers: this.headers(), method: "HEAD" });
+    return res.ok;
+  }
+
+  private headers(): Record<string, string> {
+    return {
+      Authorization: `Bearer ${this.token}`,
+      Accept: "application/vnd.github.v3+json",
+      "Content-Type": "application/json",
+      "User-Agent": "hikari-dev-cms/1.0",
+    };
+  }
+}
+
+function utf8EncodeBase64(content: string): string {
+  const bytes = new TextEncoder().encode(content);
+  return arrayBufferToBase64(bytes.buffer as ArrayBuffer);
+}
+
+function utf8Decode(base64: string): string {
+  const binary = atob(base64);
+  const bytes = Uint8Array.from(binary, (c) => c.charCodeAt(0));
+  return new TextDecoder().decode(bytes);
+}
+
+function arrayBufferToBase64(buffer: ArrayBuffer): string {
+  const bytes = new Uint8Array(buffer);
+  let binary = "";
+  const chunkSize = 0x8000;
+  for (let i = 0; i < bytes.length; i += chunkSize) {
+    const chunk = bytes.subarray(i, i + chunkSize);
+    binary += String.fromCharCode(...chunk);
+  }
+  return btoa(binary);
+}
