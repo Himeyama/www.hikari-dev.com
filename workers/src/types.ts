@@ -8,6 +8,7 @@ export interface Env {
   ALLOWED_ORIGINS: string;
   CF_ACCESS_TEAM_DOMAIN: string;
   CF_ACCESS_AUD: string;
+  ADMIN_SECRET?: string;
 }
 
 export interface AppContext {

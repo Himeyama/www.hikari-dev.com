@@ -7,24 +7,31 @@ export async function authMiddleware(
   c: Context<HonoEnv>,
   next: Next,
 ): Promise<void | Response> {
+  // Bearer token (ADMIN_SECRET)
+  const adminSecret = c.env.ADMIN_SECRET;
+  if (adminSecret) {
+    const authHeader = c.req.header("Authorization");
+    if (authHeader === `Bearer ${adminSecret}`) {
+      await next();
+      return;
+    }
+  }
+
+  // Cloudflare Access JWT
   const teamDomain = c.env.CF_ACCESS_TEAM_DOMAIN;
-  if (!teamDomain || teamDomain === "your-team.cloudflareaccess.com") {
-    // ローカル開発: Cloudflare Access 未設定のため認証をスキップ
-    await next();
-    return;
+  const isCfAccessConfigured =
+    teamDomain && teamDomain !== "your-team.cloudflareaccess.com";
+  if (isCfAccessConfigured) {
+    const token = c.req.header("CF-Access-Jwt-Assertion");
+    if (token) {
+      const valid = await validateAccessJwt(token, teamDomain, c.env.CF_ACCESS_AUD);
+      if (valid) {
+        await next();
+        return;
+      }
+    }
   }
 
-  const token = c.req.header("CF-Access-Jwt-Assertion");
-  if (!token) {
-    const requestId = (c.get("requestId") as string | undefined) ?? "";
-    return unauthorized(requestId);
-  }
-
-  const valid = await validateAccessJwt(token, teamDomain, c.env.CF_ACCESS_AUD);
-  if (!valid) {
-    const requestId = (c.get("requestId") as string | undefined) ?? "";
-    return unauthorized(requestId);
-  }
-
-  await next();
+  const requestId = (c.get("requestId") as string | undefined) ?? "";
+  return unauthorized(requestId);
 }

@@ -12,6 +12,29 @@ import type {
 const DEFAULT_BASE = "/api";
 const LOCAL_WORKERS_BASE = "http://localhost:8787/api";
 
+export const ADMIN_SECRET_STORAGE = "admin_secret";
+
+export function getAdminSecret(): string | null {
+  if (typeof window === "undefined") return null;
+  return localStorage.getItem(ADMIN_SECRET_STORAGE);
+}
+
+export function setAdminSecret(secret: string | null): void {
+  if (typeof window === "undefined") return;
+  if (secret) {
+    localStorage.setItem(ADMIN_SECRET_STORAGE, secret);
+  } else {
+    localStorage.removeItem(ADMIN_SECRET_STORAGE);
+  }
+}
+
+export class UnauthorizedError extends Error {
+  constructor() {
+    super("認証が必要です。管理者シークレットを設定してください。");
+    this.name = "UnauthorizedError";
+  }
+}
+
 function getBaseUrl(): string {
   if (typeof window === "undefined") return DEFAULT_BASE;
   const fromWindow = (window as Window & { __ADMIN_API_URL__?: string }).__ADMIN_API_URL__;
@@ -21,14 +44,24 @@ function getBaseUrl(): string {
 }
 
 async function request<T>(path: string, init?: RequestInit): Promise<T> {
+  const secret = getAdminSecret();
+  const authHeaders: Record<string, string> = secret
+    ? { Authorization: `Bearer ${secret}` }
+    : {};
+
   const res = await fetch(`${getBaseUrl()}${path}`, {
     ...init,
     credentials: "include",
     headers: {
       "Content-Type": "application/json",
+      ...authHeaders,
       ...init?.headers,
     },
   });
+
+  if (res.status === 401) {
+    throw new UnauthorizedError();
+  }
 
   const text = await res.text();
 

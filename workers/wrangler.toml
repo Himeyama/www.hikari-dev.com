@@ -14,5 +14,6 @@ ALLOWED_ORIGINS = "https://www.hikari-dev.com,http://localhost:3000"
 CF_ACCESS_TEAM_DOMAIN = "your-team.cloudflareaccess.com"
 CF_ACCESS_AUD = "your-audience-tag"
 
-# Secrets (set via: wrangler secret put GITHUB_TOKEN)
-# GITHUB_TOKEN
+# Secrets (set via wrangler secret put):
+# GITHUB_TOKEN  — GitHub PAT (contents:write)
+# ADMIN_SECRET  — Bearer token for /admin (strong random string)

@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useState } from "react";
-import { api } from "../../lib/admin/api";
+import { api, UnauthorizedError } from "../../lib/admin/api";
 import type {
   ArticleContent,
   ArticleMeta,
@@ -22,6 +22,7 @@ import { FrontmatterForm, type FrontmatterFormState } from "./FrontmatterForm";
 import { AiPanel, type AiTask } from "./AiPanel";
 import { TranslationModal } from "./TranslationModal";
 import { ApiKeyModal } from "./ApiKeyModal";
+import { AdminSecretModal } from "./AdminSecretModal";
 
 interface EditState {
   existing: ArticleContent | null;
@@ -84,8 +85,16 @@ export function AdminApp() {
     null,
   );
   const [showApiKeyModal, setShowApiKeyModal] = useState(false);
+  const [showSecretModal, setShowSecretModal] = useState(false);
 
   useAutoSave(draftKey(lang, selectedFilename), editState?.body ?? "");
+
+  function handleError(e: unknown): void {
+    if (e instanceof UnauthorizedError) {
+      setShowSecretModal(true);
+    }
+    setError(e instanceof Error ? e.message : "エラーが発生しました");
+  }
 
   const loadArticles = useCallback(async (l: Lang) => {
     setLoading(true);
@@ -94,7 +103,7 @@ export function AdminApp() {
       const list = await api.articles.list(l);
       setArticles(list);
     } catch (e) {
-      setError(e instanceof Error ? e.message : "Failed to load articles");
+      handleError(e);
     } finally {
       setLoading(false);
     }
@@ -119,7 +128,7 @@ export function AdminApp() {
         dirty: draft !== null,
       });
     } catch (e) {
-      setError(e instanceof Error ? e.message : "Failed to load article");
+      handleError(e);
     } finally {
       setLoading(false);
     }
@@ -209,7 +218,7 @@ export function AdminApp() {
       });
       await loadArticles(editState.lang);
     } catch (e) {
-      setError(e instanceof Error ? e.message : "保存に失敗しました");
+      handleError(e);
     } finally {
       setSaving(false);
     }
@@ -226,7 +235,7 @@ export function AdminApp() {
       setEditState(null);
       await loadArticles(lang);
     } catch (e) {
-      setError(e instanceof Error ? e.message : "削除に失敗しました");
+      handleError(e);
     }
   }
 
@@ -245,7 +254,7 @@ export function AdminApp() {
         prev ? { ...prev, body: prev.body + md, dirty: true } : null,
       );
     } catch (e) {
-      setError(e instanceof Error ? e.message : "画像アップロードに失敗しました");
+      handleError(e);
     }
   }
 
@@ -262,7 +271,7 @@ export function AdminApp() {
       );
       patchBody(result);
     } catch (e) {
-      setError(e instanceof Error ? e.message : "AI 生成に失敗しました");
+      handleError(e);
     } finally {
       setAiTask(null);
     }
@@ -280,7 +289,7 @@ export function AdminApp() {
       const result = await translateToOtherLangs(editState.body, aiModel);
       setTranslationResult(result);
     } catch (e) {
-      setError(e instanceof Error ? e.message : "翻訳に失敗しました");
+      handleError(e);
     } finally {
       setAiTask(null);
     }
@@ -310,7 +319,7 @@ export function AdminApp() {
       await api.articles.create(req);
       if (lang === targetLang) await loadArticles(targetLang);
     } catch (e) {
-      setError(e instanceof Error ? e.message : "翻訳記事の作成に失敗しました");
+      handleError(e);
     } finally {
       setSaving(false);
     }
@@ -378,6 +387,14 @@ export function AdminApp() {
               task={aiTask}
               disabled={false}
             />
+            <button
+              type="button"
+              className="admin-btn admin-btn-secondary admin-btn-sm"
+              onClick={() => setShowSecretModal(true)}
+              title="管理者シークレット設定"
+            >
+              🔑
+            </button>
             <span className="admin-toolbar-status">
               {error ? (
                 <span className="admin-toolbar-error">{error}</span>
@@ -434,6 +451,9 @@ export function AdminApp() {
       )}
 
       {showApiKeyModal && <ApiKeyModal onClose={() => setShowApiKeyModal(false)} />}
+      {showSecretModal && (
+        <AdminSecretModal onClose={() => setShowSecretModal(false)} />
+      )}
     </div>
   );
 }
