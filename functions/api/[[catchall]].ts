@@ -14,6 +14,8 @@ export const onRequest: PagesFunction<Env> = async (context) => {
   const url = new URL(context.request.url);
   const target = new URL(url.pathname + url.search, workerUrl);
 
-  const req = new Request(target, context.request);
-  return fetch(req);
+  const { method, headers } = context.request;
+  const body = ["GET", "HEAD"].includes(method) ? null : context.request.body;
+
+  return fetch(target.toString(), { method, headers, body });
 };
