@@ -2,7 +2,6 @@
 title: "Makefile のすすめ"
 authors: hikari
 tags: [Makefile, Linux]
-draft: true
 ---
 
 ## 背景と課題意識
