@@ -92,7 +92,7 @@ export function AdminApp() {
   const [showApiKeyModal, setShowApiKeyModal] = useState(false);
   const [showSecretModal, setShowSecretModal] = useState(false);
 
-  useAutoSave(draftKey(lang, selectedFilename), editState?.body ?? "");
+  useAutoSave(editState !== null ? draftKey(lang, selectedFilename) : null, editState?.body ?? "");
 
   function handleError(e: unknown): void {
     if (e instanceof UnauthorizedError) {
@@ -125,12 +125,13 @@ export function AdminApp() {
     try {
       const article = await api.articles.get(filename, lang);
       const draft = loadDraft(draftKey(lang, filename));
+      const effectiveDraft = draft || null;
       setEditState({
         existing: article,
         lang,
         form: formFromArticle(article),
-        body: draft ?? article.body,
-        dirty: draft !== null && draft !== article.body,
+        body: effectiveDraft ?? article.body,
+        dirty: effectiveDraft !== null && effectiveDraft !== article.body,
       });
     } catch (e) {
       handleError(e);

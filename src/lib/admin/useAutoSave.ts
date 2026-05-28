@@ -3,11 +3,12 @@ import { useEffect, useRef } from "react";
 const AUTOSAVE_DELAY_MS = 2000;
 const STORAGE_PREFIX = "hikari-admin-draft:";
 
-export function useAutoSave(id: string, value: string): void {
+export function useAutoSave(id: string | null, value: string): void {
   const timerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   useEffect(() => {
     if (timerRef.current) clearTimeout(timerRef.current);
+    if (!id) return;
     timerRef.current = setTimeout(() => {
       try {
         localStorage.setItem(`${STORAGE_PREFIX}${id}`, value);
