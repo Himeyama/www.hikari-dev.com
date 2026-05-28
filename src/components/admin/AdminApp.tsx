@@ -129,7 +129,7 @@ export function AdminApp() {
         lang,
         form: formFromArticle(article),
         body: draft ?? article.body,
-        dirty: draft !== null,
+        dirty: draft !== null && draft !== article.body,
       });
     } catch (e) {
       handleError(e);
