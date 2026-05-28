@@ -1,6 +1,10 @@
 import { useState, type ChangeEvent } from "react";
 import type { AiModel } from "../../lib/admin/openai";
-import { AI_MODELS } from "../../lib/admin/openai";
+import {
+  OPENAI_MODELS,
+  CLAUDE_MODELS,
+  CLAUDE_MODEL_LABELS,
+} from "../../lib/admin/openai";
 
 export type AiTask = "ai" | "translate" | null;
 type AiMode = "auto" | "create" | "edit";
@@ -71,11 +75,20 @@ export function AiSidePanel({
           }
           disabled={busy}
         >
-          {AI_MODELS.map((m) => (
-            <option key={m} value={m}>
-              {m}
-            </option>
-          ))}
+          <optgroup label="OpenAI">
+            {OPENAI_MODELS.map((m) => (
+              <option key={m} value={m}>
+                {m}
+              </option>
+            ))}
+          </optgroup>
+          <optgroup label="Claude (Anthropic)">
+            {CLAUDE_MODELS.map((m) => (
+              <option key={m} value={m}>
+                {CLAUDE_MODEL_LABELS[m]}
+              </option>
+            ))}
+          </optgroup>
         </select>
       </div>
 

@@ -1,12 +1,32 @@
 import OpenAI from "openai";
 
-export type AiModel = "gpt-5-nano" | "gpt-5-mini" | "gpt-5";
+export type OpenAiModel = "gpt-5-nano" | "gpt-5-mini" | "gpt-5";
+export type ClaudeModel = "claude-haiku-4-5-20251001" | "claude-sonnet-4-6" | "claude-opus-4-7";
+export type AiModel = OpenAiModel | ClaudeModel;
 
-export const AI_MODELS: AiModel[] = ["gpt-5-nano", "gpt-5-mini", "gpt-5"];
+export const OPENAI_MODELS: OpenAiModel[] = ["gpt-5-nano", "gpt-5-mini", "gpt-5"];
+export const CLAUDE_MODELS: ClaudeModel[] = [
+  "claude-haiku-4-5-20251001",
+  "claude-sonnet-4-6",
+  "claude-opus-4-7",
+];
+/** @deprecated Use OPENAI_MODELS or CLAUDE_MODELS */
+export const AI_MODELS: AiModel[] = [...OPENAI_MODELS, ...CLAUDE_MODELS];
+
+export const CLAUDE_MODEL_LABELS: Record<ClaudeModel, string> = {
+  "claude-haiku-4-5-20251001": "Claude Haiku 4.5",
+  "claude-sonnet-4-6": "Claude Sonnet 4.6",
+  "claude-opus-4-7": "Claude Opus 4.7",
+};
 
 export const API_KEY_STORAGE = "hikari_admin_openai_key";
+export const ANTHROPIC_API_KEY_STORAGE = "hikari_admin_anthropic_key";
 
-function getApiKey(): string {
+export function isClaudeModel(model: AiModel): model is ClaudeModel {
+  return CLAUDE_MODELS.includes(model as ClaudeModel);
+}
+
+function getOpenAiKey(): string {
   const stored = localStorage.getItem(API_KEY_STORAGE) ?? "";
   if (!stored) {
     throw new Error(
@@ -16,31 +36,29 @@ function getApiKey(): string {
   return stored;
 }
 
-function createClient(): OpenAI {
-  return new OpenAI({ apiKey: getApiKey(), dangerouslyAllowBrowser: true });
+function getAnthropicKey(): string {
+  const stored = localStorage.getItem(ANTHROPIC_API_KEY_STORAGE) ?? "";
+  if (!stored) {
+    throw new Error(
+      "Anthropic API キーが設定されていません。ツールバーの「設定」から API キーを入力してください。",
+    );
+  }
+  return stored;
 }
 
-export async function generateOutline(
-  title: string,
-  description: string,
-  model: AiModel,
-): Promise<string> {
-  const client = createClient();
-  const res = await client.chat.completions.create({
-    model,
-    messages: [
-      {
-        role: "system",
-        content:
-          "あなたはブログ記事のライターです。指定されたタイトルと説明に基づいて、読みやすく構造化された Markdown 形式のブログ記事を日本語で書いてください。文体は「である調」で統一し、見出しは ## から始めてください。コードブロックには言語を指定してください。",
+function getClient(model: AiModel): OpenAI {
+  if (isClaudeModel(model)) {
+    return new OpenAI({
+      apiKey: getAnthropicKey(),
+      baseURL: "https://api.anthropic.com/v1",
+      defaultHeaders: {
+        "anthropic-version": "2023-06-01",
+        "anthropic-dangerous-direct-browser-access": "true",
       },
-      {
-        role: "user",
-        content: `タイトル: ${title}\n説明: ${description || "(説明なし)"}\n\nこのタイトルでブログ記事を Markdown 形式で書いてください。`,
-      },
-    ],
-  });
-  return res.choices[0]?.message?.content ?? "";
+      dangerouslyAllowBrowser: true,
+    });
+  }
+  return new OpenAI({ apiKey: getOpenAiKey(), dangerouslyAllowBrowser: true });
 }
 
 export interface TranslationResult {
@@ -71,7 +89,7 @@ export async function generateFromPrompt(
   prompt: string,
   model: AiModel,
 ): Promise<string> {
-  const client = createClient();
+  const client = getClient(model);
   const res = await client.chat.completions.create({
     model,
     messages: [
@@ -91,7 +109,7 @@ export async function editWithPrompt(
   instruction: string,
   model: AiModel,
 ): Promise<string> {
-  const client = createClient();
+  const client = getClient(model);
   const res = await client.chat.completions.create({
     model,
     messages: [
@@ -113,7 +131,7 @@ export async function translateToOtherLangs(
   content: string,
   model: AiModel,
 ): Promise<TranslationResult> {
-  const client = createClient();
+  const client = getClient(model);
   const [en, zhTW] = await Promise.all([
     translateOne(client, content, "English", model),
     translateOne(client, content, "Traditional Chinese (Taiwan)", model),
