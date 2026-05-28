@@ -68,6 +68,9 @@ module.exports = function recentBlogPostsPlugin(context) {
           const filePath = path.join(blogDir, filename);
           const content = fs.readFileSync(filePath, 'utf-8');
 
+          // Skip draft posts
+          if (/^draft:\s*true\s*$/m.test(content)) return null;
+
           // Parse title
           const titleMatch = content.match(/^title:\s*(.+)$/m);
           const rawTitle = titleMatch ? titleMatch[1].trim() : slug;
