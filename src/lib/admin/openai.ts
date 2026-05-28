@@ -85,23 +85,46 @@ async function translateOne(
   return res.choices[0]?.message?.content ?? "";
 }
 
+export interface GenerateResult {
+  title: string;
+  tags: string[];
+  body: string;
+}
+
 export async function generateFromPrompt(
   prompt: string,
   model: AiModel,
-): Promise<string> {
+): Promise<GenerateResult> {
   const client = getClient(model);
   const res = await client.chat.completions.create({
     model,
     messages: [
       {
         role: "system",
-        content:
-          "あなたはブログ記事のライターです。指定された内容に基づいて、読みやすく構造化された Markdown 形式のブログ記事を日本語で書いてください。文体は「である調」で統一し、見出しは ## から始めてください。コードブロックには言語を指定してください。前置きや説明は不要です。記事本文のみ出力してください。",
+        content: [
+          "あなたはブログ記事のライターです。指定された内容に基づいて、読みやすく構造化された Markdown 形式のブログ記事を日本語で書いてください。",
+          "文体は「である調」で統一し、見出しは ## から始めてください。コードブロックには言語を指定してください。",
+          "",
+          "以下の JSON 形式のみで出力してください (前置きや説明は不要です):",
+          '{ "title": "記事タイトル", "tags": ["タグ1", "タグ2"], "body": "記事本文 (Markdown)" }',
+        ].join("\n"),
       },
       { role: "user", content: prompt },
     ],
   });
-  return res.choices[0]?.message?.content ?? "";
+  const raw = res.choices[0]?.message?.content ?? "";
+  try {
+    const jsonMatch = raw.match(/\{[\s\S]*\}/);
+    if (!jsonMatch) throw new Error("no JSON");
+    const parsed = JSON.parse(jsonMatch[0]) as Partial<GenerateResult>;
+    return {
+      title: typeof parsed.title === "string" ? parsed.title : "",
+      tags: Array.isArray(parsed.tags) ? parsed.tags.map(String) : [],
+      body: typeof parsed.body === "string" ? parsed.body : raw,
+    };
+  } catch {
+    return { title: "", tags: [], body: raw };
+  }
 }
 
 export async function editWithPrompt(

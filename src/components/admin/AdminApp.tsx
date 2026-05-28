@@ -283,11 +283,15 @@ export function AdminApp() {
     setAiTask("ai");
     setError(null);
     try {
-      const result =
-        mode === "create"
-          ? await generateFromPrompt(prompt, aiModel)
-          : await editWithPrompt(editState.body, prompt, aiModel);
-      patchBody(result);
+      if (mode === "create") {
+        const result = await generateFromPrompt(prompt, aiModel);
+        patchBody(result.body);
+        if (result.title) patchForm({ title: result.title });
+        if (result.tags.length > 0) patchForm({ tags: result.tags.join(", ") });
+      } else {
+        const result = await editWithPrompt(editState.body, prompt, aiModel);
+        patchBody(result);
+      }
     } catch (e) {
       handleError(e);
     } finally {
