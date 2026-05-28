@@ -352,19 +352,35 @@ export function AdminApp() {
     setSaving(true);
     setError(null);
     try {
-      const req: CreateArticleRequest = {
-        lang: targetLang,
-        date: src.date,
-        slug: src.slug,
-        title: src.title,
-        authors: src.authors,
-        tags: src.tags,
-        ...(src.image ? { image: src.image } : {}),
-        ...(src.keywords ? { keywords: src.keywords } : {}),
-        ...(src.draft ? { draft: true as const } : {}),
-        body: content,
-      };
-      await api.articles.create(req);
+      const filename = `${src.date}-${src.slug}`;
+      const existing = await api.articles.get(filename, targetLang).catch(() => null);
+      if (existing) {
+        const req: UpdateArticleRequest = {
+          title: src.title,
+          authors: src.authors,
+          tags: src.tags,
+          ...(src.image ? { image: src.image } : {}),
+          ...(src.keywords ? { keywords: src.keywords } : {}),
+          ...(src.draft ? { draft: true as const } : {}),
+          body: content,
+          sha: existing.sha,
+        };
+        await api.articles.update(filename, targetLang, req);
+      } else {
+        const req: CreateArticleRequest = {
+          lang: targetLang,
+          date: src.date,
+          slug: src.slug,
+          title: src.title,
+          authors: src.authors,
+          tags: src.tags,
+          ...(src.image ? { image: src.image } : {}),
+          ...(src.keywords ? { keywords: src.keywords } : {}),
+          ...(src.draft ? { draft: true as const } : {}),
+          body: content,
+        };
+        await api.articles.create(req);
+      }
       if (lang === targetLang) await loadArticles(targetLang);
     } catch (e) {
       handleError(e);
