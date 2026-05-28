@@ -2,7 +2,6 @@
 title: "Recommendation for Makefile"
 authors: hikari
 tags: [Makefile, Linux]
-draft: true
 ---
 
 ## Background and Problem Awareness
