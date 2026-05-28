@@ -384,7 +384,7 @@ export function AdminApp() {
           tags: src.tags,
           ...(src.image ? { image: src.image } : {}),
           ...(src.keywords ? { keywords: src.keywords } : {}),
-          ...(src.draft ? { draft: true as const } : {}),
+          draft: src.draft ?? false,
           body: content,
           sha: existing.sha,
         };
@@ -399,7 +399,7 @@ export function AdminApp() {
           tags: src.tags,
           ...(src.image ? { image: src.image } : {}),
           ...(src.keywords ? { keywords: src.keywords } : {}),
-          ...(src.draft ? { draft: true as const } : {}),
+          draft: src.draft ?? false,
           body: content,
         };
         await api.articles.create(req);
