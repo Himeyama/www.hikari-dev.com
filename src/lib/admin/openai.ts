@@ -1,10 +1,10 @@
 import OpenAI from "openai";
 
-export type OpenAiModel = "gpt-5-nano" | "gpt-5-mini" | "gpt-5";
+export type OpenAiModel = "gpt-5.4-nano" | "gpt-5.4-mini" | "gpt-5.4";
 export type ClaudeModel = "claude-haiku-4-5-20251001" | "claude-sonnet-4-6" | "claude-opus-4-7";
 export type AiModel = OpenAiModel | ClaudeModel;
 
-export const OPENAI_MODELS: OpenAiModel[] = ["gpt-5-nano", "gpt-5-mini", "gpt-5"];
+export const OPENAI_MODELS: OpenAiModel[] = ["gpt-5.4-nano", "gpt-5.4-mini", "gpt-5.4"];
 export const CLAUDE_MODELS: ClaudeModel[] = [
   "claude-haiku-4-5-20251001",
   "claude-sonnet-4-6",
@@ -62,8 +62,8 @@ function getClient(model: AiModel): OpenAI {
 }
 
 export interface TranslationResult {
-  en: string;
-  "zh-TW": string;
+  en?: string;
+  "zh-TW"?: string;
 }
 
 async function translateOne(
@@ -125,6 +125,16 @@ export async function editWithPrompt(
     ],
   });
   return res.choices[0]?.message?.content ?? "";
+}
+
+export async function translateToEn(content: string, model: AiModel): Promise<string> {
+  const client = getClient(model);
+  return translateOne(client, content, "English", model);
+}
+
+export async function translateToZhTW(content: string, model: AiModel): Promise<string> {
+  const client = getClient(model);
+  return translateOne(client, content, "Traditional Chinese (Taiwan)", model);
 }
 
 export async function translateToOtherLangs(

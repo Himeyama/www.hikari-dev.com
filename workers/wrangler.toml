@@ -17,3 +17,4 @@ CF_ACCESS_AUD = "your-audience-tag"
 # Secrets (set via wrangler secret put):
 # GITHUB_TOKEN  — GitHub PAT (contents:write)
 # ADMIN_SECRET  — Bearer token for /admin (strong random string)
+# PAGES_DEPLOY_HOOK — Cloudflare Pages deploy hook URL (optional, enables /api/build)

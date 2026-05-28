@@ -6,15 +6,16 @@ import {
   CLAUDE_MODEL_LABELS,
 } from "../../lib/admin/openai";
 
-export type AiTask = "ai" | "translate" | null;
+export type AiTask = "ai" | "translate-en" | "translate-zh-TW" | null;
 type AiMode = "auto" | "create" | "edit";
 
 interface AiSidePanelProps {
   body: string;
   model: AiModel;
   onModelChange: (model: AiModel) => void;
-  onGenerate: (prompt: string, mode: "create" | "edit") => void;
-  onTranslate: () => void;
+  onGenerate: (prompt: string, mode: "create" | "edit") => Promise<void>;
+  onTranslateEn: () => void;
+  onTranslateZhTW: () => void;
   onOpenSettings: () => void;
   task: AiTask;
 }
@@ -24,7 +25,8 @@ export function AiSidePanel({
   model,
   onModelChange,
   onGenerate,
-  onTranslate,
+  onTranslateEn,
+  onTranslateZhTW,
   onOpenSettings,
   task,
 }: AiSidePanelProps) {
@@ -35,9 +37,10 @@ export function AiSidePanel({
   const effectiveMode: "create" | "edit" =
     mode === "auto" ? (body.trim() ? "edit" : "create") : mode;
 
-  function handleExecute() {
+  async function handleExecute() {
     if (!prompt.trim()) return;
-    onGenerate(prompt, effectiveMode);
+    await onGenerate(prompt, effectiveMode);
+    setPrompt("");
   }
 
   return (
@@ -124,11 +127,20 @@ export function AiSidePanel({
         <button
           type="button"
           className="admin-btn admin-btn-secondary"
-          onClick={onTranslate}
+          onClick={onTranslateEn}
           disabled={busy || !body.trim()}
-          title="EN / 繁體中文に翻訳"
+          title="英語に翻訳"
         >
-          {task === "translate" ? "翻訳中..." : "EN/繁中翻訳"}
+          {task === "translate-en" ? "翻訳中..." : "EN 翻訳"}
+        </button>
+        <button
+          type="button"
+          className="admin-btn admin-btn-secondary"
+          onClick={onTranslateZhTW}
+          disabled={busy || !body.trim()}
+          title="繁體中文に翻訳"
+        >
+          {task === "translate-zh-TW" ? "翻訳中..." : "繁中翻訳"}
         </button>
         <button
           type="button"

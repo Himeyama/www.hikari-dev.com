@@ -146,4 +146,8 @@ export const api = {
       });
     },
   },
+
+  build(): Promise<{ message: string }> {
+    return request<{ message: string }>("/build", { method: "POST" });
+  },
 };

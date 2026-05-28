@@ -9,6 +9,7 @@ export interface Env {
   CF_ACCESS_TEAM_DOMAIN: string;
   CF_ACCESS_AUD: string;
   ADMIN_SECRET?: string;
+  PAGES_DEPLOY_HOOK?: string;
 }
 
 export interface AppContext {

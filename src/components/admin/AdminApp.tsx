@@ -12,7 +12,8 @@ import { clearDraft, loadDraft, useAutoSave } from "../../lib/admin/useAutoSave"
 import {
   generateFromPrompt,
   editWithPrompt,
-  translateToOtherLangs,
+  translateToEn,
+  translateToZhTW,
   type AiModel,
   type TranslationResult,
 } from "../../lib/admin/openai";
@@ -77,11 +78,12 @@ export function AdminApp() {
   const [editState, setEditState] = useState<EditState | null>(null);
   const [loading, setLoading] = useState(false);
   const [saving, setSaving] = useState(false);
+  const [building, setBuilding] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [showPreview, setShowPreview] = useState(true);
   const [showAiPanel, setShowAiPanel] = useState(true);
 
-  const [aiModel, setAiModel] = useState<AiModel>("gpt-5-mini");
+  const [aiModel, setAiModel] = useState<AiModel>("gpt-5.4-mini");
   const [aiTask, setAiTask] = useState<AiTask>(null);
   const [translationResult, setTranslationResult] = useState<TranslationResult | null>(
     null,
@@ -293,21 +295,51 @@ export function AdminApp() {
     }
   }
 
-  async function handleTranslate() {
+  async function handleTranslateEn() {
     if (!editState?.body) return;
     if (editState.lang !== "ja") {
       setError("翻訳は ja 記事からのみ実行できます");
       return;
     }
-    setAiTask("translate");
+    setAiTask("translate-en");
     setError(null);
     try {
-      const result = await translateToOtherLangs(editState.body, aiModel);
-      setTranslationResult(result);
+      const en = await translateToEn(editState.body, aiModel);
+      setTranslationResult({ en });
     } catch (e) {
       handleError(e);
     } finally {
       setAiTask(null);
+    }
+  }
+
+  async function handleTranslateZhTW() {
+    if (!editState?.body) return;
+    if (editState.lang !== "ja") {
+      setError("翻訳は ja 記事からのみ実行できます");
+      return;
+    }
+    setAiTask("translate-zh-TW");
+    setError(null);
+    try {
+      const zhTW = await translateToZhTW(editState.body, aiModel);
+      setTranslationResult({ "zh-TW": zhTW });
+    } catch (e) {
+      handleError(e);
+    } finally {
+      setAiTask(null);
+    }
+  }
+
+  async function handleBuild() {
+    setBuilding(true);
+    setError(null);
+    try {
+      await api.build();
+    } catch (e) {
+      handleError(e);
+    } finally {
+      setBuilding(false);
     }
   }
 
@@ -379,6 +411,14 @@ export function AdminApp() {
               disabled={saving}
             >
               {saving ? "保存中..." : editState.existing ? "保存" : "作成"}
+            </button>
+            <button
+              type="button"
+              className="admin-btn admin-btn-secondary"
+              onClick={handleBuild}
+              disabled={building}
+            >
+              {building ? "ビルド中..." : "ビルド"}
             </button>
             <button
               type="button"
@@ -488,7 +528,8 @@ export function AdminApp() {
                   model={aiModel}
                   onModelChange={setAiModel}
                   onGenerate={handleAiGenerate}
-                  onTranslate={handleTranslate}
+                  onTranslateEn={handleTranslateEn}
+                  onTranslateZhTW={handleTranslateZhTW}
                   onOpenSettings={() => setShowApiKeyModal(true)}
                   task={aiTask}
                 />

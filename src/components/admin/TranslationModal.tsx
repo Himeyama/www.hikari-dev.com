@@ -9,15 +9,16 @@ interface TranslationModalProps {
   onClose: () => void;
 }
 
-const TABS: { key: TabKey; label: string }[] = [
+const ALL_TABS: { key: TabKey; label: string }[] = [
   { key: "en", label: "English" },
   { key: "zh-TW", label: "繁體中文" },
 ];
 
 export function TranslationModal({ result, onApply, onClose }: TranslationModalProps) {
-  const [activeTab, setActiveTab] = useState<TabKey>("en");
+  const tabs = ALL_TABS.filter((t) => result[t.key]);
+  const [activeTab, setActiveTab] = useState<TabKey>(tabs[0]?.key ?? "en");
   const [copied, setCopied] = useState(false);
-  const content = result[activeTab];
+  const content = result[activeTab] ?? "";
 
   function handleOverlayClick(e: MouseEvent<HTMLDivElement>) {
     if (e.target === e.currentTarget) onClose();
@@ -44,7 +45,7 @@ export function TranslationModal({ result, onApply, onClose }: TranslationModalP
           </button>
         </div>
         <div className="admin-modal-tabs">
-          {TABS.map((tab) => (
+          {tabs.map((tab) => (
             <button
               key={tab.key}
               type="button"

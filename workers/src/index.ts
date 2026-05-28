@@ -8,6 +8,7 @@ import { authMiddleware } from "./middleware/auth.ts";
 import { healthRouter } from "./routes/health.ts";
 import { articlesRouter } from "./routes/articles.ts";
 import { imagesRouter } from "./routes/images.ts";
+import { buildRouter } from "./routes/build.ts";
 
 const app = new Hono<HonoEnv>();
 
@@ -21,6 +22,7 @@ app.route("/health", healthRouter);
 app.use("/api/*", authMiddleware);
 app.route("/api/articles", articlesRouter);
 app.route("/api/images", imagesRouter);
+app.route("/api/build", buildRouter);
 
 app.notFound((c) => {
   const requestId = (c.get("requestId") as string | undefined) ?? "";
