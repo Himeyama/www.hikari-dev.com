@@ -194,7 +194,7 @@ export function AdminApp() {
         tags,
         ...(form.image ? { image: form.image } : {}),
         ...(keywords.length > 0 ? { keywords } : {}),
-        ...(form.draft ? { draft: true as const } : {}),
+        draft: form.draft,
         body,
       };
       let saved: ArticleContent;
