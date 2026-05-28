@@ -5,6 +5,17 @@ export class ConflictError extends Error {
   }
 }
 
+// 同一ブランチへ連続してコミットすると、GitHub Contents API は
+// ブランチ参照の更新が反映されきる前に 409 を返すことがある
+// (多言語のドラフト同期など)。最新の SHA を取り直して数百 ms 待ってから
+// リトライすると解消する。
+const PUT_MAX_ATTEMPTS = 4;
+const PUT_RETRY_BASE_MS = 400;
+
+function delay(ms: number): Promise<void> {
+  return new Promise((resolve) => setTimeout(resolve, ms));
+}
+
 export interface GitHubFile {
   sha: string;
   content: string;
@@ -50,24 +61,36 @@ export class GitHubClient {
     message: string,
     sha?: string,
   ): Promise<{ sha: string }> {
-    const body: Record<string, unknown> = {
-      message,
-      content: utf8EncodeBase64(content),
-      branch: this.branch,
-    };
-    if (sha) body.sha = sha;
+    let currentSha = sha;
 
-    const res = await fetch(`${this.baseUrl}/contents/${path}`, {
-      method: "PUT",
-      headers: this.headers(),
-      body: JSON.stringify(body),
-    });
+    for (let attempt = 0; attempt < PUT_MAX_ATTEMPTS; attempt++) {
+      const body: Record<string, unknown> = {
+        message,
+        content: utf8EncodeBase64(content),
+        branch: this.branch,
+      };
+      if (currentSha) body.sha = currentSha;
 
-    if (res.status === 409) throw new ConflictError("File was modified concurrently");
-    if (!res.ok) throw new Error(`GitHub API error: ${res.status} ${await res.text()}`);
+      const res = await fetch(`${this.baseUrl}/contents/${path}`, {
+        method: "PUT",
+        headers: this.headers(),
+        body: JSON.stringify(body),
+      });
 
-    const data = (await res.json()) as { content: { sha: string } };
-    return { sha: data.content.sha };
+      if (res.status === 409 && attempt < PUT_MAX_ATTEMPTS - 1) {
+        // ブランチ更新の競合。最新の SHA を取り直して待機後にリトライする。
+        await delay(PUT_RETRY_BASE_MS * (attempt + 1));
+        currentSha = (await this.getFile(path))?.sha ?? currentSha;
+        continue;
+      }
+      if (res.status === 409) throw new ConflictError("File was modified concurrently");
+      if (!res.ok) throw new Error(`GitHub API error: ${res.status} ${await res.text()}`);
+
+      const data = (await res.json()) as { content: { sha: string } };
+      return { sha: data.content.sha };
+    }
+
+    throw new ConflictError("File was modified concurrently");
   }
 
   async putBinaryFile(

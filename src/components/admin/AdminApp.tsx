@@ -226,9 +226,9 @@ export function AdminApp() {
       // draft 状態が変わった場合、他言語ファイルへ同期する。
       // GitHub Contents API は同一ブランチへの並列コミットで 409/422 を返すため、
       // 必ず直列に実行する。失敗した言語はユーザーに通知する (握りつぶさない)。
+      const failed: Lang[] = [];
       if (existing && (existing.draft ?? false) !== form.draft) {
         const otherLangs = LANGS.filter((l) => l !== saved.lang);
-        const failed: Lang[] = [];
         for (const otherLang of otherLangs) {
           try {
             const other = await api.articles.get(saved.filename, otherLang).catch(() => null);
@@ -242,12 +242,14 @@ export function AdminApp() {
             failed.push(otherLang);
           }
         }
-        if (failed.length > 0) {
-          setError(`他言語へのドラフト同期に失敗しました: ${failed.join(", ")}`);
-        }
       }
 
+      // loadArticles は冒頭で setError(null) するため、同期失敗の通知は
+      // 再読み込みの後に行う (そうしないとエラーがすぐ消えてしまう)。
       await loadArticles(editState.lang);
+      if (failed.length > 0) {
+        setError(`他言語へのドラフト同期に失敗しました: ${failed.join(", ")}`);
+      }
     } catch (e) {
       handleError(e);
     } finally {
