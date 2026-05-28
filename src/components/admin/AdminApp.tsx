@@ -416,6 +416,9 @@ export function AdminApp() {
       <aside className="admin-sidebar">
         <div className="admin-sidebar-header">
           <span className="admin-sidebar-title">CMS</span>
+          {loading && (
+            <span className="admin-sidebar-status">読み込み中...</span>
+          )}
           <button
             type="button"
             className="admin-btn admin-btn-primary admin-btn-sm"
@@ -427,9 +430,6 @@ export function AdminApp() {
             </svg>
           </button>
         </div>
-        {loading && !editState && (
-          <div className="admin-sidebar-empty">読み込み中...</div>
-        )}
         <ArticleList
           articles={articles}
           selectedFilename={selectedFilename}
@@ -522,6 +522,8 @@ export function AdminApp() {
             <span className="admin-toolbar-status">
               {error ? (
                 <span className="admin-toolbar-error">{error}</span>
+              ) : loading ? (
+                "読み込み中..."
               ) : editState.dirty ? (
                 "未保存"
               ) : (

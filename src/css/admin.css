@@ -57,6 +57,12 @@
   font-size: 0.9375rem;
 }
 
+.admin-sidebar-status {
+  margin-left: auto;
+  font-size: 0.75rem;
+  color: var(--admin-muted);
+}
+
 .admin-sidebar-list-wrap {
   flex: 1;
   display: flex;
