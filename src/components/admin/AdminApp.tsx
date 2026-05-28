@@ -7,6 +7,7 @@ import type {
   Lang,
   UpdateArticleRequest,
 } from "../../lib/admin/types";
+import { LANGS } from "../../lib/admin/types";
 import { normalizeSlug, todayDate } from "../../lib/admin/slug";
 import { clearDraft, loadDraft, useAutoSave } from "../../lib/admin/useAutoSave";
 import {
@@ -220,6 +221,23 @@ export function AdminApp() {
         body: saved.body,
         dirty: false,
       });
+
+      // draft 状態が変わった場合、他言語ファイルへ同期する
+      if (existing && (existing.draft ?? false) !== form.draft) {
+        const otherLangs = LANGS.filter((l) => l !== saved.lang);
+        await Promise.allSettled(
+          otherLangs.map(async (otherLang) => {
+            const other = await api.articles.get(saved.filename, otherLang).catch(() => null);
+            if (other && (other.draft ?? false) !== form.draft) {
+              await api.articles.update(saved.filename, otherLang, {
+                sha: other.sha,
+                draft: form.draft,
+              });
+            }
+          }),
+        );
+      }
+
       await loadArticles(editState.lang);
     } catch (e) {
       handleError(e);
