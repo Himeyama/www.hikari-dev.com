@@ -4,9 +4,9 @@ import type {
   Frontmatter,
   UpdateArticleRequest,
 } from "../schema.ts";
-import { articlePath, COMMIT_MESSAGES, listPath, parseFilename } from "../constants.ts";
+import { articlePath, COMMIT_MESSAGES, LANGS, listPath, parseFilename } from "../constants.ts";
 import { parseFrontmatter, serializeFrontmatter } from "../frontmatter.ts";
-import type { GitHubClient } from "../github/client.ts";
+import type { FileChange, GitHubClient } from "../github/client.ts";
 
 export class ArticleService {
   constructor(private github: GitHubClient) {}
@@ -88,6 +88,41 @@ export class ArticleService {
     const body = req.body ?? existing.body;
     const path = articlePath(existing.date, existing.slug, lang);
     const content = serializeFrontmatter(merged, body);
+
+    // draft が変わったら、他言語ファイルのドラフト状態も同じ 1 コミットで同期する。
+    const newDraft = req.draft ?? existing.draft ?? false;
+    if ((existing.draft ?? false) !== newDraft) {
+      const changes: FileChange[] = [{ path, content }];
+      for (const otherLang of LANGS) {
+        if (otherLang === lang) continue;
+        const other = await this.get(filename, otherLang);
+        if (!other || (other.draft ?? false) === newDraft) continue;
+        const otherMerged: Frontmatter = {
+          title: other.title,
+          authors: other.authors,
+          tags: other.tags,
+          ...maybeField("image", other.image),
+          ...maybeField("keywords", other.keywords),
+          ...maybeField("draft", newDraft),
+        };
+        changes.push({
+          path: articlePath(other.date, other.slug, otherLang),
+          content: serializeFrontmatter(otherMerged, other.body),
+        });
+      }
+      const blobShas = await this.github.commitFiles(
+        changes,
+        COMMIT_MESSAGES.update(filename, lang),
+      );
+      return contentFromFrontmatter(
+        { date: existing.date, slug: existing.slug },
+        lang,
+        merged,
+        body,
+        blobShas[path] ?? existing.sha,
+      );
+    }
+
     const { sha } = await this.github.putFile(
       path,
       content,

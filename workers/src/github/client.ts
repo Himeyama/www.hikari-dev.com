@@ -5,21 +5,16 @@ export class ConflictError extends Error {
   }
 }
 
-// 同一ブランチへ連続してコミットすると、GitHub Contents API は
-// ブランチ参照の更新が反映されきる前に 409 を返すことがある
-// (多言語のドラフト同期など)。最新の SHA を取り直して数百 ms 待ってから
-// リトライすると解消する。
-const PUT_MAX_ATTEMPTS = 4;
-const PUT_RETRY_BASE_MS = 400;
-
-function delay(ms: number): Promise<void> {
-  return new Promise((resolve) => setTimeout(resolve, ms));
-}
-
 export interface GitHubFile {
   sha: string;
   content: string;
   path: string;
+}
+
+/** 1 コミットでまとめて変更する 1 ファイル分の内容。 */
+export interface FileChange {
+  path: string;
+  content: string;
 }
 
 export interface GitHubListItem {
@@ -61,36 +56,90 @@ export class GitHubClient {
     message: string,
     sha?: string,
   ): Promise<{ sha: string }> {
-    let currentSha = sha;
+    const body: Record<string, unknown> = {
+      message,
+      content: utf8EncodeBase64(content),
+      branch: this.branch,
+    };
+    if (sha) body.sha = sha;
 
-    for (let attempt = 0; attempt < PUT_MAX_ATTEMPTS; attempt++) {
-      const body: Record<string, unknown> = {
-        message,
-        content: utf8EncodeBase64(content),
-        branch: this.branch,
-      };
-      if (currentSha) body.sha = currentSha;
+    const res = await fetch(`${this.baseUrl}/contents/${path}`, {
+      method: "PUT",
+      headers: this.headers(),
+      body: JSON.stringify(body),
+    });
 
-      const res = await fetch(`${this.baseUrl}/contents/${path}`, {
-        method: "PUT",
-        headers: this.headers(),
-        body: JSON.stringify(body),
+    if (res.status === 409) throw new ConflictError("File was modified concurrently");
+    if (!res.ok) throw new Error(`GitHub API error: ${res.status} ${await res.text()}`);
+
+    const data = (await res.json()) as { content: { sha: string } };
+    return { sha: data.content.sha };
+  }
+
+  /**
+   * 複数ファイルを 1 コミットでまとめて変更する (Git Data API)。
+   * Contents API のようにファイルごとにコミットを分けず、ツリーを 1 つ作って
+   * 単一コミットで反映するため、同一ブランチへの連続コミット競合 (409) が起きない。
+   * 戻り値は path -> 新しい blob SHA のマップ (Contents API の file sha と同一)。
+   */
+  async commitFiles(
+    changes: FileChange[],
+    message: string,
+  ): Promise<Record<string, string>> {
+    const branch = encodeURIComponent(this.branch);
+
+    // 1. ブランチの HEAD コミットと、そのツリーを取得する。
+    const ref = await this.githubJson<{ object: { sha: string } }>(
+      `/git/ref/heads/${branch}`,
+    );
+    const baseCommitSha = ref.object.sha;
+    const baseCommit = await this.githubJson<{ tree: { sha: string } }>(
+      `/git/commits/${baseCommitSha}`,
+    );
+    const baseTreeSha = baseCommit.tree.sha;
+
+    // 2. 各ファイルの blob を作成する。
+    const blobShas: Record<string, string> = {};
+    const tree: { path: string; mode: "100644"; type: "blob"; sha: string }[] = [];
+    for (const change of changes) {
+      const blob = await this.githubJson<{ sha: string }>("/git/blobs", {
+        method: "POST",
+        body: JSON.stringify({
+          content: utf8EncodeBase64(change.content),
+          encoding: "base64",
+        }),
       });
-
-      if (res.status === 409 && attempt < PUT_MAX_ATTEMPTS - 1) {
-        // ブランチ更新の競合。最新の SHA を取り直して待機後にリトライする。
-        await delay(PUT_RETRY_BASE_MS * (attempt + 1));
-        currentSha = (await this.getFile(path))?.sha ?? currentSha;
-        continue;
-      }
-      if (res.status === 409) throw new ConflictError("File was modified concurrently");
-      if (!res.ok) throw new Error(`GitHub API error: ${res.status} ${await res.text()}`);
-
-      const data = (await res.json()) as { content: { sha: string } };
-      return { sha: data.content.sha };
+      blobShas[change.path] = blob.sha;
+      tree.push({ path: change.path, mode: "100644", type: "blob", sha: blob.sha });
     }
 
-    throw new ConflictError("File was modified concurrently");
+    // 3. ツリー -> コミット -> ブランチ参照の更新。
+    const newTree = await this.githubJson<{ sha: string }>("/git/trees", {
+      method: "POST",
+      body: JSON.stringify({ base_tree: baseTreeSha, tree }),
+    });
+    const newCommit = await this.githubJson<{ sha: string }>("/git/commits", {
+      method: "POST",
+      body: JSON.stringify({ message, tree: newTree.sha, parents: [baseCommitSha] }),
+    });
+    await this.githubJson(`/git/refs/heads/${branch}`, {
+      method: "PATCH",
+      body: JSON.stringify({ sha: newCommit.sha }),
+    });
+
+    return blobShas;
+  }
+
+  private async githubJson<T = unknown>(
+    path: string,
+    init?: RequestInit,
+  ): Promise<T> {
+    const res = await fetch(`${this.baseUrl}${path}`, {
+      ...init,
+      headers: this.headers(),
+    });
+    if (!res.ok) throw new Error(`GitHub API error: ${res.status} ${await res.text()}`);
+    return (await res.json()) as T;
   }
 
   async putBinaryFile(

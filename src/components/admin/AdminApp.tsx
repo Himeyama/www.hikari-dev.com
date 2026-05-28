@@ -7,7 +7,6 @@ import type {
   Lang,
   UpdateArticleRequest,
 } from "../../lib/admin/types";
-import { LANGS } from "../../lib/admin/types";
 import { normalizeSlug, todayDate } from "../../lib/admin/slug";
 import { clearDraft, loadDraft, useAutoSave } from "../../lib/admin/useAutoSave";
 import {
@@ -223,33 +222,9 @@ export function AdminApp() {
         dirty: false,
       });
 
-      // draft 状態が変わった場合、他言語ファイルへ同期する。
-      // GitHub Contents API は同一ブランチへの並列コミットで 409/422 を返すため、
-      // 必ず直列に実行する。失敗した言語はユーザーに通知する (握りつぶさない)。
-      const failed: Lang[] = [];
-      if (existing && (existing.draft ?? false) !== form.draft) {
-        const otherLangs = LANGS.filter((l) => l !== saved.lang);
-        for (const otherLang of otherLangs) {
-          try {
-            const other = await api.articles.get(saved.filename, otherLang).catch(() => null);
-            if (other && (other.draft ?? false) !== form.draft) {
-              await api.articles.update(saved.filename, otherLang, {
-                sha: other.sha,
-                draft: form.draft,
-              });
-            }
-          } catch {
-            failed.push(otherLang);
-          }
-        }
-      }
-
-      // loadArticles は冒頭で setError(null) するため、同期失敗の通知は
-      // 再読み込みの後に行う (そうしないとエラーがすぐ消えてしまう)。
+      // draft 状態が変わった場合の他言語ファイルへの同期は Workers 側が
+      // 1 コミットでまとめて行う (src/services/article.ts の update)。
       await loadArticles(editState.lang);
-      if (failed.length > 0) {
-        setError(`他言語へのドラフト同期に失敗しました: ${failed.join(", ")}`);
-      }
     } catch (e) {
       handleError(e);
     } finally {
