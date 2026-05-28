@@ -2,7 +2,6 @@
 title: "Makefile 的推薦"
 authors: hikari
 tags: [Makefile, Linux]
-draft: true
 ---
 
 ## 背景與問題意識
