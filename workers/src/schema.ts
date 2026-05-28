@@ -9,7 +9,10 @@ export const SlugSchema = z
 
 export const FrontmatterSchema = z.object({
   title: z.string().min(1).max(200),
-  authors: z.string().default("hikari"),
+  authors: z.preprocess(
+    (v) => (Array.isArray(v) ? v.join(", ") : v),
+    z.string().default("hikari"),
+  ),
   tags: z.array(z.string()).default([]),
   image: z.string().optional(),
   keywords: z.array(z.string()).optional(),
