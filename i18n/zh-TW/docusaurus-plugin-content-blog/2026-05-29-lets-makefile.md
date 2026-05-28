@@ -1,11 +1,9 @@
 ---
-title: "Makefile のすすめ"
+title: "Makefile 的推薦"
 authors: hikari
 tags: [Makefile, Linux]
 draft: true
 ---
-
-## Makefile 的推薦
 
 ## 背景與問題意識
 在日常工作中，使用 Python 腳本進行資料轉換自動化時，常常會遇到以下問題：
