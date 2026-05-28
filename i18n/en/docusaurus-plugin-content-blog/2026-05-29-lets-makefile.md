@@ -1,11 +1,9 @@
 ---
-title: "Makefile のすすめ"
+title: "Recommendation for Makefile"
 authors: hikari
 tags: [Makefile, Linux]
 draft: true
 ---
-
-## Recommendation for Makefile
 
 ## Background and Problem Awareness
 In daily work, when automating data transformation with Python scripts, you often run into the following issues:
