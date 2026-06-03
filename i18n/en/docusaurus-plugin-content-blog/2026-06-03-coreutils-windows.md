@@ -1,5 +1,5 @@
 ---
-title: "Coreutils for Windows のまとめ"
+title: "What is Coreutils for Windows"
 authors: hikari
 tags: [Windows]
 draft: true
