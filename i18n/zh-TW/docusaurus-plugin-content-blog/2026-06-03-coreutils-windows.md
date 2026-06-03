@@ -2,7 +2,6 @@
 title: "什麼是適用於 Windows 的 Coreutils"
 authors: hikari
 tags: [Windows]
-draft: true
 ---
 
 ## WinGet 可安裝的 Microsoft 官方 Linux 指令群最新動向（2026 年 6 月更新）

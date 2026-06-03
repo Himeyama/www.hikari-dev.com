@@ -2,7 +2,6 @@
 title: "Coreutils for Windows のまとめ"
 authors: hikari
 tags: [Windows]
-draft: true
 ---
 
 ## WinGetでインストールできるMicrosoft公式Linuxコマンド群の最新動向（2026年6月更新）

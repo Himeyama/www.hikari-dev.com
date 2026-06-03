@@ -2,7 +2,6 @@
 title: "What is Coreutils for Windows"
 authors: hikari
 tags: [Windows]
-draft: true
 ---
 
 ## Latest Trends in Microsoft’s Official Linux Command Set Installable with WinGet (Updated June 2026)
