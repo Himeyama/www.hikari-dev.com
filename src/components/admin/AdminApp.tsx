@@ -498,10 +498,21 @@ export function AdminApp() {
       setError("翻訳は ja 記事からのみ実行できます");
       return;
     }
-    if (!editState.existing) {
-      setError("翻訳前に ja 記事を保存してください");
+
+    const date = editState.existing?.date ?? editState.form.date;
+    const slug =
+      editState.existing?.slug ??
+      normalizeSlug(editState.form.slug) ??
+      normalizeSlug(editState.form.title);
+    if (!slug) {
+      setError("翻訳前にスラッグまたはタイトルを入力してください");
       return;
     }
+    if (!/^\d{4}-\d{2}-\d{2}$/.test(date)) {
+      setError("翻訳前に日付を YYYY-MM-DD 形式で入力してください");
+      return;
+    }
+    const filename = `${date}-${slug}`;
 
     setAiTask("translate");
     setError(null);
@@ -511,8 +522,6 @@ export function AdminApp() {
         editState.body,
         aiModel,
       );
-      const src = editState.existing;
-      const filename = `${src.date}-${src.slug}`;
 
       // Fetch existing en/zh-TW articles for their sha (if they already exist).
       const [enExisting, zhTWExisting] = await Promise.all([
