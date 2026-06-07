@@ -95,8 +95,28 @@ async function translateOne(
   return res.choices[0]?.message?.content ?? "";
 }
 
+async function translateTitleOnly(
+  client: OpenAI,
+  title: string,
+  target: "English" | "Traditional Chinese (Taiwan)",
+  model: AiModel,
+): Promise<string> {
+  const res = await client.chat.completions.create({
+    model,
+    messages: [
+      {
+        role: "system",
+        content: `Translate this blog post title to ${target}. Output only the translated title with no explanation.`,
+      },
+      { role: "user", content: title },
+    ],
+  });
+  return res.choices[0]?.message?.content?.trim() ?? title;
+}
+
 export interface GenerateResult {
   title: string;
+  slug: string;
   tags: string[];
   body: string;
 }
@@ -116,7 +136,9 @@ export async function generateFromPrompt(
           "文体は「である調」で統一し、見出しは ## から始めてください。コードブロックには言語を指定してください。",
           "",
           "以下の JSON 形式のみで出力してください (前置きや説明は不要です):",
-          '{ "title": "記事タイトル", "tags": ["タグ1", "タグ2"], "body": "記事本文 (Markdown)" }',
+          '{ "title": "記事タイトル", "slug": "english-kebab-case-slug", "tags": ["タグ1", "タグ2"], "body": "記事本文 (Markdown)" }',
+          "",
+          "slug は記事内容を表す英語のケバブケース (例: install-docker-on-windows)。",
         ].join("\n"),
       },
       { role: "user", content: prompt },
@@ -129,11 +151,12 @@ export async function generateFromPrompt(
     const parsed = JSON.parse(jsonMatch[0]) as Partial<GenerateResult>;
     return {
       title: typeof parsed.title === "string" ? parsed.title : "",
+      slug: typeof parsed.slug === "string" ? parsed.slug : "",
       tags: Array.isArray(parsed.tags) ? parsed.tags.map(String) : [],
       body: typeof parsed.body === "string" ? parsed.body : raw,
     };
   } catch {
-    return { title: "", tags: [], body: raw };
+    return { title: "", slug: "", tags: [], body: raw };
   }
 }
 
@@ -188,38 +211,14 @@ export async function translateBoth(
   model: AiModel,
 ): Promise<TranslationBothResult> {
   const client = getClient(model);
-  const res = await client.chat.completions.create({
-    model,
-    messages: [
-      {
-        role: "system",
-        content:
-          'You are a translator. Translate the Markdown blog article title and body into both English and Traditional Chinese (Taiwan). Preserve all Markdown formatting, code blocks, and structure. Output ONLY valid JSON with no preamble or explanation:\n{"en":{"title":"...","body":"..."},"zh-TW":{"title":"...","body":"..."}}',
-      },
-      {
-        role: "user",
-        content: `Title: ${title}\n\nBody:\n${body}`,
-      },
-    ],
-  });
-  const raw = res.choices[0]?.message?.content ?? "";
-  const jsonMatch = raw.match(/\{[\s\S]*\}/);
-  if (!jsonMatch) throw new Error("翻訳結果のパースに失敗しました");
-  const parsed = JSON.parse(jsonMatch[0]) as Partial<TranslationBothResult>;
+  const [enTitle, enBody, zhTWTitle, zhTWBody] = await Promise.all([
+    translateTitleOnly(client, title, "English", model),
+    translateOne(client, body, "English", model),
+    translateTitleOnly(client, title, "Traditional Chinese (Taiwan)", model),
+    translateOne(client, body, "Traditional Chinese (Taiwan)", model),
+  ]);
   return {
-    en: {
-      title: typeof parsed.en?.title === "string" ? parsed.en.title : title,
-      body: typeof parsed.en?.body === "string" ? parsed.en.body : "",
-    },
-    "zh-TW": {
-      title:
-        typeof parsed["zh-TW"]?.title === "string"
-          ? parsed["zh-TW"]!.title
-          : title,
-      body:
-        typeof parsed["zh-TW"]?.body === "string"
-          ? parsed["zh-TW"]!.body
-          : "",
-    },
+    en: { title: enTitle, body: enBody },
+    "zh-TW": { title: zhTWTitle, body: zhTWBody },
   };
 }

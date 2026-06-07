@@ -227,22 +227,49 @@ export function AdminApp() {
     });
   }
 
-  function handleLangChange(next: Lang) {
-    // Compute pending with current, then check if the same filename has a pending edit in the new lang.
+  async function handleLangChange(next: Lang) {
+    // Compute pending that includes the current article (if dirty).
     const newPending = pendingWithCurrent(pendingEdits);
     const matchKey = selectedFilename ? draftKey(next, selectedFilename) : null;
     const matchPending = matchKey ? newPending[matchKey] : null;
 
     if (matchPending && matchKey) {
-      // Auto-open the matching pending article for the new lang.
+      // There is a pending edit for the same article in the target lang — open it.
       const withoutMatch = { ...newPending };
       delete withoutMatch[matchKey];
       savePendingEdits(withoutMatch);
       setPendingEdits(withoutMatch);
       setLang(next);
-      setSelectedFilename(selectedFilename);
+      // selectedFilename stays the same
       setEditState({ ...matchPending, dirty: true });
+    } else if (selectedFilename) {
+      // No pending match — save pending and try to load the same article from API.
+      // Keep selectedFilename so switching back can find the pending ja/en/etc. edit.
+      savePendingEdits(newPending);
+      setPendingEdits(newPending);
+      setLang(next);
+      setEditState(null);
+      setLoading(true);
+      setError(null);
+      try {
+        const article = await api.articles.get(selectedFilename, next);
+        setEditState({
+          existing: article,
+          lang: next,
+          form: formFromArticle(article),
+          body: article.body,
+          dirty: false,
+        });
+      } catch {
+        // Article doesn't exist in this lang yet — show empty editor.
+        // selectedFilename is intentionally preserved so switching back
+        // to the original lang can auto-restore the pending edit.
+        setEditState(null);
+      } finally {
+        setLoading(false);
+      }
     } else {
+      // No article selected (new article or empty state).
       savePendingEdits(newPending);
       setPendingEdits(newPending);
       setLang(next);
@@ -426,8 +453,11 @@ export function AdminApp() {
       if (mode === "create") {
         const result = await generateFromPrompt(prompt, aiModel);
         patchBody(result.body);
-        if (result.title) patchForm({ title: result.title });
-        if (result.tags.length > 0) patchForm({ tags: result.tags.join(", ") });
+        const formPatch: Partial<FrontmatterFormState> = {};
+        if (result.title) formPatch.title = result.title;
+        if (result.slug && !editState.existing) formPatch.slug = result.slug;
+        if (result.tags.length > 0) formPatch.tags = result.tags.join(", ");
+        if (Object.keys(formPatch).length > 0) patchForm(formPatch);
       } else {
         const result = await editWithPrompt(editState.body, prompt, aiModel);
         patchBody(result);
