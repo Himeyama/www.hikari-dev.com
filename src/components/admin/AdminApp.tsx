@@ -281,12 +281,17 @@ export function AdminApp() {
   function patchForm(patch: Partial<FrontmatterFormState>) {
     setEditState((prev) => {
       if (!prev) return null;
-      return { ...prev, form: { ...prev.form, ...patch }, dirty: true };
+      const changed = (Object.keys(patch) as Array<keyof FrontmatterFormState>).some(
+        (k) => patch[k] !== prev.form[k],
+      );
+      return { ...prev, form: { ...prev.form, ...patch }, dirty: prev.dirty || changed };
     });
   }
 
   function patchBody(body: string) {
-    setEditState((prev) => (prev ? { ...prev, body, dirty: true } : null));
+    setEditState((prev) =>
+      prev ? { ...prev, body, dirty: prev.dirty || body !== prev.body } : null,
+    );
   }
 
   // Number of articles with unsaved changes (current + other pending).
