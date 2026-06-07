@@ -87,7 +87,7 @@ export function AdminApp() {
 
   const [loading, setLoading] = useState(false);
   const [saving, setSaving] = useState(false);
-  const [building, setBuilding] = useState(false);
+
   const [error, setError] = useState<string | null>(null);
   const [showPreview, setShowPreview] = useState(true);
   const [showAiPanel, setShowAiPanel] = useState(true);
@@ -567,18 +567,6 @@ export function AdminApp() {
     }
   }
 
-  async function handleBuild() {
-    setBuilding(true);
-    setError(null);
-    try {
-      await api.build();
-    } catch (e) {
-      handleError(e);
-    } finally {
-      setBuilding(false);
-    }
-  }
-
   const dirtyCount = totalDirtyCount();
 
   // Inject articles that exist only in pending (not yet pushed to the API).
@@ -697,14 +685,6 @@ export function AdminApp() {
                 : dirtyCount > 0
                   ? `保存 (${dirtyCount}件)`
                   : "保存"}
-            </button>
-            <button
-              type="button"
-              className="admin-btn admin-btn-secondary"
-              onClick={handleBuild}
-              disabled={building}
-            >
-              {building ? "ビルド中..." : "ビルド"}
             </button>
             <button
               type="button"
