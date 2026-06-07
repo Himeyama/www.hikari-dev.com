@@ -581,25 +581,78 @@ export function AdminApp() {
 
   const dirtyCount = totalDirtyCount();
 
-  // Unsaved new articles (current or stashed) are not in the API list — inject them.
-  const currentIsNew = selectedFilename === null && editState !== null && editState.lang === lang;
+  // Inject articles that exist only in pending (not yet pushed to the API).
+  const apiFilenames = new Set(articles.map((a) => a.filename));
+  const extraArticles: ArticleMeta[] = [];
+
+  // 1. New article in the editor (filename === null) or stashed as pending.
+  const currentIsNew =
+    selectedFilename === null && editState !== null && editState.lang === lang;
   const pendingNewKey = draftKey(lang, null);
   const newDraftSource = currentIsNew ? editState : (pendingEdits[pendingNewKey] ?? null);
-  const displayedArticles: ArticleMeta[] = newDraftSource
-    ? [
-        {
-          filename: NEW_ARTICLE_SENTINEL,
-          date: newDraftSource.form.date,
-          slug: normalizeSlug(newDraftSource.form.slug) || normalizeSlug(newDraftSource.form.title) || "",
-          lang,
-          title: newDraftSource.form.title || "（無題）",
-          authors: newDraftSource.form.authors,
-          tags: splitCsv(newDraftSource.form.tags),
-          draft: true,
-        },
-        ...articles,
-      ]
-    : articles;
+  if (newDraftSource) {
+    extraArticles.push({
+      filename: NEW_ARTICLE_SENTINEL,
+      date: newDraftSource.form.date,
+      slug:
+        normalizeSlug(newDraftSource.form.slug) ||
+        normalizeSlug(newDraftSource.form.title) ||
+        "",
+      lang,
+      title: newDraftSource.form.title || "（無題）",
+      authors: newDraftSource.form.authors,
+      tags: splitCsv(newDraftSource.form.tags),
+      draft: true,
+    });
+  }
+
+  // 2. Current editor article with a real filename not yet in the API.
+  if (
+    selectedFilename !== null &&
+    editState !== null &&
+    editState.lang === lang &&
+    !apiFilenames.has(selectedFilename)
+  ) {
+    extraArticles.push({
+      filename: selectedFilename,
+      date: editState.existing?.date ?? editState.form.date,
+      slug:
+        editState.existing?.slug ??
+        normalizeSlug(editState.form.slug) ||
+        normalizeSlug(editState.form.title) ||
+        "",
+      lang,
+      title: editState.form.title || "（無題）",
+      authors: editState.form.authors,
+      tags: splitCsv(editState.form.tags),
+      draft: editState.form.draft,
+    });
+  }
+
+  // 3. Other pending drafts for the current lang not yet in the API.
+  for (const [key, draft] of Object.entries(pendingEdits)) {
+    if (draft.lang !== lang) continue;
+    const keyFilename = key.slice(draft.lang.length + 1);
+    if (keyFilename === "new") continue;
+    if (apiFilenames.has(keyFilename)) continue;
+    if (keyFilename === selectedFilename) continue;
+    extraArticles.push({
+      filename: keyFilename,
+      date: draft.existing?.date ?? draft.form.date,
+      slug:
+        draft.existing?.slug ??
+        normalizeSlug(draft.form.slug) ||
+        normalizeSlug(draft.form.title) ||
+        "",
+      lang: draft.lang,
+      title: draft.form.title || "（無題）",
+      authors: draft.form.authors,
+      tags: splitCsv(draft.form.tags),
+      draft: draft.form.draft,
+    });
+  }
+
+  const displayedArticles: ArticleMeta[] = [...extraArticles, ...articles];
   const listSelectedFilename = currentIsNew ? NEW_ARTICLE_SENTINEL : selectedFilename;
 
   return (
