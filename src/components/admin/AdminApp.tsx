@@ -605,8 +605,7 @@ export function AdminApp() {
       filename: selectedFilename,
       date: editState.existing?.date ?? editState.form.date,
       slug:
-        editState.existing?.slug ??
-        normalizeSlug(editState.form.slug) ||
+        (editState.existing?.slug ?? normalizeSlug(editState.form.slug)) ||
         normalizeSlug(editState.form.title) ||
         "",
       lang,
@@ -628,8 +627,7 @@ export function AdminApp() {
       filename: keyFilename,
       date: draft.existing?.date ?? draft.form.date,
       slug:
-        draft.existing?.slug ??
-        normalizeSlug(draft.form.slug) ||
+        (draft.existing?.slug ?? normalizeSlug(draft.form.slug)) ||
         normalizeSlug(draft.form.title) ||
         "",
       lang: draft.lang,
