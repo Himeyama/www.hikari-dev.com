@@ -1,4 +1,6 @@
 import { useCallback, useEffect, useState } from "react";
+
+const NEW_ARTICLE_SENTINEL = "__new__";
 import { api, UnauthorizedError } from "../../lib/admin/api";
 import type {
   ArticleContent,
@@ -160,6 +162,22 @@ export function AdminApp() {
   }
 
   async function selectArticle(filename: string) {
+    if (filename === NEW_ARTICLE_SENTINEL) {
+      if (selectedFilename === null && editState !== null) return; // already editing
+      const newPending = pendingWithCurrent(pendingEdits);
+      const newKey = draftKey(lang, null);
+      const stashed = newPending[newKey];
+      if (stashed) {
+        const withoutNew = { ...newPending };
+        delete withoutNew[newKey];
+        savePendingEdits(withoutNew);
+        setPendingEdits(withoutNew);
+        setSelectedFilename(null);
+        setEditState({ ...stashed, dirty: true });
+      }
+      return;
+    }
+
     // Save current article to pending before switching.
     const newPending = pendingWithCurrent(pendingEdits);
     const newKey = draftKey(lang, filename);
@@ -554,6 +572,27 @@ export function AdminApp() {
 
   const dirtyCount = totalDirtyCount();
 
+  // Unsaved new articles (current or stashed) are not in the API list — inject them.
+  const currentIsNew = selectedFilename === null && editState !== null && editState.lang === lang;
+  const pendingNewKey = draftKey(lang, null);
+  const newDraftSource = currentIsNew ? editState : (pendingEdits[pendingNewKey] ?? null);
+  const displayedArticles: ArticleMeta[] = newDraftSource
+    ? [
+        {
+          filename: NEW_ARTICLE_SENTINEL,
+          date: newDraftSource.form.date,
+          slug: normalizeSlug(newDraftSource.form.slug) || normalizeSlug(newDraftSource.form.title) || "",
+          lang,
+          title: newDraftSource.form.title || "（無題）",
+          authors: newDraftSource.form.authors,
+          tags: splitCsv(newDraftSource.form.tags),
+          draft: true,
+        },
+        ...articles,
+      ]
+    : articles;
+  const listSelectedFilename = currentIsNew ? NEW_ARTICLE_SENTINEL : selectedFilename;
+
   return (
     <div className="admin-root">
       <aside className="admin-sidebar">
@@ -574,8 +613,8 @@ export function AdminApp() {
           </button>
         </div>
         <ArticleList
-          articles={articles}
-          selectedFilename={selectedFilename}
+          articles={displayedArticles}
+          selectedFilename={listSelectedFilename}
           lang={lang}
           onLangChange={handleLangChange}
           onSelect={selectArticle}
