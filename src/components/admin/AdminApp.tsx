@@ -11,6 +11,7 @@ import type {
   PendingDraft,
   UpdateArticleRequest,
 } from "../../lib/admin/types";
+import { LANGS } from "../../lib/admin/types";
 import { normalizeSlug, todayDate } from "../../lib/admin/slug";
 import {
   savePendingEdits,
@@ -567,6 +568,39 @@ export function AdminApp() {
     }
   }
 
+  function handleDiscardDraft() {
+    if (!editState) return;
+    const label = editState.form.title || "（無題）";
+    if (!confirm(`「${label}」の下書き (全言語) を破棄しますか?`)) return;
+
+    const newPending = { ...pendingEdits };
+
+    if (selectedFilename === null) {
+      // 新規記事: 現在の言語の "new" 下書きのみ破棄。
+      delete newPending[draftKey(lang, null)];
+    } else {
+      // 翻訳済み未保存記事: 全言語の同一ファイル名エントリを破棄。
+      for (const l of LANGS) {
+        delete newPending[draftKey(l, selectedFilename)];
+      }
+      // 新規 ja 記事 ("ja:new") がこのファイル名に対応する場合も破棄。
+      const jaPending = newPending[draftKey("ja", null)];
+      if (jaPending) {
+        const jaSlug =
+          normalizeSlug(jaPending.form.slug) || normalizeSlug(jaPending.form.title);
+        if (jaSlug && `${jaPending.form.date}-${jaSlug}` === selectedFilename) {
+          delete newPending[draftKey("ja", null)];
+        }
+      }
+    }
+
+    savePendingEdits(newPending);
+    setPendingEdits(newPending);
+    setEditState(null);
+    setSelectedFilename(null);
+    if (selectedFilename !== null) setLang("ja");
+  }
+
   const dirtyCount = totalDirtyCount();
 
   // Inject articles that exist only in pending (not yet pushed to the API).
@@ -698,6 +732,15 @@ export function AdminApp() {
                 onClick={handleDelete}
               >
                 削除
+              </button>
+            )}
+            {editState.existing === null && (
+              <button
+                type="button"
+                className="admin-btn admin-btn-danger"
+                onClick={handleDiscardDraft}
+              >
+                破棄
               </button>
             )}
             <label
