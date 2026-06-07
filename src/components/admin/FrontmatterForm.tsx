@@ -1,16 +1,8 @@
 import type { ChangeEvent } from "react";
+import type { FrontmatterFormState } from "../../lib/admin/types";
 import { normalizeSlug } from "../../lib/admin/slug";
 
-export interface FrontmatterFormState {
-  title: string;
-  slug: string;
-  date: string;
-  tags: string;
-  image: string;
-  keywords: string;
-  draft: boolean;
-  authors: string;
-}
+export type { FrontmatterFormState };
 
 interface FrontmatterFormProps {
   value: FrontmatterFormState;

@@ -2,6 +2,17 @@ export type Lang = "ja" | "en" | "zh-TW";
 
 export const LANGS: readonly Lang[] = ["ja", "en", "zh-TW"] as const;
 
+export interface FrontmatterFormState {
+  title: string;
+  slug: string;
+  date: string;
+  tags: string;
+  image: string;
+  keywords: string;
+  draft: boolean;
+  authors: string;
+}
+
 export interface ArticleMeta {
   filename: string;
   date: string;
@@ -52,6 +63,13 @@ export interface ImageUploadResponse {
 export interface ApiResponse<T> {
   data: T;
   requestId: string;
+}
+
+export interface PendingDraft {
+  form: FrontmatterFormState;
+  body: string;
+  existing: ArticleContent | null;
+  lang: Lang;
 }
 
 export interface ApiError {

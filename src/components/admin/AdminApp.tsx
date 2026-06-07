@@ -4,33 +4,32 @@ import type {
   ArticleContent,
   ArticleMeta,
   CreateArticleRequest,
+  FrontmatterFormState,
   Lang,
+  PendingDraft,
   UpdateArticleRequest,
 } from "../../lib/admin/types";
 import { normalizeSlug, todayDate } from "../../lib/admin/slug";
-import { clearDraft, loadDraft, useAutoSave } from "../../lib/admin/useAutoSave";
+import {
+  savePendingEdits,
+  loadPendingEdits,
+  clearPendingEdits,
+} from "../../lib/admin/useAutoSave";
 import {
   generateFromPrompt,
   editWithPrompt,
-  translateToEn,
-  translateToZhTW,
+  translateBoth,
   type AiModel,
-  type TranslationResult,
 } from "../../lib/admin/openai";
 import { Editor } from "./Editor";
 import { Preview } from "./Preview";
 import { ArticleList } from "./ArticleList";
-import { FrontmatterForm, type FrontmatterFormState } from "./FrontmatterForm";
+import { FrontmatterForm } from "./FrontmatterForm";
 import { AiSidePanel, type AiTask } from "./AiSidePanel";
-import { TranslationModal } from "./TranslationModal";
 import { ApiKeyModal } from "./ApiKeyModal";
 import { AdminSecretModal } from "./AdminSecretModal";
 
-interface EditState {
-  existing: ArticleContent | null;
-  lang: Lang;
-  form: FrontmatterFormState;
-  body: string;
+interface EditState extends PendingDraft {
   dirty: boolean;
 }
 
@@ -76,6 +75,14 @@ export function AdminApp() {
   const [articles, setArticles] = useState<ArticleMeta[]>([]);
   const [selectedFilename, setSelectedFilename] = useState<string | null>(null);
   const [editState, setEditState] = useState<EditState | null>(null);
+
+  // Pending edits: all articles edited but not yet pushed to git.
+  // Keyed by draftKey (e.g. "en:2026-06-07-my-post").
+  // Does NOT include the article currently open in the editor (that's editState).
+  const [pendingEdits, setPendingEdits] = useState<Record<string, PendingDraft>>(
+    loadPendingEdits,
+  );
+
   const [loading, setLoading] = useState(false);
   const [saving, setSaving] = useState(false);
   const [building, setBuilding] = useState(false);
@@ -85,13 +92,28 @@ export function AdminApp() {
 
   const [aiModel, setAiModel] = useState<AiModel>("gpt-5.4-mini");
   const [aiTask, setAiTask] = useState<AiTask>(null);
-  const [translationResult, setTranslationResult] = useState<TranslationResult | null>(
-    null,
-  );
   const [showApiKeyModal, setShowApiKeyModal] = useState(false);
   const [showSecretModal, setShowSecretModal] = useState(false);
 
-  useAutoSave(editState !== null ? draftKey(lang, selectedFilename) : null, editState?.body ?? "");
+  // Auto-save the current article to pendingEdits + localStorage on every change (debounced).
+  useEffect(() => {
+    if (!editState?.dirty) return;
+    const key = draftKey(lang, selectedFilename);
+    const timer = setTimeout(() => {
+      const draft: PendingDraft = {
+        form: editState.form,
+        body: editState.body,
+        existing: editState.existing,
+        lang: editState.lang,
+      };
+      setPendingEdits((prev) => {
+        const next = { ...prev, [key]: draft };
+        savePendingEdits(next);
+        return next;
+      });
+    }, 2000);
+    return () => clearTimeout(timer);
+  }, [editState, lang, selectedFilename]);
 
   function handleError(e: unknown): void {
     if (e instanceof UnauthorizedError) {
@@ -117,20 +139,58 @@ export function AdminApp() {
     void loadArticles(lang);
   }, [lang, loadArticles]);
 
+  /**
+   * Compute updated pendingEdits that includes the current editState (if dirty).
+   * Use this before switching articles to avoid losing the current changes.
+   */
+  function pendingWithCurrent(
+    current: Record<string, PendingDraft>,
+  ): Record<string, PendingDraft> {
+    if (!editState?.dirty) return current;
+    const key = draftKey(lang, selectedFilename);
+    return {
+      ...current,
+      [key]: {
+        form: editState.form,
+        body: editState.body,
+        existing: editState.existing,
+        lang: editState.lang,
+      },
+    };
+  }
+
   async function selectArticle(filename: string) {
+    // Save current article to pending before switching.
+    const newPending = pendingWithCurrent(pendingEdits);
+    const newKey = draftKey(lang, filename);
+
+    // If the target is already in pending, load from pending (and remove from map).
+    const fromPending = newPending[newKey];
+    if (fromPending) {
+      const withoutTarget = { ...newPending };
+      delete withoutTarget[newKey];
+      savePendingEdits(withoutTarget);
+      setPendingEdits(withoutTarget);
+      setSelectedFilename(filename);
+      setEditState({ ...fromPending, dirty: true });
+      return;
+    }
+
+    // Otherwise save pending and fetch from API.
+    savePendingEdits(newPending);
+    setPendingEdits(newPending);
+
     setSelectedFilename(filename);
     setLoading(true);
     setError(null);
     try {
       const article = await api.articles.get(filename, lang);
-      const draft = loadDraft(draftKey(lang, filename));
-      const effectiveDraft = draft || null;
       setEditState({
         existing: article,
         lang,
         form: formFromArticle(article),
-        body: effectiveDraft ?? article.body,
-        dirty: effectiveDraft !== null && effectiveDraft !== article.body,
+        body: article.body,
+        dirty: false,
       });
     } catch (e) {
       handleError(e);
@@ -140,6 +200,23 @@ export function AdminApp() {
   }
 
   function newArticle() {
+    const newPending = pendingWithCurrent(pendingEdits);
+    const newKey = draftKey(lang, null);
+
+    // Check if there's already a pending "new" article for this lang.
+    const fromPending = newPending[newKey];
+    if (fromPending) {
+      const withoutTarget = { ...newPending };
+      delete withoutTarget[newKey];
+      savePendingEdits(withoutTarget);
+      setPendingEdits(withoutTarget);
+      setSelectedFilename(null);
+      setEditState({ ...fromPending, dirty: true });
+      return;
+    }
+
+    savePendingEdits(newPending);
+    setPendingEdits(newPending);
     setSelectedFilename(null);
     setEditState({
       existing: null,
@@ -151,12 +228,27 @@ export function AdminApp() {
   }
 
   function handleLangChange(next: Lang) {
-    if (editState?.dirty) {
-      if (!confirm("未保存の変更があります。言語を切り替えますか?")) return;
+    // Compute pending with current, then check if the same filename has a pending edit in the new lang.
+    const newPending = pendingWithCurrent(pendingEdits);
+    const matchKey = selectedFilename ? draftKey(next, selectedFilename) : null;
+    const matchPending = matchKey ? newPending[matchKey] : null;
+
+    if (matchPending && matchKey) {
+      // Auto-open the matching pending article for the new lang.
+      const withoutMatch = { ...newPending };
+      delete withoutMatch[matchKey];
+      savePendingEdits(withoutMatch);
+      setPendingEdits(withoutMatch);
+      setLang(next);
+      setSelectedFilename(selectedFilename);
+      setEditState({ ...matchPending, dirty: true });
+    } else {
+      savePendingEdits(newPending);
+      setPendingEdits(newPending);
+      setLang(next);
+      setSelectedFilename(null);
+      setEditState(null);
     }
-    setLang(next);
-    setSelectedFilename(null);
-    setEditState(null);
   }
 
   function patchForm(patch: Partial<FrontmatterFormState>) {
@@ -170,61 +262,98 @@ export function AdminApp() {
     setEditState((prev) => (prev ? { ...prev, body, dirty: true } : null));
   }
 
+  // Number of articles with unsaved changes (current + other pending).
+  function totalDirtyCount(): number {
+    const currentKey = draftKey(lang, selectedFilename);
+    const otherCount = Object.keys(pendingEdits).filter(
+      (k) => k !== currentKey,
+    ).length;
+    return (editState?.dirty ? 1 : 0) + otherCount;
+  }
+
   async function handleSave() {
-    if (!editState) return;
-    const { form, body, existing } = editState;
-    const slug = normalizeSlug(form.slug) || normalizeSlug(form.title);
-    if (!slug) {
-      setError("スラッグまたはタイトルを入力してください");
-      return;
+    // Collect all dirty articles: pending + current (if dirty).
+    const toSave: Record<string, PendingDraft> = pendingWithCurrent(pendingEdits);
+    const count = Object.keys(toSave).length;
+    if (count === 0) return;
+
+    // Validate all articles before starting.
+    for (const [key, draft] of Object.entries(toSave)) {
+      const slug = normalizeSlug(draft.form.slug) || normalizeSlug(draft.form.title);
+      if (!slug) {
+        setError(`スラッグまたはタイトルを入力してください (${key})`);
+        return;
+      }
+      if (!/^\d{4}-\d{2}-\d{2}$/.test(draft.form.date)) {
+        setError(`日付を YYYY-MM-DD 形式で入力してください (${key})`);
+        return;
+      }
     }
-    if (!/^\d{4}-\d{2}-\d{2}$/.test(form.date)) {
-      setError("日付を YYYY-MM-DD 形式で入力してください");
-      return;
-    }
+
     setSaving(true);
     setError(null);
-    try {
-      const tags = splitCsv(form.tags);
-      const keywords = splitCsv(form.keywords);
-      const common = {
-        title: form.title,
-        authors: form.authors,
-        tags,
-        ...(form.image ? { image: form.image } : {}),
-        ...(keywords.length > 0 ? { keywords } : {}),
-        draft: form.draft,
-        body,
-      };
-      let saved: ArticleContent;
-      if (existing) {
-        const req: UpdateArticleRequest = {
-          ...common,
-          sha: existing.sha,
-        };
-        saved = await api.articles.update(existing.filename, existing.lang, req);
-      } else {
-        const req: CreateArticleRequest = {
-          lang: editState.lang,
-          date: form.date,
-          slug,
-          ...common,
-        };
-        saved = await api.articles.create(req);
-      }
-      clearDraft(draftKey(editState.lang, existing?.filename ?? null));
-      setSelectedFilename(saved.filename);
-      setEditState({
-        existing: saved,
-        lang: saved.lang,
-        form: formFromArticle(saved),
-        body: saved.body,
-        dirty: false,
-      });
+    const currentKey = draftKey(lang, selectedFilename);
 
-      // draft 状態が変わった場合の他言語ファイルへの同期は Workers 側が
-      // 1 コミットでまとめて行う (src/services/article.ts の update)。
-      await loadArticles(editState.lang);
+    try {
+      let savedCurrentArticle: ArticleContent | null = null;
+
+      for (const [key, draft] of Object.entries(toSave)) {
+        const { form, body, existing } = draft;
+        const draftLang = draft.lang;
+        const slug = normalizeSlug(form.slug) || normalizeSlug(form.title);
+        const tags = splitCsv(form.tags);
+        const keywords = splitCsv(form.keywords);
+        const common = {
+          title: form.title,
+          authors: form.authors,
+          tags,
+          ...(form.image ? { image: form.image } : {}),
+          ...(keywords.length > 0 ? { keywords } : {}),
+          draft: form.draft,
+          body,
+        };
+
+        let saved: ArticleContent;
+        if (existing) {
+          const req: UpdateArticleRequest = { ...common, sha: existing.sha };
+          saved = await api.articles.update(existing.filename, existing.lang, req);
+        } else {
+          const req: CreateArticleRequest = {
+            lang: draftLang,
+            date: form.date,
+            slug: slug!,
+            ...common,
+          };
+          saved = await api.articles.create(req);
+        }
+
+        if (key === currentKey) {
+          savedCurrentArticle = saved;
+        }
+      }
+
+      // Clear all pending state.
+      clearPendingEdits();
+      setPendingEdits({});
+
+      // Update the editor for the current article.
+      if (savedCurrentArticle) {
+        setSelectedFilename(savedCurrentArticle.filename);
+        setEditState({
+          existing: savedCurrentArticle,
+          lang: savedCurrentArticle.lang,
+          form: formFromArticle(savedCurrentArticle),
+          body: savedCurrentArticle.body,
+          dirty: false,
+        });
+      } else if (editState && !editState.dirty) {
+        // Current article was not dirty; nothing to update.
+      } else {
+        // Current article was dirty but not in toSave (shouldn't happen).
+        setEditState((prev) => (prev ? { ...prev, dirty: false } : null));
+      }
+
+      await loadArticles(lang);
     } catch (e) {
       handleError(e);
     } finally {
@@ -238,7 +367,14 @@ export function AdminApp() {
     if (!confirm(`「${existing.title}」(${existing.lang}) を削除しますか?`)) return;
     try {
       await api.articles.delete(existing.filename, existing.lang, existing.sha);
-      clearDraft(draftKey(existing.lang, existing.filename));
+      // Remove from pending if it was there.
+      const key = draftKey(existing.lang, existing.filename);
+      setPendingEdits((prev) => {
+        const next = { ...prev };
+        delete next[key];
+        savePendingEdits(next);
+        return next;
+      });
       setSelectedFilename(null);
       setEditState(null);
       await loadArticles(lang);
@@ -303,35 +439,65 @@ export function AdminApp() {
     }
   }
 
-  async function handleTranslateEn() {
-    if (!editState?.body) return;
+  async function handleTranslate() {
+    if (!editState) return;
     if (editState.lang !== "ja") {
       setError("翻訳は ja 記事からのみ実行できます");
       return;
     }
-    setAiTask("translate-en");
-    setError(null);
-    try {
-      const en = await translateToEn(editState.body, aiModel);
-      setTranslationResult({ en });
-    } catch (e) {
-      handleError(e);
-    } finally {
-      setAiTask(null);
+    if (!editState.existing) {
+      setError("翻訳前に ja 記事を保存してください");
+      return;
     }
-  }
 
-  async function handleTranslateZhTW() {
-    if (!editState?.body) return;
-    if (editState.lang !== "ja") {
-      setError("翻訳は ja 記事からのみ実行できます");
-      return;
-    }
-    setAiTask("translate-zh-TW");
+    setAiTask("translate");
     setError(null);
     try {
-      const zhTW = await translateToZhTW(editState.body, aiModel);
-      setTranslationResult({ "zh-TW": zhTW });
+      const result = await translateBoth(
+        editState.form.title,
+        editState.body,
+        aiModel,
+      );
+      const src = editState.existing;
+      const filename = `${src.date}-${src.slug}`;
+
+      // Fetch existing en/zh-TW articles for their sha (if they already exist).
+      const [enExisting, zhTWExisting] = await Promise.all([
+        api.articles.get(filename, "en").catch(() => null),
+        api.articles.get(filename, "zh-TW").catch(() => null),
+      ]);
+
+      const enDraft: PendingDraft = {
+        form: { ...editState.form, title: result.en.title },
+        body: result.en.body,
+        existing: enExisting,
+        lang: "en",
+      };
+      const zhTWDraft: PendingDraft = {
+        form: { ...editState.form, title: result["zh-TW"].title },
+        body: result["zh-TW"].body,
+        existing: zhTWExisting,
+        lang: "zh-TW",
+      };
+
+      const enKey = draftKey("en", filename);
+      const zhTWKey = draftKey("zh-TW", filename);
+
+      // Save current ja + add both translations to pending in one update.
+      const newPending: Record<string, PendingDraft> = {
+        ...pendingWithCurrent(pendingEdits),
+        [enKey]: enDraft,
+        [zhTWKey]: zhTWDraft,
+      };
+      // The en article will be open in editor, so remove it from pending.
+      delete newPending[enKey];
+      savePendingEdits(newPending);
+      setPendingEdits(newPending);
+
+      // Switch to en and open the translated article directly in the editor.
+      setLang("en");
+      setSelectedFilename(filename);
+      setEditState({ ...enDraft, dirty: true });
     } catch (e) {
       handleError(e);
     } finally {
@@ -351,51 +517,7 @@ export function AdminApp() {
     }
   }
 
-  async function handleApplyTranslation(targetLang: "en" | "zh-TW", content: string) {
-    if (!editState?.existing) {
-      setError("先に ja 記事を保存してください");
-      return;
-    }
-    const src = editState.existing;
-    setSaving(true);
-    setError(null);
-    try {
-      const filename = `${src.date}-${src.slug}`;
-      const existing = await api.articles.get(filename, targetLang).catch(() => null);
-      if (existing) {
-        const req: UpdateArticleRequest = {
-          title: src.title,
-          authors: src.authors,
-          tags: src.tags,
-          ...(src.image ? { image: src.image } : {}),
-          ...(src.keywords ? { keywords: src.keywords } : {}),
-          draft: src.draft ?? false,
-          body: content,
-          sha: existing.sha,
-        };
-        await api.articles.update(filename, targetLang, req);
-      } else {
-        const req: CreateArticleRequest = {
-          lang: targetLang,
-          date: src.date,
-          slug: src.slug,
-          title: src.title,
-          authors: src.authors,
-          tags: src.tags,
-          ...(src.image ? { image: src.image } : {}),
-          ...(src.keywords ? { keywords: src.keywords } : {}),
-          draft: src.draft ?? false,
-          body: content,
-        };
-        await api.articles.create(req);
-      }
-      if (lang === targetLang) await loadArticles(targetLang);
-    } catch (e) {
-      handleError(e);
-    } finally {
-      setSaving(false);
-    }
-  }
+  const dirtyCount = totalDirtyCount();
 
   return (
     <div className="admin-root">
@@ -432,9 +554,13 @@ export function AdminApp() {
               type="button"
               className="admin-btn admin-btn-primary"
               onClick={handleSave}
-              disabled={saving}
+              disabled={saving || dirtyCount === 0}
             >
-              {saving ? "保存中..." : editState.existing ? "保存" : "作成"}
+              {saving
+                ? "保存中..."
+                : dirtyCount > 0
+                  ? `保存 (${dirtyCount}件)`
+                  : "保存"}
             </button>
             <button
               type="button"
@@ -554,8 +680,7 @@ export function AdminApp() {
                   model={aiModel}
                   onModelChange={setAiModel}
                   onGenerate={handleAiGenerate}
-                  onTranslateEn={handleTranslateEn}
-                  onTranslateZhTW={handleTranslateZhTW}
+                  onTranslate={handleTranslate}
                   onOpenSettings={() => setShowApiKeyModal(true)}
                   task={aiTask}
                 />
@@ -567,14 +692,6 @@ export function AdminApp() {
         <div className="admin-empty-state">
           記事を選択、または「+」で新規作成
         </div>
-      )}
-
-      {translationResult && (
-        <TranslationModal
-          result={translationResult}
-          onApply={handleApplyTranslation}
-          onClose={() => setTranslationResult(null)}
-        />
       )}
 
       {showApiKeyModal && <ApiKeyModal onClose={() => setShowApiKeyModal(false)} />}

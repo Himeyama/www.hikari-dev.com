@@ -66,6 +66,16 @@ export interface TranslationResult {
   "zh-TW"?: string;
 }
 
+export interface TranslationWithTitle {
+  title: string;
+  body: string;
+}
+
+export interface TranslationBothResult {
+  en: TranslationWithTitle;
+  "zh-TW": TranslationWithTitle;
+}
+
 async function translateOne(
   client: OpenAI,
   content: string,
@@ -170,4 +180,46 @@ export async function translateToOtherLangs(
     translateOne(client, content, "Traditional Chinese (Taiwan)", model),
   ]);
   return { en, "zh-TW": zhTW };
+}
+
+export async function translateBoth(
+  title: string,
+  body: string,
+  model: AiModel,
+): Promise<TranslationBothResult> {
+  const client = getClient(model);
+  const res = await client.chat.completions.create({
+    model,
+    messages: [
+      {
+        role: "system",
+        content:
+          'You are a translator. Translate the Markdown blog article title and body into both English and Traditional Chinese (Taiwan). Preserve all Markdown formatting, code blocks, and structure. Output ONLY valid JSON with no preamble or explanation:\n{"en":{"title":"...","body":"..."},"zh-TW":{"title":"...","body":"..."}}',
+      },
+      {
+        role: "user",
+        content: `Title: ${title}\n\nBody:\n${body}`,
+      },
+    ],
+  });
+  const raw = res.choices[0]?.message?.content ?? "";
+  const jsonMatch = raw.match(/\{[\s\S]*\}/);
+  if (!jsonMatch) throw new Error("翻訳結果のパースに失敗しました");
+  const parsed = JSON.parse(jsonMatch[0]) as Partial<TranslationBothResult>;
+  return {
+    en: {
+      title: typeof parsed.en?.title === "string" ? parsed.en.title : title,
+      body: typeof parsed.en?.body === "string" ? parsed.en.body : "",
+    },
+    "zh-TW": {
+      title:
+        typeof parsed["zh-TW"]?.title === "string"
+          ? parsed["zh-TW"]!.title
+          : title,
+      body:
+        typeof parsed["zh-TW"]?.body === "string"
+          ? parsed["zh-TW"]!.body
+          : "",
+    },
+  };
 }
