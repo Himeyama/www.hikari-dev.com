@@ -8,32 +8,32 @@
 :root {
   --ifm-font-family-base: 'Noto Sans JP', system-ui, -apple-system, sans-serif;
   --ifm-font-weight-base: 700;
-  /* ライトモード: 白背景でコントラスト比 5.3:1 (WCAG AA 適合) */
-  --ifm-color-primary: #C82273;
-  --ifm-color-primary-dark: #B41E67;
-  --ifm-color-primary-darker: #A81C5F;
-  --ifm-color-primary-darkest: #8C164F;
-  --ifm-color-primary-light: #D33A82;
-  --ifm-color-primary-lighter: #DA528F;
-  --ifm-color-primary-lightest: #E47EAD;
+  /* ライトモード: オレンジベース */
+  --ifm-color-primary: #F26E1D;
+  --ifm-color-primary-dark: #D85A10;
+  --ifm-color-primary-darker: #C44F0A;
+  --ifm-color-primary-darkest: #A23D07;
+  --ifm-color-primary-light: #F78E4A;
+  --ifm-color-primary-lighter: #FAA876;
+  --ifm-color-primary-lightest: #FCC4A2;
   --ifm-code-font-size: 95%;
-  --docusaurus-highlighted-code-line-bg: rgba(200, 34, 115, 0.1);
+  --docusaurus-highlighted-code-line-bg: rgba(242, 110, 29, 0.1);
   --post-date-color: #595959;
   /* ブログ記事のフォント */
   --article-serif-font: Georgia, "Times New Roman", 'Noto Serif JP', 'ヒラギノ明朝 ProN', serif;
   --article-serif-bold-font: Georgia, "Times New Roman", 'Noto Sans JP', 'ヒラギノ角ゴ ProN', serif;
 }
 
-/* ダークモード: 暗背景でコントラスト比 7.0:1 (WCAG AA 適合) */
+/* ダークモード: オレンジベース (高コントラスト) */
 [data-theme='dark'] {
-  --ifm-color-primary: #F36AB2;
-  --ifm-color-primary-dark: #F055A5;
-  --ifm-color-primary-darker: #EE489F;
-  --ifm-color-primary-darkest: #E91D8A;
-  --ifm-color-primary-light: #F57FBD;
-  --ifm-color-primary-lighter: #F794C8;
-  --ifm-color-primary-lightest: #FAB2D9;
-  --docusaurus-highlighted-code-line-bg: rgba(243, 106, 178, 0.3);
+  --ifm-color-primary: #FB8E54;
+  --ifm-color-primary-dark: #F5724D;
+  --ifm-color-primary-darker: #EE5F48;
+  --ifm-color-primary-darkest: #D63A2B;
+  --ifm-color-primary-light: #FDAA7A;
+  --ifm-color-primary-lighter: #FDC5A0;
+  --ifm-color-primary-lightest: #FDD9C4;
+  --docusaurus-highlighted-code-line-bg: rgba(251, 142, 84, 0.3);
   --post-date-color: #9e9e9e;
 }
 

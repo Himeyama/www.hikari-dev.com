@@ -150,7 +150,6 @@ function AuthorProfile() {
           </p>
           <div className={styles.authorLinks}>
             <Link href="https://github.com/himeyama">GitHub</Link>
-            <Link href="https://x.com/ptrqr">X</Link>
           </div>
         </div>
       </div>
