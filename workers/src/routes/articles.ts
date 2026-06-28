@@ -1,6 +1,7 @@
 import { Hono } from "hono";
 import type { HonoEnv, Lang } from "../types.ts";
 import {
+  BatchSaveRequestSchema,
   CreateArticleRequestSchema,
   LangSchema,
   UpdateArticleRequestSchema,
@@ -68,6 +69,25 @@ articlesRouter.post("/", async (c) => {
     if (e instanceof Error && e.message.startsWith("Article already exists")) {
       return err("ALREADY_EXISTS", e.message, requestId, 409);
     }
+    return internalError(requestId);
+  }
+});
+
+articlesRouter.post("/batch", async (c) => {
+  const requestId = (c.get("requestId") as string | undefined) ?? "";
+  try {
+    const body = await c.req.json();
+    const parsed = BatchSaveRequestSchema.safeParse(body);
+    if (!parsed.success) {
+      return err("VALIDATION_ERROR", parsed.error.message, requestId);
+    }
+    const articles = await getService(c).batchSave(parsed.data);
+    return ok(articles, requestId);
+  } catch (e) {
+    if (e instanceof Error && e.message.startsWith("Article already exists")) {
+      return err("ALREADY_EXISTS", e.message, requestId, 409);
+    }
+    console.error("[articles.batch]", e);
     return internalError(requestId);
   }
 });

@@ -55,6 +55,8 @@ export const MAGIC_NUMBERS: Record<string, number[]> = {
 export const COMMIT_MESSAGES = {
   create: (filename: string, lang: Lang) => `create: article ${filename} (${lang})`,
   update: (filename: string, lang: Lang) => `update: article ${filename} (${lang})`,
+  save: (filename: string, langs: Lang[], created: boolean) =>
+    `${created ? "create" : "update"}: article ${filename} (${langs.join(", ")})`,
   delete: (filename: string, lang: Lang) => `delete: article ${filename} (${lang})`,
   uploadImage: (filename: string, dir: string) => `upload: image ${filename} (${dir})`,
 } as const;

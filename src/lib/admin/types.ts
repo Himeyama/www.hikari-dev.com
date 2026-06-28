@@ -55,6 +55,25 @@ export interface UpdateArticleRequest {
   sha: string;
 }
 
+export interface BatchArticleItem {
+  lang: Lang;
+  title: string;
+  authors: string;
+  tags: string[];
+  image?: string;
+  keywords?: string[];
+  draft?: boolean;
+  body: string;
+  // sha があれば更新、なければ新規作成。
+  sha?: string;
+}
+
+export interface BatchSaveRequest {
+  date: string;
+  slug: string;
+  items: BatchArticleItem[];
+}
+
 export interface ImageUploadResponse {
   url: string;
   path: string;

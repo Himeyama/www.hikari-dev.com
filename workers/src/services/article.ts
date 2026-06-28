@@ -1,5 +1,6 @@
 import type { ArticleContent, ArticleMeta, Lang } from "../types.ts";
 import type {
+  BatchSaveRequest,
   CreateArticleRequest,
   Frontmatter,
   UpdateArticleRequest,
@@ -136,6 +137,57 @@ export class ArticleService {
       merged,
       body,
       sha,
+    );
+  }
+
+  /**
+   * 同一記事 (date+slug) の複数言語ファイルを 1 コミットでまとめて保存する。
+   * 言語ごとにコミットが分かれないよう Git Data API (commitFiles) を使う。
+   */
+  async batchSave(req: BatchSaveRequest): Promise<ArticleContent[]> {
+    const filename = `${req.date}-${req.slug}`;
+
+    // 新規 (sha なし) のファイルが既に存在する場合は衝突として扱う。
+    for (const item of req.items) {
+      if (item.sha) continue;
+      const path = articlePath(req.date, req.slug, item.lang);
+      const existing = await this.github.getFile(path);
+      if (existing) {
+        throw new Error(`Article already exists: ${filename} (${item.lang})`);
+      }
+    }
+
+    const changes: FileChange[] = [];
+    const prepared = req.items.map((item) => {
+      const fm: Frontmatter = {
+        title: item.title,
+        authors: item.authors,
+        tags: item.tags,
+        ...maybeField("image", item.image),
+        ...maybeField("keywords", item.keywords),
+        ...maybeField("draft", item.draft),
+      };
+      const path = articlePath(req.date, req.slug, item.lang);
+      const content = serializeFrontmatter(fm, item.body);
+      changes.push({ path, content });
+      return { item, fm, path };
+    });
+
+    const created = req.items.every((item) => !item.sha);
+    const langs = req.items.map((item) => item.lang);
+    const blobShas = await this.github.commitFiles(
+      changes,
+      COMMIT_MESSAGES.save(filename, langs, created),
+    );
+
+    return prepared.map(({ item, fm, path }) =>
+      contentFromFrontmatter(
+        { date: req.date, slug: req.slug },
+        item.lang,
+        fm,
+        item.body,
+        blobShas[path] ?? item.sha ?? "",
+      ),
     );
   }
 

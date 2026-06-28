@@ -3,6 +3,7 @@ import type {
   ApiResponse,
   ArticleContent,
   ArticleMeta,
+  BatchSaveRequest,
   CreateArticleRequest,
   ImageUploadResponse,
   Lang,
@@ -100,6 +101,14 @@ export const api = {
 
     create(data: CreateArticleRequest): Promise<ArticleContent> {
       return request<ArticleContent>("/articles", {
+        method: "POST",
+        body: JSON.stringify(data),
+      });
+    },
+
+    // 同一記事の複数言語を 1 コミットでまとめて保存する。
+    batchSave(data: BatchSaveRequest): Promise<ArticleContent[]> {
+      return request<ArticleContent[]>("/articles/batch", {
         method: "POST",
         body: JSON.stringify(data),
       });

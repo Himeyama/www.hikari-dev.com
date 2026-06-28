@@ -46,8 +46,29 @@ export const UpdateArticleRequestSchema = z.object({
   sha: z.string(),
 });
 
+export const BatchArticleItemSchema = z.object({
+  lang: LangSchema,
+  title: z.string().min(1).max(200),
+  authors: z.string().default("hikari"),
+  tags: z.array(z.string()).default([]),
+  image: z.string().optional(),
+  keywords: z.array(z.string()).optional(),
+  draft: z.boolean().optional(),
+  body: z.string(),
+  // sha があれば更新、なければ新規作成として扱う。
+  sha: z.string().optional(),
+});
+
+export const BatchSaveRequestSchema = z.object({
+  date: DateSchema,
+  slug: SlugSchema,
+  items: z.array(BatchArticleItemSchema).min(1),
+});
+
 export type CreateArticleRequest = z.infer<typeof CreateArticleRequestSchema>;
 export type UpdateArticleRequest = z.infer<typeof UpdateArticleRequestSchema>;
+export type BatchArticleItem = z.infer<typeof BatchArticleItemSchema>;
+export type BatchSaveRequest = z.infer<typeof BatchSaveRequestSchema>;
 
 export const ImageUploadQuerySchema = z.object({
   date: DateSchema,

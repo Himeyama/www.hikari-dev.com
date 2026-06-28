@@ -5,11 +5,10 @@ import { api, UnauthorizedError } from "../../lib/admin/api";
 import type {
   ArticleContent,
   ArticleMeta,
-  CreateArticleRequest,
+  BatchArticleItem,
   FrontmatterFormState,
   Lang,
   PendingDraft,
-  UpdateArticleRequest,
 } from "../../lib/admin/types";
 import { LANGS } from "../../lib/admin/types";
 import { normalizeSlug, todayDate } from "../../lib/admin/slug";
@@ -348,38 +347,53 @@ export function AdminApp() {
     try {
       let savedCurrentArticle: ArticleContent | null = null;
 
-      for (const [key, draft] of Object.entries(toSave)) {
-        const { form, body, existing } = draft;
-        const draftLang = draft.lang;
-        const slug = normalizeSlug(form.slug) || normalizeSlug(form.title);
-        const tags = splitCsv(form.tags);
-        const keywords = splitCsv(form.keywords);
-        const common = {
-          title: form.title,
-          authors: form.authors,
-          tags,
-          ...(form.image ? { image: form.image } : {}),
-          ...(keywords.length > 0 ? { keywords } : {}),
-          draft: form.draft,
-          body,
-        };
-
-        let saved: ArticleContent;
-        if (existing) {
-          const req: UpdateArticleRequest = { ...common, sha: existing.sha };
-          saved = await api.articles.update(existing.filename, existing.lang, req);
-        } else {
-          const req: CreateArticleRequest = {
-            lang: draftLang,
-            date: form.date,
-            slug: slug!,
-            ...common,
-          };
-          saved = await api.articles.create(req);
+      // 記事 (date-slug) ごとにグループ化し、1 記事 = 1 コミットで保存する。
+      // 言語ごとにコミットが分かれないよう batch エンドポイントを使う。
+      const groups = new Map<
+        string,
+        { date: string; slug: string; entries: [string, PendingDraft][] }
+      >();
+      for (const entry of Object.entries(toSave)) {
+        const draft = entry[1];
+        const slug = normalizeSlug(draft.form.slug) || normalizeSlug(draft.form.title);
+        const articleKey = `${draft.form.date}-${slug}`;
+        let group = groups.get(articleKey);
+        if (!group) {
+          group = { date: draft.form.date, slug: slug!, entries: [] };
+          groups.set(articleKey, group);
         }
+        group.entries.push(entry);
+      }
 
-        if (key === currentKey) {
-          savedCurrentArticle = saved;
+      for (const group of groups.values()) {
+        const items: BatchArticleItem[] = group.entries.map(([, draft]) => {
+          const { form, body, existing } = draft;
+          const tags = splitCsv(form.tags);
+          const keywords = splitCsv(form.keywords);
+          return {
+            lang: draft.lang,
+            title: form.title,
+            authors: form.authors,
+            tags,
+            ...(form.image ? { image: form.image } : {}),
+            ...(keywords.length > 0 ? { keywords } : {}),
+            draft: form.draft,
+            body,
+            ...(existing ? { sha: existing.sha } : {}),
+          };
+        });
+
+        const savedList = await api.articles.batchSave({
+          date: group.date,
+          slug: group.slug,
+          items,
+        });
+
+        const savedByLang = new Map(savedList.map((a) => [a.lang, a]));
+        for (const [key, draft] of group.entries) {
+          if (key === currentKey) {
+            savedCurrentArticle = savedByLang.get(draft.lang) ?? null;
+          }
         }
       }
 
