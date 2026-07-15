@@ -611,5 +611,81 @@
   "webp.note3": {
     "message": "You can convert multiple images at once.",
     "description": "Note 3"
+  },
+  "svgIco.title": {
+    "message": "Convert SVG to ICO",
+    "description": "Title of the SVG to ICO converter page"
+  },
+  "svgIco.description": {
+    "message": "A tool to convert SVG images to ICO format. Processing happens entirely in the browser, so images are never sent to a server.",
+    "description": "Description of the SVG to ICO converter page"
+  },
+  "svgIco.subtitle": {
+    "message": "Drag and drop SVG images to convert them to ICO format. Selecting multiple sizes packs them all into a single ICO file.",
+    "description": "Subtitle on the SVG to ICO converter page"
+  },
+  "svgIco.sizesLabel": {
+    "message": "Sizes",
+    "description": "Label for the size selector"
+  },
+  "svgIco.converting": {
+    "message": "Converting...",
+    "description": "Shown while images are being converted"
+  },
+  "svgIco.dropHint": {
+    "message": "Drop SVG images here, or click to select",
+    "description": "Hint text inside the dropzone"
+  },
+  "svgIco.errorNoImage": {
+    "message": "Please select an SVG file.",
+    "description": "Error when no valid SVG files were selected"
+  },
+  "svgIco.errorConvert": {
+    "message": "Some images failed to convert.",
+    "description": "Error when conversion fails"
+  },
+  "svgIco.fileCount": {
+    "message": "Files",
+    "description": "Label for the number of converted files"
+  },
+  "svgIco.original": {
+    "message": "Original",
+    "description": "Label for total original size"
+  },
+  "svgIco.converted": {
+    "message": "Converted",
+    "description": "Label for total converted size"
+  },
+  "svgIco.downloadAll": {
+    "message": "Download All",
+    "description": "Button to download all converted images"
+  },
+  "svgIco.clearAll": {
+    "message": "Clear All",
+    "description": "Button to clear all converted images"
+  },
+  "svgIco.download": {
+    "message": "Save",
+    "description": "Button to download a single converted image"
+  },
+  "svgIco.remove": {
+    "message": "Remove",
+    "description": "Button to remove a single converted image"
+  },
+  "svgIco.notesTitle": {
+    "message": "About This Tool",
+    "description": "Title of the notes section"
+  },
+  "svgIco.note1": {
+    "message": "Conversion happens entirely in your browser; images are never sent to a server.",
+    "description": "Note 1"
+  },
+  "svgIco.note2": {
+    "message": "Selecting multiple sizes packs multiple resolutions into a single ICO file (Windows automatically picks the right one for each icon display size).",
+    "description": "Note 2"
+  },
+  "svgIco.note3": {
+    "message": "You can convert multiple images at once.",
+    "description": "Note 3"
   }
 }

@@ -26,5 +26,9 @@
   "item.label.WebP 変換": {
     "message": "WebP 轉換工具",
     "description": "Navbar item with label WebP 変換"
+  },
+  "item.label.SVG2ICO": {
+    "message": "SVG2ICO",
+    "description": "Navbar item with label SVG2ICO"
   }
 }

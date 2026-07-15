@@ -579,5 +579,81 @@
   "webp.note3": {
     "message": "可一次轉換多張圖片。",
     "description": "Note 3"
+  },
+  "svgIco.title": {
+    "message": "將 SVG 轉換為 ICO",
+    "description": "Title of the SVG to ICO converter page"
+  },
+  "svgIco.description": {
+    "message": "將 SVG 圖片轉換為 ICO 格式的工具。處理完全在瀏覽器內完成，圖片不會傳送至伺服器。",
+    "description": "Description of the SVG to ICO converter page"
+  },
+  "svgIco.subtitle": {
+    "message": "拖曳 SVG 圖片即可轉換為 ICO 格式。選擇多個尺寸時，會一併打包進單一 ICO 檔案。",
+    "description": "Subtitle on the SVG to ICO converter page"
+  },
+  "svgIco.sizesLabel": {
+    "message": "尺寸",
+    "description": "Label for the size selector"
+  },
+  "svgIco.converting": {
+    "message": "轉換中...",
+    "description": "Shown while images are being converted"
+  },
+  "svgIco.dropHint": {
+    "message": "將 SVG 圖片拖曳到此處，或點擊選擇檔案",
+    "description": "Hint text inside the dropzone"
+  },
+  "svgIco.errorNoImage": {
+    "message": "請選擇 SVG 檔案。",
+    "description": "Error when no valid SVG files were selected"
+  },
+  "svgIco.errorConvert": {
+    "message": "部分圖片轉換失敗。",
+    "description": "Error when conversion fails"
+  },
+  "svgIco.fileCount": {
+    "message": "檔案數",
+    "description": "Label for the number of converted files"
+  },
+  "svgIco.original": {
+    "message": "轉換前",
+    "description": "Label for total original size"
+  },
+  "svgIco.converted": {
+    "message": "轉換後",
+    "description": "Label for total converted size"
+  },
+  "svgIco.downloadAll": {
+    "message": "全部下載",
+    "description": "Button to download all converted images"
+  },
+  "svgIco.clearAll": {
+    "message": "全部清除",
+    "description": "Button to clear all converted images"
+  },
+  "svgIco.download": {
+    "message": "儲存",
+    "description": "Button to download a single converted image"
+  },
+  "svgIco.remove": {
+    "message": "刪除",
+    "description": "Button to remove a single converted image"
+  },
+  "svgIco.notesTitle": {
+    "message": "關於此工具",
+    "description": "Title of the notes section"
+  },
+  "svgIco.note1": {
+    "message": "轉換完全在瀏覽器內完成，圖片不會傳送至伺服器。",
+    "description": "Note 1"
+  },
+  "svgIco.note2": {
+    "message": "選擇多個尺寸時，會將多種解析度打包進單一 ICO 檔案 (Windows 會依顯示大小自動選用對應的解析度)。",
+    "description": "Note 2"
+  },
+  "svgIco.note3": {
+    "message": "可一次轉換多張圖片。",
+    "description": "Note 3"
   }
 }

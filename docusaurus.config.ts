@@ -236,6 +236,7 @@ const config: Config = {
         // },
         {to: '/', label: 'Blog', position: 'left'},
         {to: '/webp-converter', label: 'WebP 変換', position: 'left'},
+        {to: '/svg-to-ico', label: 'SVG2ICO', position: 'left'},
         {to: '/chat', label: 'Chat', position: 'right'},
         {
           href: 'https://github.com/himeyama',
