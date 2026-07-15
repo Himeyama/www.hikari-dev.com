@@ -431,82 +431,6 @@
     "message": "今日冷知識不存在。",
     "description": "Not found message on the trivia page"
   },
-  "hanoi.title": {
-    "message": "河內塔",
-    "description": "Title of the Tower of Hanoi page"
-  },
-  "hanoi.description": {
-    "message": "河內塔小遊戲。點擊柱子來選取並移動圓盤。",
-    "description": "Description of the Tower of Hanoi page"
-  },
-  "hanoi.subtitle": {
-    "message": "將 A 柱上的所有圓盤移到 C 柱！",
-    "description": "Subtitle on the Tower of Hanoi page"
-  },
-  "hanoi.diskCount": {
-    "message": "圓盤數",
-    "description": "Label for disk count selector"
-  },
-  "hanoi.moves": {
-    "message": "步數",
-    "description": "Label for move counter"
-  },
-  "hanoi.movesUnit": {
-    "message": "步",
-    "description": "Unit for number of moves"
-  },
-  "hanoi.optimal": {
-    "message": "最少",
-    "description": "Label for optimal moves"
-  },
-  "hanoi.time": {
-    "message": "時間",
-    "description": "Label for timer"
-  },
-  "hanoi.best": {
-    "message": "最佳",
-    "description": "Label for best moves record"
-  },
-  "hanoi.win": {
-    "message": "完成！",
-    "description": "Win message"
-  },
-  "hanoi.perfect": {
-    "message": "★ 最少步數！",
-    "description": "Perfect/optimal solve badge"
-  },
-  "hanoi.hintSelect": {
-    "message": "點擊要移動的柱子",
-    "description": "Hint: select a peg"
-  },
-  "hanoi.hintMove": {
-    "message": "點擊目標柱子",
-    "description": "Hint: choose destination peg"
-  },
-  "hanoi.reset": {
-    "message": "重置",
-    "description": "Reset button label"
-  },
-  "hanoi.rulesTitle": {
-    "message": "規則",
-    "description": "Title of the rules section"
-  },
-  "hanoi.rule1": {
-    "message": "每次只能移動一個圓盤。",
-    "description": "Hanoi rule 1"
-  },
-  "hanoi.rule2": {
-    "message": "只能移動柱子最上方的圓盤。",
-    "description": "Hanoi rule 2"
-  },
-  "hanoi.rule3": {
-    "message": "不能將較大的圓盤放在較小的圓盤上方。",
-    "description": "Hanoi rule 3"
-  },
-  "hanoi.formulaLabel": {
-    "message": "最少步數",
-    "description": "Label before the minimum moves formula"
-  },
   "chat.title": {
     "message": "光輝聊天"
   },
@@ -575,5 +499,85 @@
   },
   "theme.fontSwitcher.udDigi": {
     "message": "UD 數位教科書體"
+  },
+  "webp.title": {
+    "message": "將圖片轉換為 WebP",
+    "description": "Title of the WebP converter page"
+  },
+  "webp.description": {
+    "message": "將圖片轉換為 WebP 格式的工具。處理完全在瀏覽器內完成，圖片不會傳送至伺服器。",
+    "description": "Description of the WebP converter page"
+  },
+  "webp.subtitle": {
+    "message": "拖曳圖片即可轉換為 WebP 格式。所有處理都在瀏覽器內完成，圖片不會上傳至伺服器。",
+    "description": "Subtitle on the WebP converter page"
+  },
+  "webp.quality": {
+    "message": "畫質",
+    "description": "Label for the quality slider"
+  },
+  "webp.converting": {
+    "message": "轉換中...",
+    "description": "Shown while images are being converted"
+  },
+  "webp.dropHint": {
+    "message": "將圖片拖曳到此處，或點擊選擇檔案",
+    "description": "Hint text inside the dropzone"
+  },
+  "webp.errorNoImage": {
+    "message": "請選擇圖片檔案。",
+    "description": "Error when no valid image files were selected"
+  },
+  "webp.errorConvert": {
+    "message": "部分圖片轉換失敗。",
+    "description": "Error when conversion fails"
+  },
+  "webp.fileCount": {
+    "message": "檔案數",
+    "description": "Label for the number of converted files"
+  },
+  "webp.original": {
+    "message": "轉換前",
+    "description": "Label for total original size"
+  },
+  "webp.converted": {
+    "message": "轉換後",
+    "description": "Label for total converted size"
+  },
+  "webp.saved": {
+    "message": "節省",
+    "description": "Label for total size reduction percentage"
+  },
+  "webp.downloadAll": {
+    "message": "全部下載",
+    "description": "Button to download all converted images"
+  },
+  "webp.clearAll": {
+    "message": "全部清除",
+    "description": "Button to clear all converted images"
+  },
+  "webp.download": {
+    "message": "儲存",
+    "description": "Button to download a single converted image"
+  },
+  "webp.remove": {
+    "message": "刪除",
+    "description": "Button to remove a single converted image"
+  },
+  "webp.notesTitle": {
+    "message": "關於此工具",
+    "description": "Title of the notes section"
+  },
+  "webp.note1": {
+    "message": "轉換完全在瀏覽器內完成，圖片不會傳送至伺服器。",
+    "description": "Note 1"
+  },
+  "webp.note2": {
+    "message": "可使用畫質滑桿調整壓縮率 (數值越低，檔案越小)。",
+    "description": "Note 2"
+  },
+  "webp.note3": {
+    "message": "可一次轉換多張圖片。",
+    "description": "Note 3"
   }
 }

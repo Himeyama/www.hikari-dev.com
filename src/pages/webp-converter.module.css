@@ -1,0 +1,315 @@
+.pageWrapper {
+  max-width: 800px;
+  margin: 3rem auto;
+  padding: 0 1.5rem 5rem;
+}
+
+.pageTitle {
+  text-align: center;
+  margin-bottom: 0.4rem;
+}
+
+.subtitle {
+  text-align: center;
+  color: var(--ifm-color-emphasis-600);
+  margin-bottom: 1.75rem;
+  font-size: 1rem;
+}
+
+/* ── Quality slider ────────────────────────────── */
+.qualityRow {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  justify-content: center;
+  margin-bottom: 1.5rem;
+}
+
+.qualityLabel {
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: var(--ifm-color-emphasis-700);
+}
+
+.qualitySlider {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 200px;
+  height: 4px;
+  border: none;
+  border-radius: 2px;
+  background: var(--ifm-color-emphasis-300);
+  accent-color: var(--ifm-color-primary);
+  outline: none;
+}
+
+.qualitySlider::-webkit-slider-runnable-track {
+  height: 4px;
+  border: none;
+  border-radius: 2px;
+  background: transparent;
+}
+
+.qualitySlider::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 14px;
+  height: 14px;
+  border: none;
+  border-radius: 50%;
+  background: var(--ifm-color-primary);
+  cursor: pointer;
+  margin-top: -5px;
+}
+
+.qualitySlider::-moz-range-track {
+  height: 4px;
+  border: none;
+  border-radius: 2px;
+  background: var(--ifm-color-emphasis-300);
+}
+
+.qualitySlider::-moz-range-thumb {
+  width: 14px;
+  height: 14px;
+  border: none;
+  border-radius: 50%;
+  background: var(--ifm-color-primary);
+  cursor: pointer;
+}
+
+.qualityValue {
+  font-size: 0.9rem;
+  font-weight: 700;
+  min-width: 3.2em;
+  text-align: right;
+  color: var(--ifm-color-primary);
+  font-variant-numeric: tabular-nums;
+}
+
+/* ── Dropzone ──────────────────────────────────── */
+.dropzone {
+  border: 1px dashed var(--ifm-color-emphasis-400);
+  border-radius: 4px;
+  padding: 2.25rem 1.5rem;
+  text-align: center;
+  cursor: pointer;
+  transition: background 0.12s, border-color 0.12s;
+  margin-bottom: 1.5rem;
+}
+
+.dropzone:hover {
+  border-color: var(--ifm-color-emphasis-600);
+  background: var(--ifm-color-emphasis-100);
+}
+
+.dropzoneActive {
+  border-color: var(--ifm-color-primary);
+  background: var(--ifm-color-emphasis-100);
+}
+
+.hiddenInput {
+  display: none;
+}
+
+.dropzoneText {
+  margin: 0;
+  color: var(--ifm-color-emphasis-600);
+  font-size: 0.95rem;
+}
+
+.errorText {
+  text-align: center;
+  color: var(--ifm-color-danger);
+  font-size: 0.9rem;
+  margin-bottom: 1rem;
+}
+
+/* ── Stats ─────────────────────────────────────── */
+.statsBar {
+  display: flex;
+  gap: 1rem;
+  justify-content: center;
+  margin-bottom: 1.25rem;
+  flex-wrap: wrap;
+}
+
+.statBox {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background: var(--ifm-background-surface-color);
+  border: 1px solid var(--ifm-color-emphasis-200);
+  border-radius: 4px;
+  padding: 0.5rem 1.25rem;
+  min-width: 80px;
+}
+
+.statLabel {
+  font-size: 0.72rem;
+  letter-spacing: 0.03em;
+  color: var(--ifm-color-emphasis-500);
+  font-weight: 600;
+}
+
+.statValue {
+  font-size: 1.4rem;
+  font-weight: 700;
+  color: var(--ifm-font-color-base);
+  line-height: 1.2;
+  font-variant-numeric: tabular-nums;
+}
+
+.savedValue {
+  color: var(--ifm-color-primary);
+}
+
+.growValue {
+  color: var(--ifm-color-danger);
+}
+
+/* ── Actions ───────────────────────────────────── */
+.actionsRow {
+  display: flex;
+  gap: 0.6rem;
+  justify-content: center;
+  margin-bottom: 1.5rem;
+}
+
+.actionBtn {
+  padding: 0.5rem 1.4rem;
+  border: 1px solid var(--ifm-color-primary);
+  border-radius: 4px;
+  background: var(--ifm-color-primary);
+  color: #fff;
+  cursor: pointer;
+  font-size: 0.9rem;
+  font-weight: 600;
+  transition: background 0.12s, border-color 0.12s;
+}
+
+.actionBtn:hover {
+  background: var(--ifm-color-primary-dark);
+  border-color: var(--ifm-color-primary-dark);
+}
+
+.actionBtnGhost {
+  padding: 0.5rem 1.4rem;
+  border: 1px solid var(--ifm-color-emphasis-300);
+  border-radius: 4px;
+  background: var(--ifm-background-color);
+  color: var(--ifm-font-color-base);
+  cursor: pointer;
+  font-size: 0.9rem;
+  font-weight: 500;
+  transition: background 0.12s, border-color 0.12s;
+}
+
+.actionBtnGhost:hover {
+  background: var(--ifm-color-emphasis-100);
+  border-color: var(--ifm-color-emphasis-400);
+}
+
+/* ── Image list ────────────────────────────────── */
+.imageList {
+  list-style: none;
+  margin: 0 0 2.5rem 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.imageItem {
+  display: flex;
+  align-items: center;
+  gap: 0.85rem;
+  border: 1px solid var(--ifm-color-emphasis-200);
+  border-radius: 4px;
+  padding: 0.6rem 0.85rem;
+  background: var(--ifm-background-surface-color);
+}
+
+.thumb {
+  width: 64px;
+  height: 64px;
+  object-fit: cover;
+  border-radius: 2px;
+  background: var(--ifm-color-emphasis-100);
+  flex-shrink: 0;
+}
+
+.imageInfo {
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+  min-width: 0;
+  flex: 1;
+}
+
+.imageName {
+  font-weight: 600;
+  font-size: 0.92rem;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.imageMeta {
+  font-size: 0.8rem;
+  color: var(--ifm-color-emphasis-600);
+}
+
+.downloadBtn {
+  padding: 0.4rem 0.9rem;
+  border: 1px solid var(--ifm-color-emphasis-300);
+  border-radius: 4px;
+  font-size: 0.85rem;
+  font-weight: 500;
+  color: var(--ifm-font-color-base);
+  white-space: nowrap;
+  transition: background 0.12s, border-color 0.12s;
+}
+
+.downloadBtn:hover {
+  background: var(--ifm-color-emphasis-100);
+  border-color: var(--ifm-color-emphasis-400);
+  text-decoration: none;
+}
+
+.removeBtn {
+  border: 1px solid transparent;
+  background: transparent;
+  color: var(--ifm-color-emphasis-500);
+  font-size: 1.1rem;
+  line-height: 1;
+  cursor: pointer;
+  padding: 0.2rem 0.5rem;
+  border-radius: 4px;
+  flex-shrink: 0;
+}
+
+.removeBtn:hover {
+  background: var(--ifm-color-emphasis-100);
+  border-color: var(--ifm-color-emphasis-300);
+  color: var(--ifm-font-color-base);
+}
+
+/* ── Notes ─────────────────────────────────────── */
+.rules {
+  border: 1px solid var(--ifm-color-emphasis-200);
+  border-radius: 4px;
+  padding: 1.5rem 2rem;
+  background: var(--ifm-background-surface-color);
+}
+
+.rulesTitle {
+  font-size: 1.05rem;
+  margin-bottom: 0.75rem;
+}
+
+.rulesList {
+  margin: 0;
+  padding-left: 1.4rem;
+  line-height: 2;
+}

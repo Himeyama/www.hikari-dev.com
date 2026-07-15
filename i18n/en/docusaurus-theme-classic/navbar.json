@@ -23,8 +23,8 @@
     "message": "Today's Trivia",
     "description": "Navbar item with label 本日の雑学"
   },
-  "item.label.ハノイの塔": {
-    "message": "Tower of Hanoi",
-    "description": "Navbar item with label ハノイの塔"
+  "item.label.WebP 変換": {
+    "message": "WebP Converter",
+    "description": "Navbar item with label WebP 変換"
   }
 }

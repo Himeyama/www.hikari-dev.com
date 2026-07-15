@@ -23,8 +23,8 @@
     "message": "今日冷知識",
     "description": "Navbar item with label 本日の雑学"
   },
-  "item.label.ハノイの塔": {
-    "message": "河內塔",
-    "description": "Navbar item with label ハノイの塔"
+  "item.label.WebP 変換": {
+    "message": "WebP 轉換工具",
+    "description": "Navbar item with label WebP 変換"
   }
 }

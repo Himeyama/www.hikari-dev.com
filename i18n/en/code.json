@@ -463,82 +463,6 @@
     "message": "No trivia found for today.",
     "description": "Not found message on the trivia page"
   },
-  "hanoi.title": {
-    "message": "Tower of Hanoi",
-    "description": "Title of the Tower of Hanoi page"
-  },
-  "hanoi.description": {
-    "message": "Tower of Hanoi mini-game. Click a peg to select and move disks.",
-    "description": "Description of the Tower of Hanoi page"
-  },
-  "hanoi.subtitle": {
-    "message": "Move all disks from peg A to peg C!",
-    "description": "Subtitle on the Tower of Hanoi page"
-  },
-  "hanoi.diskCount": {
-    "message": "Disks",
-    "description": "Label for disk count selector"
-  },
-  "hanoi.moves": {
-    "message": "Moves",
-    "description": "Label for move counter"
-  },
-  "hanoi.movesUnit": {
-    "message": "moves",
-    "description": "Unit for number of moves"
-  },
-  "hanoi.optimal": {
-    "message": "Min",
-    "description": "Label for optimal moves"
-  },
-  "hanoi.time": {
-    "message": "Time",
-    "description": "Label for timer"
-  },
-  "hanoi.best": {
-    "message": "Best",
-    "description": "Label for best moves record"
-  },
-  "hanoi.win": {
-    "message": "Cleared!",
-    "description": "Win message"
-  },
-  "hanoi.perfect": {
-    "message": "★ Perfect!",
-    "description": "Perfect/optimal solve badge"
-  },
-  "hanoi.hintSelect": {
-    "message": "Click a peg to select",
-    "description": "Hint: select a peg"
-  },
-  "hanoi.hintMove": {
-    "message": "Click the destination peg",
-    "description": "Hint: choose destination peg"
-  },
-  "hanoi.reset": {
-    "message": "Reset",
-    "description": "Reset button label"
-  },
-  "hanoi.rulesTitle": {
-    "message": "Rules",
-    "description": "Title of the rules section"
-  },
-  "hanoi.rule1": {
-    "message": "Only one disk can be moved at a time.",
-    "description": "Hanoi rule 1"
-  },
-  "hanoi.rule2": {
-    "message": "Only the top disk of a peg can be moved.",
-    "description": "Hanoi rule 2"
-  },
-  "hanoi.rule3": {
-    "message": "A larger disk may not be placed on top of a smaller disk.",
-    "description": "Hanoi rule 3"
-  },
-  "hanoi.formulaLabel": {
-    "message": "Minimum moves",
-    "description": "Label before the minimum moves formula"
-  },
   "chat.title": {
     "message": "Hikari Chat"
   },
@@ -607,5 +531,85 @@
   },
   "theme.fontSwitcher.udDigi": {
     "message": "UD Digi Kyokasho"
+  },
+  "webp.title": {
+    "message": "Convert Images to WebP",
+    "description": "Title of the WebP converter page"
+  },
+  "webp.description": {
+    "message": "A tool to convert images to WebP format. Processing happens entirely in the browser, so images are never sent to a server.",
+    "description": "Description of the WebP converter page"
+  },
+  "webp.subtitle": {
+    "message": "Drag and drop images to convert them to WebP format. Everything runs in your browser — images are never uploaded to a server.",
+    "description": "Subtitle on the WebP converter page"
+  },
+  "webp.quality": {
+    "message": "Quality",
+    "description": "Label for the quality slider"
+  },
+  "webp.converting": {
+    "message": "Converting...",
+    "description": "Shown while images are being converted"
+  },
+  "webp.dropHint": {
+    "message": "Drop images here, or click to select",
+    "description": "Hint text inside the dropzone"
+  },
+  "webp.errorNoImage": {
+    "message": "Please select an image file.",
+    "description": "Error when no valid image files were selected"
+  },
+  "webp.errorConvert": {
+    "message": "Some images failed to convert.",
+    "description": "Error when conversion fails"
+  },
+  "webp.fileCount": {
+    "message": "Files",
+    "description": "Label for the number of converted files"
+  },
+  "webp.original": {
+    "message": "Original",
+    "description": "Label for total original size"
+  },
+  "webp.converted": {
+    "message": "Converted",
+    "description": "Label for total converted size"
+  },
+  "webp.saved": {
+    "message": "Saved",
+    "description": "Label for total size reduction percentage"
+  },
+  "webp.downloadAll": {
+    "message": "Download All",
+    "description": "Button to download all converted images"
+  },
+  "webp.clearAll": {
+    "message": "Clear All",
+    "description": "Button to clear all converted images"
+  },
+  "webp.download": {
+    "message": "Save",
+    "description": "Button to download a single converted image"
+  },
+  "webp.remove": {
+    "message": "Remove",
+    "description": "Button to remove a single converted image"
+  },
+  "webp.notesTitle": {
+    "message": "About This Tool",
+    "description": "Title of the notes section"
+  },
+  "webp.note1": {
+    "message": "Conversion happens entirely in your browser; images are never sent to a server.",
+    "description": "Note 1"
+  },
+  "webp.note2": {
+    "message": "Use the quality slider to adjust compression (lower values produce smaller files).",
+    "description": "Note 2"
+  },
+  "webp.note3": {
+    "message": "You can convert multiple images at once.",
+    "description": "Note 3"
   }
 }
