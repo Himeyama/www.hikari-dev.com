@@ -687,5 +687,57 @@
   "svgIco.note3": {
     "message": "You can convert multiple images at once.",
     "description": "Note 3"
+  },
+  "yamlJson.title": {
+    "message": "Convert Between YAML and JSON",
+    "description": "Title of the YAML/JSON converter page"
+  },
+  "yamlJson.description": {
+    "message": "A tool to convert between YAML and JSON. Processing happens entirely in the browser, so content is never sent to a server.",
+    "description": "Description of the YAML/JSON converter page"
+  },
+  "yamlJson.subtitle": {
+    "message": "Type into the left pane and the converted result appears on the right. Everything runs in your browser — content is never sent to a server.",
+    "description": "Subtitle on the YAML/JSON converter page"
+  },
+  "yamlJson.yamlLabel": {
+    "message": "YAML",
+    "description": "Label for the YAML pane"
+  },
+  "yamlJson.jsonLabel": {
+    "message": "JSON",
+    "description": "Label for the JSON pane"
+  },
+  "yamlJson.swap": {
+    "message": "Swap conversion direction",
+    "description": "Aria label for the swap button"
+  },
+  "yamlJson.copy": {
+    "message": "Copy",
+    "description": "Copy button label"
+  },
+  "yamlJson.copied": {
+    "message": "Copied",
+    "description": "Copy button label after copying"
+  },
+  "yamlJson.errorPrefix": {
+    "message": "Conversion error:",
+    "description": "Prefix shown before a conversion error message"
+  },
+  "yamlJson.notesTitle": {
+    "message": "About This Tool",
+    "description": "Title of the notes section"
+  },
+  "yamlJson.note1": {
+    "message": "Conversion happens entirely in your browser; content is never sent to a server.",
+    "description": "Note 1"
+  },
+  "yamlJson.note2": {
+    "message": "Use the swap button to switch between YAML → JSON and JSON → YAML.",
+    "description": "Note 2"
+  },
+  "yamlJson.note3": {
+    "message": "If there is a syntax error, the error details appear below the result.",
+    "description": "Note 3"
   }
 }

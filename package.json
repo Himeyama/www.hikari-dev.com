@@ -27,8 +27,10 @@
     "@docusaurus/plugin-content-pages": "^3.10.0",
     "@docusaurus/plugin-sitemap": "^3.10.0",
     "@docusaurus/preset-classic": "^3.10.0",
+    "@docusaurus/theme-common": "^3.10.0",
     "@docusaurus/theme-mermaid": "^3.10.0",
     "@mdx-js/react": "^3.1.1",
+    "@monaco-editor/react": "^4.7.0",
     "@radix-ui/react-select": "^2.2.6",
     "@radix-ui/react-tooltip": "^1.2.8",
     "axios": "^1.13.6",
@@ -42,7 +44,8 @@
     "react": "^19.2.4",
     "react-dom": "^19.2.4",
     "react-markdown": "^10.1.0",
-    "remark-gfm": "^4.0.1"
+    "remark-gfm": "^4.0.1",
+    "yaml": "^2.9.0"
   },
   "devDependencies": {
     "@docusaurus/module-type-aliases": "^3.10.0",

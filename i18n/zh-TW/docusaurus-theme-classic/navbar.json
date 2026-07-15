@@ -30,5 +30,9 @@
   "item.label.SVG2ICO": {
     "message": "SVG2ICO",
     "description": "Navbar item with label SVG2ICO"
+  },
+  "item.label.YAML⇄JSON": {
+    "message": "YAML⇄JSON",
+    "description": "Navbar item with label YAML⇄JSON"
   }
 }

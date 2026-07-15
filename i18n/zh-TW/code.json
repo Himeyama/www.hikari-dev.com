@@ -655,5 +655,57 @@
   "svgIco.note3": {
     "message": "可一次轉換多張圖片。",
     "description": "Note 3"
+  },
+  "yamlJson.title": {
+    "message": "YAML 與 JSON 互相轉換",
+    "description": "Title of the YAML/JSON converter page"
+  },
+  "yamlJson.description": {
+    "message": "YAML 與 JSON 互相轉換的工具。處理完全在瀏覽器內完成，內容不會傳送至伺服器。",
+    "description": "Description of the YAML/JSON converter page"
+  },
+  "yamlJson.subtitle": {
+    "message": "在左側輸入，右側會顯示轉換結果。所有處理都在瀏覽器內完成，內容不會傳送至伺服器。",
+    "description": "Subtitle on the YAML/JSON converter page"
+  },
+  "yamlJson.yamlLabel": {
+    "message": "YAML",
+    "description": "Label for the YAML pane"
+  },
+  "yamlJson.jsonLabel": {
+    "message": "JSON",
+    "description": "Label for the JSON pane"
+  },
+  "yamlJson.swap": {
+    "message": "切換轉換方向",
+    "description": "Aria label for the swap button"
+  },
+  "yamlJson.copy": {
+    "message": "複製",
+    "description": "Copy button label"
+  },
+  "yamlJson.copied": {
+    "message": "已複製",
+    "description": "Copy button label after copying"
+  },
+  "yamlJson.errorPrefix": {
+    "message": "轉換錯誤:",
+    "description": "Prefix shown before a conversion error message"
+  },
+  "yamlJson.notesTitle": {
+    "message": "關於此工具",
+    "description": "Title of the notes section"
+  },
+  "yamlJson.note1": {
+    "message": "轉換完全在瀏覽器內完成，內容不會傳送至伺服器。",
+    "description": "Note 1"
+  },
+  "yamlJson.note2": {
+    "message": "可使用切換按鈕在 YAML → JSON 與 JSON → YAML 之間切換。",
+    "description": "Note 2"
+  },
+  "yamlJson.note3": {
+    "message": "若有語法錯誤，結果下方會顯示錯誤內容。",
+    "description": "Note 3"
   }
 }
