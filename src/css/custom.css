@@ -94,9 +94,25 @@ article header time {
   background: rgba(24, 24, 27, 0.7);
 }
 
+/*
+ * backdrop-filter を持つ要素は position: fixed な子要素の containing block に
+ * なってしまう (特に iOS Safari)。.navbar-sidebar (ハンバーガーメニュー) が
+ * .navbar の子要素で position: fixed のため、開いている間は無効化して
+ * メニューがナビバーの高さに押し潰される不具合を防ぐ。
+ */
+.navbar.navbar-sidebar--show {
+  -webkit-backdrop-filter: none;
+  backdrop-filter: none;
+}
+
 /* 日本語以外のロケールでは非表示 */
 html:not([lang="ja"]) .navbar__item--ja-only {
   display: none;
+}
+
+/* モバイル版ハンバーガーメニュー: 項目数が多い場合にスクロールできるようにする */
+.navbar-sidebar__item {
+  overflow-y: auto;
 }
 
 /* フォント切り替え */
