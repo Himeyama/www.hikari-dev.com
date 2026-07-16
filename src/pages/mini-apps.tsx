@@ -130,6 +130,18 @@ function GlobeIcon(): ReactNode {
   );
 }
 
+function ServerIcon(): ReactNode {
+  return (
+    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+      <rect x="3" y="4" width="18" height="6" rx="1.2" stroke="currentColor" strokeWidth="1.5" />
+      <rect x="3" y="14" width="18" height="6" rx="1.2" stroke="currentColor" strokeWidth="1.5" />
+      <circle cx="7" cy="7" r="0.9" fill="currentColor" />
+      <circle cx="7" cy="17" r="0.9" fill="currentColor" />
+      <path d="M11 7h7M11 17h7" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
+    </svg>
+  );
+}
+
 type MiniApp = {
   href: string;
   Icon: () => ReactNode;
@@ -219,6 +231,14 @@ const MINI_APPS: MiniApp[] = [
     titleMessage: 'WHOIS 検索',
     descriptionId: 'miniApps.whois.description',
     descriptionMessage: 'ドメイン名の WHOIS 情報 (登録者・ネームサーバーなど) を取得する。',
+  },
+  {
+    href: '/nslookup',
+    Icon: ServerIcon,
+    titleId: 'miniApps.nslookup.title',
+    titleMessage: 'nslookup (DNS 検索)',
+    descriptionId: 'miniApps.nslookup.description',
+    descriptionMessage: 'ドメイン名の DNS レコード (A・AAAA・MX・TXT・NS・CNAME) を取得する。',
   },
   {
     href: '/chat',

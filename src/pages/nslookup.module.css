@@ -1,0 +1,170 @@
+.pageWrapper {
+  max-width: 1000px;
+  margin: 3rem auto;
+  padding: 0 1.5rem 5rem;
+}
+
+.pageTitle {
+  text-align: center;
+  margin-bottom: 0.4rem;
+}
+
+.subtitle {
+  text-align: center;
+  color: var(--ifm-color-emphasis-600);
+  margin-bottom: 1.75rem;
+  font-size: 1rem;
+}
+
+.form {
+  display: flex;
+  gap: 0.6rem;
+  margin-bottom: 1.5rem;
+}
+
+.input {
+  flex: 1;
+  min-width: 0;
+  padding: 0.55rem 0.8rem;
+  border: 1px solid var(--ifm-color-emphasis-300);
+  border-radius: 4px;
+  background: var(--ifm-background-color);
+  color: var(--ifm-font-color-base);
+  font-size: 0.95rem;
+  font-family: var(--ifm-font-family-monospace);
+}
+
+.input:focus {
+  outline: none;
+  border-color: var(--ifm-color-primary);
+}
+
+.submitBtn {
+  flex-shrink: 0;
+  padding: 0.55rem 1.4rem;
+  border: 1px solid var(--ifm-color-primary);
+  border-radius: 4px;
+  background: var(--ifm-color-primary);
+  color: var(--ifm-color-primary-contrast-foreground);
+  cursor: pointer;
+  font-size: 0.95rem;
+  font-weight: 600;
+  transition: opacity 0.12s;
+}
+
+.submitBtn:hover:not(:disabled) {
+  opacity: 0.85;
+}
+
+.submitBtn:disabled {
+  opacity: 0.5;
+  cursor: default;
+}
+
+.errorText {
+  color: var(--ifm-color-danger);
+  font-size: 0.85rem;
+  margin-bottom: 1rem;
+  font-family: var(--ifm-font-family-monospace);
+  white-space: pre-wrap;
+  word-break: break-word;
+}
+
+/* ── Results ───────────────────────────────────── */
+.recordSection {
+  border: 1px solid var(--ifm-color-emphasis-200);
+  border-radius: 4px;
+  margin-bottom: 0.85rem;
+  overflow: hidden;
+}
+
+.recordHeader {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  padding: 0.55rem 0.9rem;
+  background: var(--ifm-color-emphasis-100);
+}
+
+.recordType {
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 0.03em;
+  color: var(--ifm-color-emphasis-800);
+  width: 60px;
+  flex-shrink: 0;
+}
+
+.recordCount {
+  font-size: 0.78rem;
+  color: var(--ifm-color-emphasis-600);
+}
+
+.recordEmpty {
+  font-size: 0.78rem;
+  color: var(--ifm-color-emphasis-500);
+}
+
+.recordList {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.recordRow {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 0.6rem;
+  padding: 0.5rem 0.9rem;
+  border-top: 1px solid var(--ifm-color-emphasis-200);
+  background: var(--ifm-background-surface-color);
+}
+
+.recordData {
+  flex: 1 1 260px;
+  min-width: 0;
+  overflow-wrap: break-word;
+  word-break: break-all;
+  font-family: var(--ifm-font-family-monospace);
+  font-size: 0.85rem;
+  color: var(--ifm-font-color-base);
+}
+
+.recordTtl {
+  flex-shrink: 0;
+  font-size: 0.75rem;
+  color: var(--ifm-color-emphasis-500);
+}
+
+.loadingText {
+  color: var(--ifm-color-emphasis-600);
+  font-size: 0.9rem;
+  margin-bottom: 1rem;
+}
+
+/* ── Notes ─────────────────────────────────────── */
+.rules {
+  border: 1px solid var(--ifm-color-emphasis-200);
+  border-radius: 4px;
+  padding: 1.5rem 2rem;
+  background: var(--ifm-background-surface-color);
+  margin-top: 2rem;
+}
+
+.rulesTitle {
+  font-size: 1.05rem;
+  margin-bottom: 0.75rem;
+}
+
+.rulesList {
+  margin: 0;
+  padding-left: 1.4rem;
+  line-height: 2;
+}
+
+@media (max-width: 640px) {
+  .form {
+    flex-direction: column;
+  }
+}
