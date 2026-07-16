@@ -48,6 +48,15 @@ function Base64Icon(): ReactNode {
   );
 }
 
+function UuidIcon(): ReactNode {
+  return (
+    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+      <rect x="3" y="8" width="18" height="8" rx="1.5" stroke="currentColor" strokeWidth="1.5" />
+      <path d="M7 8v8M11 8v8M15 8v8" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
+    </svg>
+  );
+}
+
 function ChatIcon(): ReactNode {
   return (
     <svg width="22" height="22" viewBox="0 0 24 24" fill="none" aria-hidden="true">
@@ -104,6 +113,14 @@ const MINI_APPS: MiniApp[] = [
     titleMessage: 'Base64 変換',
     descriptionId: 'miniApps.base64.description',
     descriptionMessage: 'テキストやファイルを Base64 に相互変換する。',
+  },
+  {
+    href: '/uuid',
+    Icon: UuidIcon,
+    titleId: 'miniApps.uuid.title',
+    titleMessage: 'UUID ジェネレーター',
+    descriptionId: 'miniApps.uuid.description',
+    descriptionMessage: 'UUID (v4) を生成する。',
   },
   {
     href: '/chat',
