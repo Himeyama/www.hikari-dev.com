@@ -120,6 +120,16 @@ function TableIcon(): ReactNode {
   );
 }
 
+function GlobeIcon(): ReactNode {
+  return (
+    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+      <circle cx="12" cy="12" r="8.5" stroke="currentColor" strokeWidth="1.5" />
+      <ellipse cx="12" cy="12" rx="3.5" ry="8.5" stroke="currentColor" strokeWidth="1.5" />
+      <path d="M3.5 12h17M4.5 8h15M4.5 16h15" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
+    </svg>
+  );
+}
+
 type MiniApp = {
   href: string;
   Icon: () => ReactNode;
@@ -201,6 +211,14 @@ const MINI_APPS: MiniApp[] = [
     titleMessage: 'TSV→Markdown 表変換',
     descriptionId: 'miniApps.tsvMarkdown.description',
     descriptionMessage: 'Excel からコピーしたタブ区切りテキストを Markdown テーブルに変換する。',
+  },
+  {
+    href: '/whois',
+    Icon: GlobeIcon,
+    titleId: 'miniApps.whois.title',
+    titleMessage: 'WHOIS 検索',
+    descriptionId: 'miniApps.whois.description',
+    descriptionMessage: 'ドメイン名の WHOIS 情報 (登録者・ネームサーバーなど) を取得する。',
   },
   {
     href: '/chat',

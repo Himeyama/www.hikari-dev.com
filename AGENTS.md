@@ -258,13 +258,16 @@ tags: [tag1, tag2]
 
 ### Workers API
 
-`workers/` 配下に Cloudflare Workers がある。`api.hikari-dev.com` 等の別ドメインでデプロイし、Cloudflare Access で `/admin/*` と `api.*/api/*` を保護する。
+`workers/` 配下に Cloudflare Workers (`hikari-dev-cms`) がある。カスタムドメイン `cms-api.hikari-dev.com` でデプロイ済み (`workers/wrangler.toml` の `[[routes]]` で設定)。Cloudflare Access で `/admin/*` と `cms-api.hikari-dev.com/api/*` を保護する。
+
+`api.hikari-dev.com` は別サービス (AWS API Gateway、`/comment` コメント機能用) が使用しているドメインであり、この Workers プロジェクトとは無関係。混同しないこと。
 
 #### エンドポイント
 
 | メソッド | パス | 説明 |
 |---|---|---|
 | GET | `/health` | ヘルスチェック (認証不要) |
+| GET | `/public/whois?domain=...` | WHOIS 情報取得 (認証不要、`/whois` ミニアプリ用) |
 | GET | `/api/articles?lang={ja\|en\|zh-TW}` | 記事一覧 |
 | GET | `/api/articles/{filename}?lang=...` | 個別取得 |
 | POST | `/api/articles` | 作成 (body: `{lang, date, slug, title, ...}`) |

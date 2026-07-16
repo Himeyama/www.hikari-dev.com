@@ -9,6 +9,7 @@ import { healthRouter } from "./routes/health.ts";
 import { articlesRouter } from "./routes/articles.ts";
 import { imagesRouter } from "./routes/images.ts";
 import { buildRouter } from "./routes/build.ts";
+import { whoisRouter } from "./routes/whois.ts";
 
 const app = new Hono<HonoEnv>();
 
@@ -18,6 +19,9 @@ app.use("*", corsMiddleware);
 app.use("*", rateLimitMiddleware);
 
 app.route("/health", healthRouter);
+
+// Public endpoint used by the /whois mini-app — no Cloudflare Access auth required.
+app.route("/public/whois", whoisRouter);
 
 app.use("/api/*", authMiddleware);
 app.route("/api/articles", articlesRouter);

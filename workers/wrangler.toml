@@ -6,6 +6,10 @@ compatibility_flags = ["nodejs_compat"]
 [build]
 command = ""
 
+[[routes]]
+pattern = "cms-api.hikari-dev.com"
+custom_domain = true
+
 [vars]
 GITHUB_OWNER = "himeyama"
 GITHUB_REPO = "www.hikari-dev.com"
