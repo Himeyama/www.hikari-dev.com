@@ -739,5 +739,113 @@
   "yamlJson.note3": {
     "message": "If there is a syntax error, the error details appear below the result.",
     "description": "Note 3"
+  },
+  "base64.title": {
+    "message": "Base64 Converter",
+    "description": "Title of the Base64 converter page"
+  },
+  "base64.description": {
+    "message": "A tool to convert text and files to and from Base64. Processing happens entirely in the browser, so content is never sent to a server.",
+    "description": "Description of the Base64 converter page"
+  },
+  "base64.subtitle": {
+    "message": "Type text or drop a file to convert it to Base64. Everything runs in your browser — content is never sent to a server.",
+    "description": "Subtitle on the Base64 converter page"
+  },
+  "base64.textSectionTitle": {
+    "message": "Convert Text",
+    "description": "Title of the text conversion section"
+  },
+  "base64.encodePlaceholder": {
+    "message": "Enter the text to convert",
+    "description": "Placeholder for the encode source textarea"
+  },
+  "base64.decodePlaceholder": {
+    "message": "Paste a Base64 string (or a data: URI)",
+    "description": "Placeholder for the decode source textarea"
+  },
+  "base64.swap": {
+    "message": "Swap conversion direction",
+    "description": "Aria label for the swap button"
+  },
+  "base64.copy": {
+    "message": "Copy",
+    "description": "Copy button label"
+  },
+  "base64.copied": {
+    "message": "Copied",
+    "description": "Copy button label after copying"
+  },
+  "base64.base64Label": {
+    "message": "Base64",
+    "description": "Label for the Base64 pane"
+  },
+  "base64.textLabel": {
+    "message": "Text",
+    "description": "Label for the text pane"
+  },
+  "base64.errorInvalid": {
+    "message": "This string cannot be interpreted as Base64.",
+    "description": "Error shown when decode input is not valid Base64"
+  },
+  "base64.binaryNotice": {
+    "message": "Cannot be displayed as text (it may be binary data). The data: URI and download options are still available.",
+    "description": "Notice shown when decoded bytes are not valid UTF-8 text"
+  },
+  "base64.mimeType": {
+    "message": "MIME type",
+    "description": "Label for the MIME type input"
+  },
+  "base64.copyDataUri": {
+    "message": "Copy data: URI",
+    "description": "Button label to copy the data: URI"
+  },
+  "base64.fileSectionTitle": {
+    "message": "Convert a File",
+    "description": "Title of the file conversion section"
+  },
+  "base64.dropHint": {
+    "message": "Drop a file here, or click to select",
+    "description": "Hint text inside the dropzone"
+  },
+  "base64.errorFileRead": {
+    "message": "Failed to read the file.",
+    "description": "Error shown when reading a dropped file fails"
+  },
+  "base64.clearAll": {
+    "message": "Clear All",
+    "description": "Button to clear all converted files"
+  },
+  "base64.copyBase64": {
+    "message": "Copy Base64",
+    "description": "Button label to copy the raw Base64 string"
+  },
+  "base64.remove": {
+    "message": "Remove",
+    "description": "Aria label for the remove button"
+  },
+  "base64.notesTitle": {
+    "message": "About This Tool",
+    "description": "Title of the notes section"
+  },
+  "base64.note1": {
+    "message": "Conversion happens entirely in your browser; content and files are never sent to a server.",
+    "description": "Note 1"
+  },
+  "base64.note2": {
+    "message": "Pasting a data: URI directly when decoding automatically detects the MIME type.",
+    "description": "Note 2"
+  },
+  "base64.note3": {
+    "message": "Click [Open in new tab] to view the content directly in the browser via the data: scheme.",
+    "description": "Note 3"
+  },
+  "base64.note4": {
+    "message": "Dropping a file lets you copy or directly open that file's Base64 and data: URI.",
+    "description": "Note 4"
+  },
+  "base64.errorCopy": {
+    "message": "Copy failed. Please select and copy manually.",
+    "description": "Error shown when copying to the clipboard fails"
   }
 }

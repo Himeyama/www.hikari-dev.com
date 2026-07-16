@@ -37,6 +37,17 @@ function CodeIcon(): ReactNode {
   );
 }
 
+function Base64Icon(): ReactNode {
+  return (
+    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+      <rect x="3" y="6" width="18" height="12" rx="1.5" stroke="currentColor" strokeWidth="1.5" />
+      <path d="M7 10v4M7 10h1.5a1.5 1.5 0 010 3H7" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+      <path d="M11.5 10v4h2" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+      <path d="M17 10l-2 4M15.2 10l2 4" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+    </svg>
+  );
+}
+
 function ChatIcon(): ReactNode {
   return (
     <svg width="22" height="22" viewBox="0 0 24 24" fill="none" aria-hidden="true">
@@ -85,6 +96,14 @@ const MINI_APPS: MiniApp[] = [
     titleMessage: 'YAML⇄JSON',
     descriptionId: 'miniApps.yamlJson.description',
     descriptionMessage: 'YAML と JSON を相互変換する。',
+  },
+  {
+    href: '/base64',
+    Icon: Base64Icon,
+    titleId: 'miniApps.base64.title',
+    titleMessage: 'Base64 変換',
+    descriptionId: 'miniApps.base64.description',
+    descriptionMessage: 'テキストやファイルを Base64 に相互変換する。',
   },
   {
     href: '/chat',

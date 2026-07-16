@@ -707,5 +707,113 @@
   "yamlJson.note3": {
     "message": "若有語法錯誤，結果下方會顯示錯誤內容。",
     "description": "Note 3"
+  },
+  "base64.title": {
+    "message": "Base64 轉換",
+    "description": "Title of the Base64 converter page"
+  },
+  "base64.description": {
+    "message": "將文字或檔案與 Base64 互相轉換的工具。所有處理都在瀏覽器內完成，內容不會傳送至伺服器。",
+    "description": "Description of the Base64 converter page"
+  },
+  "base64.subtitle": {
+    "message": "輸入文字，或拖曳檔案以轉換成 Base64。所有處理都在瀏覽器內完成，內容不會傳送至伺服器。",
+    "description": "Subtitle on the Base64 converter page"
+  },
+  "base64.textSectionTitle": {
+    "message": "文字轉換",
+    "description": "Title of the text conversion section"
+  },
+  "base64.encodePlaceholder": {
+    "message": "輸入要轉換的文字",
+    "description": "Placeholder for the encode source textarea"
+  },
+  "base64.decodePlaceholder": {
+    "message": "貼上 Base64 字串 (或 data: URI)",
+    "description": "Placeholder for the decode source textarea"
+  },
+  "base64.swap": {
+    "message": "切換轉換方向",
+    "description": "Aria label for the swap button"
+  },
+  "base64.copy": {
+    "message": "複製",
+    "description": "Copy button label"
+  },
+  "base64.copied": {
+    "message": "已複製",
+    "description": "Copy button label after copying"
+  },
+  "base64.base64Label": {
+    "message": "Base64",
+    "description": "Label for the Base64 pane"
+  },
+  "base64.textLabel": {
+    "message": "文字",
+    "description": "Label for the text pane"
+  },
+  "base64.errorInvalid": {
+    "message": "此字串無法解析為 Base64。",
+    "description": "Error shown when decode input is not valid Base64"
+  },
+  "base64.binaryNotice": {
+    "message": "無法以文字顯示 (可能為二進位資料)。仍可使用 data: URI 或下載功能。",
+    "description": "Notice shown when decoded bytes are not valid UTF-8 text"
+  },
+  "base64.mimeType": {
+    "message": "MIME 類型",
+    "description": "Label for the MIME type input"
+  },
+  "base64.copyDataUri": {
+    "message": "複製 data: URI",
+    "description": "Button label to copy the data: URI"
+  },
+  "base64.fileSectionTitle": {
+    "message": "檔案轉換",
+    "description": "Title of the file conversion section"
+  },
+  "base64.dropHint": {
+    "message": "將檔案拖曳到這裡，或點擊選擇檔案",
+    "description": "Hint text inside the dropzone"
+  },
+  "base64.errorFileRead": {
+    "message": "讀取檔案失敗。",
+    "description": "Error shown when reading a dropped file fails"
+  },
+  "base64.clearAll": {
+    "message": "全部清除",
+    "description": "Button to clear all converted files"
+  },
+  "base64.copyBase64": {
+    "message": "複製 Base64",
+    "description": "Button label to copy the raw Base64 string"
+  },
+  "base64.remove": {
+    "message": "刪除",
+    "description": "Aria label for the remove button"
+  },
+  "base64.notesTitle": {
+    "message": "關於此工具",
+    "description": "Title of the notes section"
+  },
+  "base64.note1": {
+    "message": "轉換皆在瀏覽器內完成，輸入內容與檔案都不會傳送至伺服器。",
+    "description": "Note 1"
+  },
+  "base64.note2": {
+    "message": "解碼時直接貼上 data: URI，會自動偵測 MIME 類型。",
+    "description": "Note 2"
+  },
+  "base64.note3": {
+    "message": "點擊 [在新分頁開啟] 即可透過 data: 協定直接在瀏覽器中檢視內容。",
+    "description": "Note 3"
+  },
+  "base64.note4": {
+    "message": "拖曳檔案後，可複製或直接開啟該檔案的 Base64 與 data: URI。",
+    "description": "Note 4"
+  },
+  "base64.errorCopy": {
+    "message": "複製失敗，請手動選取後複製。",
+    "description": "Error shown when copying to the clipboard fails"
   }
 }
