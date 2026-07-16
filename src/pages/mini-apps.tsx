@@ -96,6 +96,21 @@ function HashIcon(): ReactNode {
   );
 }
 
+function CertIcon(): ReactNode {
+  return (
+    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+      <path
+        d="M12 3l7 3v5c0 4.5-3 7.5-7 9-4-1.5-7-4.5-7-9V6l7-3z"
+        stroke="currentColor"
+        strokeWidth="1.5"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
+      <path d="M9 12l2 2 4-4" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+    </svg>
+  );
+}
+
 type MiniApp = {
   href: string;
   Icon: () => ReactNode;
@@ -145,6 +160,14 @@ const MINI_APPS: MiniApp[] = [
     titleMessage: 'ハッシュ値取得',
     descriptionId: 'miniApps.hash.description',
     descriptionMessage: 'テキストやファイルのハッシュ値 (SHA-256 など) を計算する。',
+  },
+  {
+    href: '/cert-generator',
+    Icon: CertIcon,
+    titleId: 'miniApps.certGen.title',
+    titleMessage: '証明書ジェネレーター',
+    descriptionId: 'miniApps.certGen.description',
+    descriptionMessage: 'ルート CA 証明書とサーバー証明書 (オレオレ証明書) を生成する。',
   },
   {
     href: '/uuid',

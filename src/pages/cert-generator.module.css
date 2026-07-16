@@ -1,0 +1,421 @@
+.pageWrapper {
+  max-width: 1000px;
+  margin: 3rem auto;
+  padding: 0 1.5rem 5rem;
+}
+
+.pageTitle {
+  text-align: center;
+  margin-bottom: 0.4rem;
+}
+
+.subtitle {
+  text-align: center;
+  color: var(--ifm-color-emphasis-600);
+  margin-bottom: 1.75rem;
+  font-size: 1rem;
+}
+
+.sectionTitle {
+  font-size: 1.1rem;
+  margin: 2rem 0 0.85rem;
+}
+
+/* ── Form ──────────────────────────────────────── */
+.form {
+  border: 1px solid var(--ifm-color-emphasis-200);
+  border-radius: 4px;
+  padding: 1.25rem 1.5rem;
+  background: var(--ifm-background-surface-color);
+  margin-bottom: 1rem;
+}
+
+.formGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 1rem;
+  margin-bottom: 1rem;
+}
+
+.formLabel {
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+  font-size: 0.82rem;
+  font-weight: 600;
+  color: var(--ifm-color-emphasis-700);
+}
+
+.formLabelWide {
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+  font-size: 0.82rem;
+  font-weight: 600;
+  color: var(--ifm-color-emphasis-700);
+  margin-bottom: 1rem;
+}
+
+.formLabelText {
+  font-size: 0.82rem;
+  font-weight: 600;
+  color: var(--ifm-color-emphasis-700);
+}
+
+.formInput {
+  padding: 0.45rem 0.65rem;
+  border: 1px solid var(--ifm-color-emphasis-300);
+  border-radius: 4px;
+  background: var(--ifm-background-color);
+  color: var(--ifm-font-color-base);
+  font-size: 0.88rem;
+  font-weight: 400;
+}
+
+.formInput:focus {
+  outline: none;
+  border-color: var(--ifm-color-primary);
+}
+
+.formTextarea {
+  padding: 0.55rem 0.7rem;
+  border: 1px solid var(--ifm-color-emphasis-300);
+  border-radius: 4px;
+  background: var(--ifm-background-color);
+  color: var(--ifm-font-color-base);
+  font-size: 0.85rem;
+  font-family: var(--ifm-font-family-monospace);
+  font-weight: 400;
+  min-height: 70px;
+  resize: vertical;
+}
+
+.formTextarea:focus {
+  outline: none;
+  border-color: var(--ifm-color-primary);
+}
+
+.formTextareaMono {
+  padding: 0.55rem 0.7rem;
+  border: 1px solid var(--ifm-color-emphasis-300);
+  border-radius: 4px;
+  background: var(--ifm-background-color);
+  color: var(--ifm-font-color-base);
+  font-size: 0.75rem;
+  font-family: var(--ifm-font-family-monospace);
+  font-weight: 400;
+  min-height: 130px;
+  resize: vertical;
+}
+
+.formTextareaMono:focus {
+  outline: none;
+  border-color: var(--ifm-color-primary);
+}
+
+.formButtonRow {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+}
+
+.statusText {
+  font-size: 0.85rem;
+  color: var(--ifm-color-emphasis-700);
+  margin-bottom: 0.5rem;
+}
+
+/* ── Tabs ──────────────────────────────────────── */
+.tabs {
+  display: flex;
+  gap: 0.4rem;
+  margin-bottom: 1rem;
+}
+
+.tabBtn {
+  padding: 0.45rem 1rem;
+  border: 1px solid var(--ifm-color-emphasis-300);
+  border-bottom: none;
+  border-radius: 4px 4px 0 0;
+  background: var(--ifm-background-color);
+  color: var(--ifm-color-emphasis-600);
+  cursor: pointer;
+  font-size: 0.85rem;
+  font-weight: 500;
+}
+
+.tabBtn:hover {
+  background: var(--ifm-color-emphasis-100);
+}
+
+.tabBtnActive {
+  background: var(--ifm-background-surface-color);
+  color: var(--ifm-font-color-base);
+  border-color: var(--ifm-color-emphasis-200);
+  font-weight: 700;
+}
+
+/* ── Dropzone ──────────────────────────────────── */
+.dropzone {
+  border: 1px dashed var(--ifm-color-emphasis-400);
+  border-radius: 4px;
+  padding: 1.75rem 1.5rem;
+  text-align: center;
+  cursor: pointer;
+  transition: background 0.12s, border-color 0.12s;
+  margin-bottom: 1rem;
+}
+
+.dropzone:hover {
+  border-color: var(--ifm-color-emphasis-600);
+  background: var(--ifm-color-emphasis-100);
+}
+
+.dropzoneActive {
+  border-color: var(--ifm-color-primary);
+  background: var(--ifm-color-emphasis-100);
+}
+
+.hiddenInput {
+  display: none;
+}
+
+.dropzoneText {
+  margin: 0;
+  color: var(--ifm-color-emphasis-600);
+  font-size: 0.9rem;
+}
+
+/* ── Radio group ───────────────────────────────── */
+.radioGroup {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 1.25rem;
+  margin-bottom: 1.25rem;
+}
+
+.radioOption {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  font-size: 0.88rem;
+  font-weight: 400;
+  cursor: pointer;
+}
+
+.radioCard {
+  display: block;
+  border: 1px solid var(--ifm-color-emphasis-200);
+  border-radius: 4px;
+  padding: 0.65rem 0.85rem;
+  cursor: pointer;
+  background: var(--ifm-background-color);
+  transition: opacity 0.12s, background 0.12s;
+}
+
+.radioCardDisabled {
+  cursor: not-allowed;
+  opacity: 0.55;
+  background: var(--ifm-color-emphasis-100);
+}
+
+.radioCardHead {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  font-size: 0.88rem;
+  font-weight: 600;
+}
+
+.radioCardDesc {
+  margin: 0.35rem 0 0 1.6rem;
+  font-size: 0.8rem;
+  font-weight: 400;
+  line-height: 1.7;
+  color: var(--ifm-color-emphasis-600);
+}
+
+.radioBadgeReady {
+  font-size: 0.72rem;
+  font-weight: 700;
+  color: #fff;
+  background: var(--ifm-color-success, #2e8555);
+  border-radius: 999px;
+  padding: 0.15rem 0.6rem;
+}
+
+.radioBadgeLocked {
+  font-size: 0.72rem;
+  font-weight: 700;
+  color: var(--ifm-color-emphasis-700);
+  background: var(--ifm-color-emphasis-200);
+  border-radius: 999px;
+  padding: 0.15rem 0.6rem;
+}
+
+/* ── Certificate details ───────────────────────── */
+.details {
+  margin-top: 0.4rem;
+  font-size: 0.82rem;
+}
+
+.detailsSummary {
+  cursor: pointer;
+  color: var(--ifm-color-emphasis-600);
+  font-weight: 600;
+  user-select: none;
+}
+
+.detailsTable {
+  margin-top: 0.6rem;
+  border-collapse: collapse;
+  width: 100%;
+  font-size: 0.78rem;
+}
+
+.detailsTable th,
+.detailsTable td {
+  text-align: left;
+  vertical-align: top;
+  padding: 0.35rem 0.6rem;
+  border-bottom: 1px solid var(--ifm-color-emphasis-200);
+}
+
+.detailsTable th {
+  width: 160px;
+  color: var(--ifm-color-emphasis-600);
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+.detailsMono {
+  font-family: var(--ifm-font-family-monospace);
+  word-break: break-all;
+}
+
+/* ── Buttons ───────────────────────────────────── */
+.actionBtn {
+  padding: 0.55rem 1.3rem;
+  border: 1px solid var(--ifm-color-primary);
+  border-radius: 4px;
+  background: var(--ifm-color-primary);
+  color: #fff;
+  cursor: pointer;
+  font-size: 0.9rem;
+  font-weight: 600;
+  transition: background 0.12s, border-color 0.12s;
+}
+
+.actionBtn:hover:not(:disabled) {
+  background: var(--ifm-color-primary-dark);
+  border-color: var(--ifm-color-primary-dark);
+}
+
+.actionBtn:disabled {
+  opacity: 0.6;
+  cursor: default;
+}
+
+.actionBtnGhostSmall {
+  padding: 0.3rem 0.7rem;
+  border: 1px solid var(--ifm-color-emphasis-300);
+  border-radius: 4px;
+  background: var(--ifm-background-color);
+  color: var(--ifm-font-color-base);
+  cursor: pointer;
+  font-size: 0.78rem;
+  font-weight: 500;
+  white-space: nowrap;
+  transition: background 0.12s, border-color 0.12s;
+}
+
+.actionBtnGhostSmall:hover {
+  background: var(--ifm-color-emphasis-100);
+  border-color: var(--ifm-color-emphasis-400);
+}
+
+.errorText {
+  color: var(--ifm-color-danger);
+  font-size: 0.85rem;
+  margin-bottom: 1rem;
+  font-family: var(--ifm-font-family-monospace);
+  white-space: pre-wrap;
+  word-break: break-word;
+}
+
+/* ── Result blocks ─────────────────────────────── */
+.resultGroup {
+  display: flex;
+  flex-direction: column;
+  gap: 0.85rem;
+  margin-bottom: 1.5rem;
+}
+
+.certBlock {
+  border: 1px solid var(--ifm-color-emphasis-200);
+  border-radius: 4px;
+  padding: 0.75rem 0.9rem;
+  background: var(--ifm-background-surface-color);
+}
+
+.certBlockHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 0.6rem;
+  margin-bottom: 0.5rem;
+}
+
+.certBlockLabel {
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: var(--ifm-color-emphasis-700);
+}
+
+.certBlockActions {
+  display: flex;
+  gap: 0.4rem;
+}
+
+.warningText {
+  color: var(--ifm-color-warning-dark, #b45309);
+  font-size: 0.78rem;
+  margin: 0 0 0.5rem;
+}
+
+.certPre {
+  margin: 0;
+  padding: 0.65rem 0.75rem;
+  border: 1px solid var(--ifm-color-emphasis-200);
+  border-radius: 4px;
+  background: var(--ifm-background-color);
+  max-height: 220px;
+  overflow: auto;
+  font-family: var(--ifm-font-family-monospace);
+  font-size: 0.72rem;
+  line-height: 1.5;
+  white-space: pre-wrap;
+  word-break: break-all;
+}
+
+/* ── Notes ─────────────────────────────────────── */
+.rules {
+  border: 1px solid var(--ifm-color-emphasis-200);
+  border-radius: 4px;
+  padding: 1.5rem 2rem;
+  background: var(--ifm-background-surface-color);
+}
+
+.rulesTitle {
+  font-size: 1.05rem;
+  margin-bottom: 0.75rem;
+}
+
+.rulesList {
+  margin: 0;
+  padding-left: 1.4rem;
+  line-height: 2;
+}
