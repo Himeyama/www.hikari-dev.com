@@ -1,0 +1,260 @@
+.pageWrapper {
+  max-width: 1000px;
+  margin: 3rem auto;
+  padding: 0 1.5rem 5rem;
+}
+
+.pageTitle {
+  text-align: center;
+  margin-bottom: 0.4rem;
+}
+
+.subtitle {
+  text-align: center;
+  color: var(--ifm-color-emphasis-600);
+  margin-bottom: 1.75rem;
+  font-size: 1rem;
+}
+
+.sectionTitle {
+  font-size: 1.1rem;
+  margin: 2rem 0 0.85rem;
+}
+
+/* ── Text input ────────────────────────────────── */
+.editorWrapper {
+  height: 220px;
+  border: 1px solid var(--ifm-color-emphasis-200);
+  border-radius: 4px;
+  overflow: hidden;
+  margin-bottom: 1rem;
+}
+
+.editorLoading {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 220px;
+  border: 1px solid var(--ifm-color-emphasis-200);
+  border-radius: 4px;
+  color: var(--ifm-color-emphasis-500);
+  font-size: 0.9rem;
+  margin-bottom: 1rem;
+}
+
+.errorText {
+  color: var(--ifm-color-danger);
+  font-size: 0.85rem;
+  margin-bottom: 1rem;
+  font-family: var(--ifm-font-family-monospace);
+  white-space: pre-wrap;
+  word-break: break-word;
+}
+
+/* ── Hash list ─────────────────────────────────── */
+.hashList {
+  list-style: none;
+  margin: 0 0 1.5rem 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+}
+
+.hashItem {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 0.6rem;
+  border: 1px solid var(--ifm-color-emphasis-200);
+  border-radius: 4px;
+  padding: 0.5rem 0.75rem;
+  background: var(--ifm-background-surface-color);
+}
+
+.hashLabel {
+  flex-shrink: 0;
+  width: 80px;
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 0.03em;
+  color: var(--ifm-color-emphasis-700);
+}
+
+.hashValue {
+  flex: 1 1 260px;
+  min-width: 0;
+  overflow-wrap: break-word;
+  word-break: break-all;
+  font-family: var(--ifm-font-family-monospace);
+  font-size: 0.82rem;
+  color: var(--ifm-font-color-base);
+}
+
+.copyBtn {
+  flex-shrink: 0;
+  padding: 0.3rem 0.7rem;
+  border: 1px solid var(--ifm-color-emphasis-300);
+  border-radius: 4px;
+  background: var(--ifm-background-color);
+  color: var(--ifm-font-color-base);
+  cursor: pointer;
+  font-size: 0.78rem;
+  font-weight: 500;
+  white-space: nowrap;
+  transition: background 0.12s, border-color 0.12s;
+}
+
+.copyBtn:hover:not(:disabled) {
+  background: var(--ifm-color-emphasis-100);
+  border-color: var(--ifm-color-emphasis-400);
+}
+
+.copyBtn:disabled {
+  opacity: 0.5;
+  cursor: default;
+}
+
+/* ── Buttons ───────────────────────────────────── */
+.actionsRow {
+  display: flex;
+  gap: 0.6rem;
+  justify-content: flex-end;
+  margin-bottom: 1rem;
+}
+
+.actionBtnGhost {
+  padding: 0.45rem 1.1rem;
+  border: 1px solid var(--ifm-color-emphasis-300);
+  border-radius: 4px;
+  background: var(--ifm-background-color);
+  color: var(--ifm-font-color-base);
+  cursor: pointer;
+  font-size: 0.85rem;
+  font-weight: 500;
+  transition: background 0.12s, border-color 0.12s;
+}
+
+.actionBtnGhost:hover {
+  background: var(--ifm-color-emphasis-100);
+  border-color: var(--ifm-color-emphasis-400);
+}
+
+/* ── Dropzone ──────────────────────────────────── */
+.dropzone {
+  border: 1px dashed var(--ifm-color-emphasis-400);
+  border-radius: 4px;
+  padding: 2.25rem 1.5rem;
+  text-align: center;
+  cursor: pointer;
+  transition: background 0.12s, border-color 0.12s;
+  margin-bottom: 1rem;
+}
+
+.dropzone:hover {
+  border-color: var(--ifm-color-emphasis-600);
+  background: var(--ifm-color-emphasis-100);
+}
+
+.dropzoneActive {
+  border-color: var(--ifm-color-primary);
+  background: var(--ifm-color-emphasis-100);
+}
+
+.hiddenInput {
+  display: none;
+}
+
+.dropzoneText {
+  margin: 0;
+  color: var(--ifm-color-emphasis-600);
+  font-size: 0.95rem;
+}
+
+/* ── File list ─────────────────────────────────── */
+.fileList {
+  list-style: none;
+  margin: 0 0 2.5rem 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.85rem;
+}
+
+.fileItem {
+  border: 1px solid var(--ifm-color-emphasis-200);
+  border-radius: 4px;
+  padding: 0.75rem 0.85rem;
+  background: var(--ifm-background-surface-color);
+}
+
+.fileItemHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.6rem;
+  margin-bottom: 0.6rem;
+}
+
+.fileInfo {
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+  min-width: 0;
+}
+
+.fileName {
+  font-weight: 600;
+  font-size: 0.92rem;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.fileMeta {
+  font-size: 0.8rem;
+  color: var(--ifm-color-emphasis-600);
+}
+
+.removeBtn {
+  border: 1px solid transparent;
+  background: transparent;
+  color: var(--ifm-color-emphasis-500);
+  font-size: 1.1rem;
+  line-height: 1;
+  cursor: pointer;
+  padding: 0.2rem 0.5rem;
+  border-radius: 4px;
+  flex-shrink: 0;
+}
+
+.removeBtn:hover {
+  background: var(--ifm-color-emphasis-100);
+  border-color: var(--ifm-color-emphasis-300);
+  color: var(--ifm-font-color-base);
+}
+
+/* ── Notes ─────────────────────────────────────── */
+.rules {
+  border: 1px solid var(--ifm-color-emphasis-200);
+  border-radius: 4px;
+  padding: 1.5rem 2rem;
+  background: var(--ifm-background-surface-color);
+}
+
+.rulesTitle {
+  font-size: 1.05rem;
+  margin-bottom: 0.75rem;
+}
+
+.rulesList {
+  margin: 0;
+  padding-left: 1.4rem;
+  line-height: 2;
+}
+
+@media (max-width: 640px) {
+  .hashLabel {
+    width: 100%;
+  }
+}
