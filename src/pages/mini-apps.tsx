@@ -111,6 +111,15 @@ function CertIcon(): ReactNode {
   );
 }
 
+function TableIcon(): ReactNode {
+  return (
+    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+      <rect x="3" y="5" width="18" height="14" rx="1.5" stroke="currentColor" strokeWidth="1.5" />
+      <path d="M3 10h18M9 5v14M15 5v14" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
+    </svg>
+  );
+}
+
 type MiniApp = {
   href: string;
   Icon: () => ReactNode;
@@ -184,6 +193,14 @@ const MINI_APPS: MiniApp[] = [
     titleMessage: 'パスワード ジェネレーター',
     descriptionId: 'miniApps.passwordGenerator.description',
     descriptionMessage: '安全なパスフレーズやパスワードを生成する。',
+  },
+  {
+    href: '/tsv-to-markdown',
+    Icon: TableIcon,
+    titleId: 'miniApps.tsvMarkdown.title',
+    titleMessage: 'TSV→Markdown 表変換',
+    descriptionId: 'miniApps.tsvMarkdown.description',
+    descriptionMessage: 'Excel からコピーしたタブ区切りテキストを Markdown テーブルに変換する。',
   },
   {
     href: '/chat',
