@@ -57,6 +57,16 @@ function UuidIcon(): ReactNode {
   );
 }
 
+function LockIcon(): ReactNode {
+  return (
+    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+      <rect x="5" y="11" width="14" height="9" rx="1.5" stroke="currentColor" strokeWidth="1.5" />
+      <path d="M8 11V8a4 4 0 018 0v3" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+      <circle cx="12" cy="15.5" r="1.5" stroke="currentColor" strokeWidth="1.5" />
+    </svg>
+  );
+}
+
 function ChatIcon(): ReactNode {
   return (
     <svg width="22" height="22" viewBox="0 0 24 24" fill="none" aria-hidden="true">
@@ -121,6 +131,14 @@ const MINI_APPS: MiniApp[] = [
     titleMessage: 'UUID ジェネレーター',
     descriptionId: 'miniApps.uuid.description',
     descriptionMessage: 'UUID (v4) を生成する。',
+  },
+  {
+    href: '/password-generator',
+    Icon: LockIcon,
+    titleId: 'miniApps.passwordGenerator.title',
+    titleMessage: 'パスワード ジェネレーター',
+    descriptionId: 'miniApps.passwordGenerator.description',
+    descriptionMessage: '安全なパスフレーズやパスワードを生成する。',
   },
   {
     href: '/chat',
