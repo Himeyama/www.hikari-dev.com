@@ -45,7 +45,7 @@
   },
   "theme.colorToggle.ariaLabel": {
     "message": "ダークモードを切り替える(現在は{mode})",
-    "description": "The ARIA label for the navbar color mode toggle"
+    "description": "The ARIA label for the color mode toggle"
   },
   "theme.colorToggle.ariaLabel.mode.dark": {
     "message": "ダークモード",
@@ -385,36 +385,28 @@
     "description": "The text for anonymous commenter"
   },
   "articles.title": {
-    "message": "記事一覧",
-    "description": "The title of the articles page"
+    "message": "記事一覧"
   },
   "articles.description": {
-    "message": "ひかりの備忘録の記事一覧",
-    "description": "The description of the articles page"
+    "message": "ひかりの備忘録の記事一覧"
   },
   "articles.filterByTag": {
-    "message": "カテゴリーで絞り込む",
-    "description": "The heading for the tag filter section"
+    "message": "カテゴリーで絞り込む"
   },
   "articles.allPosts": {
-    "message": "全て",
-    "description": "The label for showing all posts"
+    "message": "全て"
   },
   "articles.allArticles": {
-    "message": "記事一覧",
-    "description": "The heading for all articles section"
+    "message": "記事一覧"
   },
   "articles.itemCount": {
-    "message": "件",
-    "description": "The suffix for item count"
+    "message": "件"
   },
   "articles.noResults": {
-    "message": "該当する記事がありません",
-    "description": "The message when no articles match the filter"
+    "message": "該当する記事がありません"
   },
   "homepage.description": {
-    "message": "ひかりの技術備忘録。Linux、AWS、Python、Dockerなどインフラ・開発ツールに関する記事を発信中。",
-    "description": "The description of the homepage"
+    "message": "ひかりの技術備忘録。Linux、AWS、Python、Dockerなどインフラ・開発ツールに関する記事を発信中。"
   },
   "theme.fontSwitcher.label": {
     "message": "フォント"
@@ -424,5 +416,909 @@
   },
   "theme.fontSwitcher.udDigi": {
     "message": "UD デジタル 教科書体"
+  },
+  "base64.errorInvalid": {
+    "message": "Base64 として解釈できない文字列。"
+  },
+  "base64.errorCopy": {
+    "message": "コピーに失敗した。手動で選択してコピーしてください。"
+  },
+  "base64.textLabel": {
+    "message": "テキスト"
+  },
+  "base64.base64Label": {
+    "message": "Base64"
+  },
+  "base64.swap": {
+    "message": "変換方向を入れ替える"
+  },
+  "base64.copied": {
+    "message": "コピーしました"
+  },
+  "base64.copy": {
+    "message": "コピー"
+  },
+  "base64.binaryNotice": {
+    "message": "テキストとして解釈できない (バイナリ データの可能性)。data: URI やダウンロードは利用可能。"
+  },
+  "base64.mimeType": {
+    "message": "MIME タイプ"
+  },
+  "base64.copyDataUri": {
+    "message": "data: URI をコピー"
+  },
+  "base64.errorFileRead": {
+    "message": "ファイルの読み込みに失敗した。"
+  },
+  "base64.title": {
+    "message": "Base64 変換"
+  },
+  "base64.description": {
+    "message": "テキストやファイルを Base64 に変換するツール。ブラウザ内で処理されるためサーバーに内容は送信されない。"
+  },
+  "base64.subtitle": {
+    "message": "テキストを入力するか、ファイルをドロップして Base64 に変換する。変換はすべてブラウザ内で完結し、内容はサーバーに送信されない。"
+  },
+  "base64.textSectionTitle": {
+    "message": "テキストを変換"
+  },
+  "base64.fileSectionTitle": {
+    "message": "ファイルを変換"
+  },
+  "base64.dropHint": {
+    "message": "ここにファイルをドロップ、またはクリックして選択"
+  },
+  "base64.clearAll": {
+    "message": "すべてクリア"
+  },
+  "base64.copyBase64": {
+    "message": "Base64 をコピー"
+  },
+  "base64.remove": {
+    "message": "削除"
+  },
+  "base64.notesTitle": {
+    "message": "このツールについて"
+  },
+  "base64.note1": {
+    "message": "変換はブラウザ内で完結し、入力内容やファイルがサーバーに送信されることはない。"
+  },
+  "base64.note2": {
+    "message": "デコード時に data: URI をそのまま貼り付けると MIME タイプが自動で読み取られる。"
+  },
+  "base64.note3": {
+    "message": "コピーした data: URI はブラウザのアドレスバーに貼り付けると直接表示できる。"
+  },
+  "base64.note4": {
+    "message": "ファイルをドロップすると、そのファイルの Base64 と data: URI をコピーできる。"
+  },
+  "certGen.detailsSummary": {
+    "message": "証明書の詳細を表示"
+  },
+  "certGen.detailsSubject": {
+    "message": "サブジェクト"
+  },
+  "certGen.detailsIssuer": {
+    "message": "発行者"
+  },
+  "certGen.detailsSerial": {
+    "message": "シリアル番号"
+  },
+  "certGen.detailsValidity": {
+    "message": "有効期間"
+  },
+  "certGen.detailsPublicKey": {
+    "message": "公開鍵"
+  },
+  "certGen.detailsBasicConstraints": {
+    "message": "基本制約"
+  },
+  "certGen.detailsKeyUsage": {
+    "message": "鍵の用途"
+  },
+  "certGen.detailsExtKeyUsage": {
+    "message": "拡張鍵用途"
+  },
+  "certGen.detailsFingerprint": {
+    "message": "フィンガープリント (SHA-256)"
+  },
+  "certGen.copied": {
+    "message": "コピーしました"
+  },
+  "certGen.copy": {
+    "message": "コピー"
+  },
+  "certGen.download": {
+    "message": "ダウンロード"
+  },
+  "certGen.privateKeyWarning": {
+    "message": "秘密鍵は厳重に管理し、第三者と共有しないこと。"
+  },
+  "certGen.errorCnRequired": {
+    "message": "コモンネーム (CN) を入力してください。"
+  },
+  "certGen.errorGenerate": {
+    "message": "証明書の生成に失敗した。"
+  },
+  "certGen.errorUploadMissing": {
+    "message": "CA 証明書と CA 秘密鍵の両方を入力してください。"
+  },
+  "certGen.errorUploadMismatch": {
+    "message": "CA 証明書と CA 秘密鍵が一致しない。"
+  },
+  "certGen.errorUploadParse": {
+    "message": "CA の読み込みに失敗した。PEM 形式か、秘密鍵の場合はパスフレーズを確認してください。"
+  },
+  "certGen.errorNoCa": {
+    "message": "署名に使用する CA が読み込まれていない。ルート CA を生成するかアップロードしてください。"
+  },
+  "certGen.title": {
+    "message": "証明書ジェネレーター"
+  },
+  "certGen.description": {
+    "message": "ルート CA 証明書とサーバー証明書 (オレオレ証明書) をブラウザ内で生成するツール。秘密鍵を含め、内容はサーバーに送信されない。"
+  },
+  "certGen.subtitle": {
+    "message": "ルート CA 証明書とサーバー証明書 (オレオレ証明書) を生成する。すべての処理はブラウザ内で完結し、秘密鍵を含め内容はサーバーに送信されない。"
+  },
+  "certGen.caSectionTitle": {
+    "message": "1. ルート CA を準備"
+  },
+  "certGen.tabGenerate": {
+    "message": "新規生成"
+  },
+  "certGen.tabUpload": {
+    "message": "既存の CA をアップロード"
+  },
+  "certGen.cnLabel": {
+    "message": "コモンネーム (CN)"
+  },
+  "certGen.orgLabel": {
+    "message": "組織名 (O、任意)"
+  },
+  "certGen.validityLabel": {
+    "message": "有効期間 (日)"
+  },
+  "certGen.keyBitsLabel": {
+    "message": "鍵長"
+  },
+  "certGen.generating": {
+    "message": "生成中..."
+  },
+  "certGen.generateCaBtn": {
+    "message": "ルート CA を生成"
+  },
+  "certGen.caCertLabel": {
+    "message": "CA 証明書 (PEM)"
+  },
+  "certGen.caKeyLabel": {
+    "message": "CA 秘密鍵 (PEM)"
+  },
+  "certGen.caUploadDropHint": {
+    "message": "CA 証明書・CA 秘密鍵のファイルをここにドロップ、またはクリックして選択 (まとめて 1 ファイルでも可)"
+  },
+  "certGen.caUploadCertLabel": {
+    "message": "CA 証明書 (PEM)"
+  },
+  "certGen.caUploadKeyLabel": {
+    "message": "CA 秘密鍵 (PEM)"
+  },
+  "certGen.caUploadPassphraseLabel": {
+    "message": "秘密鍵のパスフレーズ (暗号化されている場合のみ)"
+  },
+  "certGen.caUploadLoadBtn": {
+    "message": "CA を読み込む"
+  },
+  "certGen.caUploadClearBtn": {
+    "message": "クリア"
+  },
+  "certGen.caUploadLoaded": {
+    "message": "読み込み済み:"
+  },
+  "certGen.caUploadNotCaWarning": {
+    "message": "この証明書は CA (basicConstraints: cA=true) として設定されていない。署名は可能だが、多くのクライアントで信頼エラーになる可能性がある。"
+  },
+  "certGen.serverSectionTitle": {
+    "message": "2. サーバー証明書を生成"
+  },
+  "certGen.sanLabel": {
+    "message": "SAN (Subject Alternative Name、カンマまたは改行区切り。ドメイン名と IP アドレスに対応)"
+  },
+  "certGen.signModeLabel": {
+    "message": "署名方法"
+  },
+  "certGen.signModeSelf": {
+    "message": "自己署名 (オレオレ証明書)"
+  },
+  "certGen.signModeSelfDesc": {
+    "message": "証明書自身が発行者になる、最も手軽な方式。CA を用意する必要はないが、ブラウザや OS はこの証明書の発行元を知らないため信頼せず、アクセスのたびに警告が表示される。1 台のサーバーを自分だけで動作確認する場合に向く。"
+  },
+  "certGen.signModeCaGenerated": {
+    "message": "生成したルート CA で署名"
+  },
+  "certGen.readyBadge": {
+    "message": "✓ 使用可能"
+  },
+  "certGen.signModeCaGeneratedHint": {
+    "message": "未準備 — 先に上でルート CA を生成"
+  },
+  "certGen.signModeCaDesc": {
+    "message": "上のセクションで生成 (またはアップロード) した CA の秘密鍵で署名する方式。CA 証明書を OS やブラウザに「信頼されたルート証明機関」としてインポートしておけば、その CA が署名したサーバー証明書はすべて警告なしに信頼される。複数のサーバーや複数のドメインを 同じ CA でまとめて発行・管理したい場合に向く。"
+  },
+  "certGen.signModeCaUploaded": {
+    "message": "アップロードした CA で署名"
+  },
+  "certGen.signModeCaUploadedHint": {
+    "message": "未準備 — 先に上で CA をアップロード"
+  },
+  "certGen.signModeCaUploadedDesc": {
+    "message": "既存の CA (このツールの以前のセッションで生成したものや、社内・チームで共有している CA など) の証明書と秘密鍵をアップロードして署名する方式。仕組みは「生成したルート CA で署名」と同じだが、すでに信頼ストアへインポート済みの CA をそのまま使い回せる。"
+  },
+  "certGen.generateServerBtn": {
+    "message": "サーバー証明書を生成"
+  },
+  "certGen.serverKeyLabel": {
+    "message": "サーバー秘密鍵 (PEM)"
+  },
+  "certGen.serverCertLabel": {
+    "message": "サーバー証明書 (PEM)"
+  },
+  "certGen.chainCaCertLabel": {
+    "message": "CA 証明書 (PEM) — 信頼ストアへのインポート用"
+  },
+  "certGen.notesTitle": {
+    "message": "このツールについて"
+  },
+  "certGen.note1": {
+    "message": "証明書の生成はすべてブラウザ内で完結し、秘密鍵を含め内容がサーバーに送信されることはない。"
+  },
+  "certGen.note2": {
+    "message": "ページを再読み込みすると生成した鍵と証明書は失われるため、必要な場合はダウンロードして保存すること。"
+  },
+  "certGen.note3": {
+    "message": "ルート CA で署名したサーバー証明書をブラウザや OS に信頼させるには、CA 証明書を信頼されたルート証明機関としてインポートする必要がある。"
+  },
+  "certGen.note4": {
+    "message": "このツールで生成する証明書はローカル開発・検証用途を想定している。実運用環境では認証局が発行した正式な証明書を使用すること。"
+  },
+  "chat.title": {
+    "message": "ひかりチャット"
+  },
+  "chat.description": {
+    "message": "AI と対話できるチャット"
+  },
+  "hash.copied": {
+    "message": "コピーしました"
+  },
+  "hash.copy": {
+    "message": "コピー"
+  },
+  "hash.errorInsecureContext": {
+    "message": "ハッシュ計算には Web Crypto API が必要。HTTPS またはlocalhost 以外の環境では利用できない。"
+  },
+  "hash.errorCompute": {
+    "message": "ハッシュ値の計算に失敗した。"
+  },
+  "hash.errorCopy": {
+    "message": "コピーに失敗した。手動で選択してコピーしてください。"
+  },
+  "hash.errorFileRead": {
+    "message": "ファイルの読み込みに失敗した。"
+  },
+  "hash.title": {
+    "message": "ハッシュ値取得"
+  },
+  "hash.description": {
+    "message": "テキストやファイルのハッシュ値 (SHA-256 など) を計算するツール。ブラウザ内で処理されるためサーバーに内容は送信されない。"
+  },
+  "hash.subtitle": {
+    "message": "テキストを入力するか、ファイルをドロップしてハッシュ値を計算する。計算はすべてブラウザ内で完結し、内容はサーバーに送信されない。"
+  },
+  "hash.textSectionTitle": {
+    "message": "テキストのハッシュ値を計算"
+  },
+  "hash.fileSectionTitle": {
+    "message": "ファイルのハッシュ値を計算"
+  },
+  "hash.dropHint": {
+    "message": "ここにファイルをドロップ、またはクリックして選択"
+  },
+  "hash.clearAll": {
+    "message": "すべてクリア"
+  },
+  "hash.remove": {
+    "message": "削除"
+  },
+  "hash.notesTitle": {
+    "message": "このツールについて"
+  },
+  "hash.note1": {
+    "message": "計算はブラウザ内で完結し、入力内容やファイルがサーバーに送信されることはない。"
+  },
+  "hash.note2": {
+    "message": "SHA-1・SHA-256・SHA-384・SHA-512 に対応する。MD5 はブラウザ標準 API (Web Crypto API) が対応しないため計算できない。"
+  },
+  "hash.note3": {
+    "message": "ファイルの整合性を確認する場合は SHA-256 以上のアルゴリズムの使用が推奨される。"
+  },
+  "homepage.latestPosts": {
+    "message": "最新記事"
+  },
+  "homepage.viewAllPosts": {
+    "message": "全記事を見る →"
+  },
+  "homepage.categories": {
+    "message": "カテゴリー"
+  },
+  "homepage.accessRanking": {
+    "message": "アクセスランキング"
+  },
+  "homepage.comingSoon": {
+    "message": "準備中"
+  },
+  "homepage.authorProfile": {
+    "message": "著者プロフィール"
+  },
+  "homepage.authorBio": {
+    "message": "日常生活と IT 技術のブログを書いています。"
+  },
+  "miniApps.pageTitle": {
+    "message": "ミニアプリ"
+  },
+  "miniApps.pageDescription": {
+    "message": "ブラウザ内で完結する小さなツール集。"
+  },
+  "miniApps.subtitle": {
+    "message": "ブラウザ内で完結する小さなツール集。いずれもサーバーに内容を送信しない。"
+  },
+  "nslookup.errorNetwork": {
+    "message": "サーバーへの接続に失敗した。"
+  },
+  "nslookup.loading": {
+    "message": "検索中..."
+  },
+  "nslookup.noRecords": {
+    "message": "レコードなし"
+  },
+  "nslookup.nxdomain": {
+    "message": "ドメインが見つからない"
+  },
+  "nslookup.errorGeneric": {
+    "message": "検索に失敗した。"
+  },
+  "nslookup.title": {
+    "message": "nslookup (DNS 検索)"
+  },
+  "nslookup.description": {
+    "message": "ドメイン名の DNS レコード (A・AAAA・MX・TXT・NS・CNAME) を取得するツール。"
+  },
+  "nslookup.subtitle": {
+    "message": "ドメイン名を入力すると DNS レコード (A・AAAA・MX・TXT・NS・CNAME) を取得する。"
+  },
+  "nslookup.placeholder": {
+    "message": "例: example.com"
+  },
+  "nslookup.searching": {
+    "message": "検索中..."
+  },
+  "nslookup.search": {
+    "message": "検索"
+  },
+  "nslookup.notesTitle": {
+    "message": "このツールについて"
+  },
+  "nslookup.note1": {
+    "message": "検索は DNS over HTTPS (Cloudflare の 1.1.1.1) を使用してブラウザから直接行われ、サーバーには送信されない。"
+  },
+  "nslookup.note2": {
+    "message": "A・AAAA・MX・TXT・NS・CNAME の 6 種類のレコードに対応する。"
+  },
+  "nslookup.note3": {
+    "message": "DNS の変更は反映までに時間がかかる場合があり (TTL によるキャッシュ)、必ずしも最新の設定を反映しない。"
+  },
+  "passwordGenerator.title": {
+    "message": "パスワード ジェネレーター"
+  },
+  "passwordGenerator.description": {
+    "message": "安全なパスフレーズやパスワードを生成するツール。ブラウザ内で処理されるためサーバーに送信されない。"
+  },
+  "passwordGenerator.subtitle": {
+    "message": "安全なパスフレーズやパスワードを生成する。"
+  },
+  "passwordGenerator.tabPassphrase": {
+    "message": "パスフレーズ (推奨)"
+  },
+  "passwordGenerator.tabRandom": {
+    "message": "ランダム文字列"
+  },
+  "passwordGenerator.entropy": {
+    "message": "推定エントロピー"
+  },
+  "passwordGenerator.generate": {
+    "message": "生成"
+  },
+  "passwordGenerator.copied": {
+    "message": "コピーしました"
+  },
+  "passwordGenerator.copy": {
+    "message": "コピー"
+  },
+  "passwordGenerator.wordLanguage": {
+    "message": "単語の言語"
+  },
+  "passwordGenerator.wordLanguageEn": {
+    "message": "英語"
+  },
+  "passwordGenerator.wordLanguageJa": {
+    "message": "日本語 (ローマ字)"
+  },
+  "passwordGenerator.wordCount": {
+    "message": "単語数"
+  },
+  "passwordGenerator.separator": {
+    "message": "区切り文字"
+  },
+  "passwordGenerator.separatorSpace": {
+    "message": "半角スペース"
+  },
+  "passwordGenerator.separatorNone": {
+    "message": "なし (先頭大文字)"
+  },
+  "passwordGenerator.addNumber": {
+    "message": "数字を追加する"
+  },
+  "passwordGenerator.addSymbol": {
+    "message": "記号を追加する"
+  },
+  "passwordGenerator.length": {
+    "message": "文字数"
+  },
+  "passwordGenerator.upper": {
+    "message": "大文字 (A-Z)"
+  },
+  "passwordGenerator.lower": {
+    "message": "小文字 (a-z)"
+  },
+  "passwordGenerator.digits": {
+    "message": "数字 (0-9)"
+  },
+  "passwordGenerator.symbols": {
+    "message": "記号 (!@#$ など)"
+  },
+  "passwordGenerator.tipsTitle": {
+    "message": "パスワードのポイント"
+  },
+  "passwordGenerator.tip1": {
+    "message": "15 文字以上を目安にする。20 文字以上ならさらに安心。"
+  },
+  "passwordGenerator.tip2": {
+    "message": "短くて複雑なパスワードより、長いパスフレーズのほうが強力。"
+  },
+  "passwordGenerator.tip3": {
+    "message": "サービスごとに完全に別のパスワードを使う。1 つ漏えいすると、使い回している他のサービスまで突破される可能性がある。"
+  },
+  "passwordGenerator.tip4": {
+    "message": "無関係な単語をいくつか組み合わせると、覚えやすく長いパスフレーズにできる。"
+  },
+  "passwordGenerator.tip5": {
+    "message": "生成した文字列はブラウザ内でのみ処理され、サーバーには送信されない。"
+  },
+  "svgIco.errorNoImage": {
+    "message": "SVG ファイルを選択してください。"
+  },
+  "svgIco.errorConvert": {
+    "message": "変換に失敗した画像があります。"
+  },
+  "svgIco.title": {
+    "message": "SVG を ICO に変換"
+  },
+  "svgIco.description": {
+    "message": "SVG 画像を ICO 形式に変換するツール。ブラウザ内で処理されるためサーバーに画像は送信されない。"
+  },
+  "svgIco.subtitle": {
+    "message": "SVG 画像をドラッグ&ドロップすると ICO 形式に変換される。複数のサイズを選択すると 1 つの ICO ファイルにまとめて格納される。"
+  },
+  "svgIco.sizesLabel": {
+    "message": "サイズ"
+  },
+  "svgIco.converting": {
+    "message": "変換中..."
+  },
+  "svgIco.dropHint": {
+    "message": "ここに SVG 画像をドロップ、またはクリックして選択"
+  },
+  "svgIco.fileCount": {
+    "message": "枚数"
+  },
+  "svgIco.original": {
+    "message": "変換前"
+  },
+  "svgIco.converted": {
+    "message": "変換後"
+  },
+  "svgIco.downloadAll": {
+    "message": "すべてダウンロード"
+  },
+  "svgIco.clearAll": {
+    "message": "すべてクリア"
+  },
+  "svgIco.download": {
+    "message": "保存"
+  },
+  "svgIco.remove": {
+    "message": "削除"
+  },
+  "svgIco.notesTitle": {
+    "message": "このツールについて"
+  },
+  "svgIco.note1": {
+    "message": "変換はブラウザ内で完結し、画像がサーバーに送信されることはない。"
+  },
+  "svgIco.note2": {
+    "message": "サイズを複数選択すると、1 つの ICO ファイルに複数の解像度が格納される (Windows のアイコン表示サイズに応じて自動的に選択される)。"
+  },
+  "svgIco.note3": {
+    "message": "複数の画像をまとめて変換できる。"
+  },
+  "trivia.error": {
+    "message": "雑学の取得に失敗した。"
+  },
+  "trivia.notFound": {
+    "message": "本日の雑学が見つからなかった。"
+  },
+  "trivia.title": {
+    "message": "本日の雑学"
+  },
+  "trivia.description": {
+    "message": "毎日更新される雑学を紹介するページ。"
+  },
+  "tsvMarkdown.sourceLabel": {
+    "message": "Excel / TSV"
+  },
+  "tsvMarkdown.outputLabel": {
+    "message": "Markdown"
+  },
+  "tsvMarkdown.copied": {
+    "message": "コピーしました"
+  },
+  "tsvMarkdown.copy": {
+    "message": "コピー"
+  },
+  "tsvMarkdown.title": {
+    "message": "TSV→Markdown 表変換"
+  },
+  "tsvMarkdown.description": {
+    "message": "Excel からコピーしたタブ区切りテキストを Markdown テーブルに変換するツール。ブラウザ内で処理されるためサーバーに内容は送信されない。"
+  },
+  "tsvMarkdown.subtitle": {
+    "message": "Excel からコピーしたセル範囲を左側に貼り付けると、右側に Markdown テーブルが表示される。変換はすべてブラウザ内で完結し、内容はサーバーに送信されない。"
+  },
+  "tsvMarkdown.notesTitle": {
+    "message": "このツールについて"
+  },
+  "tsvMarkdown.note1": {
+    "message": "Excel やスプレッドシートで選択したセル範囲をコピーし、そのまま貼り付けられる (タブ区切りテキストとして扱われる)。"
+  },
+  "tsvMarkdown.note2": {
+    "message": "1 行目が見出し行として扱われる。"
+  },
+  "tsvMarkdown.note3": {
+    "message": "セル内に `|` が含まれる場合は自動的にエスケープされる。"
+  },
+  "tsvMarkdown.note4": {
+    "message": "変換はブラウザ内で完結し、入力内容がサーバーに送信されることはない。"
+  },
+  "uuid.title": {
+    "message": "UUID ジェネレーター"
+  },
+  "uuid.description": {
+    "message": "UUID (v4) を生成するツール。ブラウザ内で処理されるためサーバーに送信されない。"
+  },
+  "uuid.subtitle": {
+    "message": "UUID (v4) を生成する。"
+  },
+  "uuid.generate": {
+    "message": "生成"
+  },
+  "uuid.copied": {
+    "message": "コピーしました"
+  },
+  "uuid.copy": {
+    "message": "コピー"
+  },
+  "webp.errorNoImage": {
+    "message": "画像ファイルを選択してください。"
+  },
+  "webp.errorConvert": {
+    "message": "変換に失敗した画像があります。"
+  },
+  "webp.title": {
+    "message": "画像を WebP に変換"
+  },
+  "webp.description": {
+    "message": "画像を WebP 形式に変換するツール。ブラウザ内で処理されるためサーバーに画像は送信されない。"
+  },
+  "webp.subtitle": {
+    "message": "画像をドラッグ＆ドロップすると WebP 形式に変換される。すべてブラウザ内で処理され、画像はサーバーに送信されない。"
+  },
+  "webp.quality": {
+    "message": "画質"
+  },
+  "webp.converting": {
+    "message": "変換中..."
+  },
+  "webp.dropHint": {
+    "message": "ここに画像をドロップ、またはクリックして選択"
+  },
+  "webp.fileCount": {
+    "message": "枚数"
+  },
+  "webp.original": {
+    "message": "変換前"
+  },
+  "webp.converted": {
+    "message": "変換後"
+  },
+  "webp.saved": {
+    "message": "削減率"
+  },
+  "webp.downloadAll": {
+    "message": "すべてダウンロード"
+  },
+  "webp.clearAll": {
+    "message": "すべてクリア"
+  },
+  "webp.download": {
+    "message": "保存"
+  },
+  "webp.remove": {
+    "message": "削除"
+  },
+  "webp.notesTitle": {
+    "message": "このツールについて"
+  },
+  "webp.note1": {
+    "message": "変換はブラウザ内で完結し、画像がサーバーに送信されることはない。"
+  },
+  "webp.note2": {
+    "message": "画質スライダーで圧縮率を調整できる (値が低いほどファイルサイズが小さくなる)。"
+  },
+  "webp.note3": {
+    "message": "複数の画像をまとめて変換できる。"
+  },
+  "whois.copied": {
+    "message": "コピーしました"
+  },
+  "whois.copy": {
+    "message": "コピー"
+  },
+  "whois.errorGeneric": {
+    "message": "検索に失敗した。"
+  },
+  "whois.errorNetwork": {
+    "message": "サーバーへの接続に失敗した。しばらくしてからもう一度お試しください。"
+  },
+  "whois.title": {
+    "message": "WHOIS 検索"
+  },
+  "whois.description": {
+    "message": "ドメイン名の WHOIS 情報 (登録者・ネームサーバーなど) を取得するツール。"
+  },
+  "whois.subtitle": {
+    "message": "ドメイン名を入力すると WHOIS 情報 (登録者・ネームサーバー・有効期限など) を取得する。"
+  },
+  "whois.placeholder": {
+    "message": "例: example.com"
+  },
+  "whois.searching": {
+    "message": "検索中..."
+  },
+  "whois.search": {
+    "message": "検索"
+  },
+  "whois.resultTitle": {
+    "message": "WHOIS 情報"
+  },
+  "whois.registrarResultTitle": {
+    "message": "レジストラの WHOIS 情報"
+  },
+  "whois.notesTitle": {
+    "message": "このツールについて"
+  },
+  "whois.note1": {
+    "message": "検索はサーバー経由で WHOIS プロトコル (ポート 43) を使用して行われる。入力したドメイン名以外の情報はサーバーに保存されない。"
+  },
+  "whois.note2": {
+    "message": "レジストリと登録者情報を管理するレジストラの WHOIS サーバーが異なる場合、両方の結果が表示される。"
+  },
+  "whois.note3": {
+    "message": "一部のドメインではプライバシー保護サービスにより登録者情報が匿名化されている。"
+  },
+  "yamlJson.yamlLabel": {
+    "message": "YAML"
+  },
+  "yamlJson.jsonLabel": {
+    "message": "JSON"
+  },
+  "yamlJson.swap": {
+    "message": "変換方向を入れ替える"
+  },
+  "yamlJson.copied": {
+    "message": "コピーしました"
+  },
+  "yamlJson.copy": {
+    "message": "コピー"
+  },
+  "yamlJson.errorPrefix": {
+    "message": "変換エラー:"
+  },
+  "yamlJson.title": {
+    "message": "YAML と JSON を相互変換"
+  },
+  "yamlJson.description": {
+    "message": "YAML と JSON を相互変換するツール。ブラウザ内で処理されるためサーバーに内容は送信されない。"
+  },
+  "yamlJson.subtitle": {
+    "message": "左側に入力すると右側に変換結果が表示される。変換はすべてブラウザ内で完結し、内容はサーバーに送信されない。"
+  },
+  "yamlJson.notesTitle": {
+    "message": "このツールについて"
+  },
+  "yamlJson.note1": {
+    "message": "変換はブラウザ内で完結し、入力内容がサーバーに送信されることはない。"
+  },
+  "yamlJson.note2": {
+    "message": "入れ替えボタンで YAML → JSON と JSON → YAML の変換方向を切り替えられる。"
+  },
+  "yamlJson.note3": {
+    "message": "構文エラーがある場合は変換結果の下にエラー内容が表示される。"
+  },
+  "chat.code.copied": {
+    "message": "コピー済み"
+  },
+  "chat.code.copy": {
+    "message": "コピー"
+  },
+  "chat.model.label": {
+    "message": "モデル"
+  },
+  "chat.error.noApiKey": {
+    "message": "OpenAI API キーを設定してください。"
+  },
+  "chat.settings": {
+    "message": "設定"
+  },
+  "chat.reset": {
+    "message": "リセット"
+  },
+  "chat.apiKey.label": {
+    "message": "OpenAI API キー"
+  },
+  "chat.apiKey.placeholder": {
+    "message": "sk-..."
+  },
+  "chat.apiKey.hide": {
+    "message": "隠す"
+  },
+  "chat.apiKey.show": {
+    "message": "表示"
+  },
+  "chat.apiKey.save": {
+    "message": "保存"
+  },
+  "chat.apiKey.note": {
+    "message": "API キーはブラウザの localStorage にのみ保存されます。"
+  },
+  "chat.apiKey.current": {
+    "message": "現在のキー:"
+  },
+  "chat.welcome": {
+    "message": "こんにちは！何でも聞いてください。"
+  },
+  "chat.welcome.noKey": {
+    "message": "まず右上の設定から API キーを設定してください。"
+  },
+  "chat.input.placeholder": {
+    "message": "メッセージを送信... (Shift+Enter で改行)"
+  },
+  "chat.send": {
+    "message": "送信"
+  },
+  "chat.input.note": {
+    "message": "Enter で送信、Shift+Enter で改行。会話はページを閉じるとリセットされます。"
+  },
+  "theme.fontSwitcher.bizGothic": {
+    "message": "BIZ UDP ゴシック"
+  },
+  "theme.fontSwitcher.bizMincho": {
+    "message": "BIZ UDP 明朝"
+  },
+  "theme.colorToggle.ariaLabel.mode.system": {
+    "message": "システムモード",
+    "description": "The name for the system color mode"
+  },
+  "theme.IconExternalLink.ariaLabel": {
+    "message": "(opens in new tab)",
+    "description": "The ARIA label for the external link icon"
+  },
+  "theme.navbar.mobileDropdown.collapseButton.expandAriaLabel": {
+    "message": "Expand the dropdown",
+    "description": "The ARIA label of the button to expand the mobile dropdown navbar item"
+  },
+  "theme.navbar.mobileDropdown.collapseButton.collapseAriaLabel": {
+    "message": "Collapse the dropdown",
+    "description": "The ARIA label of the button to collapse the mobile dropdown navbar item"
+  },
+  "miniApps.webp.title": {
+    "message": "WebP 変換"
+  },
+  "miniApps.webp.description": {
+    "message": "画像を WebP 形式に変換する。"
+  },
+  "miniApps.svgIco.title": {
+    "message": "SVG2ICO"
+  },
+  "miniApps.svgIco.description": {
+    "message": "SVG 画像を ICO 形式に変換する。"
+  },
+  "miniApps.yamlJson.title": {
+    "message": "YAML⇄JSON"
+  },
+  "miniApps.yamlJson.description": {
+    "message": "YAML と JSON を相互変換する。"
+  },
+  "miniApps.base64.title": {
+    "message": "Base64 変換"
+  },
+  "miniApps.base64.description": {
+    "message": "テキストやファイルを Base64 に相互変換する。"
+  },
+  "miniApps.hash.title": {
+    "message": "ハッシュ値取得"
+  },
+  "miniApps.hash.description": {
+    "message": "テキストやファイルのハッシュ値 (SHA-256 など) を計算する。"
+  },
+  "miniApps.certGen.title": {
+    "message": "証明書ジェネレーター"
+  },
+  "miniApps.certGen.description": {
+    "message": "ルート CA 証明書とサーバー証明書 (オレオレ証明書) を生成する。"
+  },
+  "miniApps.uuid.title": {
+    "message": "UUID ジェネレーター"
+  },
+  "miniApps.uuid.description": {
+    "message": "UUID (v4) を生成する。"
+  },
+  "miniApps.passwordGenerator.title": {
+    "message": "パスワード ジェネレーター"
+  },
+  "miniApps.passwordGenerator.description": {
+    "message": "安全なパスフレーズやパスワードを生成する。"
+  },
+  "miniApps.tsvMarkdown.title": {
+    "message": "TSV→Markdown 表変換"
+  },
+  "miniApps.tsvMarkdown.description": {
+    "message": "Excel からコピーしたタブ区切りテキストを Markdown テーブルに変換する。"
+  },
+  "miniApps.whois.title": {
+    "message": "WHOIS 検索"
+  },
+  "miniApps.whois.description": {
+    "message": "ドメイン名の WHOIS 情報 (登録者・ネームサーバーなど) を取得する。"
+  },
+  "miniApps.nslookup.title": {
+    "message": "nslookup (DNS 検索)"
+  },
+  "miniApps.nslookup.description": {
+    "message": "ドメイン名の DNS レコード (A・AAAA・MX・TXT・NS・CNAME) を取得する。"
+  },
+  "miniApps.chat.title": {
+    "message": "チャット"
+  },
+  "miniApps.chat.description": {
+    "message": "AI と対話できるチャット。"
   }
 }

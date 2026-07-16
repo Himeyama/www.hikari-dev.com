@@ -16,6 +16,26 @@ Docusaurus による個人ブログ
 
 ---
 
+## ミニアプリ (`/src/pages/*.tsx`) の i18n 対応
+
+`/mini-apps` 一覧および各ミニアプリページ (`base64` / `cert-generator` / `hash` / `nslookup` / `password-generator` / `svg-to-ico` / `tsv-to-markdown` / `uuid` / `webp-converter` / `whois` / `yaml-json` / `chat` など) は `@docusaurus/Translate` の `<Translate id="...">日本語デフォルト</Translate>` / `translate({id, message})` を使って全文言をラップする。ハードコードされた日本語文字列を残さないこと。
+
+新しいミニアプリを追加した、または既存ミニアプリに文言を追加・変更した場合は、翻訳データが古いまま残らないよう次の手順を実施する。
+
+1. コンポーネント側で `Translate` / `translate()` を使い、`id` は `<ミニアプリ名>.<キー>` 形式にする (例: `hash.title`)。
+2. `npx docusaurus write-translations --locale ja` を実行し、`i18n/ja/code.json` に新規キーを反映する (常に日本語がソース)。
+3. `npx docusaurus write-translations --locale en` / `--locale zh-TW` を実行し、`i18n/en/code.json` / `i18n/zh-TW/code.json` に不足キーを日本語プレースホルダーとして追加する。
+4. 追加された英語・繁體中文キーを実際の翻訳文に書き換える (`Base64` `JSON` `YAML` `Markdown` などの技術用語・固有名詞はそのまま流用してよい)。
+5. `pnpm run build` を実行し、3 ロケール (`build/` `build/en/` `build/zh-TW/`) すべてが正常にビルドされることを確認する。
+
+### 注意: 動的な `id` は `write-translations` で抽出されない
+
+`src/pages/mini-apps.tsx` のように、`id` を変数 (配列のプロパティなど) から渡す `<Translate id={app.titleId}>{app.titleMessage}</Translate>` は、`docusaurus write-translations` の静的解析では検出されない (`id` が文字列リテラルでないため)。そのため `miniApps.<app>.title` / `miniApps.<app>.description` などのキーは自動生成されず、`i18n/{en,zh-TW}/code.json` に手動で追加しないと日本語のまま表示され続ける (ja ロケールは `Translate` の子要素が日本語のフォールバックになるため気づきにくい)。
+
+ミニアプリを `mini-apps.tsx` の `MINI_APPS` 配列に追加する際は、`write-translations` 実行後に該当する `miniApps.*` キーが `i18n/en/code.json` / `i18n/zh-TW/code.json` に増えているか必ず確認し、増えていなければ手動で追記して翻訳すること。
+
+---
+
 ## 日本語スタイルガイド
 
 ### 基本ルール

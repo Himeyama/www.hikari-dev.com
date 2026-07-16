@@ -380,56 +380,44 @@
     "description": "The text for anonymous commenter"
   },
   "articles.title": {
-    "message": "文章列表",
-    "description": "The title of the articles page"
+    "message": "文章列表"
   },
   "articles.description": {
-    "message": "光的筆記本的所有文章",
-    "description": "The description of the articles page"
+    "message": "光的筆記本的所有文章"
   },
   "articles.filterByTag": {
-    "message": "按類別篩選",
-    "description": "The heading for the tag filter section"
+    "message": "按類別篩選"
   },
   "articles.allPosts": {
-    "message": "全部",
-    "description": "The label for showing all posts"
+    "message": "全部"
   },
   "articles.allArticles": {
-    "message": "文章列表",
-    "description": "The heading for all articles section"
+    "message": "文章列表"
   },
   "articles.itemCount": {
-    "message": "個",
-    "description": "The suffix for item count"
+    "message": "個"
   },
   "articles.noResults": {
-    "message": "找不到相關文章",
-    "description": "The message when no articles match the filter"
+    "message": "找不到相關文章"
   },
   "homepage.description": {
-    "message": "光的技術筆記本——關於 Linux、AWS、Python、Docker 和基礎設施與開發工具的文章。",
-    "description": "The description of the homepage"
+    "message": "光的技術筆記本——關於 Linux、AWS、Python、Docker 和基礎設施與開發工具的文章。"
   },
   "trivia.title": {
-    "message": "今日冷知識",
-    "description": "The title of the trivia page"
+    "message": "今日冷知識"
   },
   "trivia.description": {
-    "message": "每日更新的冷知識頁面。",
-    "description": "The description of the trivia page"
+    "message": "每日更新的冷知識頁面。"
   },
   "trivia.loading": {
     "message": "載入中...",
     "description": "Loading message on the trivia page"
   },
   "trivia.error": {
-    "message": "無法取得今日冷知識。",
-    "description": "Error message on the trivia page"
+    "message": "無法取得今日冷知識。"
   },
   "trivia.notFound": {
-    "message": "今日冷知識不存在。",
-    "description": "Not found message on the trivia page"
+    "message": "今日冷知識不存在。"
   },
   "chat.title": {
     "message": "光輝聊天"
@@ -501,228 +489,172 @@
     "message": "UD 數位教科書體"
   },
   "webp.title": {
-    "message": "將圖片轉換為 WebP",
-    "description": "Title of the WebP converter page"
+    "message": "將圖片轉換為 WebP"
   },
   "webp.description": {
-    "message": "將圖片轉換為 WebP 格式的工具。處理完全在瀏覽器內完成，圖片不會傳送至伺服器。",
-    "description": "Description of the WebP converter page"
+    "message": "將圖片轉換為 WebP 格式的工具。處理完全在瀏覽器內完成，圖片不會傳送至伺服器。"
   },
   "webp.subtitle": {
-    "message": "拖曳圖片即可轉換為 WebP 格式。所有處理都在瀏覽器內完成，圖片不會上傳至伺服器。",
-    "description": "Subtitle on the WebP converter page"
+    "message": "拖曳圖片即可轉換為 WebP 格式。所有處理都在瀏覽器內完成，圖片不會上傳至伺服器。"
   },
   "webp.quality": {
-    "message": "畫質",
-    "description": "Label for the quality slider"
+    "message": "畫質"
   },
   "webp.converting": {
-    "message": "轉換中...",
-    "description": "Shown while images are being converted"
+    "message": "轉換中..."
   },
   "webp.dropHint": {
-    "message": "將圖片拖曳到此處，或點擊選擇檔案",
-    "description": "Hint text inside the dropzone"
+    "message": "將圖片拖曳到此處，或點擊選擇檔案"
   },
   "webp.errorNoImage": {
-    "message": "請選擇圖片檔案。",
-    "description": "Error when no valid image files were selected"
+    "message": "請選擇圖片檔案。"
   },
   "webp.errorConvert": {
-    "message": "部分圖片轉換失敗。",
-    "description": "Error when conversion fails"
+    "message": "部分圖片轉換失敗。"
   },
   "webp.fileCount": {
-    "message": "檔案數",
-    "description": "Label for the number of converted files"
+    "message": "檔案數"
   },
   "webp.original": {
-    "message": "轉換前",
-    "description": "Label for total original size"
+    "message": "轉換前"
   },
   "webp.converted": {
-    "message": "轉換後",
-    "description": "Label for total converted size"
+    "message": "轉換後"
   },
   "webp.saved": {
-    "message": "節省",
-    "description": "Label for total size reduction percentage"
+    "message": "節省"
   },
   "webp.downloadAll": {
-    "message": "全部下載",
-    "description": "Button to download all converted images"
+    "message": "全部下載"
   },
   "webp.clearAll": {
-    "message": "全部清除",
-    "description": "Button to clear all converted images"
+    "message": "全部清除"
   },
   "webp.download": {
-    "message": "儲存",
-    "description": "Button to download a single converted image"
+    "message": "儲存"
   },
   "webp.remove": {
-    "message": "刪除",
-    "description": "Button to remove a single converted image"
+    "message": "刪除"
   },
   "webp.notesTitle": {
-    "message": "關於此工具",
-    "description": "Title of the notes section"
+    "message": "關於此工具"
   },
   "webp.note1": {
-    "message": "轉換完全在瀏覽器內完成，圖片不會傳送至伺服器。",
-    "description": "Note 1"
+    "message": "轉換完全在瀏覽器內完成，圖片不會傳送至伺服器。"
   },
   "webp.note2": {
-    "message": "可使用畫質滑桿調整壓縮率 (數值越低，檔案越小)。",
-    "description": "Note 2"
+    "message": "可使用畫質滑桿調整壓縮率 (數值越低，檔案越小)。"
   },
   "webp.note3": {
-    "message": "可一次轉換多張圖片。",
-    "description": "Note 3"
+    "message": "可一次轉換多張圖片。"
   },
   "svgIco.title": {
-    "message": "將 SVG 轉換為 ICO",
-    "description": "Title of the SVG to ICO converter page"
+    "message": "將 SVG 轉換為 ICO"
   },
   "svgIco.description": {
-    "message": "將 SVG 圖片轉換為 ICO 格式的工具。處理完全在瀏覽器內完成，圖片不會傳送至伺服器。",
-    "description": "Description of the SVG to ICO converter page"
+    "message": "將 SVG 圖片轉換為 ICO 格式的工具。處理完全在瀏覽器內完成，圖片不會傳送至伺服器。"
   },
   "svgIco.subtitle": {
-    "message": "拖曳 SVG 圖片即可轉換為 ICO 格式。選擇多個尺寸時，會一併打包進單一 ICO 檔案。",
-    "description": "Subtitle on the SVG to ICO converter page"
+    "message": "拖曳 SVG 圖片即可轉換為 ICO 格式。選擇多個尺寸時，會一併打包進單一 ICO 檔案。"
   },
   "svgIco.sizesLabel": {
-    "message": "尺寸",
-    "description": "Label for the size selector"
+    "message": "尺寸"
   },
   "svgIco.converting": {
-    "message": "轉換中...",
-    "description": "Shown while images are being converted"
+    "message": "轉換中..."
   },
   "svgIco.dropHint": {
-    "message": "將 SVG 圖片拖曳到此處，或點擊選擇檔案",
-    "description": "Hint text inside the dropzone"
+    "message": "將 SVG 圖片拖曳到此處，或點擊選擇檔案"
   },
   "svgIco.errorNoImage": {
-    "message": "請選擇 SVG 檔案。",
-    "description": "Error when no valid SVG files were selected"
+    "message": "請選擇 SVG 檔案。"
   },
   "svgIco.errorConvert": {
-    "message": "部分圖片轉換失敗。",
-    "description": "Error when conversion fails"
+    "message": "部分圖片轉換失敗。"
   },
   "svgIco.fileCount": {
-    "message": "檔案數",
-    "description": "Label for the number of converted files"
+    "message": "檔案數"
   },
   "svgIco.original": {
-    "message": "轉換前",
-    "description": "Label for total original size"
+    "message": "轉換前"
   },
   "svgIco.converted": {
-    "message": "轉換後",
-    "description": "Label for total converted size"
+    "message": "轉換後"
   },
   "svgIco.downloadAll": {
-    "message": "全部下載",
-    "description": "Button to download all converted images"
+    "message": "全部下載"
   },
   "svgIco.clearAll": {
-    "message": "全部清除",
-    "description": "Button to clear all converted images"
+    "message": "全部清除"
   },
   "svgIco.download": {
-    "message": "儲存",
-    "description": "Button to download a single converted image"
+    "message": "儲存"
   },
   "svgIco.remove": {
-    "message": "刪除",
-    "description": "Button to remove a single converted image"
+    "message": "刪除"
   },
   "svgIco.notesTitle": {
-    "message": "關於此工具",
-    "description": "Title of the notes section"
+    "message": "關於此工具"
   },
   "svgIco.note1": {
-    "message": "轉換完全在瀏覽器內完成，圖片不會傳送至伺服器。",
-    "description": "Note 1"
+    "message": "轉換完全在瀏覽器內完成，圖片不會傳送至伺服器。"
   },
   "svgIco.note2": {
-    "message": "選擇多個尺寸時，會將多種解析度打包進單一 ICO 檔案 (Windows 會依顯示大小自動選用對應的解析度)。",
-    "description": "Note 2"
+    "message": "選擇多個尺寸時，會將多種解析度打包進單一 ICO 檔案 (Windows 會依顯示大小自動選用對應的解析度)。"
   },
   "svgIco.note3": {
-    "message": "可一次轉換多張圖片。",
-    "description": "Note 3"
+    "message": "可一次轉換多張圖片。"
   },
   "yamlJson.title": {
-    "message": "YAML 與 JSON 互相轉換",
-    "description": "Title of the YAML/JSON converter page"
+    "message": "YAML 與 JSON 互相轉換"
   },
   "yamlJson.description": {
-    "message": "YAML 與 JSON 互相轉換的工具。處理完全在瀏覽器內完成，內容不會傳送至伺服器。",
-    "description": "Description of the YAML/JSON converter page"
+    "message": "YAML 與 JSON 互相轉換的工具。處理完全在瀏覽器內完成，內容不會傳送至伺服器。"
   },
   "yamlJson.subtitle": {
-    "message": "在左側輸入，右側會顯示轉換結果。所有處理都在瀏覽器內完成，內容不會傳送至伺服器。",
-    "description": "Subtitle on the YAML/JSON converter page"
+    "message": "在左側輸入，右側會顯示轉換結果。所有處理都在瀏覽器內完成，內容不會傳送至伺服器。"
   },
   "yamlJson.yamlLabel": {
-    "message": "YAML",
-    "description": "Label for the YAML pane"
+    "message": "YAML"
   },
   "yamlJson.jsonLabel": {
-    "message": "JSON",
-    "description": "Label for the JSON pane"
+    "message": "JSON"
   },
   "yamlJson.swap": {
-    "message": "切換轉換方向",
-    "description": "Aria label for the swap button"
+    "message": "切換轉換方向"
   },
   "yamlJson.copy": {
-    "message": "複製",
-    "description": "Copy button label"
+    "message": "複製"
   },
   "yamlJson.copied": {
-    "message": "已複製",
-    "description": "Copy button label after copying"
+    "message": "已複製"
   },
   "yamlJson.errorPrefix": {
-    "message": "轉換錯誤:",
-    "description": "Prefix shown before a conversion error message"
+    "message": "轉換錯誤:"
   },
   "yamlJson.notesTitle": {
-    "message": "關於此工具",
-    "description": "Title of the notes section"
+    "message": "關於此工具"
   },
   "yamlJson.note1": {
-    "message": "轉換完全在瀏覽器內完成，內容不會傳送至伺服器。",
-    "description": "Note 1"
+    "message": "轉換完全在瀏覽器內完成，內容不會傳送至伺服器。"
   },
   "yamlJson.note2": {
-    "message": "可使用切換按鈕在 YAML → JSON 與 JSON → YAML 之間切換。",
-    "description": "Note 2"
+    "message": "可使用切換按鈕在 YAML → JSON 與 JSON → YAML 之間切換。"
   },
   "yamlJson.note3": {
-    "message": "若有語法錯誤，結果下方會顯示錯誤內容。",
-    "description": "Note 3"
+    "message": "若有語法錯誤，結果下方會顯示錯誤內容。"
   },
   "base64.title": {
-    "message": "Base64 轉換",
-    "description": "Title of the Base64 converter page"
+    "message": "Base64 轉換"
   },
   "base64.description": {
-    "message": "將文字或檔案與 Base64 互相轉換的工具。所有處理都在瀏覽器內完成，內容不會傳送至伺服器。",
-    "description": "Description of the Base64 converter page"
+    "message": "將文字或檔案與 Base64 互相轉換的工具。所有處理都在瀏覽器內完成，內容不會傳送至伺服器。"
   },
   "base64.subtitle": {
-    "message": "輸入文字，或拖曳檔案以轉換成 Base64。所有處理都在瀏覽器內完成，內容不會傳送至伺服器。",
-    "description": "Subtitle on the Base64 converter page"
+    "message": "輸入文字，或拖曳檔案以轉換成 Base64。所有處理都在瀏覽器內完成，內容不會傳送至伺服器。"
   },
   "base64.textSectionTitle": {
-    "message": "文字轉換",
-    "description": "Title of the text conversion section"
+    "message": "文字轉換"
   },
   "base64.encodePlaceholder": {
     "message": "輸入要轉換的文字",
@@ -733,87 +665,666 @@
     "description": "Placeholder for the decode source textarea"
   },
   "base64.swap": {
-    "message": "切換轉換方向",
-    "description": "Aria label for the swap button"
+    "message": "切換轉換方向"
   },
   "base64.copy": {
-    "message": "複製",
-    "description": "Copy button label"
+    "message": "複製"
   },
   "base64.copied": {
-    "message": "已複製",
-    "description": "Copy button label after copying"
+    "message": "已複製"
   },
   "base64.base64Label": {
-    "message": "Base64",
-    "description": "Label for the Base64 pane"
+    "message": "Base64"
   },
   "base64.textLabel": {
-    "message": "文字",
-    "description": "Label for the text pane"
+    "message": "文字"
   },
   "base64.errorInvalid": {
-    "message": "此字串無法解析為 Base64。",
-    "description": "Error shown when decode input is not valid Base64"
+    "message": "此字串無法解析為 Base64。"
   },
   "base64.binaryNotice": {
-    "message": "無法以文字顯示 (可能為二進位資料)。仍可使用 data: URI 或下載功能。",
-    "description": "Notice shown when decoded bytes are not valid UTF-8 text"
+    "message": "無法以文字顯示 (可能為二進位資料)。仍可使用 data: URI 或下載功能。"
   },
   "base64.mimeType": {
-    "message": "MIME 類型",
-    "description": "Label for the MIME type input"
+    "message": "MIME 類型"
   },
   "base64.copyDataUri": {
-    "message": "複製 data: URI",
-    "description": "Button label to copy the data: URI"
+    "message": "複製 data: URI"
   },
   "base64.fileSectionTitle": {
-    "message": "檔案轉換",
-    "description": "Title of the file conversion section"
+    "message": "檔案轉換"
   },
   "base64.dropHint": {
-    "message": "將檔案拖曳到這裡，或點擊選擇檔案",
-    "description": "Hint text inside the dropzone"
+    "message": "將檔案拖曳到這裡，或點擊選擇檔案"
   },
   "base64.errorFileRead": {
-    "message": "讀取檔案失敗。",
-    "description": "Error shown when reading a dropped file fails"
+    "message": "讀取檔案失敗。"
   },
   "base64.clearAll": {
-    "message": "全部清除",
-    "description": "Button to clear all converted files"
+    "message": "全部清除"
   },
   "base64.copyBase64": {
-    "message": "複製 Base64",
-    "description": "Button label to copy the raw Base64 string"
+    "message": "複製 Base64"
   },
   "base64.remove": {
-    "message": "刪除",
-    "description": "Aria label for the remove button"
+    "message": "刪除"
   },
   "base64.notesTitle": {
-    "message": "關於此工具",
-    "description": "Title of the notes section"
+    "message": "關於此工具"
   },
   "base64.note1": {
-    "message": "轉換皆在瀏覽器內完成，輸入內容與檔案都不會傳送至伺服器。",
-    "description": "Note 1"
+    "message": "轉換皆在瀏覽器內完成，輸入內容與檔案都不會傳送至伺服器。"
   },
   "base64.note2": {
-    "message": "解碼時直接貼上 data: URI，會自動偵測 MIME 類型。",
-    "description": "Note 2"
+    "message": "解碼時直接貼上 data: URI，會自動偵測 MIME 類型。"
   },
   "base64.note3": {
-    "message": "點擊 [在新分頁開啟] 即可透過 data: 協定直接在瀏覽器中檢視內容。",
-    "description": "Note 3"
+    "message": "點擊 [在新分頁開啟] 即可透過 data: 協定直接在瀏覽器中檢視內容。"
   },
   "base64.note4": {
-    "message": "拖曳檔案後，可複製或直接開啟該檔案的 Base64 與 data: URI。",
-    "description": "Note 4"
+    "message": "拖曳檔案後，可複製或直接開啟該檔案的 Base64 與 data: URI。"
   },
   "base64.errorCopy": {
-    "message": "複製失敗，請手動選取後複製。",
-    "description": "Error shown when copying to the clipboard fails"
+    "message": "複製失敗，請手動選取後複製。"
+  },
+  "certGen.detailsSummary": {
+    "message": "顯示憑證詳細資訊"
+  },
+  "certGen.detailsSubject": {
+    "message": "主體"
+  },
+  "certGen.detailsIssuer": {
+    "message": "發行者"
+  },
+  "certGen.detailsSerial": {
+    "message": "序號"
+  },
+  "certGen.detailsValidity": {
+    "message": "有效期限"
+  },
+  "certGen.detailsPublicKey": {
+    "message": "公鑰"
+  },
+  "certGen.detailsBasicConstraints": {
+    "message": "基本限制"
+  },
+  "certGen.detailsKeyUsage": {
+    "message": "金鑰用途"
+  },
+  "certGen.detailsExtKeyUsage": {
+    "message": "擴充金鑰用途"
+  },
+  "certGen.detailsFingerprint": {
+    "message": "指紋 (SHA-256)"
+  },
+  "certGen.copied": {
+    "message": "已複製"
+  },
+  "certGen.copy": {
+    "message": "複製"
+  },
+  "certGen.download": {
+    "message": "下載"
+  },
+  "certGen.privateKeyWarning": {
+    "message": "請妥善保管私鑰，切勿與第三方分享。"
+  },
+  "certGen.errorCnRequired": {
+    "message": "請輸入通用名稱 (CN)。"
+  },
+  "certGen.errorGenerate": {
+    "message": "產生憑證失敗。"
+  },
+  "certGen.errorUploadMissing": {
+    "message": "請同時輸入 CA 憑證與 CA 私鑰。"
+  },
+  "certGen.errorUploadMismatch": {
+    "message": "CA 憑證與 CA 私鑰不相符。"
+  },
+  "certGen.errorUploadParse": {
+    "message": "載入 CA 失敗。請確認格式為 PEM，若私鑰已加密請確認密碼是否正確。"
+  },
+  "certGen.errorNoCa": {
+    "message": "尚未載入用於簽署的 CA。請先產生或上傳根 CA。"
+  },
+  "certGen.title": {
+    "message": "憑證產生器"
+  },
+  "certGen.description": {
+    "message": "在瀏覽器中產生根 CA 憑證與伺服器憑證 (自簽憑證) 的工具。包含私鑰在內的內容都不會傳送到伺服器。"
+  },
+  "certGen.subtitle": {
+    "message": "產生根 CA 憑證與伺服器憑證 (自簽憑證)。所有處理都在瀏覽器中完成，包含私鑰在內的內容都不會傳送到伺服器。"
+  },
+  "certGen.caSectionTitle": {
+    "message": "1. 準備根 CA"
+  },
+  "certGen.tabGenerate": {
+    "message": "新增產生"
+  },
+  "certGen.tabUpload": {
+    "message": "上傳既有 CA"
+  },
+  "certGen.cnLabel": {
+    "message": "通用名稱 (CN)"
+  },
+  "certGen.orgLabel": {
+    "message": "組織名稱 (O，選填)"
+  },
+  "certGen.validityLabel": {
+    "message": "有效期限 (天)"
+  },
+  "certGen.keyBitsLabel": {
+    "message": "金鑰長度"
+  },
+  "certGen.generating": {
+    "message": "產生中..."
+  },
+  "certGen.generateCaBtn": {
+    "message": "產生根 CA"
+  },
+  "certGen.caCertLabel": {
+    "message": "CA 憑證 (PEM)"
+  },
+  "certGen.caKeyLabel": {
+    "message": "CA 私鑰 (PEM)"
+  },
+  "certGen.caUploadDropHint": {
+    "message": "將 CA 憑證與 CA 私鑰檔案拖放至此，或點擊選擇檔案 (也支援合併成一個檔案)"
+  },
+  "certGen.caUploadCertLabel": {
+    "message": "CA 憑證 (PEM)"
+  },
+  "certGen.caUploadKeyLabel": {
+    "message": "CA 私鑰 (PEM)"
+  },
+  "certGen.caUploadPassphraseLabel": {
+    "message": "私鑰密碼 (僅在已加密時需要)"
+  },
+  "certGen.caUploadLoadBtn": {
+    "message": "載入 CA"
+  },
+  "certGen.caUploadClearBtn": {
+    "message": "清除"
+  },
+  "certGen.caUploadLoaded": {
+    "message": "已載入:"
+  },
+  "certGen.caUploadNotCaWarning": {
+    "message": "此憑證未設定為 CA (basicConstraints: cA=true)。雖然仍可用於簽署，但許多用戶端可能不會信任。"
+  },
+  "certGen.serverSectionTitle": {
+    "message": "2. 產生伺服器憑證"
+  },
+  "certGen.sanLabel": {
+    "message": "SAN (Subject Alternative Name，以逗號或換行分隔，支援網域名稱與 IP 位址)"
+  },
+  "certGen.signModeLabel": {
+    "message": "簽署方式"
+  },
+  "certGen.signModeSelf": {
+    "message": "自我簽署 (自簽憑證)"
+  },
+  "certGen.signModeSelfDesc": {
+    "message": "最簡單的方式，憑證本身即為發行者。不需要準備 CA，但瀏覽器與作業系統無法識別發行者，因此每次存取都會顯示警告。適合單獨測試一台伺服器時使用。"
+  },
+  "certGen.signModeCaGenerated": {
+    "message": "使用產生的根 CA 簽署"
+  },
+  "certGen.readyBadge": {
+    "message": "✓ 可使用"
+  },
+  "certGen.signModeCaGeneratedHint": {
+    "message": "尚未準備 — 請先在上方產生根 CA"
+  },
+  "certGen.signModeCaDesc": {
+    "message": "使用上方區塊產生 (或上傳) 的 CA 私鑰進行簽署。只要將 CA 憑證匯入作業系統或瀏覽器作為受信任的根憑證授權單位，該 CA 所簽署的所有伺服器憑證都會被信任而不會出現警告。適合以同一個 CA 統一發行與管理多台伺服器或多個網域的憑證。"
+  },
+  "certGen.signModeCaUploaded": {
+    "message": "使用上傳的 CA 簽署"
+  },
+  "certGen.signModeCaUploadedHint": {
+    "message": "尚未準備 — 請先在上方上傳 CA"
+  },
+  "certGen.signModeCaUploadedDesc": {
+    "message": "上傳既有 CA (例如此工具先前工作階段產生的 CA，或團隊共用的 CA) 的憑證與私鑰進行簽署。運作方式與「使用產生的根 CA 簽署」相同，但可重複使用已匯入信任存放區的 CA。"
+  },
+  "certGen.generateServerBtn": {
+    "message": "產生伺服器憑證"
+  },
+  "certGen.serverKeyLabel": {
+    "message": "伺服器私鑰 (PEM)"
+  },
+  "certGen.serverCertLabel": {
+    "message": "伺服器憑證 (PEM)"
+  },
+  "certGen.chainCaCertLabel": {
+    "message": "CA 憑證 (PEM) — 用於匯入信任存放區"
+  },
+  "certGen.notesTitle": {
+    "message": "關於此工具"
+  },
+  "certGen.note1": {
+    "message": "憑證產生完全在瀏覽器中完成，包含私鑰在內的內容都不會傳送到伺服器。"
+  },
+  "certGen.note2": {
+    "message": "重新載入頁面後，已產生的金鑰與憑證將會遺失，如有需要請先下載保存。"
+  },
+  "certGen.note3": {
+    "message": "若要讓瀏覽器或作業系統信任由根 CA 簽署的伺服器憑證，需將 CA 憑證匯入為受信任的根憑證授權單位。"
+  },
+  "certGen.note4": {
+    "message": "此工具產生的憑證僅適用於本機開發與測試用途。正式環境請使用憑證授權單位發行的正式憑證。"
+  },
+  "hash.copied": {
+    "message": "已複製"
+  },
+  "hash.copy": {
+    "message": "複製"
+  },
+  "hash.errorInsecureContext": {
+    "message": "計算雜湊值需要 Web Crypto API，僅能在 HTTPS 或 localhost 環境使用。"
+  },
+  "hash.errorCompute": {
+    "message": "計算雜湊值失敗。"
+  },
+  "hash.errorCopy": {
+    "message": "複製失敗，請手動選取並複製。"
+  },
+  "hash.errorFileRead": {
+    "message": "讀取檔案失敗。"
+  },
+  "hash.title": {
+    "message": "雜湊值計算"
+  },
+  "hash.description": {
+    "message": "計算文字或檔案雜湊值 (如 SHA-256) 的工具。處理在瀏覽器內完成，內容不會傳送到伺服器。"
+  },
+  "hash.subtitle": {
+    "message": "輸入文字或拖放檔案以計算雜湊值。所有計算都在瀏覽器中完成，內容不會傳送到伺服器。"
+  },
+  "hash.textSectionTitle": {
+    "message": "計算文字的雜湊值"
+  },
+  "hash.fileSectionTitle": {
+    "message": "計算檔案的雜湊值"
+  },
+  "hash.dropHint": {
+    "message": "將檔案拖放到此處，或點擊選擇"
+  },
+  "hash.clearAll": {
+    "message": "全部清除"
+  },
+  "hash.remove": {
+    "message": "移除"
+  },
+  "hash.notesTitle": {
+    "message": "關於此工具"
+  },
+  "hash.note1": {
+    "message": "計算完全在瀏覽器中完成，輸入的內容或檔案都不會傳送到伺服器。"
+  },
+  "hash.note2": {
+    "message": "支援 SHA-1、SHA-256、SHA-384、SHA-512。由於瀏覽器標準 API (Web Crypto API) 不支援 MD5，故無法計算。"
+  },
+  "hash.note3": {
+    "message": "確認檔案完整性時，建議使用 SHA-256 以上的演算法。"
+  },
+  "miniApps.pageTitle": {
+    "message": "迷你應用"
+  },
+  "miniApps.pageDescription": {
+    "message": "完全在瀏覽器中運作的小工具集。"
+  },
+  "miniApps.subtitle": {
+    "message": "完全在瀏覽器中運作的小工具集，皆不會將內容傳送到伺服器。"
+  },
+  "nslookup.errorNetwork": {
+    "message": "連線伺服器失敗。"
+  },
+  "nslookup.loading": {
+    "message": "載入中..."
+  },
+  "nslookup.noRecords": {
+    "message": "無記錄"
+  },
+  "nslookup.nxdomain": {
+    "message": "找不到該網域"
+  },
+  "nslookup.errorGeneric": {
+    "message": "查詢失敗。"
+  },
+  "nslookup.title": {
+    "message": "nslookup (DNS 查詢)"
+  },
+  "nslookup.description": {
+    "message": "查詢網域名稱 DNS 記錄 (A、AAAA、MX、TXT、NS、CNAME) 的工具。"
+  },
+  "nslookup.subtitle": {
+    "message": "輸入網域名稱即可查詢其 DNS 記錄 (A、AAAA、MX、TXT、NS、CNAME)。"
+  },
+  "nslookup.placeholder": {
+    "message": "例如: example.com"
+  },
+  "nslookup.searching": {
+    "message": "搜尋中..."
+  },
+  "nslookup.search": {
+    "message": "搜尋"
+  },
+  "nslookup.notesTitle": {
+    "message": "關於此工具"
+  },
+  "nslookup.note1": {
+    "message": "查詢會透過 DNS over HTTPS (Cloudflare 的 1.1.1.1) 直接從瀏覽器進行，不會傳送到伺服器。"
+  },
+  "nslookup.note2": {
+    "message": "支援 A、AAAA、MX、TXT、NS、CNAME 共 6 種記錄類型。"
+  },
+  "nslookup.note3": {
+    "message": "DNS 變更可能需要一段時間才會生效 (因 TTL 快取)，查詢結果不一定反映最新設定。"
+  },
+  "passwordGenerator.title": {
+    "message": "密碼產生器"
+  },
+  "passwordGenerator.description": {
+    "message": "產生安全密碼短語與密碼的工具。處理在瀏覽器內完成，不會傳送到伺服器。"
+  },
+  "passwordGenerator.subtitle": {
+    "message": "產生安全的密碼短語與密碼。"
+  },
+  "passwordGenerator.tabPassphrase": {
+    "message": "密碼短語 (建議)"
+  },
+  "passwordGenerator.tabRandom": {
+    "message": "隨機字串"
+  },
+  "passwordGenerator.entropy": {
+    "message": "預估熵值"
+  },
+  "passwordGenerator.generate": {
+    "message": "產生"
+  },
+  "passwordGenerator.copied": {
+    "message": "已複製"
+  },
+  "passwordGenerator.copy": {
+    "message": "複製"
+  },
+  "passwordGenerator.wordLanguage": {
+    "message": "單字語言"
+  },
+  "passwordGenerator.wordLanguageEn": {
+    "message": "英文"
+  },
+  "passwordGenerator.wordLanguageJa": {
+    "message": "日文 (羅馬拼音)"
+  },
+  "passwordGenerator.wordCount": {
+    "message": "單字數量"
+  },
+  "passwordGenerator.separator": {
+    "message": "分隔符號"
+  },
+  "passwordGenerator.separatorSpace": {
+    "message": "半形空格"
+  },
+  "passwordGenerator.separatorNone": {
+    "message": "無 (字首大寫)"
+  },
+  "passwordGenerator.addNumber": {
+    "message": "加入數字"
+  },
+  "passwordGenerator.addSymbol": {
+    "message": "加入符號"
+  },
+  "passwordGenerator.length": {
+    "message": "長度"
+  },
+  "passwordGenerator.upper": {
+    "message": "大寫字母 (A-Z)"
+  },
+  "passwordGenerator.lower": {
+    "message": "小寫字母 (a-z)"
+  },
+  "passwordGenerator.digits": {
+    "message": "數字 (0-9)"
+  },
+  "passwordGenerator.symbols": {
+    "message": "符號 (!@#$ 等)"
+  },
+  "passwordGenerator.tipsTitle": {
+    "message": "密碼設定要點"
+  },
+  "passwordGenerator.tip1": {
+    "message": "建議至少 15 個字元，20 個字元以上更安全。"
+  },
+  "passwordGenerator.tip2": {
+    "message": "較長的密碼短語比短而複雜的密碼更安全。"
+  },
+  "passwordGenerator.tip3": {
+    "message": "每個服務都應使用完全不同的密碼。一旦外洩，重複使用的其他服務也可能遭到入侵。"
+  },
+  "passwordGenerator.tip4": {
+    "message": "將幾個不相關的單字組合在一起，可以產生既好記又夠長的密碼短語。"
+  },
+  "passwordGenerator.tip5": {
+    "message": "產生的字串僅在瀏覽器中處理，不會傳送到伺服器。"
+  },
+  "tsvMarkdown.sourceLabel": {
+    "message": "Excel / TSV"
+  },
+  "tsvMarkdown.outputLabel": {
+    "message": "Markdown"
+  },
+  "tsvMarkdown.copied": {
+    "message": "已複製"
+  },
+  "tsvMarkdown.copy": {
+    "message": "複製"
+  },
+  "tsvMarkdown.title": {
+    "message": "TSV 轉 Markdown 表格"
+  },
+  "tsvMarkdown.description": {
+    "message": "將從 Excel 複製的定位字元分隔文字轉換為 Markdown 表格的工具。處理在瀏覽器內完成，內容不會傳送到伺服器。"
+  },
+  "tsvMarkdown.subtitle": {
+    "message": "將從 Excel 複製的儲存格範圍貼到左側，右側即會顯示 Markdown 表格。所有轉換都在瀏覽器中完成，內容不會傳送到伺服器。"
+  },
+  "tsvMarkdown.notesTitle": {
+    "message": "關於此工具"
+  },
+  "tsvMarkdown.note1": {
+    "message": "可直接複製 Excel 或試算表中選取的儲存格範圍並貼上 (會視為定位字元分隔文字處理)。"
+  },
+  "tsvMarkdown.note2": {
+    "message": "第一列會視為標題列。"
+  },
+  "tsvMarkdown.note3": {
+    "message": "儲存格內含有 `|` 時會自動跳脫處理。"
+  },
+  "tsvMarkdown.note4": {
+    "message": "轉換完全在瀏覽器中完成，輸入的內容不會傳送到伺服器。"
+  },
+  "uuid.title": {
+    "message": "UUID 產生器"
+  },
+  "uuid.description": {
+    "message": "產生 UUID (v4) 的工具。處理在瀏覽器內完成，不會傳送到伺服器。"
+  },
+  "uuid.subtitle": {
+    "message": "產生 UUID (v4)。"
+  },
+  "uuid.generate": {
+    "message": "產生"
+  },
+  "uuid.copied": {
+    "message": "已複製"
+  },
+  "uuid.copy": {
+    "message": "複製"
+  },
+  "whois.copied": {
+    "message": "已複製"
+  },
+  "whois.copy": {
+    "message": "複製"
+  },
+  "whois.errorGeneric": {
+    "message": "查詢失敗。"
+  },
+  "whois.errorNetwork": {
+    "message": "連線伺服器失敗，請稍後再試。"
+  },
+  "whois.title": {
+    "message": "WHOIS 查詢"
+  },
+  "whois.description": {
+    "message": "查詢網域名稱 WHOIS 資訊 (註冊人、名稱伺服器等) 的工具。"
+  },
+  "whois.subtitle": {
+    "message": "輸入網域名稱即可查詢其 WHOIS 資訊 (註冊人、名稱伺服器、到期日等)。"
+  },
+  "whois.placeholder": {
+    "message": "例如: example.com"
+  },
+  "whois.searching": {
+    "message": "搜尋中..."
+  },
+  "whois.search": {
+    "message": "搜尋"
+  },
+  "whois.resultTitle": {
+    "message": "WHOIS 資訊"
+  },
+  "whois.registrarResultTitle": {
+    "message": "註冊商 WHOIS 資訊"
+  },
+  "whois.notesTitle": {
+    "message": "關於此工具"
+  },
+  "whois.note1": {
+    "message": "查詢透過伺服器使用 WHOIS 通訊協定 (連接埠 43) 進行。除輸入的網域名稱外，其他資訊皆不會儲存在伺服器上。"
+  },
+  "whois.note2": {
+    "message": "若註冊機構與管理註冊人資訊的註冊商使用不同的 WHOIS 伺服器，將同時顯示兩者的查詢結果。"
+  },
+  "whois.note3": {
+    "message": "部分網域的註冊人資訊會因隱私保護服務而被匿名化。"
+  },
+  "theme.fontSwitcher.bizGothic": {
+    "message": "BIZ UDP ゴシック"
+  },
+  "theme.fontSwitcher.bizMincho": {
+    "message": "BIZ UDP 明朝"
+  },
+  "theme.docs.versions.unreleasedVersionLabel": {
+    "message": "此為 {siteTitle} {versionLabel} 版尚未發行的文件。",
+    "description": "The label used to tell the user that he's browsing an unreleased doc version"
+  },
+  "theme.docs.versions.unmaintainedVersionLabel": {
+    "message": "此為 {siteTitle} {versionLabel} 版的文件，現已不再積極維護。",
+    "description": "The label used to tell the user that he's browsing an unmaintained doc version"
+  },
+  "theme.docs.versions.latestVersionSuggestionLabel": {
+    "message": "最新的文件請參閱 {latestVersionLink} ({versionLabel})。",
+    "description": "The label used to tell the user to check the latest version"
+  },
+  "theme.docs.versions.latestVersionLinkLabel": {
+    "message": "最新版本",
+    "description": "The label used for the latest version suggestion link label"
+  },
+  "theme.DocSidebarItem.expandCategoryAriaLabel": {
+    "message": "展開側邊欄分類 '{label}'",
+    "description": "The ARIA label to expand the sidebar category"
+  },
+  "theme.DocSidebarItem.collapseCategoryAriaLabel": {
+    "message": "收起側邊欄分類 '{label}'",
+    "description": "The ARIA label to collapse the sidebar category"
+  },
+  "theme.IconExternalLink.ariaLabel": {
+    "message": "(opens in new tab)",
+    "description": "The ARIA label for the external link icon"
+  },
+  "theme.navbar.mobileDropdown.collapseButton.expandAriaLabel": {
+    "message": "Expand the dropdown",
+    "description": "The ARIA label of the button to expand the mobile dropdown navbar item"
+  },
+  "theme.navbar.mobileDropdown.collapseButton.collapseAriaLabel": {
+    "message": "Collapse the dropdown",
+    "description": "The ARIA label of the button to collapse the mobile dropdown navbar item"
+  },
+  "miniApps.webp.title": {
+    "message": "WebP 轉換工具"
+  },
+  "miniApps.webp.description": {
+    "message": "將圖片轉換為 WebP 格式。"
+  },
+  "miniApps.svgIco.title": {
+    "message": "SVG2ICO"
+  },
+  "miniApps.svgIco.description": {
+    "message": "將 SVG 圖片轉換為 ICO 格式。"
+  },
+  "miniApps.yamlJson.title": {
+    "message": "YAML⇄JSON"
+  },
+  "miniApps.yamlJson.description": {
+    "message": "將 YAML 與 JSON 互相轉換。"
+  },
+  "miniApps.base64.title": {
+    "message": "Base64 轉換"
+  },
+  "miniApps.base64.description": {
+    "message": "將文字或檔案與 Base64 互相轉換。"
+  },
+  "miniApps.hash.title": {
+    "message": "雜湊值計算"
+  },
+  "miniApps.hash.description": {
+    "message": "計算文字或檔案的雜湊值 (如 SHA-256)。"
+  },
+  "miniApps.certGen.title": {
+    "message": "憑證產生器"
+  },
+  "miniApps.certGen.description": {
+    "message": "產生根 CA 憑證與伺服器憑證 (自簽憑證)。"
+  },
+  "miniApps.uuid.title": {
+    "message": "UUID 產生器"
+  },
+  "miniApps.uuid.description": {
+    "message": "產生 UUID (v4)。"
+  },
+  "miniApps.passwordGenerator.title": {
+    "message": "密碼產生器"
+  },
+  "miniApps.passwordGenerator.description": {
+    "message": "產生安全的密碼短語與密碼。"
+  },
+  "miniApps.tsvMarkdown.title": {
+    "message": "TSV 轉 Markdown 表格"
+  },
+  "miniApps.tsvMarkdown.description": {
+    "message": "將從 Excel 複製的定位字元分隔文字轉換為 Markdown 表格。"
+  },
+  "miniApps.whois.title": {
+    "message": "WHOIS 查詢"
+  },
+  "miniApps.whois.description": {
+    "message": "查詢網域名稱的 WHOIS 資訊 (註冊人、名稱伺服器等)。"
+  },
+  "miniApps.nslookup.title": {
+    "message": "nslookup (DNS 查詢)"
+  },
+  "miniApps.nslookup.description": {
+    "message": "查詢網域名稱的 DNS 記錄 (A、AAAA、MX、TXT、NS、CNAME)。"
+  },
+  "miniApps.chat.title": {
+    "message": "Chat"
+  },
+  "miniApps.chat.description": {
+    "message": "可與 AI 對話的聊天工具。"
   }
 }

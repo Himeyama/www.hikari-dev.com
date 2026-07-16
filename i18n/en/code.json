@@ -412,56 +412,44 @@
     "description": "The text for anonymous commenter"
   },
   "articles.title": {
-    "message": "Articles",
-    "description": "The title of the articles page"
+    "message": "Articles"
   },
   "articles.description": {
-    "message": "All articles from Hikari's Notebook",
-    "description": "The description of the articles page"
+    "message": "All articles from Hikari's Notebook"
   },
   "articles.filterByTag": {
-    "message": "Filter by Category",
-    "description": "The heading for the tag filter section"
+    "message": "Filter by Category"
   },
   "articles.allPosts": {
-    "message": "All",
-    "description": "The label for showing all posts"
+    "message": "All"
   },
   "articles.allArticles": {
-    "message": "Articles",
-    "description": "The heading for all articles section"
+    "message": "Articles"
   },
   "articles.itemCount": {
-    "message": "items",
-    "description": "The suffix for item count"
+    "message": "items"
   },
   "articles.noResults": {
-    "message": "No articles found",
-    "description": "The message when no articles match the filter"
+    "message": "No articles found"
   },
   "homepage.description": {
-    "message": "Hikari's tech notebook — articles on Linux, AWS, Python, Docker, and infrastructure & development tools.",
-    "description": "The description of the homepage"
+    "message": "Hikari's tech notebook — articles on Linux, AWS, Python, Docker, and infrastructure & development tools."
   },
   "trivia.title": {
-    "message": "Today's Trivia",
-    "description": "The title of the trivia page"
+    "message": "Today's Trivia"
   },
   "trivia.description": {
-    "message": "A daily trivia fact updated every day.",
-    "description": "The description of the trivia page"
+    "message": "A daily trivia fact updated every day."
   },
   "trivia.loading": {
     "message": "Loading...",
     "description": "Loading message on the trivia page"
   },
   "trivia.error": {
-    "message": "Failed to fetch today's trivia.",
-    "description": "Error message on the trivia page"
+    "message": "Failed to fetch today's trivia."
   },
   "trivia.notFound": {
-    "message": "No trivia found for today.",
-    "description": "Not found message on the trivia page"
+    "message": "No trivia found for today."
   },
   "chat.title": {
     "message": "Hikari Chat"
@@ -533,228 +521,172 @@
     "message": "UD Digi Kyokasho"
   },
   "webp.title": {
-    "message": "Convert Images to WebP",
-    "description": "Title of the WebP converter page"
+    "message": "Convert Images to WebP"
   },
   "webp.description": {
-    "message": "A tool to convert images to WebP format. Processing happens entirely in the browser, so images are never sent to a server.",
-    "description": "Description of the WebP converter page"
+    "message": "A tool to convert images to WebP format. Processing happens entirely in the browser, so images are never sent to a server."
   },
   "webp.subtitle": {
-    "message": "Drag and drop images to convert them to WebP format. Everything runs in your browser — images are never uploaded to a server.",
-    "description": "Subtitle on the WebP converter page"
+    "message": "Drag and drop images to convert them to WebP format. Everything runs in your browser — images are never uploaded to a server."
   },
   "webp.quality": {
-    "message": "Quality",
-    "description": "Label for the quality slider"
+    "message": "Quality"
   },
   "webp.converting": {
-    "message": "Converting...",
-    "description": "Shown while images are being converted"
+    "message": "Converting..."
   },
   "webp.dropHint": {
-    "message": "Drop images here, or click to select",
-    "description": "Hint text inside the dropzone"
+    "message": "Drop images here, or click to select"
   },
   "webp.errorNoImage": {
-    "message": "Please select an image file.",
-    "description": "Error when no valid image files were selected"
+    "message": "Please select an image file."
   },
   "webp.errorConvert": {
-    "message": "Some images failed to convert.",
-    "description": "Error when conversion fails"
+    "message": "Some images failed to convert."
   },
   "webp.fileCount": {
-    "message": "Files",
-    "description": "Label for the number of converted files"
+    "message": "Files"
   },
   "webp.original": {
-    "message": "Original",
-    "description": "Label for total original size"
+    "message": "Original"
   },
   "webp.converted": {
-    "message": "Converted",
-    "description": "Label for total converted size"
+    "message": "Converted"
   },
   "webp.saved": {
-    "message": "Saved",
-    "description": "Label for total size reduction percentage"
+    "message": "Saved"
   },
   "webp.downloadAll": {
-    "message": "Download All",
-    "description": "Button to download all converted images"
+    "message": "Download All"
   },
   "webp.clearAll": {
-    "message": "Clear All",
-    "description": "Button to clear all converted images"
+    "message": "Clear All"
   },
   "webp.download": {
-    "message": "Save",
-    "description": "Button to download a single converted image"
+    "message": "Save"
   },
   "webp.remove": {
-    "message": "Remove",
-    "description": "Button to remove a single converted image"
+    "message": "Remove"
   },
   "webp.notesTitle": {
-    "message": "About This Tool",
-    "description": "Title of the notes section"
+    "message": "About This Tool"
   },
   "webp.note1": {
-    "message": "Conversion happens entirely in your browser; images are never sent to a server.",
-    "description": "Note 1"
+    "message": "Conversion happens entirely in your browser; images are never sent to a server."
   },
   "webp.note2": {
-    "message": "Use the quality slider to adjust compression (lower values produce smaller files).",
-    "description": "Note 2"
+    "message": "Use the quality slider to adjust compression (lower values produce smaller files)."
   },
   "webp.note3": {
-    "message": "You can convert multiple images at once.",
-    "description": "Note 3"
+    "message": "You can convert multiple images at once."
   },
   "svgIco.title": {
-    "message": "Convert SVG to ICO",
-    "description": "Title of the SVG to ICO converter page"
+    "message": "Convert SVG to ICO"
   },
   "svgIco.description": {
-    "message": "A tool to convert SVG images to ICO format. Processing happens entirely in the browser, so images are never sent to a server.",
-    "description": "Description of the SVG to ICO converter page"
+    "message": "A tool to convert SVG images to ICO format. Processing happens entirely in the browser, so images are never sent to a server."
   },
   "svgIco.subtitle": {
-    "message": "Drag and drop SVG images to convert them to ICO format. Selecting multiple sizes packs them all into a single ICO file.",
-    "description": "Subtitle on the SVG to ICO converter page"
+    "message": "Drag and drop SVG images to convert them to ICO format. Selecting multiple sizes packs them all into a single ICO file."
   },
   "svgIco.sizesLabel": {
-    "message": "Sizes",
-    "description": "Label for the size selector"
+    "message": "Sizes"
   },
   "svgIco.converting": {
-    "message": "Converting...",
-    "description": "Shown while images are being converted"
+    "message": "Converting..."
   },
   "svgIco.dropHint": {
-    "message": "Drop SVG images here, or click to select",
-    "description": "Hint text inside the dropzone"
+    "message": "Drop SVG images here, or click to select"
   },
   "svgIco.errorNoImage": {
-    "message": "Please select an SVG file.",
-    "description": "Error when no valid SVG files were selected"
+    "message": "Please select an SVG file."
   },
   "svgIco.errorConvert": {
-    "message": "Some images failed to convert.",
-    "description": "Error when conversion fails"
+    "message": "Some images failed to convert."
   },
   "svgIco.fileCount": {
-    "message": "Files",
-    "description": "Label for the number of converted files"
+    "message": "Files"
   },
   "svgIco.original": {
-    "message": "Original",
-    "description": "Label for total original size"
+    "message": "Original"
   },
   "svgIco.converted": {
-    "message": "Converted",
-    "description": "Label for total converted size"
+    "message": "Converted"
   },
   "svgIco.downloadAll": {
-    "message": "Download All",
-    "description": "Button to download all converted images"
+    "message": "Download All"
   },
   "svgIco.clearAll": {
-    "message": "Clear All",
-    "description": "Button to clear all converted images"
+    "message": "Clear All"
   },
   "svgIco.download": {
-    "message": "Save",
-    "description": "Button to download a single converted image"
+    "message": "Save"
   },
   "svgIco.remove": {
-    "message": "Remove",
-    "description": "Button to remove a single converted image"
+    "message": "Remove"
   },
   "svgIco.notesTitle": {
-    "message": "About This Tool",
-    "description": "Title of the notes section"
+    "message": "About This Tool"
   },
   "svgIco.note1": {
-    "message": "Conversion happens entirely in your browser; images are never sent to a server.",
-    "description": "Note 1"
+    "message": "Conversion happens entirely in your browser; images are never sent to a server."
   },
   "svgIco.note2": {
-    "message": "Selecting multiple sizes packs multiple resolutions into a single ICO file (Windows automatically picks the right one for each icon display size).",
-    "description": "Note 2"
+    "message": "Selecting multiple sizes packs multiple resolutions into a single ICO file (Windows automatically picks the right one for each icon display size)."
   },
   "svgIco.note3": {
-    "message": "You can convert multiple images at once.",
-    "description": "Note 3"
+    "message": "You can convert multiple images at once."
   },
   "yamlJson.title": {
-    "message": "Convert Between YAML and JSON",
-    "description": "Title of the YAML/JSON converter page"
+    "message": "Convert Between YAML and JSON"
   },
   "yamlJson.description": {
-    "message": "A tool to convert between YAML and JSON. Processing happens entirely in the browser, so content is never sent to a server.",
-    "description": "Description of the YAML/JSON converter page"
+    "message": "A tool to convert between YAML and JSON. Processing happens entirely in the browser, so content is never sent to a server."
   },
   "yamlJson.subtitle": {
-    "message": "Type into the left pane and the converted result appears on the right. Everything runs in your browser — content is never sent to a server.",
-    "description": "Subtitle on the YAML/JSON converter page"
+    "message": "Type into the left pane and the converted result appears on the right. Everything runs in your browser — content is never sent to a server."
   },
   "yamlJson.yamlLabel": {
-    "message": "YAML",
-    "description": "Label for the YAML pane"
+    "message": "YAML"
   },
   "yamlJson.jsonLabel": {
-    "message": "JSON",
-    "description": "Label for the JSON pane"
+    "message": "JSON"
   },
   "yamlJson.swap": {
-    "message": "Swap conversion direction",
-    "description": "Aria label for the swap button"
+    "message": "Swap conversion direction"
   },
   "yamlJson.copy": {
-    "message": "Copy",
-    "description": "Copy button label"
+    "message": "Copy"
   },
   "yamlJson.copied": {
-    "message": "Copied",
-    "description": "Copy button label after copying"
+    "message": "Copied"
   },
   "yamlJson.errorPrefix": {
-    "message": "Conversion error:",
-    "description": "Prefix shown before a conversion error message"
+    "message": "Conversion error:"
   },
   "yamlJson.notesTitle": {
-    "message": "About This Tool",
-    "description": "Title of the notes section"
+    "message": "About This Tool"
   },
   "yamlJson.note1": {
-    "message": "Conversion happens entirely in your browser; content is never sent to a server.",
-    "description": "Note 1"
+    "message": "Conversion happens entirely in your browser; content is never sent to a server."
   },
   "yamlJson.note2": {
-    "message": "Use the swap button to switch between YAML → JSON and JSON → YAML.",
-    "description": "Note 2"
+    "message": "Use the swap button to switch between YAML → JSON and JSON → YAML."
   },
   "yamlJson.note3": {
-    "message": "If there is a syntax error, the error details appear below the result.",
-    "description": "Note 3"
+    "message": "If there is a syntax error, the error details appear below the result."
   },
   "base64.title": {
-    "message": "Base64 Converter",
-    "description": "Title of the Base64 converter page"
+    "message": "Base64 Converter"
   },
   "base64.description": {
-    "message": "A tool to convert text and files to and from Base64. Processing happens entirely in the browser, so content is never sent to a server.",
-    "description": "Description of the Base64 converter page"
+    "message": "A tool to convert text and files to and from Base64. Processing happens entirely in the browser, so content is never sent to a server."
   },
   "base64.subtitle": {
-    "message": "Type text or drop a file to convert it to Base64. Everything runs in your browser — content is never sent to a server.",
-    "description": "Subtitle on the Base64 converter page"
+    "message": "Type text or drop a file to convert it to Base64. Everything runs in your browser — content is never sent to a server."
   },
   "base64.textSectionTitle": {
-    "message": "Convert Text",
-    "description": "Title of the text conversion section"
+    "message": "Convert Text"
   },
   "base64.encodePlaceholder": {
     "message": "Enter the text to convert",
@@ -765,87 +697,634 @@
     "description": "Placeholder for the decode source textarea"
   },
   "base64.swap": {
-    "message": "Swap conversion direction",
-    "description": "Aria label for the swap button"
+    "message": "Swap conversion direction"
   },
   "base64.copy": {
-    "message": "Copy",
-    "description": "Copy button label"
+    "message": "Copy"
   },
   "base64.copied": {
-    "message": "Copied",
-    "description": "Copy button label after copying"
+    "message": "Copied"
   },
   "base64.base64Label": {
-    "message": "Base64",
-    "description": "Label for the Base64 pane"
+    "message": "Base64"
   },
   "base64.textLabel": {
-    "message": "Text",
-    "description": "Label for the text pane"
+    "message": "Text"
   },
   "base64.errorInvalid": {
-    "message": "This string cannot be interpreted as Base64.",
-    "description": "Error shown when decode input is not valid Base64"
+    "message": "This string cannot be interpreted as Base64."
   },
   "base64.binaryNotice": {
-    "message": "Cannot be displayed as text (it may be binary data). The data: URI and download options are still available.",
-    "description": "Notice shown when decoded bytes are not valid UTF-8 text"
+    "message": "Cannot be displayed as text (it may be binary data). The data: URI and download options are still available."
   },
   "base64.mimeType": {
-    "message": "MIME type",
-    "description": "Label for the MIME type input"
+    "message": "MIME type"
   },
   "base64.copyDataUri": {
-    "message": "Copy data: URI",
-    "description": "Button label to copy the data: URI"
+    "message": "Copy data: URI"
   },
   "base64.fileSectionTitle": {
-    "message": "Convert a File",
-    "description": "Title of the file conversion section"
+    "message": "Convert a File"
   },
   "base64.dropHint": {
-    "message": "Drop a file here, or click to select",
-    "description": "Hint text inside the dropzone"
+    "message": "Drop a file here, or click to select"
   },
   "base64.errorFileRead": {
-    "message": "Failed to read the file.",
-    "description": "Error shown when reading a dropped file fails"
+    "message": "Failed to read the file."
   },
   "base64.clearAll": {
-    "message": "Clear All",
-    "description": "Button to clear all converted files"
+    "message": "Clear All"
   },
   "base64.copyBase64": {
-    "message": "Copy Base64",
-    "description": "Button label to copy the raw Base64 string"
+    "message": "Copy Base64"
   },
   "base64.remove": {
-    "message": "Remove",
-    "description": "Aria label for the remove button"
+    "message": "Remove"
   },
   "base64.notesTitle": {
-    "message": "About This Tool",
-    "description": "Title of the notes section"
+    "message": "About This Tool"
   },
   "base64.note1": {
-    "message": "Conversion happens entirely in your browser; content and files are never sent to a server.",
-    "description": "Note 1"
+    "message": "Conversion happens entirely in your browser; content and files are never sent to a server."
   },
   "base64.note2": {
-    "message": "Pasting a data: URI directly when decoding automatically detects the MIME type.",
-    "description": "Note 2"
+    "message": "Pasting a data: URI directly when decoding automatically detects the MIME type."
   },
   "base64.note3": {
-    "message": "Click [Open in new tab] to view the content directly in the browser via the data: scheme.",
-    "description": "Note 3"
+    "message": "Click [Open in new tab] to view the content directly in the browser via the data: scheme."
   },
   "base64.note4": {
-    "message": "Dropping a file lets you copy or directly open that file's Base64 and data: URI.",
-    "description": "Note 4"
+    "message": "Dropping a file lets you copy or directly open that file's Base64 and data: URI."
   },
   "base64.errorCopy": {
-    "message": "Copy failed. Please select and copy manually.",
-    "description": "Error shown when copying to the clipboard fails"
+    "message": "Copy failed. Please select and copy manually."
+  },
+  "certGen.detailsSummary": {
+    "message": "Show certificate details"
+  },
+  "certGen.detailsSubject": {
+    "message": "Subject"
+  },
+  "certGen.detailsIssuer": {
+    "message": "Issuer"
+  },
+  "certGen.detailsSerial": {
+    "message": "Serial Number"
+  },
+  "certGen.detailsValidity": {
+    "message": "Validity Period"
+  },
+  "certGen.detailsPublicKey": {
+    "message": "Public Key"
+  },
+  "certGen.detailsBasicConstraints": {
+    "message": "Basic Constraints"
+  },
+  "certGen.detailsKeyUsage": {
+    "message": "Key Usage"
+  },
+  "certGen.detailsExtKeyUsage": {
+    "message": "Extended Key Usage"
+  },
+  "certGen.detailsFingerprint": {
+    "message": "Fingerprint (SHA-256)"
+  },
+  "certGen.copied": {
+    "message": "Copied"
+  },
+  "certGen.copy": {
+    "message": "Copy"
+  },
+  "certGen.download": {
+    "message": "Download"
+  },
+  "certGen.privateKeyWarning": {
+    "message": "Keep private keys secure and never share them with anyone."
+  },
+  "certGen.errorCnRequired": {
+    "message": "Please enter a Common Name (CN)."
+  },
+  "certGen.errorGenerate": {
+    "message": "Failed to generate the certificate."
+  },
+  "certGen.errorUploadMissing": {
+    "message": "Please provide both the CA certificate and CA private key."
+  },
+  "certGen.errorUploadMismatch": {
+    "message": "The CA certificate and CA private key do not match."
+  },
+  "certGen.errorUploadParse": {
+    "message": "Failed to load the CA. Check that it is in PEM format, and that the passphrase is correct if the private key is encrypted."
+  },
+  "certGen.errorNoCa": {
+    "message": "No CA is loaded for signing. Generate or upload a root CA first."
+  },
+  "certGen.title": {
+    "message": "Certificate Generator"
+  },
+  "certGen.description": {
+    "message": "A tool to generate a root CA certificate and server certificate (self-signed certificate) in the browser. Nothing, including private keys, is sent to a server."
+  },
+  "certGen.subtitle": {
+    "message": "Generate a root CA certificate and server certificate (self-signed certificate). Everything happens in the browser; nothing, including private keys, is sent to a server."
+  },
+  "certGen.caSectionTitle": {
+    "message": "1. Prepare a Root CA"
+  },
+  "certGen.tabGenerate": {
+    "message": "Generate New"
+  },
+  "certGen.tabUpload": {
+    "message": "Upload Existing CA"
+  },
+  "certGen.cnLabel": {
+    "message": "Common Name (CN)"
+  },
+  "certGen.orgLabel": {
+    "message": "Organization (O, optional)"
+  },
+  "certGen.validityLabel": {
+    "message": "Validity Period (days)"
+  },
+  "certGen.keyBitsLabel": {
+    "message": "Key Size"
+  },
+  "certGen.generating": {
+    "message": "Generating..."
+  },
+  "certGen.generateCaBtn": {
+    "message": "Generate Root CA"
+  },
+  "certGen.caCertLabel": {
+    "message": "CA Certificate (PEM)"
+  },
+  "certGen.caKeyLabel": {
+    "message": "CA Private Key (PEM)"
+  },
+  "certGen.caUploadDropHint": {
+    "message": "Drop the CA certificate and CA private key files here, or click to select (a single combined file is also supported)"
+  },
+  "certGen.caUploadCertLabel": {
+    "message": "CA Certificate (PEM)"
+  },
+  "certGen.caUploadKeyLabel": {
+    "message": "CA Private Key (PEM)"
+  },
+  "certGen.caUploadPassphraseLabel": {
+    "message": "Private key passphrase (only if encrypted)"
+  },
+  "certGen.caUploadLoadBtn": {
+    "message": "Load CA"
+  },
+  "certGen.caUploadClearBtn": {
+    "message": "Clear"
+  },
+  "certGen.caUploadLoaded": {
+    "message": "Loaded:"
+  },
+  "certGen.caUploadNotCaWarning": {
+    "message": "This certificate is not configured as a CA (basicConstraints: cA=true). It can still sign certificates, but many clients may not trust it."
+  },
+  "certGen.serverSectionTitle": {
+    "message": "2. Generate a Server Certificate"
+  },
+  "certGen.sanLabel": {
+    "message": "SAN (Subject Alternative Name, comma or newline separated; supports domain names and IP addresses)"
+  },
+  "certGen.signModeLabel": {
+    "message": "Signing Method"
+  },
+  "certGen.signModeSelf": {
+    "message": "Self-signed"
+  },
+  "certGen.signModeSelfDesc": {
+    "message": "The simplest method, where the certificate is its own issuer. No CA is required, but browsers and OSes don't recognize the issuer, so a warning appears every time it's accessed. Suited for testing a single server on your own."
+  },
+  "certGen.signModeCaGenerated": {
+    "message": "Sign with the generated root CA"
+  },
+  "certGen.readyBadge": {
+    "message": "✓ Ready"
+  },
+  "certGen.signModeCaGeneratedHint": {
+    "message": "Not ready — generate a root CA above first"
+  },
+  "certGen.signModeCaDesc": {
+    "message": "Sign with the private key of the CA generated (or uploaded) in the section above. Once the CA certificate is imported into an OS or browser as a trusted root certification authority, every server certificate signed by that CA is trusted without warnings. Suited for issuing and managing certificates for multiple servers or domains under a single CA."
+  },
+  "certGen.signModeCaUploaded": {
+    "message": "Sign with the uploaded CA"
+  },
+  "certGen.signModeCaUploadedHint": {
+    "message": "Not ready — upload a CA above first"
+  },
+  "certGen.signModeCaUploadedDesc": {
+    "message": "Upload the certificate and private key of an existing CA (e.g., one generated in a previous session of this tool, or a CA shared within your team) and sign with it. It works the same way as \"Sign with the generated root CA\", but lets you reuse a CA that is already imported into a trust store."
+  },
+  "certGen.generateServerBtn": {
+    "message": "Generate Server Certificate"
+  },
+  "certGen.serverKeyLabel": {
+    "message": "Server Private Key (PEM)"
+  },
+  "certGen.serverCertLabel": {
+    "message": "Server Certificate (PEM)"
+  },
+  "certGen.chainCaCertLabel": {
+    "message": "CA Certificate (PEM) — for importing into a trust store"
+  },
+  "certGen.notesTitle": {
+    "message": "About This Tool"
+  },
+  "certGen.note1": {
+    "message": "Certificate generation happens entirely in the browser; nothing, including private keys, is sent to a server."
+  },
+  "certGen.note2": {
+    "message": "Reloading the page discards the generated keys and certificates, so download them if you need to keep them."
+  },
+  "certGen.note3": {
+    "message": "To have a browser or OS trust a server certificate signed by the root CA, the CA certificate must be imported as a trusted root certification authority."
+  },
+  "certGen.note4": {
+    "message": "Certificates generated by this tool are intended for local development and testing. Use certificates issued by a certificate authority in production."
+  },
+  "hash.copied": {
+    "message": "Copied"
+  },
+  "hash.copy": {
+    "message": "Copy"
+  },
+  "hash.errorInsecureContext": {
+    "message": "Computing hashes requires the Web Crypto API, which is unavailable outside HTTPS or localhost."
+  },
+  "hash.errorCompute": {
+    "message": "Failed to compute the hash value."
+  },
+  "hash.errorCopy": {
+    "message": "Failed to copy. Please select and copy manually."
+  },
+  "hash.errorFileRead": {
+    "message": "Failed to read the file."
+  },
+  "hash.title": {
+    "message": "Hash Calculator"
+  },
+  "hash.description": {
+    "message": "A tool to compute hash values (such as SHA-256) for text or files. Processing happens in the browser, so nothing is sent to a server."
+  },
+  "hash.subtitle": {
+    "message": "Enter text or drop a file to compute its hash value. Everything happens in the browser; nothing is sent to a server."
+  },
+  "hash.textSectionTitle": {
+    "message": "Compute Text's Hash"
+  },
+  "hash.fileSectionTitle": {
+    "message": "Compute a File's Hash"
+  },
+  "hash.dropHint": {
+    "message": "Drop a file here, or click to select"
+  },
+  "hash.clearAll": {
+    "message": "Clear All"
+  },
+  "hash.remove": {
+    "message": "Remove"
+  },
+  "hash.notesTitle": {
+    "message": "About This Tool"
+  },
+  "hash.note1": {
+    "message": "Computation happens entirely in the browser; nothing you enter or upload is sent to a server."
+  },
+  "hash.note2": {
+    "message": "SHA-1, SHA-256, SHA-384, and SHA-512 are supported. MD5 cannot be computed because the browser's standard API (Web Crypto API) doesn't support it."
+  },
+  "hash.note3": {
+    "message": "When verifying file integrity, using SHA-256 or a stronger algorithm is recommended."
+  },
+  "miniApps.pageTitle": {
+    "message": "Mini Apps"
+  },
+  "miniApps.pageDescription": {
+    "message": "A collection of small tools that run entirely in the browser."
+  },
+  "miniApps.subtitle": {
+    "message": "A collection of small tools that run entirely in the browser. None of them send any content to a server."
+  },
+  "nslookup.errorNetwork": {
+    "message": "Failed to connect to the server."
+  },
+  "nslookup.loading": {
+    "message": "Loading..."
+  },
+  "nslookup.noRecords": {
+    "message": "No records"
+  },
+  "nslookup.nxdomain": {
+    "message": "Domain not found"
+  },
+  "nslookup.errorGeneric": {
+    "message": "The lookup failed."
+  },
+  "nslookup.title": {
+    "message": "nslookup (DNS Lookup)"
+  },
+  "nslookup.description": {
+    "message": "A tool to look up a domain's DNS records (A, AAAA, MX, TXT, NS, CNAME)."
+  },
+  "nslookup.subtitle": {
+    "message": "Enter a domain name to look up its DNS records (A, AAAA, MX, TXT, NS, CNAME)."
+  },
+  "nslookup.placeholder": {
+    "message": "e.g., example.com"
+  },
+  "nslookup.searching": {
+    "message": "Searching..."
+  },
+  "nslookup.search": {
+    "message": "Search"
+  },
+  "nslookup.notesTitle": {
+    "message": "About This Tool"
+  },
+  "nslookup.note1": {
+    "message": "Lookups are performed directly from the browser using DNS over HTTPS (Cloudflare's 1.1.1.1) and are not sent to a server."
+  },
+  "nslookup.note2": {
+    "message": "Six record types are supported: A, AAAA, MX, TXT, NS, and CNAME."
+  },
+  "nslookup.note3": {
+    "message": "DNS changes may take time to propagate (due to TTL caching), so results may not always reflect the latest configuration."
+  },
+  "passwordGenerator.title": {
+    "message": "Password Generator"
+  },
+  "passwordGenerator.description": {
+    "message": "A tool to generate secure passphrases and passwords. Processing happens in the browser, so nothing is sent to a server."
+  },
+  "passwordGenerator.subtitle": {
+    "message": "Generate secure passphrases and passwords."
+  },
+  "passwordGenerator.tabPassphrase": {
+    "message": "Passphrase (recommended)"
+  },
+  "passwordGenerator.tabRandom": {
+    "message": "Random String"
+  },
+  "passwordGenerator.entropy": {
+    "message": "Estimated Entropy"
+  },
+  "passwordGenerator.generate": {
+    "message": "Generate"
+  },
+  "passwordGenerator.copied": {
+    "message": "Copied"
+  },
+  "passwordGenerator.copy": {
+    "message": "Copy"
+  },
+  "passwordGenerator.wordLanguage": {
+    "message": "Word Language"
+  },
+  "passwordGenerator.wordLanguageEn": {
+    "message": "English"
+  },
+  "passwordGenerator.wordLanguageJa": {
+    "message": "Japanese (Romaji)"
+  },
+  "passwordGenerator.wordCount": {
+    "message": "Word Count"
+  },
+  "passwordGenerator.separator": {
+    "message": "Separator"
+  },
+  "passwordGenerator.separatorSpace": {
+    "message": "Space"
+  },
+  "passwordGenerator.separatorNone": {
+    "message": "None (capitalize first letter)"
+  },
+  "passwordGenerator.addNumber": {
+    "message": "Add a number"
+  },
+  "passwordGenerator.addSymbol": {
+    "message": "Add a symbol"
+  },
+  "passwordGenerator.length": {
+    "message": "Length"
+  },
+  "passwordGenerator.upper": {
+    "message": "Uppercase (A-Z)"
+  },
+  "passwordGenerator.lower": {
+    "message": "Lowercase (a-z)"
+  },
+  "passwordGenerator.digits": {
+    "message": "Digits (0-9)"
+  },
+  "passwordGenerator.symbols": {
+    "message": "Symbols (!@#$ etc.)"
+  },
+  "passwordGenerator.tipsTitle": {
+    "message": "Password Tips"
+  },
+  "passwordGenerator.tip1": {
+    "message": "Aim for at least 15 characters. 20 or more is even safer."
+  },
+  "passwordGenerator.tip2": {
+    "message": "A long passphrase is stronger than a short, complex password."
+  },
+  "passwordGenerator.tip3": {
+    "message": "Use a completely different password for each service. If one leaks, reused passwords on other services can be compromised too."
+  },
+  "passwordGenerator.tip4": {
+    "message": "Combining a few unrelated words makes a passphrase that's both long and easy to remember."
+  },
+  "passwordGenerator.tip5": {
+    "message": "Generated strings are processed only in the browser and are never sent to a server."
+  },
+  "tsvMarkdown.sourceLabel": {
+    "message": "Excel / TSV"
+  },
+  "tsvMarkdown.outputLabel": {
+    "message": "Markdown"
+  },
+  "tsvMarkdown.copied": {
+    "message": "Copied"
+  },
+  "tsvMarkdown.copy": {
+    "message": "Copy"
+  },
+  "tsvMarkdown.title": {
+    "message": "TSV to Markdown Table Converter"
+  },
+  "tsvMarkdown.description": {
+    "message": "A tool to convert tab-separated text copied from Excel into a Markdown table. Processing happens in the browser, so nothing is sent to a server."
+  },
+  "tsvMarkdown.subtitle": {
+    "message": "Paste a cell range copied from Excel on the left, and the Markdown table appears on the right. Everything happens in the browser; nothing is sent to a server."
+  },
+  "tsvMarkdown.notesTitle": {
+    "message": "About This Tool"
+  },
+  "tsvMarkdown.note1": {
+    "message": "You can copy a cell range selected in Excel or a spreadsheet and paste it directly (it's treated as tab-separated text)."
+  },
+  "tsvMarkdown.note2": {
+    "message": "The first row is treated as the header row."
+  },
+  "tsvMarkdown.note3": {
+    "message": "A `|` character within a cell is automatically escaped."
+  },
+  "tsvMarkdown.note4": {
+    "message": "Conversion happens entirely in the browser; nothing you enter is sent to a server."
+  },
+  "uuid.title": {
+    "message": "UUID Generator"
+  },
+  "uuid.description": {
+    "message": "A tool to generate UUIDs (v4). Processing happens in the browser, so nothing is sent to a server."
+  },
+  "uuid.subtitle": {
+    "message": "Generate UUIDs (v4)."
+  },
+  "uuid.generate": {
+    "message": "Generate"
+  },
+  "uuid.copied": {
+    "message": "Copied"
+  },
+  "uuid.copy": {
+    "message": "Copy"
+  },
+  "whois.copied": {
+    "message": "Copied"
+  },
+  "whois.copy": {
+    "message": "Copy"
+  },
+  "whois.errorGeneric": {
+    "message": "The lookup failed."
+  },
+  "whois.errorNetwork": {
+    "message": "Failed to connect to the server. Please try again later."
+  },
+  "whois.title": {
+    "message": "WHOIS Lookup"
+  },
+  "whois.description": {
+    "message": "A tool to look up WHOIS information (registrant, name servers, etc.) for a domain name."
+  },
+  "whois.subtitle": {
+    "message": "Enter a domain name to look up its WHOIS information (registrant, name servers, expiration date, etc.)."
+  },
+  "whois.placeholder": {
+    "message": "e.g., example.com"
+  },
+  "whois.searching": {
+    "message": "Searching..."
+  },
+  "whois.search": {
+    "message": "Search"
+  },
+  "whois.resultTitle": {
+    "message": "WHOIS Information"
+  },
+  "whois.registrarResultTitle": {
+    "message": "Registrar WHOIS Information"
+  },
+  "whois.notesTitle": {
+    "message": "About This Tool"
+  },
+  "whois.note1": {
+    "message": "Lookups are performed server-side using the WHOIS protocol (port 43). No information other than the domain name entered is stored on the server."
+  },
+  "whois.note2": {
+    "message": "When the registry and the registrar managing the registrant information use different WHOIS servers, both results are shown."
+  },
+  "whois.note3": {
+    "message": "For some domains, registrant information is anonymized by a privacy protection service."
+  },
+  "theme.fontSwitcher.bizGothic": {
+    "message": "BIZ UDP ゴシック"
+  },
+  "theme.fontSwitcher.bizMincho": {
+    "message": "BIZ UDP 明朝"
+  },
+  "theme.IconExternalLink.ariaLabel": {
+    "message": "(opens in new tab)",
+    "description": "The ARIA label for the external link icon"
+  },
+  "miniApps.webp.title": {
+    "message": "WebP Converter"
+  },
+  "miniApps.webp.description": {
+    "message": "Convert images to WebP format."
+  },
+  "miniApps.svgIco.title": {
+    "message": "SVG2ICO"
+  },
+  "miniApps.svgIco.description": {
+    "message": "Convert SVG images to ICO format."
+  },
+  "miniApps.yamlJson.title": {
+    "message": "YAML⇄JSON"
+  },
+  "miniApps.yamlJson.description": {
+    "message": "Convert between YAML and JSON."
+  },
+  "miniApps.base64.title": {
+    "message": "Base64 Converter"
+  },
+  "miniApps.base64.description": {
+    "message": "Convert text or files to and from Base64."
+  },
+  "miniApps.hash.title": {
+    "message": "Hash Calculator"
+  },
+  "miniApps.hash.description": {
+    "message": "Compute hash values (such as SHA-256) for text or files."
+  },
+  "miniApps.certGen.title": {
+    "message": "Certificate Generator"
+  },
+  "miniApps.certGen.description": {
+    "message": "Generate a root CA certificate and server certificate (self-signed certificate)."
+  },
+  "miniApps.uuid.title": {
+    "message": "UUID Generator"
+  },
+  "miniApps.uuid.description": {
+    "message": "Generate UUIDs (v4)."
+  },
+  "miniApps.passwordGenerator.title": {
+    "message": "Password Generator"
+  },
+  "miniApps.passwordGenerator.description": {
+    "message": "Generate secure passphrases and passwords."
+  },
+  "miniApps.tsvMarkdown.title": {
+    "message": "TSV to Markdown Converter"
+  },
+  "miniApps.tsvMarkdown.description": {
+    "message": "Convert tab-separated text copied from Excel into a Markdown table."
+  },
+  "miniApps.whois.title": {
+    "message": "WHOIS Lookup"
+  },
+  "miniApps.whois.description": {
+    "message": "Look up WHOIS information (registrant, name servers, etc.) for a domain name."
+  },
+  "miniApps.nslookup.title": {
+    "message": "nslookup (DNS Lookup)"
+  },
+  "miniApps.nslookup.description": {
+    "message": "Look up a domain's DNS records (A, AAAA, MX, TXT, NS, CNAME)."
+  },
+  "miniApps.chat.title": {
+    "message": "Chat"
+  },
+  "miniApps.chat.description": {
+    "message": "A chat that lets you converse with AI."
   }
 }

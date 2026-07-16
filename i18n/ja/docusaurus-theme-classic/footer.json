@@ -29,7 +29,7 @@
   },
   "link.item.label.Blog": {
     "message": "技術ブログ",
-    "description": "The label of footer link with label=Blog linking to /blog"
+    "description": "The label of footer link with label=Blog linking to /"
   },
   "item.label.Like": {
     "message": "趣味部屋",
