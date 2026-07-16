@@ -94,6 +94,19 @@ export default function FontSwitcher(): JSX.Element | null {
             <Translate id="theme.fontSwitcher.bizMincho">BIZ UDP 明朝</Translate>
           </a>
         </li>
+        <li>
+          <a
+            className={clsx('dropdown__link', {
+              'dropdown__link--active': font === 'ms-yahei',
+            })}
+            href="#"
+            onClick={(e) => {
+              e.preventDefault();
+              changeFont('ms-yahei');
+            }}>
+            <Translate id="theme.fontSwitcher.msYahei">Microsoft Yahei</Translate>
+          </a>
+        </li>
       </ul>
     </div>
   );

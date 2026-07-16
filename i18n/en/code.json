@@ -1326,5 +1326,8 @@
   },
   "miniApps.chat.description": {
     "message": "A chat that lets you converse with AI."
+  },
+  "theme.fontSwitcher.msYahei": {
+    "message": "Microsoft Yahei"
   }
 }

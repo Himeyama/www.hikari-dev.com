@@ -169,6 +169,24 @@ html:not([lang="ja"]) .navbar__item--ja-only {
   font-family: 'BIZ UDPGothic', sans-serif;
 }
 
+/* Microsoft Yahei (微软雅黑) */
+[data-font='ms-yahei'] {
+  --ifm-font-family-base: 'Microsoft Yahei', '微软雅黑', sans-serif;
+  --article-serif-font: 'Microsoft Yahei', '微软雅黑', sans-serif;
+  --article-serif-bold-font: 'Microsoft Yahei', '微软雅黑', sans-serif;
+}
+
+[data-font='ms-yahei'] article strong,
+[data-font='ms-yahei'] article b,
+[data-font='ms-yahei'] article h1,
+[data-font='ms-yahei'] article h2,
+[data-font='ms-yahei'] article h3,
+[data-font='ms-yahei'] article h4,
+[data-font='ms-yahei'] article h5,
+[data-font='ms-yahei'] article h6 {
+  font-family: 'Microsoft Yahei', '微软雅黑', sans-serif;
+}
+
 /* チャットページではフッターを非表示 */
 .chat-page-wrapper ~ footer {
   display: none;

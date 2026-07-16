@@ -1320,5 +1320,8 @@
   },
   "miniApps.chat.description": {
     "message": "AI と対話できるチャット。"
+  },
+  "theme.fontSwitcher.msYahei": {
+    "message": "Microsoft Yahei"
   }
 }

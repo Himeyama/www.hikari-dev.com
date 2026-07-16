@@ -1326,5 +1326,8 @@
   },
   "miniApps.chat.description": {
     "message": "可與 AI 對話的聊天工具。"
+  },
+  "theme.fontSwitcher.msYahei": {
+    "message": "微軟雅黑"
   }
 }
