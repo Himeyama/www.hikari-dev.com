@@ -186,6 +186,7 @@ function DocApp(): ReactNode {
   const [dragging, setDragging] = useState(false);
   const bodyRef = useRef<HTMLDivElement>(null);
   const editorRef = useRef<MonacoEditor | null>(null);
+  const previewRef = useRef<HTMLDivElement>(null);
   const [marks, setMarks] = useState({bold: false, italic: false, strike: false});
   const [hasSelection, setHasSelection] = useState(false);
 
@@ -228,6 +229,16 @@ function DocApp(): ReactNode {
       endColumn: e.column,
     });
     editor.focus();
+  };
+
+  // エディタのスクロール量に応じてプレビューの縦スクロールを同じ割合だけ動かす
+  const syncPreviewScroll = () => {
+    const editor = editorRef.current;
+    const preview = previewRef.current;
+    if (!editor || !preview) return;
+    const scrollHeight = editor.getScrollHeight() - editor.getLayoutInfo().height;
+    const ratio = scrollHeight > 0 ? editor.getScrollTop() / scrollHeight : 0;
+    preview.scrollTop = ratio * (preview.scrollHeight - preview.clientHeight);
   };
 
   const html = useMemo(
@@ -355,6 +366,7 @@ function DocApp(): ReactNode {
             onMount={(editor) => {
               editorRef.current = editor;
               editor.onDidChangeCursorSelection(refreshMarks);
+              editor.onDidScrollChange(syncPreviewScroll);
             }}
           />
         </div>
@@ -372,6 +384,7 @@ function DocApp(): ReactNode {
         <div className={styles.previewPane}>
           {tab === 'preview' ? (
             <div
+              ref={previewRef}
               className={`${styles.previewScroll} markdown`}
               dangerouslySetInnerHTML={{__html: html}}
             />
