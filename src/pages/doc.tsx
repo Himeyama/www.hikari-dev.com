@@ -422,7 +422,7 @@ function DocApp(): ReactNode {
     [source, tab],
   );
   const ooxml = useMemo(
-    () => (tab === 'ooxml' ? markdownToDocumentXml(source, font) : ''),
+    () => (tab === 'ooxml' ? markdownToDocumentXml(source, font).xml : ''),
     [source, tab, font],
   );
 
@@ -450,7 +450,8 @@ function DocApp(): ReactNode {
   const downloadDocx = async () => {
     setDownloading(true);
     try {
-      const blob = await buildDocxBlob(markdownToDocumentXml(source, font), font);
+      const {xml, orderedListStarts} = markdownToDocumentXml(source, font);
+      const blob = await buildDocxBlob(xml, font, orderedListStarts);
       downloadBlob('document.docx', blob);
     } finally {
       setDownloading(false);

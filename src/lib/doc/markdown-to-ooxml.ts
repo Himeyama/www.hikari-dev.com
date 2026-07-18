@@ -1,5 +1,6 @@
 import MarkdownIt from 'markdown-it';
 import type {FontOption} from './fonts';
+import {BULLET_NUM_ID} from './docx-package';
 
 type Token = ReturnType<MarkdownIt['parse']>[number];
 
@@ -228,22 +229,41 @@ function buildTable(rows: string[], columnCount: number): string {
   ].join('\n');
 }
 
-export function markdownToDocumentXml(src: string, font: FontOption): string {
+export interface MarkdownToDocumentXmlResult {
+  xml: string;
+  // <ol> の出現順の開始番号。docx-package.ts の buildNumberingXml に渡し、
+  // リストごとに独立した numId (開始番号込み) を割り当てるために使う
+  orderedListStarts: number[];
+}
+
+export function markdownToDocumentXml(src: string, font: FontOption): MarkdownToDocumentXmlResult {
   const boldFonts: BoldFonts = {eastAsia: font.boldEastAsia, latin: font.boldLatin};
   const tokens = md.parse(src, {});
   const paragraphs: string[] = [];
-  const listStack: {type: 'bullet' | 'ordered'; counter: number}[] = [];
-  let pendingMarker: string | null = null;
+  // bullet は共有 numId + ネスト深さの ilvl で階層化する。ordered は <ol> ごとに独立した
+  // numId を割り当てる (開始番号を持てるのは ilvl=0 のみのため、常に ilvl=0 で使う)
+  const listStack: {numId: number; ilvl: number}[] = [];
+  const orderedListStarts: number[] = [];
+  let nextOrderedNumId = 2; // 1 = BULLET_NUM_ID (docx-package.ts) で固定のため 2 から採番
+  // リスト項目の先頭段落だけに w:numPr (自動採番/箇条書き記号) を適用する。2 段落目以降は
+  // マーカーを重複させないため null のままにする
+  let pendingNumPr: {numId: number; ilvl: number} | null = null;
   let blockquoteDepth = 0;
   let inHeaderRow = false;
   let tableRows: string[] = [];
   let rowCells: string[] = [];
   let tableColumnCount = 0;
 
-  // w:pPr の子要素はスキーマ順 (pBdr → shd → spacing → ind) に並べる
+  // w:pPr の子要素はスキーマ順 (numPr → pBdr → shd → spacing → ind) に並べる
   const blockContext = (extraPPr: string[] = []): {pPr: string; base: RunStyle} => {
     const parts: string[] = [];
     const base: RunStyle = {};
+    if (pendingNumPr !== null) {
+      parts.push(
+        `<w:numPr><w:ilvl w:val="${pendingNumPr.ilvl}"/><w:numId w:val="${pendingNumPr.numId}"/></w:numPr>`,
+      );
+      pendingNumPr = null;
+    }
     if (blockquoteDepth > 0) {
       parts.push('<w:pBdr><w:left w:val="single" w:sz="12" w:space="8" w:color="AAAAAA"/></w:pBdr>');
       base.color = '666666';
@@ -258,12 +278,7 @@ export function markdownToDocumentXml(src: string, font: FontOption): string {
 
   const pushInlineParagraph = (inline: Token) => {
     const {pPr, base} = blockContext();
-    const children: string[] = [];
-    if (pendingMarker !== null) {
-      children.push(textRun(pendingMarker, base, boldFonts));
-      pendingMarker = null;
-    }
-    children.push(...renderRuns(inline.children ?? [], base, boldFonts));
+    const children = renderRuns(inline.children ?? [], base, boldFonts);
     paragraphs.push(buildParagraph(pPr, children));
   };
 
@@ -273,8 +288,10 @@ export function markdownToDocumentXml(src: string, font: FontOption): string {
       case 'heading_open': {
         const level = Number(t.tag.slice(1)) || 1;
         const inline = tokens[i + 1];
+        // 太字は Heading スタイル (docx-package.ts の buildStylesXml) 側で既に設定済みのため、
+        // ここでも w:b を出すと mammoth 等で見出しが <strong> 二重ラップされ "# **見出し**" のように
+        // インポートされてしまう。run には size のみ持たせる
         const base: RunStyle = {
-          bold: true,
           italic: level >= 6,
           size: HEADING_SIZES[level - 1] ?? 22,
         };
@@ -298,18 +315,26 @@ export function markdownToDocumentXml(src: string, font: FontOption): string {
         break;
       }
       case 'bullet_list_open':
-        listStack.push({type: 'bullet', counter: 1});
+        // 箇条書きは numId を共有し、ネスト深さを ilvl (0-8) で表現して階層化する
+        listStack.push({numId: BULLET_NUM_ID, ilvl: Math.min(listStack.length, 8)});
         break;
-      case 'ordered_list_open':
-        listStack.push({type: 'ordered', counter: Number(t.attrGet('start') ?? '1') || 1});
+      case 'ordered_list_open': {
+        // <ol> ごとに独立した numId を割り当て、開始番号 (attrGet('start')) を
+        // numbering.xml 側の startOverride (ilvl=0 のみ) に渡すことで、リストごとに正しく
+        // 番号が振り直される。そのため ordered は常に ilvl=0 で使う
+        const start = Number(t.attrGet('start') ?? '1') || 1;
+        const numId = nextOrderedNumId++;
+        orderedListStarts.push(start);
+        listStack.push({numId, ilvl: 0});
         break;
+      }
       case 'bullet_list_close':
       case 'ordered_list_close':
         listStack.pop();
         break;
       case 'list_item_open': {
         const list = listStack[listStack.length - 1];
-        pendingMarker = list?.type === 'ordered' ? `${list.counter++}. ` : '• ';
+        pendingNumPr = list ? {numId: list.numId, ilvl: list.ilvl} : null;
         break;
       }
       case 'blockquote_open':
@@ -390,7 +415,7 @@ export function markdownToDocumentXml(src: string, font: FontOption): string {
     }
   }
 
-  return [
+  const xml = [
     '<?xml version="1.0" encoding="UTF-8" standalone="yes"?>',
     '<w:document xmlns:w="http://schemas.openxmlformats.org/wordprocessingml/2006/main">',
     '  <w:body>',
@@ -400,4 +425,5 @@ export function markdownToDocumentXml(src: string, font: FontOption): string {
     '</w:document>',
     '',
   ].join('\n');
+  return {xml, orderedListStarts};
 }
