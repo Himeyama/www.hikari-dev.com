@@ -281,7 +281,10 @@ export function markdownToDocumentXml(src: string, font: FontOption): string {
         const runs =
           inline?.type === 'inline' ? renderRuns(inline.children ?? [], base, boldFonts) : [];
         paragraphs.push(
-          buildParagraph('<w:pPr><w:spacing w:before="240" w:after="120"/></w:pPr>', runs),
+          buildParagraph(
+            `<w:pPr><w:pStyle w:val="Heading${level}"/><w:spacing w:before="240" w:after="120"/></w:pPr>`,
+            runs,
+          ),
         );
         i += 2;
         break;

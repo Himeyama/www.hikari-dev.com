@@ -28,11 +28,30 @@ function escapeXmlAttr(s: string): string {
   return s.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
 }
 
+// 見出しレベル別フォントサイズ (半ポイント: 20/16/14/12/11/11pt)。markdown-to-ooxml.ts の
+// HEADING_SIZES と同じ値を Heading1-6 スタイルの sz にも設定し、pStyle 未反映の環境でも体裁が崩れないようにする
+const HEADING_STYLE_SIZES = [40, 32, 28, 24, 22, 22];
+
 // docDefaults だけでは Word 内蔵の既定 Normal スタイルに優先度で負けて無視されることがあるため、
 // Normal 段落スタイルにも明示的に同じ rFonts を設定し、本文フォントを確実に反映させる
 function buildStylesXml(family: string): string {
   const f = escapeXmlAttr(family);
   const rFonts = `<w:rFonts w:ascii="${f}" w:hAnsi="${f}" w:eastAsia="${f}"/>`;
+  // w:pStyle="HeadingN" が Word の「見出し」段落スタイルとして認識されるよう、
+  // Heading1-6 を明示的に定義する (これが無いと見出しがナビゲーション/目次に反映されない)
+  const headingStyles = HEADING_STYLE_SIZES.map((size, idx) => {
+    const level = idx + 1;
+    return `  <w:style w:type="paragraph" w:styleId="Heading${level}">
+    <w:name w:val="heading ${level}"/>
+    <w:basedOn w:val="Normal"/>
+    <w:next w:val="Normal"/>
+    <w:qFormat/>
+    <w:pPr>
+      <w:outlineLvl w:val="${idx}"/>
+    </w:pPr>
+    <w:rPr>${rFonts}<w:b/><w:sz w:val="${size}"/></w:rPr>
+  </w:style>`;
+  }).join('\n');
   return `<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <w:styles xmlns:w="http://schemas.openxmlformats.org/wordprocessingml/2006/main">
   <w:docDefaults>
@@ -45,6 +64,7 @@ function buildStylesXml(family: string): string {
     <w:qFormat/>
     <w:rPr>${rFonts}</w:rPr>
   </w:style>
+${headingStyles}
 </w:styles>
 `;
 }
