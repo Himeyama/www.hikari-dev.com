@@ -202,6 +202,8 @@ module.exports = function gaRankingPlugin(context) {
         if (!filePath) continue;
 
         const content = fs.readFileSync(filePath, 'utf-8');
+        if (/^draft:\s*true\s*$/m.test(content)) continue;
+
         const titleMatch = content.match(/^title:\s*(.+)$/m);
         const rawTitle = titleMatch ? titleMatch[1].trim() : slug;
         const title = rawTitle.replace(/^['"]|['"]$/g, '');
