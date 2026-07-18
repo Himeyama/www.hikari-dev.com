@@ -3,7 +3,7 @@ title: SSH Local Forward 備忘錄
 description: 關於 SSH Local Forward 的備忘錄
 authors: hikari
 tags: [SSH, 隧道, 本地轉發]
-image: /img/ogp/2024-02-26-ssh-localforward.png
+image: /img/ogp/2024-02-26-ssh-localforward.webp
 ---
 
 這篇備忘錄記錄了 SSH Local Forward。

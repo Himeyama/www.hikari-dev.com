@@ -2,7 +2,7 @@
 title: EC2 Instance Connect 在 Windows 上無法在沒有金鑰時連線
 authors: hikari
 tags: [AWS]
-image: /img/ogp/2025-06-11-eic-disconnect.png
+image: /img/ogp/2025-06-11-eic-disconnect.webp
 ---
 
 ## 在 Windows 上無法連線到 Instance Connect

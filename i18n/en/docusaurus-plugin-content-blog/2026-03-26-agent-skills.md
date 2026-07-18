@@ -2,7 +2,7 @@
 title: What Are AI Agent Skills? How They Work, Explained Simply
 authors: hikari
 tags: [AI, Claude]
-image: /img/ogp/2026-03-26-agent-skills.png
+image: /img/ogp/2026-03-26-agent-skills.webp
 ---
 
 Adding "skills" to an AI agent lets you extend its capabilities, just like installing a plugin for an app. This article explains how Agent Skills work and what an agent actually does internally when using them.

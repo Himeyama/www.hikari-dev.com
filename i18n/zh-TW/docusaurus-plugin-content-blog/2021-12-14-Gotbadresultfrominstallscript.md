@@ -3,7 +3,7 @@ title: 從安裝腳本中得到錯誤的結果
 description: 關於我從安裝腳本中得到錯誤結果的備忘錄
 authors: hikari
 tags: [錯誤, 安裝]
-image: /img/ogp/2021-12-14-Gotbadresultfrominstallscript.png
+image: /img/ogp/2021-12-14-Gotbadresultfrominstallscript.webp
 ---
 
 這篇備忘錄記錄了當我從安裝腳本中得到錯誤結果時的解決方法。

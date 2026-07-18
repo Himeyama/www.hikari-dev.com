@@ -3,7 +3,7 @@ title: Installing ImageMagick (Ubuntu)
 tags: [Image Processing, Ruby, Linux]
 description: How to install ImageMagick
 date: "2021-6-13"
-image: /img/ogp/2021-06-13-install-magick.png
+image: /img/ogp/2021-06-13-install-magick.webp
 ---
 
 # Download the source

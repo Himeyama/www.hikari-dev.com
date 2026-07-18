@@ -1,7 +1,7 @@
 ---
 title: 透過 rbenv 安裝的 Ruby 在 Webrick 上 CGI 無法運作的解決方法
 tags: [Ruby]
-image: /img/ogp/2021-08-05-webrick-cgi-path.png
+image: /img/ogp/2021-08-05-webrick-cgi-path.webp
 ---
 
 # 概要

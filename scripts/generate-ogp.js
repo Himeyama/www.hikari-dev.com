@@ -1,6 +1,6 @@
 /**
  * タグ・タイトル付き OGP 画像を生成する Node.js スクリプト。
- * satori (SVG生成) + @resvg/resvg-js (PNG変換) を使用。
+ * satori (SVG生成) + @resvg/resvg-js (PNGラスタライズ) + sharp (WebP変換、品質80) を使用。
  * フォント: NotoSansJP を初回実行時に jsDelivr CDN からダウンロードしてキャッシュ。
  * 実行: node scripts/generate-ogp.js
  */
@@ -10,6 +10,9 @@ const fs = require('fs');
 const path = require('path');
 const https = require('https');
 const { Resvg } = require('@resvg/resvg-js');
+const sharp = require('sharp');
+
+const WEBP_QUALITY = 80;
 
 // タグ別グラデーション色 [topRGB, bottomRGB]
 const TAG_COLORS = {
@@ -206,7 +209,7 @@ async function main() {
       if (!fmMatch) continue;
 
       const slug = slugFromFile(file);
-      const autoImgPath = `${prefix}/${slug}.png`;
+      const autoImgPath = `${prefix}/${slug}.webp`;
       const fm = fmMatch[1];
 
       // カスタム画像が設定されている場合はスキップ
@@ -227,9 +230,10 @@ async function main() {
         const svg = await satori(el, { width: W, height: H, fonts });
         const resvg = new Resvg(svg);
         const png = Buffer.from(resvg.render().asPng());
-        fs.writeFileSync(path.join(OGP_DIR, `${slug}.png`), png);
+        const webp = await sharp(png).webp({ quality: WEBP_QUALITY }).toBuffer();
+        fs.writeFileSync(path.join(OGP_DIR, `${slug}.webp`), webp);
         processed.add(slug);
-        console.log(`GEN [${tags[0] || 'default'}] ${slug}.png`);
+        console.log(`GEN [${tags[0] || 'default'}] ${slug}.webp`);
       }
 
       if (!fm.includes('image:')) {

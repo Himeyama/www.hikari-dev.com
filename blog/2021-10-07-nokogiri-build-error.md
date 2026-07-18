@@ -2,7 +2,7 @@
 title: brew 環境下で nokogiri をインストールできないとき
 date: '2021-10-07 01:32'
 authors: hikari
-image: /img/ogp/2021-10-07-nokogiri-build-error.png
+image: /img/ogp/2021-10-07-nokogiri-build-error.webp
 ---
 
 # 問題

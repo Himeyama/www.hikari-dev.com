@@ -1,7 +1,7 @@
 ---
 title: Configure the Dock using gsettings on Ubuntu
 tags: [Linux]
-image: /img/ogp/2022-04-27-ubuntu-dock.png
+image: /img/ogp/2022-04-27-ubuntu-dock.webp
 ---
 
 This is useful when you want to configure the Dock with a script or when configuring via SSH.

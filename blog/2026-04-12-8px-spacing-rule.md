@@ -2,7 +2,7 @@
 title: CSS ではなぜ「8 の倍数」が余白の基準になるのか
 authors: hikari
 tags: [デザイン, CSS]
-image: /img/ogp/2026-04-12-8px-spacing-rule.png
+image: /img/ogp/2026-04-12-8px-spacing-rule.webp
 ---
 
 現代の UI デザインでは「余白は 8 の倍数で設定する」というルールがよく用いられる。これは単なる慣習ではなく、**画面密度・タイポグラフィ・スケールの数学的整合性**に裏付けられた経験則である。

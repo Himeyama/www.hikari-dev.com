@@ -3,7 +3,7 @@ title: 資料庫前端備忘錄
 description: 關於資料庫前端的備忘錄
 authors: hikari
 tags: [前端, 資料庫, 網頁開發]
-image: /img/ogp/2024-01-30-database-fe.png
+image: /img/ogp/2024-01-30-database-fe.webp
 ---
 
 這篇備忘錄記錄了資料庫前端。

@@ -2,7 +2,7 @@
 title: AWS S3 から Cloudflare Pages へ移行しました
 authors: [hikari]
 tags: [AWS, Cloudflare, Docusaurus, CI/CD]
-image: /img/ogp/2026-04-19-migrate-to-cloudflare-pages.png
+image: /img/ogp/2026-04-19-migrate-to-cloudflare-pages.webp
 ---
 
 このブログを AWS S3 から Cloudflare Pages へ移行した。これまでは S3 で静的ホスティングを行い、CloudFront を通じて配信していたが、管理の簡素化とパフォーマンス向上のために Cloudflare Pages を採用することにした。

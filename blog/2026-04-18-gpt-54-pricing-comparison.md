@@ -2,7 +2,7 @@
 title: GPT-5.4 / GPT-5.4 mini / GPT-5.4 nano / GPT-4o / GPT-4o mini の料金・性能比較
 authors: hikari
 tags: [AI, OpenAI]
-image: /img/ogp/2026-04-18-gpt-54-pricing-comparison.png
+image: /img/ogp/2026-04-18-gpt-54-pricing-comparison.webp
 draft: true
 ---
 

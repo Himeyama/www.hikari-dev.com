@@ -3,7 +3,7 @@ title: Jupyter Lab のインストールと設定
 date: "2021-6-10"
 authors: hikari
 tags: [Python]
-image: /img/ogp/2021-06-10-jupyterlab.png
+image: /img/ogp/2021-06-10-jupyterlab.webp
 ---
 
 # Jupyter Lab のインストール

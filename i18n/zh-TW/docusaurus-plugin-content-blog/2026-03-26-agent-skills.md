@@ -2,7 +2,7 @@
 title: AI 代理人的「技能」是什麼？淺顯說明其運作原理
 authors: hikari
 tags: [AI, Claude]
-image: /img/ogp/2026-03-26-agent-skills.png
+image: /img/ogp/2026-03-26-agent-skills.webp
 ---
 
 將「技能」加入 AI 代理人，就像在應用程式安裝功能擴充一樣，可以增加它能做的事情。本文解說 Agent Skills 的運作方式，以及代理人在內部如何處理任務。

@@ -2,7 +2,7 @@
 title: OpenLDAP の slappasswd で生成される SSHA とは
 authors: hikari
 tags: [SSH, Network]
-image: /img/ogp/2022-04-10-ssha-openldap.png
+image: /img/ogp/2022-04-10-ssha-openldap.webp
 ---
 
 ## slappasswd コマンドとは

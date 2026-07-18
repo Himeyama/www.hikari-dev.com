@@ -3,7 +3,7 @@ title: Numo::NArray でドット積
 date: '2021-06-04 00:20'
 authors: hikari
 tags: [Ruby]
-image: /img/ogp/2021-06-04-narray-dot.png
+image: /img/ogp/2021-06-04-narray-dot.webp
 ---
 
 ```rb

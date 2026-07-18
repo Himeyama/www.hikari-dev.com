@@ -3,7 +3,7 @@ title: gem 作り方
 date: '2021-07-16 01:54'
 authors: hikari
 tags: [Ruby]
-image: /img/ogp/2021-07-16-how2create-gem.png
+image: /img/ogp/2021-07-16-how2create-gem.webp
 ---
 
 

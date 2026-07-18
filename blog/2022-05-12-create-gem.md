@@ -3,7 +3,7 @@ title: 自作 gem の作り方
 tag: [Ruby, gem]
 authors: hikari
 tags: [Ruby]
-image: /img/ogp/2022-05-12-create-gem.png
+image: /img/ogp/2022-05-12-create-gem.webp
 ---
 
 ## gem を作成 (`bundle gem`)

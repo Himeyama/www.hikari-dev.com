@@ -2,7 +2,7 @@
 title: Solving mDNS (hostname.local) resolution failures from Windows to a Linux machine on the same LAN
 authors: hikari
 tags: [Linux, Windows, ネットワーク, Fedora]
-image: /img/ogp/2026-07-18-windows-mdns-local-firewalld.png
+image: /img/ogp/2026-07-18-windows-mdns-local-firewalld.webp
 ---
 
 I ran into a case where trying to reach a Fedora Server machine on the same LAN via `myhost.local` (mDNS) failed name resolution only. By capturing packets directly with tcpdump, I traced the cause to firewalld blocking inbound mDNS traffic.

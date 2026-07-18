@@ -2,7 +2,7 @@
 title: Markdown を docx に変換するミニアプリ「DOC」を作った
 authors: hikari
 tags: [Docusaurus, ミニアプリ, Markdown, Word]
-image: /img/ogp/2026-07-18-doc-mini-app.png
+image: /img/ogp/2026-07-18-doc-mini-app.webp
 ---
 
 Markdown で書いた文書を Word (docx) に変換したい場面のために、ブラウザだけで完結するエディタ「DOC」を作った。サーバーに本文を送信せず、変換もすべてブラウザ内で行う。

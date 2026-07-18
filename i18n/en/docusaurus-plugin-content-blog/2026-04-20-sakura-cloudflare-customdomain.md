@@ -2,7 +2,7 @@
 title: Assigned a Custom Domain to a Subpath on Sakura Server with Cloudflare Workers
 authors: [hikari]
 tags: [Cloudflare, Sakura Rental Server]
-image: /img/ogp/2026-04-20-sakura-cloudflare-customdomain.png
+image: /img/ogp/2026-04-20-sakura-cloudflare-customdomain.webp
 ---
 
 ## Background

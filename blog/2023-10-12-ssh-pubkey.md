@@ -2,7 +2,7 @@
 title: 公開鍵認証と SSH
 authors: hikari
 tags: [SSH]
-image: /img/ogp/2023-10-12-ssh-pubkey.png
+image: /img/ogp/2023-10-12-ssh-pubkey.webp
 ---
 
 公開鍵認証とは、暗号化やデジタル署名に使われる技術の一つで、公開鍵と秘密鍵という二つの鍵を使って通信相手の本人確認や暗号化を行う方法です。

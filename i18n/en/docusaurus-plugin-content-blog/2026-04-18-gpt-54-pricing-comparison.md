@@ -1,7 +1,7 @@
 ---
 title: "GPT-5.4 / GPT-5.4 mini / GPT-5.4 nano / GPT-4o / GPT-4o mini: Pricing and Performance Comparison"
 tags: [AI, OpenAI]
-image: /img/ogp/2026-04-18-gpt-54-pricing-comparison.png
+image: /img/ogp/2026-04-18-gpt-54-pricing-comparison.webp
 draft: true
 ---
 

@@ -2,7 +2,7 @@
 title: Anthropic API と AWS Bedrock の料金比較してみた
 authors: hikari
 tags: [AI, AWS, Claude]
-image: /img/ogp/2026-03-30-anthropic-api-vs-bedrock-price.png
+image: /img/ogp/2026-03-30-anthropic-api-vs-bedrock-price.webp
 ---
 
 Claude を API 経由で使う場合、Anthropic API 直接のほかに **AWS Bedrock**、**Google Vertex AI**、**Microsoft Azure (Azure AI Foundry)** 経由でも利用できる。基本料金はどの経路もほぼ同額だが、バッチ処理やクラウドエコシステムとの統合面で差がある。

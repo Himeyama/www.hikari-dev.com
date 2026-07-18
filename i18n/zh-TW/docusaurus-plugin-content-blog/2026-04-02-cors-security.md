@@ -2,7 +2,7 @@
 title: 什麼是 CORS？從安全性角度為初學者解說
 authors: hikari
 tags: [Web, 安全性]
-image: /img/ogp/2026-04-02-cors-security.png
+image: /img/ogp/2026-04-02-cors-security.webp
 ---
 
 説明 Web 瀏覽器的安全功能 **CORS (Cross-Origin Resource Sharing)**，涵蓋「為什麼需要」和「有什麼風險」，為初學者量身打造的解説。正確理解 CORS 能夠實現安全的 Web 開發。

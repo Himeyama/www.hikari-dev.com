@@ -3,7 +3,7 @@ title: 建立個人主頁
 description: 關於如何建立個人主頁的備忘錄
 authors: hikari
 tags: [網頁開發, 主頁, Docusaurus]
-image: /img/ogp/2023-06-26-create-homepage.png
+image: /img/ogp/2023-06-26-create-homepage.webp
 ---
 
 這篇備忘錄記錄了如何建立個人主頁。

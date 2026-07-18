@@ -2,7 +2,7 @@
 title: Building a docx by Hand in a Text Editor
 authors: hikari
 tags: [Word, XML, PowerShell]
-image: /img/ogp/2026-07-18-handmade-docx.png
+image: /img/ogp/2026-07-18-handmade-docx.webp
 ---
 
 "A docx is just a zip, right? So if I zip up some XML and change the extension, I get a docx?"

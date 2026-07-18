@@ -1,7 +1,7 @@
 ---
 title: OpenLDAP 中 slappasswd 產生的 SSHA 是什麼？
 tags: [SSH, Network]
-image: /img/ogp/2022-04-10-ssha-openldap.png
+image: /img/ogp/2022-04-10-ssha-openldap.webp
 ---
 
 ## slappasswd 指令是什麼？

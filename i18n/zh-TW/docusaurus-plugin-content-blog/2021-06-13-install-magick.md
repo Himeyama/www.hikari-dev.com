@@ -3,7 +3,7 @@ title: 安裝 ImageMagick
 description: 安裝 ImageMagick 的筆記
 authors: hikari
 tags: [ImageMagick, Ubuntu]
-image: /img/ogp/2021-06-13-install-magick.png
+image: /img/ogp/2021-06-13-install-magick.webp
 ---
 
 這篇筆記記錄了在 Ubuntu 上安裝 ImageMagick 的方法。

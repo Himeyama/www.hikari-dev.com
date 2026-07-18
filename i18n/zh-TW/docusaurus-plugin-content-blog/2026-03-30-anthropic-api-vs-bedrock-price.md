@@ -2,7 +2,7 @@
 title: 比較 Anthropic API 與 AWS Bedrock 的費用
 authors: hikari
 tags: [AI, AWS, Claude]
-image: /img/ogp/2026-03-30-anthropic-api-vs-bedrock-price.png
+image: /img/ogp/2026-03-30-anthropic-api-vs-bedrock-price.webp
 ---
 
 Claude 若要透過 API 使用，除了直接使用 Anthropic API 外，也能經由 **AWS Bedrock**、**Google Vertex AI**、**Microsoft Azure (Azure AI Foundry)** 使用。基本價格各路徑幾乎相同，但在批次處理與與雲端生態系統整合面會有差異。

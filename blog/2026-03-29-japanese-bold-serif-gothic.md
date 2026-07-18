@@ -2,7 +2,7 @@
 title: 明朝体の文章でも太字はゴシック体になる理由
 authors: hikari
 tags: [デザイン, CSS]
-image: /img/ogp/2026-03-29-japanese-bold-serif-gothic.png
+image: /img/ogp/2026-03-29-japanese-bold-serif-gothic.webp
 ---
 
 明朝体やセリフ体で書かれた文章でも、**太字はゴシック体**で表示されることが多い。これはデザイン上の意図的な選択であり、可読性・視認性・歴史的慣習の 3 つの理由がある。

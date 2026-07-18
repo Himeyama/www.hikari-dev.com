@@ -2,7 +2,7 @@
 title: Anthropic API で Claude のモデル一覧を取得する
 authors: hikari
 tags: [AI, Claude]
-image: /img/ogp/2026-05-22-claude-models.png
+image: /img/ogp/2026-05-22-claude-models.webp
 ---
 
 Anthropic API の `/v1/models` エンドポイントを使うと、利用可能な Claude モデルの一覧とその仕様をプログラムから取得できる。

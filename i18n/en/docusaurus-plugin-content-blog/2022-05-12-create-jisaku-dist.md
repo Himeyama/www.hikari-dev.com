@@ -1,7 +1,7 @@
 ---
 title: How to Create a Custom Linux Distribution Based on Ubuntu
 tags: [Linux]
-image: /img/ogp/2022-05-12-create-jisaku-dist.png
+image: /img/ogp/2022-05-12-create-jisaku-dist.webp
 ---
 
 ## Overview

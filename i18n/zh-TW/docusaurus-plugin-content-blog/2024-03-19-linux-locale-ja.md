@@ -3,7 +3,7 @@ title: Linux 上的日語環境設置
 description: 關於 Linux 上的日語環境設置的備忘錄
 authors: hikari
 tags: [Linux, 日語, 環境設置]
-image: /img/ogp/2024-03-19-linux-locale-ja.png
+image: /img/ogp/2024-03-19-linux-locale-ja.webp
 ---
 
 這篇備忘錄記錄了在 Linux 上設置日語環境的方法。

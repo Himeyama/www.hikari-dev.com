@@ -2,7 +2,7 @@
 title: Obtaining a List of Claude Models Using the Anthropic API
 authors: hikari
 tags: [AI, Claude]
-image: /img/ogp/2026-05-22-claude-models.png
+image: /img/ogp/2026-05-22-claude-models.webp
 ---
 
 By using the Anthropic API's `/v1/models` endpoint, you can programmatically retrieve a list of available Claude models along with their specifications.

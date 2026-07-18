@@ -2,7 +2,7 @@
 title: Visual Studio Code で Got bad result from install script. のエラーの対処
 date: '2021-12-14 04:08'
 authors: hikari
-image: /img/ogp/2021-12-14-Gotbadresultfrominstallscript.png
+image: /img/ogp/2021-12-14-Gotbadresultfrominstallscript.webp
 ---
 
 # 概要

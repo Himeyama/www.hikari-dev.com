@@ -3,7 +3,7 @@ title: Ubuntu 上的 Dock
 description: 關於 Ubuntu 上的 Dock 的備忘錄
 authors: hikari
 tags: [Ubuntu, Dock]
-image: /img/ogp/2022-04-27-ubuntu-dock.png
+image: /img/ogp/2022-04-27-ubuntu-dock.webp
 ---
 
 這篇備忘錄記錄了 Ubuntu 上的 Dock。

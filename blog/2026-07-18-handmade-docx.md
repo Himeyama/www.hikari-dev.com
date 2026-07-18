@@ -2,7 +2,7 @@
 title: docx をテキストエディタで作ってみた
 authors: hikari
 tags: [Word, XML, PowerShell]
-image: /img/ogp/2026-07-18-handmade-docx.png
+image: /img/ogp/2026-07-18-handmade-docx.webp
 ---
 
 「docx って結局 zip なんでしょ? じゃあ XML を zip して拡張子変えれば docx になるのでは?」

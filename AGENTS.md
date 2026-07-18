@@ -18,7 +18,7 @@ Docusaurus による個人ブログ
 
 ## ミニアプリ (`/src/pages/*.tsx`) の i18n 対応
 
-`/mini-apps` 一覧および各ミニアプリページ (`base64` / `cert-generator` / `doc` / `hash` / `nslookup` / `password-generator` / `svg-to-ico` / `tsv-to-markdown` / `uuid` / `webp-converter` / `whois` / `yaml-json` / `chat` など) は `@docusaurus/Translate` の `<Translate id="...">日本語デフォルト</Translate>` / `translate({id, message})` を使って全文言をラップする。ハードコードされた日本語文字列を残さないこと。
+`/mini-apps` 一覧および各ミニアプリページ (`base64` / `cert-generator` / `doc` / `hash` / `nslookup` / `passwordうぇ-generator` / `svg-to-ico` / `tsv-to-markdown` / `uuid` / `webp-converter` / `whois` / `yaml-json` / `chat` など) は `@docusaurus/Translate` の `<Translate id="...">日本語デフォルト</Translate>` / `translate({id, message})` を使って全文言をラップする。ハードコードされた日本語文字列を残さないこと。
 
 新しいミニアプリを追加した、または既存ミニアプリに文言を追加・変更した場合は、翻訳データが古いまま残らないよう次の手順を実施する。
 
@@ -230,8 +230,8 @@ tags: [tag1, tag2]
   image: /img/blog/YYYY-MM-DD-slug/thumbnail.png
   ---
   ```
-- `image:` が未設定の場合、タグベースのグラデーション PNG (`/img/ogp/SLUG.png`) が使われる。
-  - 画像は `scripts/generate-ogp.js` で生成済み（外部ライブラリ不要）。
+- `image:` が未設定の場合、タグベースのグラデーション WebP (`/img/ogp/SLUG.webp`、品質 80) が使われる。
+  - 画像は `scripts/generate-ogp.js` で生成済み (satori + resvg で PNG ラスタライズ後、sharp で WebP 品質 80 に変換)。
   - 新記事を追加して `image:` を設定しない場合は `node scripts/generate-ogp.js` を再実行すること。
   - 特定記事のみ生成する場合は `--file` オプションを使う: `node scripts/generate-ogp.js --file 2026-04-20-slug.md`
   - タグと色の対応は同スクリプト内の `TAG_COLORS` を編集して変更できる。

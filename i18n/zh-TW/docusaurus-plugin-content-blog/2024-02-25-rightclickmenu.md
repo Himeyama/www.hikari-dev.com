@@ -1,6 +1,6 @@
 ---
 title: 使用 JavaScript、HTML 和 CSS 實作右鍵選單
-image: /img/ogp/2024-02-25-rightclickmenu.png
+image: /img/ogp/2024-02-25-rightclickmenu.webp
 ---
 
 ## JavaScript

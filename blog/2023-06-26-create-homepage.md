@@ -2,7 +2,7 @@
 title: 個人サイトについて語る
 tag: [技術ブログ]
 authors: hikari
-image: /img/ogp/2023-06-26-create-homepage.png
+image: /img/ogp/2023-06-26-create-homepage.webp
 ---
 
 情報発信では、Twitter、Instagram がメジャーであるが、規約や仕様によって制限され自由度が小さい。

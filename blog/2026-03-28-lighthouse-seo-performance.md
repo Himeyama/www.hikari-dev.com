@@ -2,7 +2,7 @@
 title: "Docusaurus ブログで PageSpeed Insights ほぼ満点を達成した方法 — SEO・パフォーマンス・アクセシビリティ"
 authors: hikari
 tags: [Web, SEO]
-image: /img/ogp/2026-03-28-pagespeed-insights-seo-performance.png
+image: /img/ogp/2026-03-28-lighthouse-seo-performance.webp
 ---
 
 このブログのモバイル PageSpeed Insights スコアを **Performance 99、Accessibility 100、Best Practices 100、SEO 100** まで改善した。SEO・パフォーマンス・アクセシビリティの各観点から、実施した変更をまとめる。

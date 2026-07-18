@@ -1,6 +1,6 @@
 ---
 title: Implementing a right-click menu with JavaScript, HTML, and CSS
-image: /img/ogp/2024-02-25-rightclickmenu.png
+image: /img/ogp/2024-02-25-rightclickmenu.webp
 ---
 
 ## JavaScript

@@ -1,7 +1,7 @@
 ---
 title: JavaScript と HTML と CSS で右クリックメニューを実装
 authors: hikari
-image: /img/ogp/2024-02-25-rightclickmenu.png
+image: /img/ogp/2024-02-25-rightclickmenu.webp
 ---
 
 ## JavaScript

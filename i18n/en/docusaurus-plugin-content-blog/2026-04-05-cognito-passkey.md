@@ -2,7 +2,7 @@
 title: Configuration of Passkeys (WebAuthn) using Amazon Cognito
 authors: hikari
 tags: [AWS, Cognito, WebAuthn, Security]
-image: /img/ogp/2026-04-05-cognito-passkey.png
+image: /img/ogp/2026-04-05-cognito-passkey.webp
 ---
 
 I am using Amazon Cognito for user authentication in a file storage API built with AWS SAM. Recently, I added login via passkeys (WebAuthn), so I will summarize the configuration details.

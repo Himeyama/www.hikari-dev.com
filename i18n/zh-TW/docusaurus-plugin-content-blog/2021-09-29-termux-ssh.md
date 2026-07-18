@@ -3,7 +3,7 @@ title: Termux 上的 SSH
 description: 關於 Termux 上的 SSH 的備忘錄
 authors: hikari
 tags: [SSH, Termux]
-image: /img/ogp/2021-09-29-termux-ssh.png
+image: /img/ogp/2021-09-29-termux-ssh.webp
 ---
 
 這篇備忘錄記錄了在 Termux 上使用 SSH 的方法。

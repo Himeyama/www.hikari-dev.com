@@ -1,6 +1,6 @@
 ---
 title: 3 Recommended Power Strips for Your Remote Work (Work-from-Home) Environment
-image: /img/ogp/2023-09-18-remote-work-recommend-code.png
+image: /img/ogp/2023-09-18-remote-work-recommend-code.webp
 ---
 
 Choosing a power strip is a crucial factor for a remote work environment. Here, I will introduce some recommended power strips.

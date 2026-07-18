@@ -1,7 +1,7 @@
 ---
 title: youtube-dl のインストールと使い方
 date: 2021-05-09
-image: /img/ogp/2021-05-09-youtube-dl.png
+image: /img/ogp/2021-05-09-youtube-dl.webp
 ---
 
 ## 注意

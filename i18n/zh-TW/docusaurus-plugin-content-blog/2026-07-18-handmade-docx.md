@@ -2,7 +2,7 @@
 title: 用文字編輯器手工打造 docx
 authors: hikari
 tags: [Word, XML, PowerShell]
-image: /img/ogp/2026-07-18-handmade-docx.png
+image: /img/ogp/2026-07-18-handmade-docx.webp
 ---
 
 「docx 說到底不就是 zip 嗎? 那把 XML 壓成 zip 再改個副檔名，不就變成 docx 了?」

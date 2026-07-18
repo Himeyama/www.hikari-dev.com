@@ -3,7 +3,7 @@ title: Termux 上的 Powerline
 description: 關於 Termux 上的 Powerline 的備忘錄
 authors: hikari
 tags: [Powerline, Termux]
-image: /img/ogp/2021-09-29-powerline-termux.png
+image: /img/ogp/2021-09-29-powerline-termux.webp
 ---
 
 這篇備忘錄記錄了在 Termux 上安裝和配置 Powerline 的方法。

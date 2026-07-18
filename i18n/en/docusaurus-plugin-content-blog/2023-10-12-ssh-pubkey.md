@@ -1,7 +1,7 @@
 ---
 title: Public Key Authentication and SSH
 tags: [SSH]
-image: /img/ogp/2023-10-12-ssh-pubkey.png
+image: /img/ogp/2023-10-12-ssh-pubkey.webp
 ---
 
 Public key authentication is a technique used in encryption and digital signatures that uses two keys, a public key and a private key, to authenticate communication partners and perform encryption.

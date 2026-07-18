@@ -2,7 +2,7 @@
 title: 即使是明朝體的文章，加粗常會變成黑體的理由
 authors: hikari
 tags: [設計, CSS]
-image: /img/ogp/2026-03-29-japanese-bold-serif-gothic.png
+image: /img/ogp/2026-03-29-japanese-bold-serif-gothic.webp
 ---
 
 即使是以明朝體或襯線字體書寫的文章，**加粗時常以黑體（無襯線字體）呈現**。這是設計上刻意的選擇，主要有可讀性、視認性、與歷史慣習三個理由。

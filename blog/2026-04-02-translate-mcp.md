@@ -2,7 +2,7 @@
 title: OpenAI API で複数言語に対応した翻訳 CLI ツール translate-mcp の開発
 authors: hikari
 tags: [MCP, 翻訳, OpenAI, Python]
-image: /img/ogp/2026-04-02-translate-mcp.png
+image: /img/ogp/2026-04-02-translate-mcp.webp
 ---
 
 translate-mcp は OpenAI の API を使った翻訳ツールである。CLI モードと MCP サーバーの両方の利用方法に対応している。

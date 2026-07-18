@@ -3,7 +3,7 @@ title: 推薦遠端工作程式碼
 description: 關於推薦遠端工作程式碼的備忘錄
 authors: hikari
 tags: [遠端工作, 程式碼, 生產力]
-image: /img/ogp/2023-09-18-remote-work-recommend-code.png
+image: /img/ogp/2023-09-18-remote-work-recommend-code.webp
 ---
 
 這篇備忘錄記錄了推薦用於遠端工作的程式碼相關工具和實踐。

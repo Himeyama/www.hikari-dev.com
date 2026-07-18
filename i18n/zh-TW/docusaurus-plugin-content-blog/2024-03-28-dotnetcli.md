@@ -3,7 +3,7 @@ title: .NET CLI 備忘錄
 description: 關於 .NET CLI 的備忘錄
 authors: hikari
 tags: [.NET, CLI]
-image: /img/ogp/2024-03-28-dotnetcli.png
+image: /img/ogp/2024-03-28-dotnetcli.webp
 ---
 
 這篇備忘錄記錄了 .NET CLI (命令行界面)。

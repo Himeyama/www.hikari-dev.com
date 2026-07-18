@@ -2,7 +2,7 @@
 title: Why Bold Text Uses Gothic (Sans-serif) Font in Japanese Typography
 authors: hikari
 tags: [デザイン, CSS]
-image: /img/ogp/2026-03-29-japanese-bold-serif-gothic.png
+image: /img/ogp/2026-03-29-japanese-bold-serif-gothic.webp
 ---
 
 Even when body text uses Mincho (serif) typeface, **bold text typically renders in Gothic (sans-serif)**. This is an intentional design choice rooted in readability, visual clarity, and historical printing conventions.

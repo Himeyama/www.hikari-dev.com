@@ -2,7 +2,7 @@
 title: CSS 為什麼「8 的倍數」成為邊距的標準
 authors: hikari
 tags: [設計, CSS]
-image: /img/ogp/2026-04-12-8px-spacing-rule.png
+image: /img/ogp/2026-04-12-8px-spacing-rule.webp
 ---
 
 現代的 UI 設計中，「邊距設定為 8 的倍數」的規則被廣泛使用。這不僅僅是慣例，而是基於 **螢幕密度、排版和比例的數學一致性**所支持的經驗法則。

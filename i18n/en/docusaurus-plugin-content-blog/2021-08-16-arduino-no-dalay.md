@@ -1,7 +1,7 @@
 ---
 title: Avoid using delay() in Arduino
 tags: [Arduino]
-image: /img/ogp/2021-08-16-arduino-no-dalay.png
+image: /img/ogp/2021-08-16-arduino-no-dalay.webp
 ---
 
 Using `delay()` in Arduino prevents any other actions from being performed during the waiting time.

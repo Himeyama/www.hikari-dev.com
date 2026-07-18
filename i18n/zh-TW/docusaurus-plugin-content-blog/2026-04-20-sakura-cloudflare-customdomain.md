@@ -2,7 +2,7 @@
 title: 在 Cloudflare Workers 上將自訂域名指向櫻花伺服器的子路徑
 authors: [hikari]
 tags: [Cloudflare, 櫻花租用伺服器]
-image: /img/ogp/2026-04-20-sakura-cloudflare-customdomain.png
+image: /img/ogp/2026-04-20-sakura-cloudflare-customdomain.webp
 ---
 
 ## 背景

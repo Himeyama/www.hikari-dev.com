@@ -3,7 +3,7 @@ title: 如何安裝 Docker
 description: 關於如何安裝 Docker 的備忘錄
 authors: hikari
 tags: [Docker, 安裝]
-image: /img/ogp/2022-06-26-how-to-install-docker.png
+image: /img/ogp/2022-06-26-how-to-install-docker.webp
 ---
 
 這篇備忘錄記錄了如何在 Linux（Ubuntu/Debian）上安裝 Docker。

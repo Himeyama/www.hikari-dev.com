@@ -3,7 +3,7 @@ title: SSH 公鑰認證
 description: 關於 SSH 公鑰認證的備忘錄
 authors: hikari
 tags: [SSH, 安全]
-image: /img/ogp/2023-10-12-ssh-pubkey.png
+image: /img/ogp/2023-10-12-ssh-pubkey.webp
 ---
 
 這篇備忘錄記錄了 SSH 公鑰認證。

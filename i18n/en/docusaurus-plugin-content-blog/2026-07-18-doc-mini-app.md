@@ -2,7 +2,7 @@
 title: I Built "DOC," a Mini App That Converts Markdown to docx
 authors: hikari
 tags: [Docusaurus, ミニアプリ, Markdown, Word]
-image: /img/ogp/2026-07-18-doc-mini-app.png
+image: /img/ogp/2026-07-18-doc-mini-app.webp
 ---
 
 For those times when you want to convert a Markdown document into Word (docx), I built "DOC," an editor that runs entirely in the browser. It never sends your content to a server — the conversion itself happens entirely in the browser.

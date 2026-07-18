@@ -2,7 +2,7 @@
 title: 在 AWS 無伺服器環境下自建部落格留言 API
 authors: hikari
 tags: [AWS, Web]
-image: /img/ogp/2026-03-21-blog-comment-service.png
+image: /img/ogp/2026-03-21-blog-comment-service.webp
 ---
 
 想要在這個部落格加入留言功能，因此在 AWS 無伺服器架構下自建了一個 API。介紹其設計與實作。

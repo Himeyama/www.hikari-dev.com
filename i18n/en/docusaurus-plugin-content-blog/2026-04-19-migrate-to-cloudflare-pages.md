@@ -2,7 +2,7 @@
 title: Migrated from AWS S3 to Cloudflare Pages
 authors: [hikari]
 tags: [AWS, Cloudflare, Docusaurus, CI/CD]
-image: /img/ogp/2026-04-19-migrate-to-cloudflare-pages.png
+image: /img/ogp/2026-04-19-migrate-to-cloudflare-pages.webp
 ---
 
 I migrated this blog from AWS S3 to Cloudflare Pages. Until now, I had been hosting statically on S3 and delivering through CloudFront, but I decided to adopt Cloudflare Pages to simplify management and improve performance.

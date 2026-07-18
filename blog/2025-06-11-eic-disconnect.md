@@ -2,7 +2,7 @@
 title: EC2 Instance Connect が鍵なしで Windows から繋がらない
 authors: hikari
 tags: [AWS]
-image: /img/ogp/2025-06-11-eic-disconnect.png
+image: /img/ogp/2025-06-11-eic-disconnect.webp
 ---
 
 ## Windows で Instance Connect へ接続できない

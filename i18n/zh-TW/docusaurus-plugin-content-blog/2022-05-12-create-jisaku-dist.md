@@ -3,7 +3,7 @@ title: 建立自製發行版
 description: 關於如何建立自製發行版的備忘錄
 authors: hikari
 tags: [Linux, 發行版, 自製]
-image: /img/ogp/2022-05-12-create-jisaku-dist.png
+image: /img/ogp/2022-05-12-create-jisaku-dist.webp
 ---
 
 這篇備忘錄記錄了如何建立自製的 Linux 發行版。

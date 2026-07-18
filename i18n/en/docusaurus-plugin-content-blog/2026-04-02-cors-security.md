@@ -2,7 +2,7 @@
 title: What is CORS? An Explanation of Security for Beginners
 authors: hikari
 tags: [Web, Security]
-image: /img/ogp/2026-04-02-cors-security.png
+image: /img/ogp/2026-04-02-cors-security.webp
 ---
 
 This article explains **CORS (Cross-Origin Resource Sharing)**, a web browser security feature, for beginners, covering "why it's necessary" and "what dangers it entails." Understanding it correctly will enable secure web development.

@@ -3,7 +3,7 @@ title: WinUI3 Button
 description: 關於 WinUI3 Button 的備忘錄
 authors: hikari
 tags: [WinUI3, XAML]
-image: /img/ogp/2023-09-12-winui3-Button.png
+image: /img/blog/2023-09-12-winui3-Button/Button.png
 ---
 
 這篇備忘錄記錄了 WinUI3 中的 `Button` 控制項。

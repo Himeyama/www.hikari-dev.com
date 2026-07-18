@@ -1,7 +1,7 @@
 ---
 title: Summary of frequently used dotnet commands
 tags: [.NET]
-image: /img/ogp/2024-03-28-dotnetcli.png
+image: /img/ogp/2024-03-28-dotnetcli.webp
 ---
 
 |Command|Function|

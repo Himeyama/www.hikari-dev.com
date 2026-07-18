@@ -2,7 +2,7 @@
 title: Windows から同一 LAN 上の Linux 機に hostname.local でアクセスできない問題を解決する
 authors: hikari
 tags: [Linux, Windows, ネットワーク, Fedora]
-image: /img/ogp/2026-07-18-windows-mdns-local-firewalld.png
+image: /img/ogp/2026-07-18-windows-mdns-local-firewalld.webp
 ---
 
 同一 LAN 上の Fedora Server に `myhost.local` (mDNS) でアクセスしようとしたところ名前解決だけが失敗する現象に遭遇した。tcpdump でパケットを直接観測して切り分けたところ、原因は firewalld が mDNS の着信をブロックしていたことだった。

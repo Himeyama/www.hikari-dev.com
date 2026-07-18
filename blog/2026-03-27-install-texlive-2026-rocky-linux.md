@@ -2,7 +2,7 @@
 title: Linux に TeX Live 2026 をインストールする
 authors: hikari
 tags: [Linux, TeX, LaTeX]
-image: /img/ogp/2026-03-27-install-texlive-2026-rocky-linux.png
+image: /img/ogp/2026-03-27-install-texlive-2026-rocky-linux.webp
 ---
 
 Linux (RHEL 系) に ISO イメージを使って TeX Live 2026 をインストールする手順をまとめた。RHEL 系全般に適用できる。

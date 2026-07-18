@@ -2,7 +2,7 @@
 title: Why "Multiples of 8" Are the Standard for Spacing in CSS
 authors: hikari
 tags: [Design, CSS]
-image: /img/ogp/2026-04-12-8px-spacing-rule.png
+image: /img/ogp/2026-04-12-8px-spacing-rule.webp
 ---
 
 In modern UI design, the rule of setting "spacing in multiples of 8" is commonly used. This is not just a convention, but an empirical rule supported by the **mathematical consistency of screen density, typography, and scale**.

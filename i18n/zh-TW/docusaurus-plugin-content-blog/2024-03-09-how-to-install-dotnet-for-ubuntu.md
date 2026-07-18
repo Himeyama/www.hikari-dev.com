@@ -3,7 +3,7 @@ title: 如何為 Ubuntu 安裝 .NET
 description: 關於如何為 Ubuntu 安裝 .NET 的備忘錄
 authors: hikari
 tags: [.NET, Ubuntu, 安裝]
-image: /img/ogp/2024-03-09-how-to-install-dotnet-for-ubuntu.png
+image: /img/ogp/2024-03-09-how-to-install-dotnet-for-ubuntu.webp
 ---
 
 這篇備忘錄記錄了如何為 Ubuntu 安裝 .NET。

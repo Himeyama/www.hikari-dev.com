@@ -2,7 +2,7 @@
 title: "在 Docusaurus 部落格把 PageSpeed Insights 幾乎做滿分的方法 — SEO、效能、可及性"
 authors: hikari
 tags: [Web, SEO]
-image: /img/ogp/2026-03-28-pagespeed-insights-seo-performance.png
+image: /img/ogp/2026-03-28-lighthouse-seo-performance.webp
 ---
 
 我把這個部落格的行動版 PageSpeed Insights 分數改善到 **Performance 99、Accessibility 100、Best Practices 100、SEO 100**。從 SEO、效能、可及性 三個面向整理我做過的改動。

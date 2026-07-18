@@ -2,7 +2,7 @@
 title: 安裝與設定 Jupyter Lab
 tags: [Python]
 date: "2021-6-10"
-image: /img/ogp/2021-06-10-jupyterlab.png
+image: /img/ogp/2021-06-10-jupyterlab.webp
 ---
 
 # 安裝 Jupyter Lab

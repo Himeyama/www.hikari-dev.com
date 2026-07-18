@@ -2,7 +2,7 @@
 title: Building a Blog Comment API with AWS Serverless
 authors: hikari
 tags: [AWS, Web]
-image: /img/ogp/2026-03-21-blog-comment-service.png
+image: /img/ogp/2026-03-21-blog-comment-service.webp
 ---
 
 I wanted to add a comment section to this blog, so instead of using an off-the-shelf solution like Disqus or giscus, I built my own API on AWS serverless. Here's a look at the design and implementation.

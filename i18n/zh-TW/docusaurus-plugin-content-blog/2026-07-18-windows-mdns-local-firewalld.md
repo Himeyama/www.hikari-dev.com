@@ -2,7 +2,7 @@
 title: 解決 Windows 無法透過 hostname.local 存取同一區域網路內 Linux 主機的問題
 authors: hikari
 tags: [Linux, Windows, ネットワーク, Fedora]
-image: /img/ogp/2026-07-18-windows-mdns-local-firewalld.png
+image: /img/ogp/2026-07-18-windows-mdns-local-firewalld.webp
 ---
 
 在嘗試透過 `myhost.local` (mDNS) 存取同一區域網路內的 Fedora Server 時,遇到了唯獨名稱解析失敗的狀況。透過 tcpdump 直接觀察封包進行排查後,發現原因是 firewalld 封鎖了 mDNS 的傳入流量。

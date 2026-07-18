@@ -2,7 +2,7 @@
 title: Ubuntu で gsettings を使用し Dock の設定を行う
 authors: hikari
 tags: [Linux]
-image: /img/ogp/2022-04-27-ubuntu-dock.png
+image: /img/ogp/2022-04-27-ubuntu-dock.webp
 ---
 
 スクリプトで Dock の設定したいときや、SSH で設定したいときに使う。

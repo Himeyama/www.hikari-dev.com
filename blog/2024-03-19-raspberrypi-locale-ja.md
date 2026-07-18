@@ -2,7 +2,7 @@
 title: RaspberryPi のプロンプトを日本語化する方法
 authors: hikari
 tags: [Raspberry Pi, Security]
-image: /img/ogp/2024-03-19-raspberrypi-locale-ja.png
+image: /img/ogp/2024-03-19-raspberrypi-locale-ja.webp
 ---
 
 Raspberry Pi のプロンプトを日本語化する方法を紹介します。

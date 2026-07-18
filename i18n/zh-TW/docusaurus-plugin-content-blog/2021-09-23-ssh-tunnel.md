@@ -3,7 +3,7 @@ title: SSH 隧道
 description: 關於 SSH 隧道的備忘錄
 authors: hikari
 tags: [SSH, 隧道]
-image: /img/ogp/2021-09-23-ssh-tunnel.png
+image: /img/ogp/2021-09-23-ssh-tunnel.webp
 ---
 
 這篇備忘錄記錄了 SSH 隧道。

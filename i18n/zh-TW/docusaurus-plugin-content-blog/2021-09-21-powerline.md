@@ -2,7 +2,7 @@
 title: 如何安裝 Powerline
 tags: [CLI]
 date: '2021-09-21 06:12'
-image: /img/ogp/2021-09-21-powerline.png
+image: /img/ogp/2021-09-21-powerline.webp
 ---
 
 # 安裝

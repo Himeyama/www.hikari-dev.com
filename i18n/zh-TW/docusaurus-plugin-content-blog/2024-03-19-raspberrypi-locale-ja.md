@@ -3,7 +3,7 @@ title: Raspberry Pi 上的日語環境設置
 description: 關於 Raspberry Pi 上的日語環境設置的備忘錄
 authors: hikari
 tags: [Raspberry Pi, 日語, 環境設置]
-image: /img/ogp/2024-03-19-raspberrypi-locale-ja.png
+image: /img/ogp/2024-03-19-raspberrypi-locale-ja.webp
 ---
 
 這篇備忘錄記錄了在 Raspberry Pi 上設置日語環境的方法。

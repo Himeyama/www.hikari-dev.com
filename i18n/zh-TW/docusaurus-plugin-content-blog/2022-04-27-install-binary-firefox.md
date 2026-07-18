@@ -1,7 +1,7 @@
 ---
 title: 安裝 Firefox 建置版本
 tags: [Web]
-image: /img/ogp/2022-04-27-install-binary-firefox.png
+image: /img/ogp/2022-04-27-install-binary-firefox.webp
 ---
 
 Ubuntu 22.04 似乎預設安裝了 snap 版本的 Firefox，在某些環境下無法啟動，因此記錄如何安裝預先建置的 Firefox。

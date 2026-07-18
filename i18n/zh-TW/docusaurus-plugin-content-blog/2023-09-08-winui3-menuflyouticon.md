@@ -3,7 +3,7 @@ title: WinUI3 MenuFlyoutIcon
 description: 關於 WinUI3 MenuFlyoutIcon 的備忘錄
 authors: hikari
 tags: [WinUI3, XAML]
-image: /img/ogp/2023-09-08-winui3-menuflyouticon.png
+image: /img/blog/2023-09-08-winui3-menuflyouticon/menuflyoutitemicon.png
 ---
 
 這篇備忘錄記錄了 WinUI3 中的 `MenuFlyoutIcon`。

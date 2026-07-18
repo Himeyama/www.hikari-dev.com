@@ -4,7 +4,7 @@ description: ImageMagick のインストール方法
 date: "2021-6-13"
 authors: hikari
 tags: [Image Processing, Ruby, Linux]
-image: /img/ogp/2021-06-13-install-magick.png
+image: /img/ogp/2021-06-13-install-magick.webp
 ---
 
 # ソースのダウンロード

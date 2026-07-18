@@ -2,7 +2,7 @@
 title: 使用 Anthropic API 獲得 Claude 模型列表
 authors: hikari
 tags: [AI, Claude]
-image: /img/ogp/2026-05-22-claude-models.png
+image: /img/ogp/2026-05-22-claude-models.webp
 ---
 
 透過使用 Anthropic API 的 `/v1/models` 端點，可以從程式中獲取可用的 Claude 模型列表及其規格。

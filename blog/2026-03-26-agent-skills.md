@@ -2,7 +2,7 @@
 title: AIエージェントのスキルとは何か？仕組みをわかりやすく解説
 authors: hikari
 tags: [AI, Claude]
-image: /img/ogp/2026-03-26-agent-skills.png
+image: /img/ogp/2026-03-26-agent-skills.webp
 ---
 
 AI エージェントに「スキル」を追加すると、まるでアプリに機能拡張をインストールするように、できることを増やせます。この記事では、Agent Skills の仕組みと、エージェントが内部でどのような処理をしているかを解説します。

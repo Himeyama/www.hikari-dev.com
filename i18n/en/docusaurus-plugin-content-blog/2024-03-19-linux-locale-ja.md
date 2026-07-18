@@ -1,7 +1,7 @@
 ---
 title: How to Japanese the Linux Prompt
 tags: [Linux, Security]
-image: /img/ogp/2024-03-19-linux-locale-ja.png
+image: /img/ogp/2024-03-19-linux-locale-ja.webp
 ---
 
 This post introduces how to Japanese the Linux prompt.

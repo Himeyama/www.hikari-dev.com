@@ -3,7 +3,7 @@ title: 建立 Ruby Gem
 description: 關於如何建立 Ruby Gem 的備忘錄
 authors: hikari
 tags: [Ruby, Gem]
-image: /img/ogp/2022-05-12-create-gem.png
+image: /img/ogp/2022-05-12-create-gem.webp
 ---
 
 這篇備忘錄記錄了如何建立 Ruby Gem。

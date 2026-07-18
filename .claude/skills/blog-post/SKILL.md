@@ -36,7 +36,7 @@ description: 新しいブログ記事を作成する（日本語本文 + 英語/
    ```bash
    node scripts/generate-ogp.js --file YYYY-MM-DD-slug.md
    ```
-   - 日本語版・英語版のフロントマターに `image: /img/ogp/YYYY-MM-DD-slug.png` が自動追加される。
+   - 日本語版・英語版のフロントマターに `image: /img/ogp/YYYY-MM-DD-slug.webp` が自動追加される (WebP、品質 80)。
    - zh-TW 版はスクリプトの対象外なので、同じ `image:` 行を手動で追加する。
    - 記事内に代表画像がある場合はタグベース OGP の代わりにその画像パスを `image:` に設定してもよい（その場合はスクリプト実行不要）。
 

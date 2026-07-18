@@ -3,7 +3,7 @@ title: pyenv 安裝
 description: 關於 pyenv 安裝的備忘錄
 authors: hikari
 tags: [Python, pyenv, 安裝]
-image: /img/ogp/2024-03-16-pyenv-install.png
+image: /img/ogp/2024-03-16-pyenv-install.webp
 ---
 
 這篇備忘錄記錄了 pyenv 的安裝。

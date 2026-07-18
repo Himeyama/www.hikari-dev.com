@@ -1,7 +1,7 @@
 ---
 title: 使用 ResizeObserver 在元素大小改變時執行處理
 tags: [JavaScript]
-image: /img/ogp/2024-03-23-js-resizeelement.png
+image: /img/ogp/2024-03-23-js-resizeelement.webp
 ---
 
 <p>在 HTML 中定義元素如下：</p>

@@ -2,7 +2,7 @@
 title: 使用 Numo::NArray 計算點積
 tags: [Ruby]
 date: '2021-06-04 00:20'
-image: /img/ogp/2021-06-04-narray-dot.png
+image: /img/ogp/2021-06-04-narray-dot.webp
 ---
 
 ```rb
