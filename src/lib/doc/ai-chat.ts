@@ -94,13 +94,32 @@ const SYSTEM_PROMPT = `あなたは Markdown 文書の編集を助けるアシ�
 コードフェンスで全体を囲む必要はなく、そのまま貼り付けられる Markdown を返すこと。
 補足説明が必要な場合は結果の後に短く添える。`;
 
-// 現在の文書全体と選択範囲を文脈として system メッセージに埋め込む
-export function buildContextMessage(source: string, selection: string): ChatMessageParam {
-  const parts = [SYSTEM_PROMPT, '', '--- 現在の文書全体 ---', source || '(空)'];
+// cache_control 付きの system テキストメッセージを作る。
+// OpenRouter は content パートの cache_control でプロンプトキャッシュのブレークポイントを指定する
+// (Anthropic 等は明示指定が必須、OpenAI は自動キャッシュのため無視されるが害はない)。
+// OpenAI SDK の型に cache_control が無いためキャストする。
+function cachedSystem(text: string): ChatMessageParam {
+  return {
+    role: 'system',
+    content: [{type: 'text', text, cache_control: {type: 'ephemeral'}}],
+  } as unknown as ChatMessageParam;
+}
+
+// 現在の文書全体と選択範囲を文脈として先頭の system メッセージ群に埋め込む。
+// キャッシュを効かせるため、変化しにくいものを先頭に固定プレフィックスとして並べる:
+//   1. SYSTEM_PROMPT (常に不変) — cache_control
+//   2. 文書全体 (編集しなければ不変) — cache_control
+//   3. 選択範囲 (毎回変わりうる) — キャッシュ対象外。文書のブレークポイントより後ろに置き、
+//      選択が変わっても文書までのキャッシュが無効にならないようにする。
+export function buildContextMessages(source: string, selection: string): ChatMessageParam[] {
+  const messages: ChatMessageParam[] = [
+    cachedSystem(SYSTEM_PROMPT),
+    cachedSystem(`--- 現在の文書全体 ---\n${source || '(空)'}`),
+  ];
   if (selection.trim()) {
-    parts.push('', '--- 現在の選択範囲 ---', selection);
+    messages.push({role: 'system', content: `--- 現在の選択範囲 ---\n${selection}`});
   }
-  return {role: 'system', content: parts.join('\n')};
+  return messages;
 }
 
 export interface StreamChatArgs {
@@ -111,26 +130,49 @@ export interface StreamChatArgs {
   signal?: AbortSignal;
 }
 
-// ストリーミングでチャット補完を実行し、逐次テキストを onDelta に渡す。最終テキストを返す。
+export interface ChatUsage {
+  promptTokens?: number;
+  completionTokens?: number;
+  totalTokens?: number;
+  cachedTokens?: number;
+}
+
+export interface StreamChatResult {
+  text: string;
+  usage: ChatUsage | null;
+}
+
+// ストリーミングでチャット補完を実行し、逐次テキストを onDelta に渡す。最終テキストとトークン使用量を返す。
 export async function streamChat({
   apiKey,
   model,
   messages,
   onDelta,
   signal,
-}: StreamChatArgs): Promise<string> {
+}: StreamChatArgs): Promise<StreamChatResult> {
   const client = createClient(apiKey);
   const stream = await client.chat.completions.create(
-    {model, messages, stream: true},
+    {model, messages, stream: true, stream_options: {include_usage: true}},
     {signal},
   );
   let accumulated = '';
+  let usage: ChatUsage | null = null;
   for await (const chunk of stream) {
     const delta = chunk.choices[0]?.delta;
     if (delta?.content) {
       accumulated += delta.content;
       onDelta(accumulated);
     }
+    // 使用量は最後のチャンクにのみ含まれる (choices は空配列になる)
+    if (chunk.usage) {
+      usage = {
+        promptTokens: chunk.usage.prompt_tokens,
+        completionTokens: chunk.usage.completion_tokens,
+        totalTokens: chunk.usage.total_tokens,
+        // キャッシュヒットしたプロンプトトークン数 (OpenRouter が返す場合)
+        cachedTokens: chunk.usage.prompt_tokens_details?.cached_tokens,
+      };
+    }
   }
-  return accumulated;
+  return {text: accumulated, usage};
 }

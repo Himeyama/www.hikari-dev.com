@@ -4,7 +4,7 @@ import DOMPurify from 'dompurify';
 import Translate, {translate} from '@docusaurus/Translate';
 import {md} from '../../lib/doc/markdown-to-ooxml';
 import {
-  buildContextMessage,
+  buildContextMessages,
   getModel,
   loadApiKey,
   loadModel,
@@ -92,8 +92,47 @@ function AssistantMarkdown({content}: {content: string}): ReactNode {
     () => DOMPurify.sanitize(md.render(content), {USE_PROFILES: {html: true}}),
     [content],
   );
+  const containerRef = useRef<HTMLDivElement>(null);
+
+  // レンダリング後に各コードブロックへコピーボタンを差し込む
+  useEffect(() => {
+    const container = containerRef.current;
+    if (!container) return;
+    const copyLabel = translate({id: 'doc.copyCode', message: 'コピー'});
+    const copiedLabel = translate({id: 'doc.copiedCode', message: 'コピー完了'});
+    const cleanups: Array<() => void> = [];
+    container.querySelectorAll('pre').forEach((pre) => {
+      const code = pre.querySelector('code');
+      if (!code) return;
+      pre.classList.add(styles.codeBlock);
+      const button = document.createElement('button');
+      button.type = 'button';
+      button.className = styles.copyBtn;
+      button.textContent = copyLabel;
+      let timer: ReturnType<typeof setTimeout> | undefined;
+      const onClick = () => {
+        void navigator.clipboard.writeText(code.textContent ?? '').then(() => {
+          button.textContent = copiedLabel;
+          if (timer) clearTimeout(timer);
+          timer = setTimeout(() => {
+            button.textContent = copyLabel;
+          }, 1500);
+        });
+      };
+      button.addEventListener('click', onClick);
+      pre.appendChild(button);
+      cleanups.push(() => {
+        button.removeEventListener('click', onClick);
+        if (timer) clearTimeout(timer);
+        button.remove();
+      });
+    });
+    return () => cleanups.forEach((fn) => fn());
+  }, [html]);
+
   return (
     <div
+      ref={containerRef}
       className={`${styles.assistantContent} markdown`}
       dangerouslySetInnerHTML={{__html: html}}
     />
@@ -168,19 +207,31 @@ export function DocChatPanel({
     const historySnapshot = historyRef.current;
     historyRef.current = [...historyRef.current, {role: 'user', content: trimmed}];
 
+    const startedAt = Date.now();
     try {
       // 毎回、最新の文書全体と選択範囲を文脈として先頭に付与する
-      const context = buildContextMessage(sourceRef.current, selectionRef.current);
-      const accumulated = await streamChat({
+      const context = buildContextMessages(sourceRef.current, selectionRef.current);
+      const {text: accumulated, usage} = await streamChat({
         apiKey,
         model,
-        messages: [context, ...historyRef.current],
+        messages: [...context, ...historyRef.current],
         onDelta: (text) =>
           setMessages((prev) =>
             prev.map((m) => (m.id === assistantId ? {...m, content: text} : m)),
           ),
       });
       historyRef.current = [...historyRef.current, {role: 'assistant', content: accumulated}];
+      // 簡単なログ (時刻、モデル、所要時間、トークン) をコンソールに出力する
+      const elapsedMs = Date.now() - startedAt;
+      console.info('[DocChat]', {
+        time: new Date(startedAt).toISOString(),
+        model,
+        elapsedMs,
+        promptTokens: usage?.promptTokens,
+        completionTokens: usage?.completionTokens,
+        totalTokens: usage?.totalTokens,
+        cachedTokens: usage?.cachedTokens,
+      });
     } catch (err: unknown) {
       const errMsg = err instanceof Error ? err.message : String(err);
       setError(errMsg);
@@ -336,7 +387,7 @@ export function DocChatPanel({
           value={input}
           onChange={(e) => setInput(e.target.value)}
           onKeyDown={handleKeyDown}
-          rows={2}
+          rows={3}
           placeholder={translate({
             id: 'doc.chatPlaceholder',
             message: '指示を入力 (Enter で送信、Shift + Enter で改行)',

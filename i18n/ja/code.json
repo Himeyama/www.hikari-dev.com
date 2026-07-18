@@ -1443,5 +1443,11 @@
   },
   "doc.model": {
     "message": "モデル"
+  },
+  "doc.copyCode": {
+    "message": "コピー"
+  },
+  "doc.copiedCode": {
+    "message": "コピー完了"
   }
 }

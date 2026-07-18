@@ -177,8 +177,42 @@
   margin-bottom: 0;
 }
 .assistantContent :global(pre) {
-  overflow-x: auto;
   border-radius: 6px;
+}
+
+/* コードブロック: 横スクロールせず折り返し、右上にコピーボタンを重ねる */
+.codeBlock {
+  position: relative;
+}
+.codeBlock :global(code) {
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+  word-break: break-word;
+}
+
+.copyBtn {
+  position: absolute;
+  top: 6px;
+  right: 6px;
+  border: 1px solid var(--ifm-color-emphasis-300);
+  border-radius: 4px;
+  background: var(--ifm-background-surface-color);
+  color: var(--ifm-color-emphasis-800);
+  font-size: 0.7rem;
+  line-height: 1;
+  padding: 0.2rem 0.45rem;
+  cursor: pointer;
+  font-family: inherit;
+  opacity: 0;
+  transition: opacity 0.15s, background 0.15s, border-color 0.15s;
+}
+.codeBlock:hover .copyBtn,
+.copyBtn:focus-visible {
+  opacity: 1;
+}
+.copyBtn:hover {
+  border-color: var(--ifm-color-primary);
+  background: var(--ifm-color-emphasis-100);
 }
 .assistantContent :global(ul),
 .assistantContent :global(ol) {

@@ -717,7 +717,19 @@ function DocApp(): ReactNode {
         <div className={styles.menuDivider} />
         <button
           className={`${styles.iconBtn} ${chatOpen ? styles.iconBtnActive : ''}`}
-          onClick={() => setChatOpen((v) => !v)}
+          onClick={() =>
+            setChatOpen((v) => {
+              if (!v) {
+                // 開くときはエディター・プレビュー・チャットを 2:2:1 (40% / 40% / 20%) に整える
+                setLeftPct(40);
+                setChatPct(20);
+              } else {
+                // 閉じるときはエディターとプレビューを 1:1 (50% / 50%) に戻す
+                setLeftPct(50);
+              }
+              return !v;
+            })
+          }
           title={translate({id: 'doc.aiChat', message: 'AI チャット'})}
           aria-label={translate({id: 'doc.aiChat', message: 'AI チャット'})}
         >
@@ -794,7 +806,11 @@ function DocApp(): ReactNode {
                 hasSelection={hasSelection}
                 onApplyToSelection={applyToSelection}
                 onApplyToDocument={applyToDocument}
-                onClose={() => setChatOpen(false)}
+                onClose={() => {
+                  // 閉じるときはエディターとプレビューを 1:1 (50% / 50%) に戻す
+                  setLeftPct(50);
+                  setChatOpen(false);
+                }}
               />
             </div>
           </>

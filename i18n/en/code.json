@@ -1449,5 +1449,11 @@
   },
   "doc.model": {
     "message": "Model"
+  },
+  "doc.copyCode": {
+    "message": "Copy"
+  },
+  "doc.copiedCode": {
+    "message": "Copied"
   }
 }
