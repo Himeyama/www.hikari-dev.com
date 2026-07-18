@@ -247,8 +247,14 @@
 .previewScroll h5,
 .previewScroll h6,
 .previewScroll strong,
-.previewScroll b {
+.previewScroll b,
+.previewScroll th {
   font-family: var(--doc-preview-bold-font);
+}
+
+/* ブラウザ既定の中央寄せを打ち消し、docx 側 (列タイトルを左寄せ) と表示を揃える */
+.previewScroll th {
+  text-align: left;
 }
 
 .editorFull {

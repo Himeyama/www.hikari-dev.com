@@ -4,7 +4,8 @@ import type {FontOption} from './fonts';
 type Token = ReturnType<MarkdownIt['parse']>[number];
 
 // プレビュー (render) と docx 変換 (parse) で同一インスタンスを共用し、解釈を一致させる
-export const md = new MarkdownIt({html: false, linkify: true, typographer: true});
+// html: true により <br> <u> <sup> <sub> <mark> 等のインラインタグを透過させる (プレビューは DOMPurify でサニタイズ)
+export const md = new MarkdownIt({html: true, linkify: true, typographer: true});
 
 // 見出しレベル別フォントサイズ (半ポイント: 20/16/14/12/11/11pt)
 const HEADING_SIZES = [40, 32, 28, 24, 22, 22];
@@ -17,9 +18,19 @@ interface RunStyle {
   bold?: boolean;
   italic?: boolean;
   strike?: boolean;
+  underline?: boolean;
+  highlight?: string;
+  vertAlign?: 'superscript' | 'subscript';
   code?: boolean;
   color?: string;
   size?: number;
+}
+
+// <tag>, </tag>, <tag/> を解析する。マッチしない (コメント等) 場合は null
+function parseHtmlTag(raw: string): {name: string; closing: boolean} | null {
+  const m = raw.match(/^<\s*(\/?)\s*([a-zA-Z][a-zA-Z0-9]*)\b[^>]*>$/);
+  if (!m) return null;
+  return {name: m[2].toLowerCase(), closing: m[1] === '/'};
 }
 
 function escapeXml(s: string): string {
@@ -37,7 +48,7 @@ interface BoldFonts {
   latin?: string;
 }
 
-// w:rPr の子要素はスキーマ順 (rFonts → b → i → strike → color → sz → shd) に並べる
+// w:rPr の子要素はスキーマ順 (rFonts → b → i → strike → color → sz → highlight → u → shd → vertAlign) に並べる
 function runProps(style: RunStyle, boldFonts?: BoldFonts): string {
   const parts: string[] = [];
   if (style.code) parts.push(MONO_FONT);
@@ -55,7 +66,10 @@ function runProps(style: RunStyle, boldFonts?: BoldFonts): string {
   if (style.strike) parts.push('<w:strike/>');
   if (style.color) parts.push(`<w:color w:val="${style.color}"/>`);
   if (style.size) parts.push(`<w:sz w:val="${style.size}"/>`);
+  if (style.highlight) parts.push(`<w:highlight w:val="${style.highlight}"/>`);
+  if (style.underline) parts.push('<w:u w:val="single"/>');
   if (style.code) parts.push(CODE_FILL);
+  if (style.vertAlign) parts.push(`<w:vertAlign w:val="${style.vertAlign}"/>`);
   return parts.length > 0 ? `<w:rPr>${parts.join('')}</w:rPr>` : '';
 }
 
@@ -68,12 +82,16 @@ function renderRuns(tokens: Token[], base: RunStyle, boldFonts?: BoldFonts): str
   let bold = base.bold ?? false;
   let italic = base.italic ?? false;
   let strike = base.strike ?? false;
+  let underline = base.underline ?? false;
+  let highlight = base.highlight;
+  let vertAlign = base.vertAlign;
   const out: string[] = [];
+  const current = (): RunStyle => ({...base, bold, italic, strike, underline, highlight, vertAlign});
   for (const t of tokens) {
     switch (t.type) {
       case 'text':
         // markdown-it は ***text*** 等で空テキストトークンを挟むため、空 run は出さない
-        if (t.content) out.push(textRun(t.content, {...base, bold, italic, strike}, boldFonts));
+        if (t.content) out.push(textRun(t.content, current(), boldFonts));
         break;
       case 'strong_open':
         bold = true;
@@ -94,20 +112,59 @@ function renderRuns(tokens: Token[], base: RunStyle, boldFonts?: BoldFonts): str
         strike = base.strike ?? false;
         break;
       case 'code_inline':
-        out.push(textRun(t.content, {...base, bold, italic, strike, code: true}, boldFonts));
+        out.push(textRun(t.content, {...current(), code: true}, boldFonts));
         break;
       case 'softbreak':
-        out.push(textRun(' ', {...base, bold, italic, strike}, boldFonts));
+        out.push(textRun(' ', current(), boldFonts));
         break;
       case 'hardbreak':
         out.push('<w:br/>');
         break;
+      case 'html_inline': {
+        // <br> <b/strong> <i/em> <u> <s/strike/del> <sup> <sub> <mark> を装飾トグルとして解釈し、
+        // それ以外の未対応タグ (div, span 等) はテキストとして出力せず読み飛ばす
+        const tag = parseHtmlTag(t.content);
+        if (!tag) break;
+        switch (tag.name) {
+          case 'br':
+            out.push('<w:br/>');
+            break;
+          case 'b':
+          case 'strong':
+            bold = tag.closing ? (base.bold ?? false) : true;
+            break;
+          case 'i':
+          case 'em':
+            italic = tag.closing ? (base.italic ?? false) : true;
+            break;
+          case 'u':
+            underline = tag.closing ? (base.underline ?? false) : true;
+            break;
+          case 's':
+          case 'strike':
+          case 'del':
+            strike = tag.closing ? (base.strike ?? false) : true;
+            break;
+          case 'sup':
+            vertAlign = tag.closing ? base.vertAlign : 'superscript';
+            break;
+          case 'sub':
+            vertAlign = tag.closing ? base.vertAlign : 'subscript';
+            break;
+          case 'mark':
+            highlight = tag.closing ? base.highlight : 'yellow';
+            break;
+          default:
+            break;
+        }
+        break;
+      }
       case 'image':
       case 'link_open':
       case 'link_close':
         break;
       default:
-        if (t.content) out.push(textRun(t.content, {...base, bold, italic, strike}, boldFonts));
+        if (t.content) out.push(textRun(t.content, current(), boldFonts));
     }
   }
   return out;
@@ -126,6 +183,51 @@ function buildParagraph(pPr: string, children: string[]): string {
   return lines.join('\n');
 }
 
+const TBL_INDENT = '    ';
+const TR_INDENT = '      ';
+const TC_INDENT = '        ';
+const CELL_P_INDENT = '          ';
+const CELL_RUN_INDENT = '            ';
+const TABLE_HEADER_FILL = '<w:shd w:val="clear" w:color="auto" w:fill="F2F2F2"/>';
+const TABLE_BORDERS =
+  '<w:tblBorders>' +
+  '<w:top w:val="single" w:sz="4" w:space="0" w:color="AAAAAA"/>' +
+  '<w:left w:val="single" w:sz="4" w:space="0" w:color="AAAAAA"/>' +
+  '<w:bottom w:val="single" w:sz="4" w:space="0" w:color="AAAAAA"/>' +
+  '<w:right w:val="single" w:sz="4" w:space="0" w:color="AAAAAA"/>' +
+  '<w:insideH w:val="single" w:sz="4" w:space="0" w:color="AAAAAA"/>' +
+  '<w:insideV w:val="single" w:sz="4" w:space="0" w:color="AAAAAA"/>' +
+  '</w:tblBorders>';
+
+// 列タイトル (th) は左寄せ・ヘッダー網掛けにする。本文セル (td) は既定の左寄せのまま
+function buildTableCell(runs: string[], header: boolean): string {
+  const lines = [`${TC_INDENT}<w:tc>`];
+  if (header) lines.push(`${CELL_P_INDENT}<w:tcPr>${TABLE_HEADER_FILL}</w:tcPr>`);
+  lines.push(`${CELL_P_INDENT}<w:p>`);
+  if (header) lines.push(`${CELL_RUN_INDENT}<w:pPr><w:jc w:val="left"/></w:pPr>`);
+  for (const r of runs) lines.push(`${CELL_RUN_INDENT}${r}`);
+  lines.push(`${CELL_P_INDENT}</w:p>`);
+  lines.push(`${TC_INDENT}</w:tc>`);
+  return lines.join('\n');
+}
+
+function buildTableRow(cells: string[]): string {
+  return [`${TR_INDENT}<w:tr>`, ...cells, `${TR_INDENT}</w:tr>`].join('\n');
+}
+
+function buildTable(rows: string[], columnCount: number): string {
+  const grid = Array.from({length: columnCount}, () => `${CELL_P_INDENT}<w:gridCol/>`);
+  return [
+    `${TBL_INDENT}<w:tbl>`,
+    `${TR_INDENT}<w:tblPr><w:tblW w:w="5000" w:type="pct"/>${TABLE_BORDERS}</w:tblPr>`,
+    `${TR_INDENT}<w:tblGrid>`,
+    ...grid,
+    `${TR_INDENT}</w:tblGrid>`,
+    ...rows,
+    `${TBL_INDENT}</w:tbl>`,
+  ].join('\n');
+}
+
 export function markdownToDocumentXml(src: string, font: FontOption): string {
   const boldFonts: BoldFonts = {eastAsia: font.boldEastAsia, latin: font.boldLatin};
   const tokens = md.parse(src, {});
@@ -133,6 +235,10 @@ export function markdownToDocumentXml(src: string, font: FontOption): string {
   const listStack: {type: 'bullet' | 'ordered'; counter: number}[] = [];
   let pendingMarker: string | null = null;
   let blockquoteDepth = 0;
+  let inHeaderRow = false;
+  let tableRows: string[] = [];
+  let rowCells: string[] = [];
+  let tableColumnCount = 0;
 
   // w:pPr の子要素はスキーマ順 (pBdr → shd → spacing → ind) に並べる
   const blockContext = (extraPPr: string[] = []): {pPr: string; base: RunStyle} => {
@@ -229,10 +335,53 @@ export function markdownToDocumentXml(src: string, font: FontOption): string {
           ),
         );
         break;
+      case 'table_open':
+        tableRows = [];
+        tableColumnCount = 0;
+        break;
+      case 'table_close':
+        paragraphs.push(buildTable(tableRows, tableColumnCount));
+        tableRows = [];
+        break;
+      case 'thead_open':
+        inHeaderRow = true;
+        break;
+      case 'thead_close':
+        inHeaderRow = false;
+        break;
+      case 'tr_open':
+        rowCells = [];
+        break;
+      case 'tr_close':
+        tableColumnCount = Math.max(tableColumnCount, rowCells.length);
+        tableRows.push(buildTableRow(rowCells));
+        break;
+      case 'th_open':
+      case 'td_open': {
+        // 列タイトル (th) は太字と同じ扱いにする (boldFonts によるフォント差し替えも適用される)
+        const header = t.type === 'th_open';
+        const inline = tokens[i + 1];
+        const runs =
+          inline?.type === 'inline'
+            ? renderRuns(inline.children ?? [], header ? {bold: true} : {}, boldFonts)
+            : [];
+        rowCells.push(buildTableCell(runs, header));
+        i += 2;
+        break;
+      }
       case 'inline':
-        // 未対応ブロック (テーブル等) 内のテキストを素の段落として出力し、内容の消失を防ぐ
+        // 未対応ブロック内のテキストを素の段落として出力し、内容の消失を防ぐ
         pushInlineParagraph(t);
         break;
+      case 'html_block': {
+        // ブロックレベルの HTML (<div>...</div> 等) はタグを除去し、残ったテキストのみ段落として出力する
+        const text = t.content.replace(/<[^>]*>/g, '').trim();
+        if (text) {
+          const {pPr, base} = blockContext();
+          paragraphs.push(buildParagraph(pPr, [textRun(text, base, boldFonts)]));
+        }
+        break;
+      }
       default:
         break;
     }
