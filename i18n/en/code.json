@@ -1337,7 +1337,7 @@
     "message": "Microsoft Yahei"
   },
   "doc.editorLabel": {
-    "message": "Markdown"
+    "message": "DOC"
   },
   "doc.previewTab": {
     "message": "Preview"
@@ -1352,7 +1352,7 @@
     "message": "Download docx"
   },
   "doc.title": {
-    "message": "Convert Markdown to a Word Document"
+    "message": "DOC"
   },
   "doc.description": {
     "message": "A tool that converts Markdown into a docx (Word) document. Everything runs in your browser, so nothing is sent to a server."

@@ -1331,7 +1331,7 @@
     "message": "Microsoft Yahei"
   },
   "doc.editorLabel": {
-    "message": "Markdown"
+    "message": "DOC"
   },
   "doc.previewTab": {
     "message": "プレビュー"
@@ -1346,7 +1346,7 @@
     "message": "docx をダウンロード"
   },
   "doc.title": {
-    "message": "Markdown を Word 文書に変換"
+    "message": "DOC"
   },
   "doc.description": {
     "message": "Markdown を docx (Word 文書) に変換するツール。ブラウザ内で処理されるためサーバーに内容は送信されない。"

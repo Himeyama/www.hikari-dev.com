@@ -540,7 +540,7 @@ function DocApp(): ReactNode {
       )}
       <div className={styles.menubar}>
         <span className={styles.brand}>
-          <Translate id="doc.editorLabel">Markdown</Translate>
+          <Translate id="doc.editorLabel">DOC</Translate>
         </span>
         <div className={styles.menuDivider} />
         <button
@@ -688,7 +688,7 @@ function DocApp(): ReactNode {
 export default function DocPage(): ReactNode {
   return (
     <Layout
-      title={translate({id: 'doc.title', message: 'Markdown を Word 文書に変換'})}
+      title={translate({id: 'doc.title', message: 'DOC'})}
       description={translate({
         id: 'doc.description',
         message:
