@@ -1327,7 +1327,43 @@
   "miniApps.chat.description": {
     "message": "可與 AI 對話的聊天工具。"
   },
+  "miniApps.doc.title": {
+    "message": "Markdown→docx 轉換"
+  },
+  "miniApps.doc.description": {
+    "message": "將 Markdown 轉換為 Word 文件 (docx)。"
+  },
   "theme.fontSwitcher.msYahei": {
     "message": "微軟雅黑"
+  },
+  "doc.editorLabel": {
+    "message": "Markdown"
+  },
+  "doc.previewTab": {
+    "message": "預覽"
+  },
+  "doc.ooxmlTab": {
+    "message": "OOXML"
+  },
+  "doc.downloadMd": {
+    "message": "下載 Markdown"
+  },
+  "doc.downloadDocx": {
+    "message": "下載 docx"
+  },
+  "doc.title": {
+    "message": "將 Markdown 轉換為 Word 文件"
+  },
+  "doc.description": {
+    "message": "將 Markdown 轉換為 docx (Word 文件) 的工具。所有處理皆在瀏覽器內完成，內容不會傳送至伺服器。"
+  },
+  "doc.bold": {
+    "message": "粗體"
+  },
+  "doc.italic": {
+    "message": "斜體"
+  },
+  "doc.strikethrough": {
+    "message": "刪除線"
   }
 }

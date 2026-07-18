@@ -142,6 +142,22 @@ function ServerIcon(): ReactNode {
   );
 }
 
+function DocIcon(): ReactNode {
+  return (
+    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+      <path
+        d="M6 3h8l4 4v14H6V3z"
+        stroke="currentColor"
+        strokeWidth="1.5"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
+      <path d="M14 3v4h4" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+      <path d="M9 12h6M9 15.5h6" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
+    </svg>
+  );
+}
+
 type MiniApp = {
   href: string;
   Icon: () => ReactNode;
@@ -239,6 +255,14 @@ const MINI_APPS: MiniApp[] = [
     titleMessage: 'nslookup (DNS 検索)',
     descriptionId: 'miniApps.nslookup.description',
     descriptionMessage: 'ドメイン名の DNS レコード (A・AAAA・MX・TXT・NS・CNAME) を取得する。',
+  },
+  {
+    href: '/doc',
+    Icon: DocIcon,
+    titleId: 'miniApps.doc.title',
+    titleMessage: 'Markdown→docx 変換',
+    descriptionId: 'miniApps.doc.description',
+    descriptionMessage: 'Markdown を Word 文書 (docx) に変換する。',
   },
   {
     href: '/chat',

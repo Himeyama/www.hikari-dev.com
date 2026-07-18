@@ -18,7 +18,7 @@ Docusaurus による個人ブログ
 
 ## ミニアプリ (`/src/pages/*.tsx`) の i18n 対応
 
-`/mini-apps` 一覧および各ミニアプリページ (`base64` / `cert-generator` / `hash` / `nslookup` / `password-generator` / `svg-to-ico` / `tsv-to-markdown` / `uuid` / `webp-converter` / `whois` / `yaml-json` / `chat` など) は `@docusaurus/Translate` の `<Translate id="...">日本語デフォルト</Translate>` / `translate({id, message})` を使って全文言をラップする。ハードコードされた日本語文字列を残さないこと。
+`/mini-apps` 一覧および各ミニアプリページ (`base64` / `cert-generator` / `doc` / `hash` / `nslookup` / `password-generator` / `svg-to-ico` / `tsv-to-markdown` / `uuid` / `webp-converter` / `whois` / `yaml-json` / `chat` など) は `@docusaurus/Translate` の `<Translate id="...">日本語デフォルト</Translate>` / `translate({id, message})` を使って全文言をラップする。ハードコードされた日本語文字列を残さないこと。
 
 新しいミニアプリを追加した、または既存ミニアプリに文言を追加・変更した場合は、翻訳データが古いまま残らないよう次の手順を実施する。
 

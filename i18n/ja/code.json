@@ -1321,7 +1321,43 @@
   "miniApps.chat.description": {
     "message": "AI と対話できるチャット。"
   },
+  "miniApps.doc.title": {
+    "message": "Markdown→docx 変換"
+  },
+  "miniApps.doc.description": {
+    "message": "Markdown を Word 文書 (docx) に変換する。"
+  },
   "theme.fontSwitcher.msYahei": {
     "message": "Microsoft Yahei"
+  },
+  "doc.editorLabel": {
+    "message": "Markdown"
+  },
+  "doc.previewTab": {
+    "message": "プレビュー"
+  },
+  "doc.ooxmlTab": {
+    "message": "OOXML"
+  },
+  "doc.downloadMd": {
+    "message": "Markdown をダウンロード"
+  },
+  "doc.downloadDocx": {
+    "message": "docx をダウンロード"
+  },
+  "doc.title": {
+    "message": "Markdown を Word 文書に変換"
+  },
+  "doc.description": {
+    "message": "Markdown を docx (Word 文書) に変換するツール。ブラウザ内で処理されるためサーバーに内容は送信されない。"
+  },
+  "doc.bold": {
+    "message": "太字"
+  },
+  "doc.italic": {
+    "message": "斜体"
+  },
+  "doc.strikethrough": {
+    "message": "取り消し線"
   }
 }

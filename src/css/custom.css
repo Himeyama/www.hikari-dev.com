@@ -187,7 +187,8 @@ html:not([lang="ja"]) .navbar__item--ja-only {
   font-family: 'Microsoft Yahei', '微软雅黑', sans-serif;
 }
 
-/* チャットページではフッターを非表示 */
-.chat-page-wrapper ~ footer {
+/* チャットページ・Doc ページではフッターを非表示 */
+.chat-page-wrapper ~ footer,
+.doc-page-wrapper ~ footer {
   display: none;
 }

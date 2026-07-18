@@ -1327,7 +1327,43 @@
   "miniApps.chat.description": {
     "message": "A chat that lets you converse with AI."
   },
+  "miniApps.doc.title": {
+    "message": "Markdown to docx"
+  },
+  "miniApps.doc.description": {
+    "message": "Convert Markdown into a Word document (docx)."
+  },
   "theme.fontSwitcher.msYahei": {
     "message": "Microsoft Yahei"
+  },
+  "doc.editorLabel": {
+    "message": "Markdown"
+  },
+  "doc.previewTab": {
+    "message": "Preview"
+  },
+  "doc.ooxmlTab": {
+    "message": "OOXML"
+  },
+  "doc.downloadMd": {
+    "message": "Download Markdown"
+  },
+  "doc.downloadDocx": {
+    "message": "Download docx"
+  },
+  "doc.title": {
+    "message": "Convert Markdown to a Word Document"
+  },
+  "doc.description": {
+    "message": "A tool that converts Markdown into a docx (Word) document. Everything runs in your browser, so nothing is sent to a server."
+  },
+  "doc.bold": {
+    "message": "Bold"
+  },
+  "doc.italic": {
+    "message": "Italic"
+  },
+  "doc.strikethrough": {
+    "message": "Strikethrough"
   }
 }

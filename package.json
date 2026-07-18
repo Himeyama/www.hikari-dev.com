@@ -37,6 +37,7 @@
     "clsx": "^2.1.1",
     "commander": "^14.0.3",
     "dompurify": "^3.2.2",
+    "jszip": "^3.10.1",
     "markdown-it": "^14.1.0",
     "mermaid": "^11.14.0",
     "node-forge": "^1.4.0",
