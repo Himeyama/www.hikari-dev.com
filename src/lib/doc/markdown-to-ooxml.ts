@@ -1,4 +1,5 @@
 import MarkdownIt from 'markdown-it';
+import type {FontOption} from './fonts';
 
 type Token = ReturnType<MarkdownIt['parse']>[number];
 
@@ -30,10 +31,25 @@ function escapeXml(s: string): string {
     .replace(/'/g, '&apos;');
 }
 
+// 太字時だけ差し替えたいフォント (実体の Bold がないファミリー用)
+interface BoldFonts {
+  eastAsia?: string;
+  latin?: string;
+}
+
 // w:rPr の子要素はスキーマ順 (rFonts → b → i → strike → color → sz → shd) に並べる
-function runProps(style: RunStyle): string {
+function runProps(style: RunStyle, boldFonts?: BoldFonts): string {
   const parts: string[] = [];
   if (style.code) parts.push(MONO_FONT);
+  else if (style.bold && (boldFonts?.eastAsia || boldFonts?.latin)) {
+    const attrs: string[] = [];
+    if (boldFonts.latin) {
+      const f = escapeXml(boldFonts.latin);
+      attrs.push(`w:ascii="${f}"`, `w:hAnsi="${f}"`);
+    }
+    if (boldFonts.eastAsia) attrs.push(`w:eastAsia="${escapeXml(boldFonts.eastAsia)}"`);
+    parts.push(`<w:rFonts ${attrs.join(' ')}/>`);
+  }
   if (style.bold) parts.push('<w:b/>');
   if (style.italic) parts.push('<w:i/>');
   if (style.strike) parts.push('<w:strike/>');
@@ -43,12 +59,12 @@ function runProps(style: RunStyle): string {
   return parts.length > 0 ? `<w:rPr>${parts.join('')}</w:rPr>` : '';
 }
 
-function textRun(text: string, style: RunStyle): string {
-  return `<w:r>${runProps(style)}<w:t xml:space="preserve">${escapeXml(text)}</w:t></w:r>`;
+function textRun(text: string, style: RunStyle, boldFonts?: BoldFonts): string {
+  return `<w:r>${runProps(style, boldFonts)}<w:t xml:space="preserve">${escapeXml(text)}</w:t></w:r>`;
 }
 
 // 各 run (または <w:br/>) を 1 要素とする配列を返す。整形時に 1 行 1 要素で並べる
-function renderRuns(tokens: Token[], base: RunStyle): string[] {
+function renderRuns(tokens: Token[], base: RunStyle, boldFonts?: BoldFonts): string[] {
   let bold = base.bold ?? false;
   let italic = base.italic ?? false;
   let strike = base.strike ?? false;
@@ -57,7 +73,7 @@ function renderRuns(tokens: Token[], base: RunStyle): string[] {
     switch (t.type) {
       case 'text':
         // markdown-it は ***text*** 等で空テキストトークンを挟むため、空 run は出さない
-        if (t.content) out.push(textRun(t.content, {...base, bold, italic, strike}));
+        if (t.content) out.push(textRun(t.content, {...base, bold, italic, strike}, boldFonts));
         break;
       case 'strong_open':
         bold = true;
@@ -78,10 +94,10 @@ function renderRuns(tokens: Token[], base: RunStyle): string[] {
         strike = base.strike ?? false;
         break;
       case 'code_inline':
-        out.push(textRun(t.content, {...base, bold, italic, strike, code: true}));
+        out.push(textRun(t.content, {...base, bold, italic, strike, code: true}, boldFonts));
         break;
       case 'softbreak':
-        out.push(textRun(' ', {...base, bold, italic, strike}));
+        out.push(textRun(' ', {...base, bold, italic, strike}, boldFonts));
         break;
       case 'hardbreak':
         out.push('<w:br/>');
@@ -91,7 +107,7 @@ function renderRuns(tokens: Token[], base: RunStyle): string[] {
       case 'link_close':
         break;
       default:
-        if (t.content) out.push(textRun(t.content, {...base, bold, italic, strike}));
+        if (t.content) out.push(textRun(t.content, {...base, bold, italic, strike}, boldFonts));
     }
   }
   return out;
@@ -110,7 +126,8 @@ function buildParagraph(pPr: string, children: string[]): string {
   return lines.join('\n');
 }
 
-export function markdownToDocumentXml(src: string): string {
+export function markdownToDocumentXml(src: string, font: FontOption): string {
+  const boldFonts: BoldFonts = {eastAsia: font.boldEastAsia, latin: font.boldLatin};
   const tokens = md.parse(src, {});
   const paragraphs: string[] = [];
   const listStack: {type: 'bullet' | 'ordered'; counter: number}[] = [];
@@ -137,10 +154,10 @@ export function markdownToDocumentXml(src: string): string {
     const {pPr, base} = blockContext();
     const children: string[] = [];
     if (pendingMarker !== null) {
-      children.push(textRun(pendingMarker, base));
+      children.push(textRun(pendingMarker, base, boldFonts));
       pendingMarker = null;
     }
-    children.push(...renderRuns(inline.children ?? [], base));
+    children.push(...renderRuns(inline.children ?? [], base, boldFonts));
     paragraphs.push(buildParagraph(pPr, children));
   };
 
@@ -155,7 +172,8 @@ export function markdownToDocumentXml(src: string): string {
           italic: level >= 6,
           size: HEADING_SIZES[level - 1] ?? 22,
         };
-        const runs = inline?.type === 'inline' ? renderRuns(inline.children ?? [], base) : [];
+        const runs =
+          inline?.type === 'inline' ? renderRuns(inline.children ?? [], base, boldFonts) : [];
         paragraphs.push(
           buildParagraph('<w:pPr><w:spacing w:before="240" w:after="120"/></w:pPr>', runs),
         );

@@ -1365,5 +1365,8 @@
   },
   "doc.strikethrough": {
     "message": "Strikethrough"
+  },
+  "doc.font": {
+    "message": "Font"
   }
 }

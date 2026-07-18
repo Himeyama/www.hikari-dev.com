@@ -1,4 +1,4 @@
-import type {ReactNode} from 'react';
+import type {CSSProperties, ReactNode} from 'react';
 import {useEffect, useMemo, useRef, useState} from 'react';
 import Editor, {type OnMount} from '@monaco-editor/react';
 import DOMPurify from 'dompurify';
@@ -8,6 +8,13 @@ import Layout from '@theme/Layout';
 import Translate, {translate} from '@docusaurus/Translate';
 import {md, markdownToDocumentXml} from '../lib/doc/markdown-to-ooxml';
 import {buildDocxBlob} from '../lib/doc/docx-package';
+import {
+  FONT_OPTIONS,
+  FONT_CATEGORY_LABELS,
+  DEFAULT_FONT_ID,
+  getFontOption,
+  type FontOption,
+} from '../lib/doc/fonts';
 import styles from './doc.module.css';
 
 const SAMPLE_MARKDOWN = `# サンプル文書
@@ -45,6 +52,26 @@ const EDITOR_OPTIONS = {
 
 const MIN_PANE_PCT = 20;
 const MAX_PANE_PCT = 80;
+const FONT_STORAGE_KEY = 'doc-font-id';
+
+function loadStoredFontId(): string {
+  try {
+    return localStorage.getItem(FONT_STORAGE_KEY) ?? DEFAULT_FONT_ID;
+  } catch {
+    // localStorage が使用できない環境 (プライベートモード等) では既定値にフォールバック
+    return DEFAULT_FONT_ID;
+  }
+}
+
+// 太字の英数字 (boldLatin) と日本語 (boldEastAsia) で別ファミリーを使うフォントは、
+// unicode-range で英数字だけ切り出した DocPreviewBoldLatin (doc.module.css) を先頭に挟む
+function boldFontStack(font: FontOption): string {
+  const eastAsia = font.boldEastAsia ?? font.family;
+  if (font.boldLatin && font.boldLatin !== eastAsia) {
+    return `'DocPreviewBoldLatin', "${eastAsia}", sans-serif`;
+  }
+  return `"${eastAsia}", sans-serif`;
+}
 
 type PreviewTab = 'preview' | 'ooxml';
 type MonacoEditor = Parameters<OnMount>[0];
@@ -168,6 +195,121 @@ function DocxDownloadIcon(): ReactNode {
   );
 }
 
+function ChevronDownIcon(): ReactNode {
+  return (
+    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+      <path
+        d="M6 9l6 6 6-6"
+        stroke="currentColor"
+        strokeWidth="1.8"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
+    </svg>
+  );
+}
+
+function CheckIcon(): ReactNode {
+  return (
+    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+      <path
+        d="M5 12.5l4.5 4.5L19 7"
+        stroke="currentColor"
+        strokeWidth="2"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
+    </svg>
+  );
+}
+
+const FONT_CATEGORIES = ['serif', 'sans-serif', 'serif-sans'] as const;
+
+// "Noto Serif JP / Noto Sans JP" のような複合ラベルは、"/" の前後をそれぞれの実フォントで描画する
+function renderFontLabel(font: FontOption): ReactNode {
+  const parts = font.label.split(' / ');
+  if (parts.length !== 2 || !font.boldEastAsia) {
+    return <span style={{fontFamily: `"${font.family}", sans-serif`}}>{font.label}</span>;
+  }
+  return (
+    <span>
+      <span style={{fontFamily: `"${font.family}", sans-serif`}}>{parts[0]}</span>
+      {' / '}
+      <span style={{fontFamily: `"${font.boldEastAsia}", sans-serif`}}>{parts[1]}</span>
+    </span>
+  );
+}
+
+// フォント名自体をそのファミリーで描画するリッチなドロップダウン (ネイティブ select の代替)
+function FontDropdown({
+  value,
+  onChange,
+}: {
+  value: string;
+  onChange: (id: string) => void;
+}): ReactNode {
+  const [open, setOpen] = useState(false);
+  const rootRef = useRef<HTMLDivElement>(null);
+  const current = getFontOption(value);
+
+  useEffect(() => {
+    if (!open) return;
+    const onDocClick = (e: MouseEvent) => {
+      if (rootRef.current && !rootRef.current.contains(e.target as Node)) setOpen(false);
+    };
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') setOpen(false);
+    };
+    document.addEventListener('mousedown', onDocClick);
+    document.addEventListener('keydown', onKey);
+    return () => {
+      document.removeEventListener('mousedown', onDocClick);
+      document.removeEventListener('keydown', onKey);
+    };
+  }, [open]);
+
+  return (
+    <div className={styles.fontPicker} ref={rootRef}>
+      <button
+        type="button"
+        className={styles.fontTrigger}
+        onClick={() => setOpen((v) => !v)}
+        title={translate({id: 'doc.font', message: 'フォント'})}
+        aria-haspopup="listbox"
+        aria-expanded={open}
+      >
+        <span className={styles.fontTriggerLabel}>{renderFontLabel(current)}</span>
+        <ChevronDownIcon />
+      </button>
+      {open && (
+        <div className={styles.fontMenu} role="listbox">
+          {FONT_CATEGORIES.map((category) => (
+            <div key={category} className={styles.fontGroup}>
+              <div className={styles.fontGroupLabel}>{FONT_CATEGORY_LABELS[category]}</div>
+              {FONT_OPTIONS.filter((f) => f.category === category).map((f) => (
+                <button
+                  type="button"
+                  key={f.id}
+                  role="option"
+                  aria-selected={f.id === value}
+                  className={`${styles.fontOption} ${f.id === value ? styles.fontOptionActive : ''}`}
+                  onClick={() => {
+                    onChange(f.id);
+                    setOpen(false);
+                  }}
+                >
+                  {renderFontLabel(f)}
+                  {f.id === value && <CheckIcon />}
+                </button>
+              ))}
+            </div>
+          ))}
+        </div>
+      )}
+    </div>
+  );
+}
+
 function downloadBlob(filename: string, blob: Blob) {
   const url = URL.createObjectURL(blob);
   const a = document.createElement('a');
@@ -189,6 +331,16 @@ function DocApp(): ReactNode {
   const previewRef = useRef<HTMLDivElement>(null);
   const [marks, setMarks] = useState({bold: false, italic: false, strike: false});
   const [hasSelection, setHasSelection] = useState(false);
+  const [fontId, setFontIdState] = useState(loadStoredFontId);
+  const font = useMemo(() => getFontOption(fontId), [fontId]);
+  const setFontId = (id: string) => {
+    setFontIdState(id);
+    try {
+      localStorage.setItem(FONT_STORAGE_KEY, id);
+    } catch {
+      // localStorage が使用できない環境では保存をあきらめる
+    }
+  };
 
   // 現在の選択範囲に適用済みの装飾と、選択の有無を判定してツールバーに反映する
   const refreshMarks = () => {
@@ -249,8 +401,8 @@ function DocApp(): ReactNode {
     [source, tab],
   );
   const ooxml = useMemo(
-    () => (tab === 'ooxml' ? markdownToDocumentXml(source) : ''),
-    [source, tab],
+    () => (tab === 'ooxml' ? markdownToDocumentXml(source, font) : ''),
+    [source, tab, font],
   );
 
   useEffect(() => {
@@ -277,7 +429,7 @@ function DocApp(): ReactNode {
   const downloadDocx = async () => {
     setDownloading(true);
     try {
-      const blob = await buildDocxBlob(markdownToDocumentXml(source));
+      const blob = await buildDocxBlob(markdownToDocumentXml(source, font), font);
       downloadBlob('document.docx', blob);
     } finally {
       setDownloading(false);
@@ -321,6 +473,8 @@ function DocApp(): ReactNode {
           <StrikethroughIcon />
         </button>
         <div className={styles.menuSpacer} />
+        <FontDropdown value={fontId} onChange={setFontId} />
+        <div className={styles.menuDivider} />
         <div className={styles.tabs}>
           <button
             className={`${styles.tabBtn} ${tab === 'preview' ? styles.tabBtnActive : ''}`}
@@ -386,6 +540,12 @@ function DocApp(): ReactNode {
             <div
               ref={previewRef}
               className={`${styles.previewScroll} markdown`}
+              style={
+                {
+                  '--doc-preview-font': `"${font.family}", sans-serif`,
+                  '--doc-preview-bold-font': boldFontStack(font),
+                } as CSSProperties
+              }
               dangerouslySetInnerHTML={{__html: html}}
             />
           ) : (

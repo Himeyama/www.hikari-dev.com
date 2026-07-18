@@ -1365,5 +1365,8 @@
   },
   "doc.strikethrough": {
     "message": "刪除線"
+  },
+  "doc.font": {
+    "message": "字型"
   }
 }

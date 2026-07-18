@@ -1359,5 +1359,8 @@
   },
   "doc.strikethrough": {
     "message": "取り消し線"
+  },
+  "doc.font": {
+    "message": "フォント"
   }
 }
