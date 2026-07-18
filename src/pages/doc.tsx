@@ -58,6 +58,17 @@ const MIN_CHAT_PCT = 18;
 const MAX_CHAT_PCT = 60;
 const FONT_STORAGE_KEY = 'doc-font-id';
 const CHAT_OPEN_STORAGE_KEY = 'doc-chat-open';
+const SOURCE_STORAGE_KEY = 'doc-source';
+const SOURCE_SAVE_DEBOUNCE_MS = 500;
+
+function loadStoredSource(): string {
+  try {
+    return localStorage.getItem(SOURCE_STORAGE_KEY) ?? SAMPLE_MARKDOWN;
+  } catch {
+    // localStorage が使用できない環境ではサンプル文書にフォールバック
+    return SAMPLE_MARKDOWN;
+  }
+}
 
 function loadChatOpen(): boolean {
   try {
@@ -369,7 +380,7 @@ function downloadBlob(filename: string, blob: Blob) {
 
 function DocApp(): ReactNode {
   const {colorMode} = useColorMode();
-  const [source, setSource] = useState(SAMPLE_MARKDOWN);
+  const [source, setSource] = useState(loadStoredSource);
   const [tab, setTab] = useState<PreviewTab>('preview');
   const [downloading, setDownloading] = useState(false);
   const [leftPct, setLeftPct] = useState(50);
@@ -477,6 +488,18 @@ function DocApp(): ReactNode {
     () => (tab === 'ooxml' ? markdownToDocumentXml(source, font).xml : ''),
     [source, tab, font],
   );
+
+  // 本文の変更をデバウンスしてブラウザのローカルストレージに自動保存する
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      try {
+        localStorage.setItem(SOURCE_STORAGE_KEY, source);
+      } catch {
+        // localStorage が使用できない環境では保存をあきらめる
+      }
+    }, SOURCE_SAVE_DEBOUNCE_MS);
+    return () => clearTimeout(timer);
+  }, [source]);
 
   useEffect(() => {
     if (!dragging) return;
