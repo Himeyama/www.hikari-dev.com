@@ -1383,5 +1383,71 @@
   },
   "doc.import": {
     "message": "匯入 (.md、.markdown、.docx)"
+  },
+  "doc.aiChat": {
+    "message": "AI 對話"
+  },
+  "doc.apiSettings": {
+    "message": "API 設定"
+  },
+  "doc.apiKeyLabel": {
+    "message": "OpenRouter API 金鑰"
+  },
+  "doc.hide": {
+    "message": "隱藏"
+  },
+  "doc.show": {
+    "message": "顯示"
+  },
+  "doc.apiKeyHint": {
+    "message": "儲存在瀏覽器的 localStorage，不會傳送至伺服器。"
+  },
+  "doc.cancel": {
+    "message": "取消"
+  },
+  "doc.saved": {
+    "message": "已儲存"
+  },
+  "doc.save": {
+    "message": "儲存"
+  },
+  "doc.noApiKey": {
+    "message": "尚未設定 API 金鑰，請於 API 設定中輸入。"
+  },
+  "doc.chatClear": {
+    "message": "清除對話"
+  },
+  "doc.modelSettings": {
+    "message": "模型設定"
+  },
+  "doc.close": {
+    "message": "關閉"
+  },
+  "doc.chatEmpty": {
+    "message": "針對文件下達指示，AI 會針對選取範圍或整份文件提出編輯建議。"
+  },
+  "doc.applyToSelectionHint": {
+    "message": "在編輯器中選取文字後即可套用。"
+  },
+  "doc.applyToSelection": {
+    "message": "套用至選取範圍"
+  },
+  "doc.applyToDocument": {
+    "message": "套用至整份文件"
+  },
+  "doc.copied": {
+    "message": "已複製"
+  },
+  "doc.copy": {
+    "message": "複製"
+  },
+  "doc.chatPlaceholder": {
+    "message": "輸入指示 (Enter 傳送，Shift + Enter 換行)"
+  },
+  "doc.send": {
+    "message": "傳送"
+  },
+  "doc.model": {
+    "message": "模型"
   }
 }

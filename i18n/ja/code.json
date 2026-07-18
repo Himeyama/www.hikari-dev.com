@@ -1377,5 +1377,71 @@
   },
   "doc.import": {
     "message": "インポート (.md, .markdown, .docx)"
+  },
+  "doc.aiChat": {
+    "message": "AI チャット"
+  },
+  "doc.apiSettings": {
+    "message": "API 設定"
+  },
+  "doc.apiKeyLabel": {
+    "message": "OpenRouter API キー"
+  },
+  "doc.hide": {
+    "message": "非表示"
+  },
+  "doc.show": {
+    "message": "表示"
+  },
+  "doc.apiKeyHint": {
+    "message": "ブラウザの localStorage に保存される。サーバーには送信されない。"
+  },
+  "doc.cancel": {
+    "message": "キャンセル"
+  },
+  "doc.saved": {
+    "message": "保存しました"
+  },
+  "doc.save": {
+    "message": "保存"
+  },
+  "doc.noApiKey": {
+    "message": "API キーが未設定である。API 設定から入力する。"
+  },
+  "doc.chatClear": {
+    "message": "チャットをクリア"
+  },
+  "doc.modelSettings": {
+    "message": "モデル設定"
+  },
+  "doc.close": {
+    "message": "閉じる"
+  },
+  "doc.chatEmpty": {
+    "message": "文書について指示すると、選択範囲や文書全体を対象に AI が編集を提案する。"
+  },
+  "doc.applyToSelectionHint": {
+    "message": "エディタでテキストを選択すると適用できる"
+  },
+  "doc.applyToSelection": {
+    "message": "選択範囲に適用"
+  },
+  "doc.applyToDocument": {
+    "message": "全体に適用"
+  },
+  "doc.copied": {
+    "message": "コピーした"
+  },
+  "doc.copy": {
+    "message": "コピー"
+  },
+  "doc.chatPlaceholder": {
+    "message": "指示を入力 (Enter で送信、Shift + Enter で改行)"
+  },
+  "doc.send": {
+    "message": "送信"
+  },
+  "doc.model": {
+    "message": "モデル"
   }
 }

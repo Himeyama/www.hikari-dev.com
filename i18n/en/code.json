@@ -1383,5 +1383,71 @@
   },
   "doc.import": {
     "message": "Import (.md, .markdown, .docx)"
+  },
+  "doc.aiChat": {
+    "message": "AI Chat"
+  },
+  "doc.apiSettings": {
+    "message": "API settings"
+  },
+  "doc.apiKeyLabel": {
+    "message": "OpenRouter API key"
+  },
+  "doc.hide": {
+    "message": "Hide"
+  },
+  "doc.show": {
+    "message": "Show"
+  },
+  "doc.apiKeyHint": {
+    "message": "Stored in the browser localStorage. It is not sent to any server."
+  },
+  "doc.cancel": {
+    "message": "Cancel"
+  },
+  "doc.saved": {
+    "message": "Saved"
+  },
+  "doc.save": {
+    "message": "Save"
+  },
+  "doc.noApiKey": {
+    "message": "No API key is set. Enter one in API settings."
+  },
+  "doc.chatClear": {
+    "message": "Clear chat"
+  },
+  "doc.modelSettings": {
+    "message": "Model settings"
+  },
+  "doc.close": {
+    "message": "Close"
+  },
+  "doc.chatEmpty": {
+    "message": "Give an instruction about the document, and the AI will suggest edits for the selection or the whole document."
+  },
+  "doc.applyToSelectionHint": {
+    "message": "Select text in the editor to apply."
+  },
+  "doc.applyToSelection": {
+    "message": "Apply to selection"
+  },
+  "doc.applyToDocument": {
+    "message": "Apply to document"
+  },
+  "doc.copied": {
+    "message": "Copied"
+  },
+  "doc.copy": {
+    "message": "Copy"
+  },
+  "doc.chatPlaceholder": {
+    "message": "Enter an instruction (Enter to send, Shift + Enter for newline)"
+  },
+  "doc.send": {
+    "message": "Send"
+  },
+  "doc.model": {
+    "message": "Model"
   }
 }

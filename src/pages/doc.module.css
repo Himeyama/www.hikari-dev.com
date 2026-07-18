@@ -313,6 +313,13 @@
   text-align: left;
 }
 
+.chatPane {
+  height: 100%;
+  min-width: 0;
+  overflow: hidden;
+  flex-shrink: 0;
+}
+
 .editorFull {
   height: 100%;
 }

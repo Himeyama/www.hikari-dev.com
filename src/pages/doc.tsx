@@ -16,6 +16,7 @@ import {
   getFontOption,
   type FontOption,
 } from '../lib/doc/fonts';
+import {DocChatPanel} from '../components/DocChat/DocChatPanel';
 import styles from './doc.module.css';
 
 const SAMPLE_MARKDOWN = `# サンプル文書
@@ -53,7 +54,19 @@ const EDITOR_OPTIONS = {
 
 const MIN_PANE_PCT = 20;
 const MAX_PANE_PCT = 80;
+const MIN_CHAT_PCT = 18;
+const MAX_CHAT_PCT = 60;
 const FONT_STORAGE_KEY = 'doc-font-id';
+const CHAT_OPEN_STORAGE_KEY = 'doc-chat-open';
+
+function loadChatOpen(): boolean {
+  try {
+    return localStorage.getItem(CHAT_OPEN_STORAGE_KEY) === '1';
+  } catch {
+    // localStorage が使用できない環境では閉じた状態にフォールバック
+    return false;
+  }
+}
 
 function loadStoredFontId(): string {
   try {
@@ -211,6 +224,25 @@ function ImportIcon(): ReactNode {
   );
 }
 
+function AiChatIcon(): ReactNode {
+  return (
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+      <path
+        d="M4 5.5h16v10H9l-4 3.5v-3.5H4z"
+        stroke="currentColor"
+        strokeWidth="1.5"
+        strokeLinejoin="round"
+      />
+      <path
+        d="M12 7.5l.9 2.1 2.1.9-2.1.9-.9 2.1-.9-2.1-2.1-.9 2.1-.9z"
+        stroke="currentColor"
+        strokeWidth="1.2"
+        strokeLinejoin="round"
+      />
+    </svg>
+  );
+}
+
 function ChevronDownIcon(): ReactNode {
   return (
     <svg width="14" height="14" viewBox="0 0 24 24" fill="none" aria-hidden="true">
@@ -352,6 +384,10 @@ function DocApp(): ReactNode {
   const dragCounterRef = useRef(0);
   const [marks, setMarks] = useState({bold: false, italic: false, strike: false});
   const [hasSelection, setHasSelection] = useState(false);
+  const [selectedText, setSelectedText] = useState('');
+  const [chatOpen, setChatOpenState] = useState(loadChatOpen);
+  const [chatPct, setChatPct] = useState(30);
+  const [chatDragging, setChatDragging] = useState(false);
   const [fontId, setFontIdState] = useState(loadStoredFontId);
   const font = useMemo(() => getFontOption(fontId), [fontId]);
   const setFontId = (id: string) => {
@@ -363,6 +399,19 @@ function DocApp(): ReactNode {
     }
   };
 
+  // AI チャットの開閉状態をブラウザに記録する
+  const setChatOpen = (next: boolean | ((v: boolean) => boolean)) => {
+    setChatOpenState((prev) => {
+      const value = typeof next === 'function' ? next(prev) : next;
+      try {
+        localStorage.setItem(CHAT_OPEN_STORAGE_KEY, value ? '1' : '0');
+      } catch {
+        // localStorage が使用できない環境では保存をあきらめる
+      }
+      return value;
+    });
+  };
+
   // 現在の選択範囲に適用済みの装飾と、選択の有無を判定してツールバーに反映する
   const refreshMarks = () => {
     const editor = editorRef.current;
@@ -371,11 +420,14 @@ function DocApp(): ReactNode {
     if (!editor || !model || !selection || selection.isEmpty()) {
       setMarks({bold: false, italic: false, strike: false});
       setHasSelection(false);
+      setSelectedText('');
       return;
     }
-    const {decos} = analyze(model.getValueInRange(selection));
+    const selText = model.getValueInRange(selection);
+    const {decos} = analyze(selText);
     setMarks({bold: decos.has('bold'), italic: decos.has('italic'), strike: decos.has('strike')});
     setHasSelection(true);
+    setSelectedText(selText);
   };
 
   // 指定した装飾だけをトグルし、他の装飾は保持したまま囲み直す (組み合わせ対応)
@@ -442,6 +494,41 @@ function DocApp(): ReactNode {
       window.removeEventListener('mouseup', onUp);
     };
   }, [dragging]);
+
+  // AI チャットパネルの幅を右端からのドラッグで変更する
+  useEffect(() => {
+    if (!chatDragging) return;
+    const onMove = (e: MouseEvent) => {
+      const rect = bodyRef.current?.getBoundingClientRect();
+      if (!rect) return;
+      const pct = ((rect.right - e.clientX) / rect.width) * 100;
+      setChatPct(Math.min(MAX_CHAT_PCT, Math.max(MIN_CHAT_PCT, pct)));
+    };
+    const onUp = () => setChatDragging(false);
+    window.addEventListener('mousemove', onMove);
+    window.addEventListener('mouseup', onUp);
+    return () => {
+      window.removeEventListener('mousemove', onMove);
+      window.removeEventListener('mouseup', onUp);
+    };
+  }, [chatDragging]);
+
+  // AI 応答をエディタの現在の選択範囲に置き換える
+  const applyToSelection = (text: string) => {
+    const editor = editorRef.current;
+    const model = editor?.getModel();
+    const selection = editor?.getSelection();
+    if (!editor || !model || !selection || selection.isEmpty()) return;
+    editor.executeEdits('doc-ai', [
+      {range: selection, text, forceMoveMarkers: true},
+    ]);
+    editor.focus();
+  };
+
+  // AI 応答で文書全体を置き換える
+  const applyToDocument = (text: string) => {
+    setSource(text);
+  };
 
   const downloadMarkdown = () => {
     downloadBlob('document.md', new Blob([source], {type: 'text/markdown'}));
@@ -627,6 +714,15 @@ function DocApp(): ReactNode {
         >
           <DocxDownloadIcon />
         </button>
+        <div className={styles.menuDivider} />
+        <button
+          className={`${styles.iconBtn} ${chatOpen ? styles.iconBtnActive : ''}`}
+          onClick={() => setChatOpen((v) => !v)}
+          title={translate({id: 'doc.aiChat', message: 'AI チャット'})}
+          aria-label={translate({id: 'doc.aiChat', message: 'AI チャット'})}
+        >
+          <AiChatIcon />
+        </button>
       </div>
 
       <div className={styles.body} ref={bodyRef}>
@@ -680,7 +776,31 @@ function DocApp(): ReactNode {
           )}
         </div>
 
-        {dragging && <div className={styles.dragOverlay} />}
+        {chatOpen && (
+          <>
+            <div
+              className={`${styles.divider} ${chatDragging ? styles.dividerActive : ''}`}
+              onMouseDown={(e) => {
+                e.preventDefault();
+                setChatDragging(true);
+              }}
+              role="separator"
+              aria-orientation="vertical"
+            />
+            <div className={styles.chatPane} style={{width: `${chatPct}%`}}>
+              <DocChatPanel
+                source={source}
+                selectedText={selectedText}
+                hasSelection={hasSelection}
+                onApplyToSelection={applyToSelection}
+                onApplyToDocument={applyToDocument}
+                onClose={() => setChatOpen(false)}
+              />
+            </div>
+          </>
+        )}
+
+        {(dragging || chatDragging) && <div className={styles.dragOverlay} />}
       </div>
     </div>
   );
