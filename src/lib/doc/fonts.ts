@@ -25,6 +25,7 @@ export const FONT_OPTIONS: FontOption[] = [
   {id: 'ms-pgothic', label: 'MS Pゴシック', family: 'MS PGothic', category: 'sans-serif'},
   {id: 'meiryo', label: 'メイリオ', family: 'Meiryo', category: 'sans-serif'},
   {id: 'noto-sans-jp', label: 'Noto Sans JP', family: 'Noto Sans JP', category: 'sans-serif'},
+  {id: 'microsoft-yahei', label: 'Microsoft YaHei', family: 'Microsoft YaHei', category: 'sans-serif'},
   {id: 'biz-ud-gothic', label: 'BIZ UDGothic', family: 'BIZ UDGothic', category: 'sans-serif'},
   {
     id: 'biz-ud-pgothic',

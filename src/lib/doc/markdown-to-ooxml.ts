@@ -10,7 +10,7 @@ export const md = new MarkdownIt({html: false, linkify: true, typographer: true}
 const HEADING_SIZES = [40, 32, 28, 24, 22, 22];
 const LIST_INDENT_TWIP = 720;
 const QUOTE_INDENT_TWIP = 360;
-const MONO_FONT = '<w:rFonts w:ascii="Consolas" w:hAnsi="Consolas"/>';
+const MONO_FONT = '<w:rFonts w:ascii="Cascadia Code" w:hAnsi="Cascadia Code"/>';
 const CODE_FILL = '<w:shd w:val="clear" w:color="auto" w:fill="F2F2F2"/>';
 
 interface RunStyle {
