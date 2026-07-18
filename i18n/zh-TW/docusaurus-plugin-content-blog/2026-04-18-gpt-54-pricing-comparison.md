@@ -3,6 +3,7 @@ title: "GPT-5.4 / GPT-5.4 mini / GPT-5.4 nano / GPT-4o / GPT-4o mini 費用・�
 authors: hikari
 tags: [AI, OpenAI]
 image: /img/ogp/2026-04-18-gpt-54-pricing-comparison.png
+draft: true
 ---
 
 本文比較 OpenAI 目前可用的 API 模型——GPT-5.4、GPT-5.4 nano、GPT-5.4 mini、GPT-4o、GPT-4o mini 的費用、規格與效能，並整理各使用情境下的選擇建議。
