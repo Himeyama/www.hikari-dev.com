@@ -1368,5 +1368,20 @@
   },
   "doc.font": {
     "message": "字型"
+  },
+  "doc.importUnsupported": {
+    "message": "不支援的檔案格式 (僅支援 .md、.markdown、.docx)"
+  },
+  "doc.importFailed": {
+    "message": "檔案讀取失敗"
+  },
+  "doc.dismiss": {
+    "message": "關閉"
+  },
+  "doc.dropHere": {
+    "message": "將檔案拖曳至此以匯入 (.md、.markdown、.docx)"
+  },
+  "doc.import": {
+    "message": "匯入 (.md、.markdown、.docx)"
   }
 }

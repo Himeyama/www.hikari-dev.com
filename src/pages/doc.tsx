@@ -1,4 +1,4 @@
-import type {CSSProperties, ReactNode} from 'react';
+import type {CSSProperties, DragEvent, ReactNode} from 'react';
 import {useEffect, useMemo, useRef, useState} from 'react';
 import Editor, {type OnMount} from '@monaco-editor/react';
 import DOMPurify from 'dompurify';
@@ -8,6 +8,7 @@ import Layout from '@theme/Layout';
 import Translate, {translate} from '@docusaurus/Translate';
 import {md, markdownToDocumentXml} from '../lib/doc/markdown-to-ooxml';
 import {buildDocxBlob} from '../lib/doc/docx-package';
+import {IMPORT_ACCEPT, fileToMarkdownSource} from '../lib/doc/import-source';
 import {
   FONT_OPTIONS,
   FONT_CATEGORY_LABELS,
@@ -195,6 +196,21 @@ function DocxDownloadIcon(): ReactNode {
   );
 }
 
+function ImportIcon(): ReactNode {
+  return (
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+      <rect x="2.5" y="6" width="19" height="12" rx="2" stroke="currentColor" strokeWidth="1.5" />
+      <path
+        d="M12 15V9m0 0l-3 3m3-3l3 3"
+        stroke="currentColor"
+        strokeWidth="1.5"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
+    </svg>
+  );
+}
+
 function ChevronDownIcon(): ReactNode {
   return (
     <svg width="14" height="14" viewBox="0 0 24 24" fill="none" aria-hidden="true">
@@ -326,9 +342,14 @@ function DocApp(): ReactNode {
   const [downloading, setDownloading] = useState(false);
   const [leftPct, setLeftPct] = useState(50);
   const [dragging, setDragging] = useState(false);
+  const [fileDragging, setFileDragging] = useState(false);
+  const [importing, setImporting] = useState(false);
+  const [importError, setImportError] = useState('');
   const bodyRef = useRef<HTMLDivElement>(null);
   const editorRef = useRef<MonacoEditor | null>(null);
   const previewRef = useRef<HTMLDivElement>(null);
+  const fileInputRef = useRef<HTMLInputElement>(null);
+  const dragCounterRef = useRef(0);
   const [marks, setMarks] = useState({bold: false, italic: false, strike: false});
   const [hasSelection, setHasSelection] = useState(false);
   const [fontId, setFontIdState] = useState(loadStoredFontId);
@@ -436,10 +457,87 @@ function DocApp(): ReactNode {
     }
   };
 
+  const importFile = async (file: File) => {
+    setImportError('');
+    if (!/\.(md|markdown|docx)$/i.test(file.name)) {
+      setImportError(
+        translate({
+          id: 'doc.importUnsupported',
+          message: '対応していないファイル形式である (.md, .markdown, .docx のみ)',
+        }),
+      );
+      return;
+    }
+    setImporting(true);
+    try {
+      setSource(await fileToMarkdownSource(file));
+      setTab('preview');
+    } catch {
+      setImportError(
+        translate({id: 'doc.importFailed', message: 'ファイルの読み込みに失敗した'}),
+      );
+    } finally {
+      setImporting(false);
+    }
+  };
+
+  const onDragEnter = (e: DragEvent) => {
+    if (!e.dataTransfer.types.includes('Files')) return;
+    e.preventDefault();
+    dragCounterRef.current += 1;
+    setFileDragging(true);
+  };
+  const onDragOver = (e: DragEvent) => {
+    if (!e.dataTransfer.types.includes('Files')) return;
+    e.preventDefault();
+  };
+  const onDragLeave = (e: DragEvent) => {
+    if (!e.dataTransfer.types.includes('Files')) return;
+    e.preventDefault();
+    dragCounterRef.current = Math.max(0, dragCounterRef.current - 1);
+    if (dragCounterRef.current === 0) setFileDragging(false);
+  };
+  const onDrop = (e: DragEvent) => {
+    e.preventDefault();
+    dragCounterRef.current = 0;
+    setFileDragging(false);
+    const file = e.dataTransfer.files?.[0];
+    if (file) void importFile(file);
+  };
+
   const editorTheme = colorMode === 'dark' ? 'vs-dark' : 'light';
 
   return (
-    <div className={styles.app}>
+    <div
+      className={styles.app}
+      onDragEnter={onDragEnter}
+      onDragOver={onDragOver}
+      onDragLeave={onDragLeave}
+      onDrop={onDrop}
+    >
+      {importError && (
+        <div className={styles.importError} role="alert">
+          <span>{importError}</span>
+          <button
+            type="button"
+            className={styles.importErrorClose}
+            onClick={() => setImportError('')}
+            aria-label={translate({id: 'doc.dismiss', message: '閉じる'})}
+          >
+            ×
+          </button>
+        </div>
+      )}
+      {fileDragging && (
+        <div className={styles.fileDropOverlay}>
+          <div className={styles.fileDropMessage}>
+            <ImportIcon />
+            <Translate id="doc.dropHere">
+              ファイルをドロップしてインポート (.md, .markdown, .docx)
+            </Translate>
+          </div>
+        </div>
+      )}
       <div className={styles.menubar}>
         <span className={styles.brand}>
           <Translate id="doc.editorLabel">Markdown</Translate>
@@ -489,6 +587,27 @@ function DocApp(): ReactNode {
             <Translate id="doc.ooxmlTab">OOXML</Translate>
           </button>
         </div>
+        <div className={styles.menuDivider} />
+        <input
+          ref={fileInputRef}
+          type="file"
+          accept={IMPORT_ACCEPT}
+          className={styles.hiddenFileInput}
+          onChange={(e) => {
+            const file = e.target.files?.[0];
+            e.target.value = '';
+            if (file) void importFile(file);
+          }}
+        />
+        <button
+          className={styles.iconBtn}
+          onClick={() => fileInputRef.current?.click()}
+          disabled={importing}
+          title={translate({id: 'doc.import', message: 'インポート (.md, .markdown, .docx)'})}
+          aria-label={translate({id: 'doc.import', message: 'インポート (.md, .markdown, .docx)'})}
+        >
+          <ImportIcon />
+        </button>
         <div className={styles.menuDivider} />
         <button
           className={styles.iconBtn}

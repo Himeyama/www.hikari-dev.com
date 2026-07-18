@@ -1362,5 +1362,20 @@
   },
   "doc.font": {
     "message": "フォント"
+  },
+  "doc.importUnsupported": {
+    "message": "対応していないファイル形式である (.md, .markdown, .docx のみ)"
+  },
+  "doc.importFailed": {
+    "message": "ファイルの読み込みに失敗した"
+  },
+  "doc.dismiss": {
+    "message": "閉じる"
+  },
+  "doc.dropHere": {
+    "message": "ファイルをドロップしてインポート (.md, .markdown, .docx)"
+  },
+  "doc.import": {
+    "message": "インポート (.md, .markdown, .docx)"
   }
 }

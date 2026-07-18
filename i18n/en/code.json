@@ -1368,5 +1368,20 @@
   },
   "doc.font": {
     "message": "Font"
+  },
+  "doc.importUnsupported": {
+    "message": "Unsupported file type (only .md, .markdown, .docx)"
+  },
+  "doc.importFailed": {
+    "message": "Failed to read the file"
+  },
+  "doc.dismiss": {
+    "message": "Dismiss"
+  },
+  "doc.dropHere": {
+    "message": "Drop a file here to import (.md, .markdown, .docx)"
+  },
+  "doc.import": {
+    "message": "Import (.md, .markdown, .docx)"
   }
 }
