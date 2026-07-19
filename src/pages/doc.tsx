@@ -7,6 +7,7 @@ import {useColorMode} from '@docusaurus/theme-common';
 import Layout from '@theme/Layout';
 import Translate, {translate} from '@docusaurus/Translate';
 import {md, markdownToDocumentXml} from '../lib/doc/markdown-to-ooxml';
+import {markdownToLatex} from '../lib/doc/markdown-to-latex';
 import {buildDocxBlob} from '../lib/doc/docx-package';
 import {IMPORT_ACCEPT, fileToMarkdownSource} from '../lib/doc/import-source';
 import {
@@ -149,7 +150,7 @@ function boldFontStack(font: FontOption): string {
   return `"${eastAsia}", sans-serif`;
 }
 
-type PreviewTab = 'preview' | 'ooxml';
+type PreviewTab = 'preview' | 'ooxml' | 'latex';
 type MonacoEditor = Parameters<OnMount>[0];
 type Deco = 'bold' | 'italic' | 'strike';
 
@@ -264,6 +265,27 @@ function DocxDownloadIcon(): ReactNode {
         d="M12 10.5v5m0 0l-2-2m2 2l2-2"
         stroke="currentColor"
         strokeWidth="1.5"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
+    </svg>
+  );
+}
+
+function LatexDownloadIcon(): ReactNode {
+  return (
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+      <path
+        d="M6 3h8l4 4v14H6V3z"
+        stroke="currentColor"
+        strokeWidth="1.5"
+        strokeLinejoin="round"
+      />
+      <path d="M14 3v4h4" stroke="currentColor" strokeWidth="1.5" strokeLinejoin="round" />
+      <path
+        d="M8.4 11v3.4h1.9M12.1 11l2.2 3.4M14.3 11l-2.2 3.4"
+        stroke="currentColor"
+        strokeWidth="1.3"
         strokeLinecap="round"
         strokeLinejoin="round"
       />
@@ -550,6 +572,7 @@ function DocApp(): ReactNode {
     () => (tab === 'ooxml' ? markdownToDocumentXml(source, font).xml : ''),
     [source, tab, font],
   );
+  const latex = useMemo(() => (tab === 'latex' ? markdownToLatex(source) : ''), [source, tab]);
 
   // プレビュー内の各コードブロック (<pre class="hljs">) にコピー ボタンを注入する。
   // dangerouslySetInnerHTML で innerHTML が再構築されるたびに実行し、ボタンを付け直す
@@ -668,6 +691,10 @@ function DocApp(): ReactNode {
     } finally {
       setDownloading(false);
     }
+  };
+
+  const downloadLatex = () => {
+    downloadBlob('document.tex', new Blob([markdownToLatex(source)], {type: 'application/x-tex'}));
   };
 
   const importFile = async (file: File) => {
@@ -799,6 +826,12 @@ function DocApp(): ReactNode {
           >
             <Translate id="doc.ooxmlTab">OOXML</Translate>
           </button>
+          <button
+            className={`${styles.tabBtn} ${tab === 'latex' ? styles.tabBtnActive : ''}`}
+            onClick={() => setTab('latex')}
+          >
+            <Translate id="doc.latexTab">LaTeX</Translate>
+          </button>
         </div>
         <div className={styles.menuDivider} />
         <input
@@ -838,6 +871,14 @@ function DocApp(): ReactNode {
           aria-label={translate({id: 'doc.downloadDocx', message: 'docx をダウンロード'})}
         >
           <DocxDownloadIcon />
+        </button>
+        <button
+          className={styles.iconBtn}
+          onClick={downloadLatex}
+          title={translate({id: 'doc.downloadTex', message: 'LaTeX (.tex) をダウンロード'})}
+          aria-label={translate({id: 'doc.downloadTex', message: 'LaTeX (.tex) をダウンロード'})}
+        >
+          <LatexDownloadIcon />
         </button>
         <div className={styles.menuDivider} />
         <button
@@ -904,8 +945,8 @@ function DocApp(): ReactNode {
           ) : (
             <div className={styles.editorFull}>
               <Editor
-                language="xml"
-                value={ooxml}
+                language={tab === 'latex' ? 'plaintext' : 'xml'}
+                value={tab === 'latex' ? latex : ooxml}
                 theme={editorTheme}
                 options={{...EDITOR_OPTIONS, readOnly: true}}
               />

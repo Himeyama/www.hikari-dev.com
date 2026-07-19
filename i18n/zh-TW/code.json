@@ -1491,5 +1491,11 @@
   },
   "miniApps.texPreview.description": {
     "message": "即時預覽 TeX 語法的公式。"
+  },
+  "doc.latexTab": {
+    "message": "LaTeX"
+  },
+  "doc.downloadTex": {
+    "message": "下載 LaTeX (.tex)"
   }
 }

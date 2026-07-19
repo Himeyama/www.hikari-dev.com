@@ -1479,5 +1479,11 @@
   },
   "texPreview.note3": {
     "message": "構文エラーがある数式はプレビュー内にエラーメッセージとして表示される。"
+  },
+  "doc.latexTab": {
+    "message": "LaTeX"
+  },
+  "doc.downloadTex": {
+    "message": "LaTeX (.tex) をダウンロード"
   }
 }

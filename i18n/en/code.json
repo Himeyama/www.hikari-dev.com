@@ -1491,5 +1491,11 @@
   },
   "miniApps.texPreview.description": {
     "message": "Preview TeX-notation formulas in real time."
+  },
+  "doc.latexTab": {
+    "message": "LaTeX"
+  },
+  "doc.downloadTex": {
+    "message": "Download LaTeX (.tex)"
   }
 }
