@@ -17,6 +17,8 @@ const CODE_FILL = '<w:shd w:val="clear" w:color="auto" w:fill="F2F2F2"/>';
 
 interface RunStyle {
   bold?: boolean;
+  // 見出しのように <w:b/> は出さないが、太字用フォント (boldEastAsia/boldLatin) への差し替えだけは適用したい場合に指定する
+  fontBold?: boolean;
   italic?: boolean;
   strike?: boolean;
   underline?: boolean;
@@ -52,8 +54,9 @@ interface BoldFonts {
 // w:rPr の子要素はスキーマ順 (rFonts → b → i → strike → color → sz → highlight → u → shd → vertAlign) に並べる
 function runProps(style: RunStyle, boldFonts?: BoldFonts): string {
   const parts: string[] = [];
+  const wantsBoldFont = style.fontBold ?? style.bold;
   if (style.code) parts.push(MONO_FONT);
-  else if (style.bold && (boldFonts?.eastAsia || boldFonts?.latin)) {
+  else if (wantsBoldFont && (boldFonts?.eastAsia || boldFonts?.latin)) {
     const attrs: string[] = [];
     if (boldFonts.latin) {
       const f = escapeXml(boldFonts.latin);
@@ -86,8 +89,9 @@ function renderRuns(tokens: Token[], base: RunStyle, boldFonts?: BoldFonts): str
   let underline = base.underline ?? false;
   let highlight = base.highlight;
   let vertAlign = base.vertAlign;
+  let code = base.code ?? false;
   const out: string[] = [];
-  const current = (): RunStyle => ({...base, bold, italic, strike, underline, highlight, vertAlign});
+  const current = (): RunStyle => ({...base, bold, italic, strike, underline, highlight, vertAlign, code});
   for (const t of tokens) {
     switch (t.type) {
       case 'text':
@@ -122,7 +126,7 @@ function renderRuns(tokens: Token[], base: RunStyle, boldFonts?: BoldFonts): str
         out.push('<w:br/>');
         break;
       case 'html_inline': {
-        // <br> <b/strong> <i/em> <u> <s/strike/del> <sup> <sub> <mark> を装飾トグルとして解釈し、
+        // <br> <b/strong> <i/em> <u> <s/strike/del> <sup> <sub> <mark> <code> を装飾トグルとして解釈し、
         // それ以外の未対応タグ (div, span 等) はテキストとして出力せず読み飛ばす
         const tag = parseHtmlTag(t.content);
         if (!tag) break;
@@ -154,6 +158,9 @@ function renderRuns(tokens: Token[], base: RunStyle, boldFonts?: BoldFonts): str
             break;
           case 'mark':
             highlight = tag.closing ? base.highlight : 'yellow';
+            break;
+          case 'code':
+            code = tag.closing ? (base.code ?? false) : true;
             break;
           default:
             break;
@@ -292,6 +299,7 @@ export function markdownToDocumentXml(src: string, font: FontOption): MarkdownTo
         // ここでも w:b を出すと mammoth 等で見出しが <strong> 二重ラップされ "# **見出し**" のように
         // インポートされてしまう。run には size のみ持たせる
         const base: RunStyle = {
+          fontBold: true,
           italic: level >= 6,
           size: HEADING_SIZES[level - 1] ?? 22,
         };
