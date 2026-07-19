@@ -19,7 +19,12 @@ import {
 import {DocChatPanel} from '../components/DocChat/DocChatPanel';
 import styles from './doc.module.css';
 
-const SAMPLE_MARKDOWN = `# サンプル文書
+// 初回表示・本文が空のときに読み込むサンプル文書。ロケールごとに翻訳する
+// (code.json のキー doc.sample。コードブロック内の識別子はそのまま流用してよい)
+function getSampleMarkdown(): string {
+  return translate({
+    id: 'doc.sample',
+    message: `# サンプル文書
 
 これは **太字** と *斜体* と ~~取り消し線~~ と \`インラインコード\` を含む段落である。
 ***太字 + 斜体*** のような組み合わせも可能である。
@@ -82,7 +87,9 @@ def greet(name: str) -> str:
 ---
 
 以上がサンプル文書である。
-`;
+`,
+  });
+}
 
 const EDITOR_OPTIONS = {
   minimap: {enabled: false},
@@ -107,10 +114,10 @@ function loadStoredSource(): string {
   try {
     const stored = localStorage.getItem(SOURCE_STORAGE_KEY);
     // 保存されていた内容が空 (全角スペースのみ等を含む) の場合はサンプル文書にフォールバックする
-    return stored && stored.trim() !== '' ? stored : SAMPLE_MARKDOWN;
+    return stored && stored.trim() !== '' ? stored : getSampleMarkdown();
   } catch {
     // localStorage が使用できない環境ではサンプル文書にフォールバック
-    return SAMPLE_MARKDOWN;
+    return getSampleMarkdown();
   }
 }
 
@@ -311,6 +318,17 @@ function ChevronDownIcon(): ReactNode {
     </svg>
   );
 }
+
+// プレビューのコードブロックに DOM 注入するコピー / 完了アイコン (innerHTML 用の SVG 文字列)
+const COPY_ICON_SVG =
+  '<svg width="15" height="15" viewBox="0 0 24 24" fill="none" aria-hidden="true">' +
+  '<rect x="9" y="9" width="11" height="11" rx="2" stroke="currentColor" stroke-width="2"/>' +
+  '<path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>' +
+  '</svg>';
+const CHECK_ICON_SVG =
+  '<svg width="15" height="15" viewBox="0 0 24 24" fill="none" aria-hidden="true">' +
+  '<path d="M5 12.5l4.5 4.5L19 7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>' +
+  '</svg>';
 
 function CheckIcon(): ReactNode {
   return (
@@ -532,6 +550,46 @@ function DocApp(): ReactNode {
     () => (tab === 'ooxml' ? markdownToDocumentXml(source, font).xml : ''),
     [source, tab, font],
   );
+
+  // プレビュー内の各コードブロック (<pre class="hljs">) にコピー ボタンを注入する。
+  // dangerouslySetInnerHTML で innerHTML が再構築されるたびに実行し、ボタンを付け直す
+  useEffect(() => {
+    if (tab !== 'preview') return;
+    const preview = previewRef.current;
+    if (!preview) return;
+    const copyLabel = translate({id: 'doc.preview.copyCode', message: 'コードをコピー'});
+    const cleanups: (() => void)[] = [];
+    preview.querySelectorAll<HTMLPreElement>('pre.hljs').forEach((pre) => {
+      pre.classList.add('doc-code-block');
+      const btn = document.createElement('button');
+      btn.type = 'button';
+      btn.className = 'doc-code-copy';
+      btn.setAttribute('aria-label', copyLabel);
+      btn.title = copyLabel;
+      btn.innerHTML = COPY_ICON_SVG;
+      const onClick = async () => {
+        const code = pre.querySelector('code')?.textContent ?? pre.textContent ?? '';
+        try {
+          await navigator.clipboard.writeText(code);
+        } catch {
+          return;
+        }
+        btn.innerHTML = CHECK_ICON_SVG;
+        btn.classList.add('doc-code-copy--done');
+        window.setTimeout(() => {
+          btn.innerHTML = COPY_ICON_SVG;
+          btn.classList.remove('doc-code-copy--done');
+        }, 1500);
+      };
+      btn.addEventListener('click', onClick);
+      pre.appendChild(btn);
+      cleanups.push(() => {
+        btn.removeEventListener('click', onClick);
+        btn.remove();
+      });
+    });
+    return () => cleanups.forEach((fn) => fn());
+  }, [html, tab]);
 
   // 本文の変更をデバウンスしてブラウザのローカルストレージに自動保存する
   useEffect(() => {

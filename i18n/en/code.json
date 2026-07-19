@@ -1455,5 +1455,11 @@
   },
   "doc.copiedCode": {
     "message": "Copied"
+  },
+  "doc.preview.copyCode": {
+    "message": "Copy code"
+  },
+  "doc.sample": {
+    "message": "# Sample Document\n\nThis is a paragraph containing **bold**, *italic*, ~~strikethrough~~, and `inline code`.\nCombinations like ***bold + italic*** are also possible.\nXML special characters (& < >) are escaped as well.\n\n## Heading Levels\n\n### Level 3 Heading\n\nHeadings from level 1 through 6 are supported.\n\n## Lists\n\n- Bullet 1\n- Bullet 2\n  - Nested item\n    - Further nested item\n- Bullet 3\n\n1. Numbered item 1\n2. Numbered item 2\n   1. Nested numbered item\n3. Numbered item 3\n\n## Code Blocks\n\nSpecifying a language applies syntax highlighting.\n\n```bash\n#!/bin/bash\necho \"Hello, docx!\"\n```\n\n```javascript\nfunction greet(name) {\n  // Return a greeting\n  return `Hello, ${name}!`;\n}\n```\n\n```python\ndef greet(name: str) -> str:\n    \"\"\"Return a greeting\"\"\"\n    return f\"Hello, {name}!\"\n```\n\n## Quotes\n\n> A blockquote is converted like this.\n> Multi-line quotes are supported too.\n\n## Tables\n\n| Item | Description |\n| --- | --- |\n| Headings | `#` through `######` |\n| Lists | Unordered, ordered, nested |\n| Code | Inline and block (with syntax highlighting) |\n\n---\n\nThat concludes the sample document.\n"
   }
 }

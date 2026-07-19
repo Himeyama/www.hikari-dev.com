@@ -196,7 +196,46 @@ html:not([lang="ja"]) .navbar__item--ja-only {
 /* Doc プレビューのコードブロック: highlight.js によるシンタックスハイライト (VS Code の vs-light 相当、ダークモードでも固定) */
 .doc-page-wrapper .hljs {
   color: #000000;
+  background: #f2f2f2;
+}
+
+/* コードブロックのコピー ボタン (アイコンのみ、ホバーで表示) */
+.doc-page-wrapper pre.doc-code-block {
+  position: relative;
+}
+
+.doc-page-wrapper .doc-code-copy {
+  position: absolute;
+  top: 6px;
+  right: 6px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 28px;
+  height: 28px;
+  padding: 0;
+  border: 1px solid rgba(0, 0, 0, 0.12);
+  border-radius: 6px;
+  background: rgba(255, 255, 255, 0.85);
+  color: #555555;
+  cursor: pointer;
+  opacity: 0;
+  transition: opacity 0.15s ease, color 0.15s ease, background 0.15s ease;
+}
+
+.doc-page-wrapper pre.doc-code-block:hover .doc-code-copy,
+.doc-page-wrapper .doc-code-copy:focus-visible {
+  opacity: 1;
+}
+
+.doc-page-wrapper .doc-code-copy:hover {
+  color: #1a1a1a;
   background: #ffffff;
+}
+
+.doc-page-wrapper .doc-code-copy--done {
+  color: #098658;
+  opacity: 1;
 }
 
 .doc-page-wrapper .hljs-comment,
