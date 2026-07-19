@@ -29,6 +29,85 @@ export const md = new MarkdownIt({
   highlight: highlightCode,
 });
 
+// highlight.js が出力する <span class="hljs-xxx">...</span> の断片。docx の run 分割に使う
+interface HljsToken {
+  text: string;
+  classes: string[];
+}
+
+// highlight.js の escapeHTML は & < > " ' をエスケープする (" は &quot;、' は &#x27;)
+function decodeHljsEntities(s: string): string {
+  return s
+    .replace(/&lt;/g, '<')
+    .replace(/&gt;/g, '>')
+    .replace(/&quot;/g, '"')
+    .replace(/&#x27;/g, "'")
+    .replace(/&amp;/g, '&');
+}
+
+// highlightCode() が生成する <pre class="hljs"><code class="hljs...">...</code></pre> の
+// 内側 (子要素) を、class の入れ子を保持したままフラットなテキスト断片の配列に変換する
+function parseHljsHtml(html: string): HljsToken[] {
+  const tokens: HljsToken[] = [];
+  const stack: string[][] = [];
+  const re = /<span class="([^"]*)">|<\/span>|([^<]+)/g;
+  let m: RegExpExecArray | null;
+  while ((m = re.exec(html))) {
+    if (m[1] !== undefined) {
+      stack.push(m[1].split(' '));
+    } else if (m[2] !== undefined) {
+      const text = decodeHljsEntities(m[2]);
+      if (text) tokens.push({text, classes: stack.flat()});
+    } else {
+      // </span>
+      stack.pop();
+    }
+  }
+  return tokens;
+}
+
+// custom.css の .doc-page-wrapper .hljs-* (VS Code の vs-light 相当) と同じ配色を docx にも適用する
+function hljsRunStyle(classes: string[]): {color?: string; italic?: boolean; bold?: boolean} {
+  const has = (c: string) => classes.includes(c);
+  let color: string | undefined;
+  if (has('hljs-title') && has('class_')) color = '267f99';
+  else if (has('hljs-comment') || has('hljs-quote')) color = '008000';
+  else if (has('hljs-keyword') || has('hljs-selector-tag') || has('hljs-literal')) color = '0000ff';
+  else if (has('hljs-type') || has('hljs-built_in')) color = '267f99';
+  else if (has('hljs-string') || has('hljs-template-tag') || has('hljs-template-variable')) color = 'a31515';
+  else if (has('hljs-attr') || has('hljs-attribute')) color = 'ff0000';
+  else if (has('hljs-number') || has('hljs-symbol') || has('hljs-bullet')) color = '098658';
+  else if (has('hljs-title') || has('hljs-section')) color = '795e26';
+  else if (has('hljs-variable') || has('hljs-name')) color = '001080';
+  else if (has('hljs-tag')) color = '800000';
+  const italic = has('hljs-comment') || has('hljs-quote') || has('hljs-emphasis');
+  const bold = has('hljs-strong');
+  return {color, italic, bold};
+}
+
+// コードブロックの各行を、シンタックスハイライトの断片単位に分割した配列として返す
+// (docx は run 単位でしか色を変えられないため、行ごとに複数 run へ分ける)
+function highlightLinesForDocx(code: string, lang: string): HljsToken[][] | null {
+  const language = lang && hljs.getLanguage(lang) ? lang : undefined;
+  let html: string;
+  try {
+    const result = language ? hljs.highlight(code, {language}) : hljs.highlightAuto(code);
+    html = result.value;
+  } catch {
+    return null;
+  }
+  const tokens = parseHljsHtml(html);
+  const lines: HljsToken[][] = [[]];
+  for (const token of tokens) {
+    const parts = token.text.split('\n');
+    parts.forEach((part, idx) => {
+      if (idx > 0) lines.push([]);
+      if (part) lines[lines.length - 1].push({text: part, classes: token.classes});
+    });
+  }
+  return lines;
+}
+
 // 見出しレベル別フォントサイズ (半ポイント: 20/16/14/12/11/11pt)
 const HEADING_SIZES = [40, 32, 28, 24, 22, 22];
 const LIST_INDENT_TWIP = 720;
@@ -411,12 +490,37 @@ export function markdownToDocumentXml(src: string, font: FontOption): MarkdownTo
           ' w:leftChars="50" w:rightChars="50"',
           'CodeBlock',
         );
-        const lines = t.content.replace(/\n$/, '').split('\n');
+        const code = t.content.replace(/\n$/, '');
+        const lang = t.type === 'fence' ? (t.info ? t.info.trim().split(/\s+/)[0] : '') : '';
+        const highlighted = highlightLinesForDocx(code, lang);
         const children: string[] = [];
-        lines.forEach((line, idx) => {
-          if (idx > 0) children.push('<w:br/>');
-          children.push(textRun(line, {...base, codeBlock: true, size: 20}));
-        });
+        if (highlighted) {
+          highlighted.forEach((line, idx) => {
+            if (idx > 0) children.push('<w:br/>');
+            if (line.length === 0) {
+              children.push(textRun('', {...base, codeBlock: true, size: 20}));
+            } else {
+              for (const token of line) {
+                const {color, italic, bold} = hljsRunStyle(token.classes);
+                children.push(
+                  textRun(token.text, {
+                    ...base,
+                    codeBlock: true,
+                    size: 20,
+                    color: color ?? base.color,
+                    italic,
+                    bold,
+                  }),
+                );
+              }
+            }
+          });
+        } else {
+          code.split('\n').forEach((line, idx) => {
+            if (idx > 0) children.push('<w:br/>');
+            children.push(textRun(line, {...base, codeBlock: true, size: 20}));
+          });
+        }
         paragraphs.push(buildParagraph(pPr, children));
         break;
       }
