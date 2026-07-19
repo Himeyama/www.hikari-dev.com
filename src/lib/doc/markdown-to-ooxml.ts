@@ -1,4 +1,5 @@
 import MarkdownIt from 'markdown-it';
+import hljs from 'highlight.js/lib/common';
 import type {FontOption} from './fonts';
 import {
   BULLET_NUM_ID,
@@ -10,9 +11,23 @@ import {
 
 type Token = ReturnType<MarkdownIt['parse']>[number];
 
+// コードブロックの言語指定 (```bash 等) に応じて highlight.js でハイライトする。
+// この結果は render() (HTML プレビュー) でのみ使われ、parse() を使う docx 変換のトークン走査には影響しない。
+function highlightCode(code: string, lang: string): string {
+  const language = lang && hljs.getLanguage(lang) ? lang : undefined;
+  const result = language ? hljs.highlight(code, {language}) : hljs.highlightAuto(code);
+  const langClass = result.language ? ` language-${result.language}` : '';
+  return `<pre class="hljs"><code class="hljs${langClass}">${result.value}</code></pre>`;
+}
+
 // プレビュー (render) と docx 変換 (parse) で同一インスタンスを共用し、解釈を一致させる
 // html: true により <br> <u> <sup> <sub> <mark> 等のインラインタグを透過させる (プレビューは DOMPurify でサニタイズ)
-export const md = new MarkdownIt({html: true, linkify: true, typographer: true});
+export const md = new MarkdownIt({
+  html: true,
+  linkify: true,
+  typographer: true,
+  highlight: highlightCode,
+});
 
 // 見出しレベル別フォントサイズ (半ポイント: 20/16/14/12/11/11pt)
 const HEADING_SIZES = [40, 32, 28, 24, 22, 22];
@@ -217,6 +232,16 @@ const TABLE_BORDERS =
   '<w:insideH w:val="single" w:sz="4" w:space="0" w:color="AAAAAA"/>' +
   '<w:insideV w:val="single" w:sz="4" w:space="0" w:color="AAAAAA"/>' +
   '</w:tblBorders>';
+// 0.5 字分 (全角 1 文字 = 本文の既定サイズ 10.5pt を twip 換算した 210 の半分)。
+// tblInd/tblCellMar は w:leftChars のような文字単位の属性を持たないため、twip に換算して指定する
+const TABLE_HALF_CHAR_TWIP = 105;
+const TABLE_IND = `<w:tblInd w:w="${TABLE_HALF_CHAR_TWIP}" w:type="dxa"/>`;
+// 4 辺分を明示的な連結ではなく配列の map/join で組み立てる。同一の埋め込み値を持つ
+// 4 つのテンプレートリテラルを + で連結すると、本番ビルドの minify (SWC) が
+// 末尾の共通部分文字列を誤って畳み込み `w:type="dxa"/>` が欠落する不具合があったため
+const TABLE_CELL_MAR = `<w:tblCellMar>${(['top', 'left', 'bottom', 'right'] as const)
+  .map((side) => `<w:${side} w:w="${TABLE_HALF_CHAR_TWIP}" w:type="dxa"/>`)
+  .join('')}</w:tblCellMar>`;
 
 // 列タイトル (th) は左寄せ・ヘッダー網掛けにする。本文セル (td) は既定の左寄せのまま
 function buildTableCell(runs: string[], header: boolean): string {
@@ -238,7 +263,7 @@ function buildTable(rows: string[], columnCount: number): string {
   const grid = Array.from({length: columnCount}, () => `${CELL_P_INDENT}<w:gridCol/>`);
   return [
     `${TBL_INDENT}<w:tbl>`,
-    `${TR_INDENT}<w:tblPr><w:tblW w:w="5000" w:type="pct"/>${TABLE_BORDERS}</w:tblPr>`,
+    `${TR_INDENT}<w:tblPr><w:tblW w:w="5000" w:type="pct"/>${TABLE_IND}${TABLE_BORDERS}${TABLE_CELL_MAR}</w:tblPr>`,
     `${TR_INDENT}<w:tblGrid>`,
     ...grid,
     `${TR_INDENT}</w:tblGrid>`,
@@ -333,7 +358,7 @@ export function markdownToDocumentXml(src: string, font: FontOption): MarkdownTo
           inline?.type === 'inline' ? renderRuns(inline.children ?? [], base, boldFonts) : [];
         paragraphs.push(
           buildParagraph(
-            `<w:pPr><w:pStyle w:val="Heading${level}"/><w:spacing w:before="240" w:after="120"/></w:pPr>`,
+            `<w:pPr><w:pStyle w:val="Heading${level}"/><w:keepNext/><w:spacing w:before="240" w:after="120"/></w:pPr>`,
             runs,
           ),
         );

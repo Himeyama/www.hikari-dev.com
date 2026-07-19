@@ -119,6 +119,7 @@ function buildStylesXml(family: string): string {
     <w:next w:val="Normal"/>
     <w:qFormat/>
     <w:pPr>
+      <w:keepNext/>
       <w:outlineLvl w:val="${idx}"/>
     </w:pPr>
     <w:rPr>${rFonts}<w:b/><w:sz w:val="${size}"/></w:rPr>

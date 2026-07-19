@@ -192,3 +192,75 @@ html:not([lang="ja"]) .navbar__item--ja-only {
 .doc-page-wrapper ~ footer {
   display: none;
 }
+
+/* Doc プレビューのコードブロック: highlight.js によるシンタックスハイライト (VS Code の vs-light 相当、ダークモードでも固定) */
+.doc-page-wrapper .hljs {
+  color: #000000;
+  background: #ffffff;
+}
+
+.doc-page-wrapper .hljs-comment,
+.doc-page-wrapper .hljs-quote {
+  color: #008000;
+  font-style: italic;
+}
+
+.doc-page-wrapper .hljs-keyword,
+.doc-page-wrapper .hljs-selector-tag,
+.doc-page-wrapper .hljs-literal {
+  color: #0000ff;
+}
+
+.doc-page-wrapper .hljs-type,
+.doc-page-wrapper .hljs-built_in,
+.doc-page-wrapper .hljs-title.class_ {
+  color: #267f99;
+}
+
+.doc-page-wrapper .hljs-string,
+.doc-page-wrapper .hljs-template-tag,
+.doc-page-wrapper .hljs-template-variable {
+  color: #a31515;
+}
+
+.doc-page-wrapper .hljs-attr,
+.doc-page-wrapper .hljs-attribute {
+  color: #ff0000;
+}
+
+.doc-page-wrapper .hljs-number,
+.doc-page-wrapper .hljs-symbol,
+.doc-page-wrapper .hljs-bullet {
+  color: #098658;
+}
+
+.doc-page-wrapper .hljs-title,
+.doc-page-wrapper .hljs-title.function_,
+.doc-page-wrapper .hljs-section {
+  color: #795e26;
+}
+
+.doc-page-wrapper .hljs-variable,
+.doc-page-wrapper .hljs-name {
+  color: #001080;
+}
+
+.doc-page-wrapper .hljs-tag {
+  color: #800000;
+}
+
+.doc-page-wrapper .hljs-deletion {
+  background: #ffeef0;
+}
+
+.doc-page-wrapper .hljs-addition {
+  background: #f0fff4;
+}
+
+.doc-page-wrapper .hljs-emphasis {
+  font-style: italic;
+}
+
+.doc-page-wrapper .hljs-strong {
+  font-weight: bold;
+}

@@ -21,25 +21,67 @@ import styles from './doc.module.css';
 
 const SAMPLE_MARKDOWN = `# サンプル文書
 
-これは **太字** と *斜体* と \`インラインコード\` を含む段落である。
+これは **太字** と *斜体* と ~~取り消し線~~ と \`インラインコード\` を含む段落である。
+***太字 + 斜体*** のような組み合わせも可能である。
 XML の特殊文字 (& < >) もエスケープされる。
+
+## 見出しレベル
+
+### レベル 3 の見出し
+
+見出しはレベル 1 から 6 まで対応する。
 
 ## リスト
 
 - 箇条書き 1
 - 箇条書き 2
   - ネストした項目
+    - さらにネストした項目
+- 箇条書き 3
 
 1. 番号リスト 1
 2. 番号リスト 2
+   1. ネストした番号リスト
+3. 番号リスト 3
 
 ## コードブロック
 
+言語を指定するとシンタックスハイライトが適用される。
+
 \`\`\`bash
+#!/bin/bash
 echo "Hello, docx!"
 \`\`\`
 
+\`\`\`javascript
+function greet(name) {
+  // 挨拶を返す
+  return \`Hello, \${name}!\`;
+}
+\`\`\`
+
+\`\`\`python
+def greet(name: str) -> str:
+    """挨拶を返す"""
+    return f"Hello, {name}!"
+\`\`\`
+
+## 引用
+
 > 引用ブロックはこのように変換される。
+> 複数行の引用にも対応する。
+
+## 表
+
+| 項目 | 説明 |
+| --- | --- |
+| 見出し | \`#\` から \`######\` |
+| リスト | 番号なし・番号付き・ネスト |
+| コード | インラインとブロック (シンタックスハイライト対応) |
+
+---
+
+以上がサンプル文書である。
 `;
 
 const EDITOR_OPTIONS = {
@@ -63,7 +105,9 @@ const SOURCE_SAVE_DEBOUNCE_MS = 500;
 
 function loadStoredSource(): string {
   try {
-    return localStorage.getItem(SOURCE_STORAGE_KEY) ?? SAMPLE_MARKDOWN;
+    const stored = localStorage.getItem(SOURCE_STORAGE_KEY);
+    // 保存されていた内容が空 (全角スペースのみ等を含む) の場合はサンプル文書にフォールバックする
+    return stored && stored.trim() !== '' ? stored : SAMPLE_MARKDOWN;
   } catch {
     // localStorage が使用できない環境ではサンプル文書にフォールバック
     return SAMPLE_MARKDOWN;
