@@ -31,8 +31,8 @@
     "message": "本日の雑学",
     "description": "Navbar item with label 本日の雑学"
   },
-  "item.label.ミニアプリ": {
-    "message": "ミニアプリ",
-    "description": "Navbar item with label ミニアプリ"
+  "item.label.アプリ": {
+    "message": "アプリ",
+    "description": "Navbar item with label アプリ"
   }
 }

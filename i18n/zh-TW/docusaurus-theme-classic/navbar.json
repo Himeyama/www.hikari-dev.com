@@ -35,8 +35,8 @@
     "message": "YAML⇄JSON",
     "description": "Navbar item with label YAML⇄JSON"
   },
-  "item.label.ミニアプリ": {
-    "message": "迷你應用",
-    "description": "Navbar item with label ミニアプリ"
+  "item.label.アプリ": {
+    "message": "應用程式",
+    "description": "Navbar item with label アプリ"
   }
 }

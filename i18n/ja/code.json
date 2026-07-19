@@ -1485,5 +1485,35 @@
   },
   "doc.downloadTex": {
     "message": "LaTeX (.tex) をダウンロード"
+  },
+  "desktop.pageTitle": {
+    "message": "デスクトップ"
+  },
+  "desktop.pageDescription": {
+    "message": "ミニアプリをデスクトップ風の画面で使う。"
+  },
+  "desktop.window.restore": {
+    "message": "元のサイズに戻す"
+  },
+  "desktop.window.maximize": {
+    "message": "最大化"
+  },
+  "desktop.window.minimize": {
+    "message": "最小化"
+  },
+  "desktop.window.close": {
+    "message": "閉じる"
+  },
+  "desktop.home": {
+    "message": "ホームへ戻る"
+  },
+  "desktop.clock.calendar": {
+    "message": "カレンダー"
+  },
+  "desktop.clock.prevMonth": {
+    "message": "前の月"
+  },
+  "desktop.clock.nextMonth": {
+    "message": "次の月"
   }
 }

@@ -303,3 +303,22 @@ html:not([lang="ja"]) .navbar__item--ja-only {
 .doc-page-wrapper .hljs-strong {
   font-weight: bold;
 }
+
+/* ===== 埋め込みモード (?embed=1): ナビバー/フッターを隠す ===== */
+html[data-embed='1'] .navbar {
+  display: none;
+}
+html[data-embed='1'] footer.footer {
+  display: none;
+}
+html[data-embed='1'] .main-wrapper {
+  min-height: 100vh;
+}
+
+/* ===== デスクトップ UI (/desktop) 表示中 ===== */
+html.desktop-active .navbar {
+  display: none;
+}
+html.desktop-active body {
+  overflow: hidden;
+}

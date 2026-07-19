@@ -176,7 +176,7 @@ const config: Config = {
     ],
   ],
 
-  clientModules: ['./src/clientModules/gtag.js'],
+  clientModules: ['./src/clientModules/gtag.js', './src/clientModules/embedMode.ts'],
 
   plugins: [
     './plugins/recent-blog-posts.js',
@@ -235,7 +235,7 @@ const config: Config = {
         //   label: 'Tutorial',
         // },
         {to: '/', label: 'Blog', position: 'left'},
-        {to: '/mini-apps', label: 'ミニアプリ', position: 'left'},
+        {to: '/desktop', label: 'アプリ', position: 'left'},
         {
           href: 'https://github.com/himeyama',
           label: 'GitHub',

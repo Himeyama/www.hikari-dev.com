@@ -1497,5 +1497,35 @@
   },
   "doc.downloadTex": {
     "message": "下載 LaTeX (.tex)"
+  },
+  "desktop.pageTitle": {
+    "message": "桌面"
+  },
+  "desktop.pageDescription": {
+    "message": "在桌面風格的畫面中使用迷你工具。"
+  },
+  "desktop.window.restore": {
+    "message": "還原大小"
+  },
+  "desktop.window.maximize": {
+    "message": "最大化"
+  },
+  "desktop.window.minimize": {
+    "message": "最小化"
+  },
+  "desktop.window.close": {
+    "message": "關閉"
+  },
+  "desktop.home": {
+    "message": "回到首頁"
+  },
+  "desktop.clock.calendar": {
+    "message": "行事曆"
+  },
+  "desktop.clock.prevMonth": {
+    "message": "上個月"
+  },
+  "desktop.clock.nextMonth": {
+    "message": "下個月"
   }
 }

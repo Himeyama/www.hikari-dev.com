@@ -1497,5 +1497,35 @@
   },
   "doc.downloadTex": {
     "message": "Download LaTeX (.tex)"
+  },
+  "desktop.pageTitle": {
+    "message": "Desktop"
+  },
+  "desktop.pageDescription": {
+    "message": "Use the mini apps on a desktop-style screen."
+  },
+  "desktop.window.restore": {
+    "message": "Restore"
+  },
+  "desktop.window.maximize": {
+    "message": "Maximize"
+  },
+  "desktop.window.minimize": {
+    "message": "Minimize"
+  },
+  "desktop.window.close": {
+    "message": "Close"
+  },
+  "desktop.home": {
+    "message": "Back to home"
+  },
+  "desktop.clock.calendar": {
+    "message": "Calendar"
+  },
+  "desktop.clock.prevMonth": {
+    "message": "Previous month"
+  },
+  "desktop.clock.nextMonth": {
+    "message": "Next month"
   }
 }
