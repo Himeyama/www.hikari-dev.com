@@ -142,6 +142,20 @@ function ServerIcon(): ReactNode {
   );
 }
 
+function SigmaIcon(): ReactNode {
+  return (
+    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+      <path
+        d="M6 5h12l-6 7 6 7H6l5-6.2"
+        stroke="currentColor"
+        strokeWidth="1.5"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
+    </svg>
+  );
+}
+
 function DocIcon(): ReactNode {
   return (
     <svg width="22" height="22" viewBox="0 0 24 24" fill="none" aria-hidden="true">
@@ -263,6 +277,14 @@ const MINI_APPS: MiniApp[] = [
     titleMessage: 'Markdown→docx 変換',
     descriptionId: 'miniApps.doc.description',
     descriptionMessage: 'Markdown を Word 文書 (docx) に変換する。',
+  },
+  {
+    href: '/tex-preview',
+    Icon: SigmaIcon,
+    titleId: 'miniApps.texPreview.title',
+    titleMessage: 'TeX 数式プレビュー',
+    descriptionId: 'miniApps.texPreview.description',
+    descriptionMessage: 'TeX 記法の数式をリアルタイムでプレビューする。',
   },
   {
     href: '/chat',

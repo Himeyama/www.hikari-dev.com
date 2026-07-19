@@ -1461,5 +1461,35 @@
   },
   "doc.sample": {
     "message": "# 範例文件\n\n這是包含 **粗體**、*斜體*、~~刪除線~~ 與 `行內程式碼` 的段落。\n也可以使用 ***粗體 + 斜體*** 這樣的組合。\nXML 的特殊字元 (& < >) 也會被轉義。\n\n## 標題層級\n\n### 層級 3 的標題\n\n標題支援層級 1 到 6。\n\n## 清單\n\n- 項目符號 1\n- 項目符號 2\n  - 巢狀項目\n    - 更深層的巢狀項目\n- 項目符號 3\n\n1. 編號清單 1\n2. 編號清單 2\n   1. 巢狀編號清單\n3. 編號清單 3\n\n## 程式碼區塊\n\n指定語言後會套用語法突顯。\n\n```bash\n#!/bin/bash\necho \"Hello, docx!\"\n```\n\n```javascript\nfunction greet(name) {\n  // 回傳問候語\n  return `Hello, ${name}!`;\n}\n```\n\n```python\ndef greet(name: str) -> str:\n    \"\"\"回傳問候語\"\"\"\n    return f\"Hello, {name}!\"\n```\n\n## 引用\n\n> 引用區塊會像這樣轉換。\n> 也支援多行引用。\n\n## 表格\n\n| 項目 | 說明 |\n| --- | --- |\n| 標題 | `#` 到 `######` |\n| 清單 | 無序、有序、巢狀 |\n| 程式碼 | 行內與區塊 (支援語法突顯) |\n\n---\n\n以上就是範例文件。\n"
+  },
+  "texPreview.previewEmpty": {
+    "message": "輸入公式後，這裡會顯示即時預覽。"
+  },
+  "texPreview.title": {
+    "message": "TeX 公式預覽"
+  },
+  "texPreview.description": {
+    "message": "即時預覽 TeX 語法公式的工具。所有處理都在瀏覽器內完成，內容不會傳送到伺服器。"
+  },
+  "texPreview.subtitle": {
+    "message": "輸入 TeX 語法的公式後，會即時顯示預覽。以空行分隔可輸入多個公式。"
+  },
+  "texPreview.notesTitle": {
+    "message": "關於此工具"
+  },
+  "texPreview.note1": {
+    "message": "公式的算繪使用 KaTeX。所有處理都在瀏覽器內完成，輸入內容不會傳送到伺服器。"
+  },
+  "texPreview.note2": {
+    "message": "以空行 (兩個以上換行) 分隔可一次輸入多個公式。"
+  },
+  "texPreview.note3": {
+    "message": "含有語法錯誤的公式會在預覽中顯示錯誤訊息。"
+  },
+  "miniApps.texPreview.title": {
+    "message": "TeX 公式預覽"
+  },
+  "miniApps.texPreview.description": {
+    "message": "即時預覽 TeX 語法的公式。"
   }
 }
