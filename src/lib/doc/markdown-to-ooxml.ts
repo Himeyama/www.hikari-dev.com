@@ -1,6 +1,12 @@
 import MarkdownIt from 'markdown-it';
 import type {FontOption} from './fonts';
-import {BULLET_NUM_ID} from './docx-package';
+import {
+  BULLET_NUM_ID,
+  CODE_BLOCK_FONT,
+  CODE_BORDER,
+  QUOTE_BORDER,
+  QUOTE_COLOR,
+} from './docx-package';
 
 type Token = ReturnType<MarkdownIt['parse']>[number];
 
@@ -11,6 +17,8 @@ export const md = new MarkdownIt({html: true, linkify: true, typographer: true})
 // 見出しレベル別フォントサイズ (半ポイント: 20/16/14/12/11/11pt)
 const HEADING_SIZES = [40, 32, 28, 24, 22, 22];
 const LIST_INDENT_TWIP = 720;
+// ぶら下げ 1 字分 (全角 1 文字 = 本文の既定サイズ 10.5pt を twip 換算: 10.5 * 20)
+const LIST_HANGING_TWIP = 210;
 const QUOTE_INDENT_TWIP = 360;
 const MONO_FONT = '<w:rFonts w:ascii="Cascadia Code" w:hAnsi="Cascadia Code"/>';
 const CODE_FILL = '<w:shd w:val="clear" w:color="auto" w:fill="F2F2F2"/>';
@@ -25,6 +33,8 @@ interface RunStyle {
   highlight?: string;
   vertAlign?: 'superscript' | 'subscript';
   code?: boolean;
+  // コードブロック用: 等幅フォントだけ適用し、背景色 (CODE_FILL) は付けない
+  codeBlock?: boolean;
   color?: string;
   size?: number;
 }
@@ -55,7 +65,8 @@ interface BoldFonts {
 function runProps(style: RunStyle, boldFonts?: BoldFonts): string {
   const parts: string[] = [];
   const wantsBoldFont = style.fontBold ?? style.bold;
-  if (style.code) parts.push(MONO_FONT);
+  if (style.codeBlock) parts.push(CODE_BLOCK_FONT);
+  else if (style.code) parts.push(MONO_FONT);
   else if (wantsBoldFont && (boldFonts?.eastAsia || boldFonts?.latin)) {
     const attrs: string[] = [];
     if (boldFonts.latin) {
@@ -261,10 +272,15 @@ export function markdownToDocumentXml(src: string, font: FontOption): MarkdownTo
   let rowCells: string[] = [];
   let tableColumnCount = 0;
 
-  // w:pPr の子要素はスキーマ順 (numPr → pBdr → shd → spacing → ind) に並べる
-  const blockContext = (extraPPr: string[] = []): {pPr: string; base: RunStyle} => {
+  // w:pPr の子要素はスキーマ順 (pStyle → numPr → pBdr → shd → spacing → ind) に並べる
+  const blockContext = (
+    extraPPr: string[] = [],
+    extraIndAttrs = '',
+    pStyle = '',
+  ): {pPr: string; base: RunStyle} => {
     const parts: string[] = [];
     const base: RunStyle = {};
+    if (pStyle) parts.push(`<w:pStyle w:val="${pStyle}"/>`);
     if (pendingNumPr !== null) {
       parts.push(
         `<w:numPr><w:ilvl w:val="${pendingNumPr.ilvl}"/><w:numId w:val="${pendingNumPr.numId}"/></w:numPr>`,
@@ -272,19 +288,29 @@ export function markdownToDocumentXml(src: string, font: FontOption): MarkdownTo
       pendingNumPr = null;
     }
     if (blockquoteDepth > 0) {
-      parts.push('<w:pBdr><w:left w:val="single" w:sz="12" w:space="8" w:color="AAAAAA"/></w:pBdr>');
-      base.color = '666666';
+      // docx-package.ts の "Quote" スタイルと同じ書式 (styles.xml 側で Word の
+      // スタイル ギャラリーからも一括変更できるようにするため、pStyle="Quote" も付与する)
+      parts.push(QUOTE_BORDER);
+      base.color = QUOTE_COLOR;
     }
     parts.push(...extraPPr);
-    const indent =
-      listStack.length * LIST_INDENT_TWIP + (blockquoteDepth > 0 ? QUOTE_INDENT_TWIP : 0);
-    if (indent > 0) parts.push(`<w:ind w:left="${indent}"/>`);
+    // 最上位レベルのマーカーが左マージンに揃うよう、リストの左インデントは hanging 分だけ
+    // (ネスト 1 段につき LIST_INDENT_TWIP を追加)。文字列側は左インデント + hanging の位置になる
+    const listIndent = listStack.length > 0 ? (listStack.length - 1) * LIST_INDENT_TWIP + LIST_HANGING_TWIP : 0;
+    const indent = listIndent + (blockquoteDepth > 0 ? QUOTE_INDENT_TWIP : 0);
+    // リスト項目はマーカーと文字列の間隔を hanging で固定する (これが無いと Word が
+    // 既定のタブ位置に合わせてマーカー後の余白をネスト段数に応じて大きく空けてしまう)
+    if (indent > 0 || extraIndAttrs) {
+      const hanging = listIndent > 0 ? ` w:hanging="${LIST_HANGING_TWIP}"` : '';
+      const left = indent > 0 ? ` w:left="${indent}"` : '';
+      parts.push(`<w:ind${left}${hanging}${extraIndAttrs}/>`);
+    }
     const pPr = parts.length > 0 ? `<w:pPr>${parts.join('')}</w:pPr>` : '';
     return {pPr, base};
   };
 
   const pushInlineParagraph = (inline: Token) => {
-    const {pPr, base} = blockContext();
+    const {pPr, base} = blockContext([], '', blockquoteDepth > 0 ? 'Quote' : '');
     const children = renderRuns(inline.children ?? [], base, boldFonts);
     paragraphs.push(buildParagraph(pPr, children));
   };
@@ -353,12 +379,18 @@ export function markdownToDocumentXml(src: string, font: FontOption): MarkdownTo
         break;
       case 'fence':
       case 'code_block': {
-        const {pPr, base} = blockContext([CODE_FILL, '<w:spacing w:after="120"/>']);
+        // 背景は付けず、上下罫線 (罫線内側の余白は上下左右とも 8pt) とインデント
+        // 左右 0.5 字・段落前後 0.5 行の余白で区切る (docx-package.ts の "CodeBlock" スタイルと同じ書式)
+        const {pPr, base} = blockContext(
+          [CODE_BORDER, '<w:spacing w:beforeLines="50" w:afterLines="50"/>'],
+          ' w:leftChars="50" w:rightChars="50"',
+          'CodeBlock',
+        );
         const lines = t.content.replace(/\n$/, '').split('\n');
         const children: string[] = [];
         lines.forEach((line, idx) => {
           if (idx > 0) children.push('<w:br/>');
-          children.push(textRun(line, {...base, code: true, size: 20}));
+          children.push(textRun(line, {...base, codeBlock: true, size: 20}));
         });
         paragraphs.push(buildParagraph(pPr, children));
         break;

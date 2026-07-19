@@ -87,6 +87,23 @@ function escapeXmlAttr(s: string): string {
 // HEADING_SIZES と同じ値を Heading1-6 スタイルの sz にも設定し、pStyle 未反映の環境でも体裁が崩れないようにする
 const HEADING_STYLE_SIZES = [40, 32, 28, 24, 22, 22];
 
+// 引用ブロック (Quote スタイル、Word 組み込みの styleId と同名にして「クイック スタイル」に認識させる)
+export const QUOTE_COLOR = '666666';
+export const QUOTE_BORDER = '<w:pBdr><w:left w:val="single" w:sz="12" w:space="8" w:color="AAAAAA"/></w:pBdr>';
+
+// コードブロックは本文フォントに関わらず、日本語 (eastAsia) を Noto Sans JP に固定する
+export const CODE_BLOCK_FONT =
+  '<w:rFonts w:ascii="Cascadia Code" w:hAnsi="Cascadia Code" w:eastAsia="Noto Sans JP"/>';
+// コードブロックの罫線: 上下のみ線を引き、左右は非表示 (w:val="nil") のまま w:space だけ確保して
+// 4 辺とも罫線内側の余白 (w:space、単位は pt) を 8pt に揃える
+export const CODE_BORDER =
+  '<w:pBdr>' +
+  '<w:top w:val="single" w:sz="6" w:space="8" w:color="AAAAAA"/>' +
+  '<w:left w:val="nil" w:sz="0" w:space="8" w:color="auto"/>' +
+  '<w:bottom w:val="single" w:sz="6" w:space="8" w:color="AAAAAA"/>' +
+  '<w:right w:val="nil" w:sz="0" w:space="8" w:color="auto"/>' +
+  '</w:pBdr>';
+
 // docDefaults だけでは Word 内蔵の既定 Normal スタイルに優先度で負けて無視されることがあるため、
 // Normal 段落スタイルにも明示的に同じ rFonts を設定し、本文フォントを確実に反映させる
 function buildStylesXml(family: string): string {
@@ -107,6 +124,41 @@ function buildStylesXml(family: string): string {
     <w:rPr>${rFonts}<w:b/><w:sz w:val="${size}"/></w:rPr>
   </w:style>`;
   }).join('\n');
+  // Quote / CodeBlock は Word の「スタイル」ギャラリーから見つけて一括変更できるよう、
+  // markdown-to-ooxml.ts が直接付与する pPr/rPr と同じ内容を styleId として定義しておく
+  const quoteStyle = `  <w:style w:type="paragraph" w:styleId="Quote">
+    <w:name w:val="Quote"/>
+    <w:basedOn w:val="Normal"/>
+    <w:next w:val="Normal"/>
+    <w:qFormat/>
+    <w:pPr>${QUOTE_BORDER}</w:pPr>
+    <w:rPr>${rFonts}<w:color w:val="${QUOTE_COLOR}"/></w:rPr>
+  </w:style>`;
+  const codeBlockStyle = `  <w:style w:type="paragraph" w:styleId="CodeBlock">
+    <w:name w:val="Code Block"/>
+    <w:basedOn w:val="Normal"/>
+    <w:next w:val="Normal"/>
+    <w:qFormat/>
+    <w:pPr>${CODE_BORDER}<w:spacing w:beforeLines="50" w:afterLines="50"/><w:ind w:leftChars="50" w:rightChars="50"/></w:pPr>
+    <w:rPr>${CODE_BLOCK_FONT}<w:sz w:val="20"/></w:rPr>
+  </w:style>`;
+  // Title/Subtitle は Word 組み込みスタイル (styleId="Title"/"Subtitle") を明示的に上書きする。
+  // これが無いと未定義の built-in スタイルとして Word 側のテーマフォント (既定は Calibri Light 等)
+  // が使われ、選択したフォントが反映されない
+  const titleStyle = `  <w:style w:type="paragraph" w:styleId="Title">
+    <w:name w:val="Title"/>
+    <w:basedOn w:val="Normal"/>
+    <w:next w:val="Normal"/>
+    <w:qFormat/>
+    <w:rPr>${rFonts}<w:sz w:val="56"/></w:rPr>
+  </w:style>`;
+  const subtitleStyle = `  <w:style w:type="paragraph" w:styleId="Subtitle">
+    <w:name w:val="Subtitle"/>
+    <w:basedOn w:val="Normal"/>
+    <w:next w:val="Normal"/>
+    <w:qFormat/>
+    <w:rPr>${rFonts}<w:i/><w:color w:val="595959"/><w:sz w:val="22"/></w:rPr>
+  </w:style>`;
   return `<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <w:styles xmlns:w="http://schemas.openxmlformats.org/wordprocessingml/2006/main">
   <w:docDefaults>
@@ -120,6 +172,10 @@ function buildStylesXml(family: string): string {
     <w:rPr>${rFonts}</w:rPr>
   </w:style>
 ${headingStyles}
+${quoteStyle}
+${codeBlockStyle}
+${titleStyle}
+${subtitleStyle}
 </w:styles>
 `;
 }
