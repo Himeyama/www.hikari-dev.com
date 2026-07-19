@@ -383,7 +383,7 @@ function DocApp(): ReactNode {
   const [source, setSource] = useState(loadStoredSource);
   const [tab, setTab] = useState<PreviewTab>('preview');
   const [downloading, setDownloading] = useState(false);
-  const [leftPct, setLeftPct] = useState(50);
+  const [leftPct, setLeftPct] = useState(() => (loadChatOpen() ? 40 : 50));
   const [dragging, setDragging] = useState(false);
   const [fileDragging, setFileDragging] = useState(false);
   const [importing, setImporting] = useState(false);
@@ -397,7 +397,7 @@ function DocApp(): ReactNode {
   const [hasSelection, setHasSelection] = useState(false);
   const [selectedText, setSelectedText] = useState('');
   const [chatOpen, setChatOpenState] = useState(loadChatOpen);
-  const [chatPct, setChatPct] = useState(30);
+  const [chatPct, setChatPct] = useState(() => (loadChatOpen() ? 20 : 30));
   const [chatDragging, setChatDragging] = useState(false);
   const [fontId, setFontIdState] = useState(loadStoredFontId);
   const font = useMemo(() => getFontOption(fontId), [fontId]);
