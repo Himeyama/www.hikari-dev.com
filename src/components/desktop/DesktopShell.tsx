@@ -268,6 +268,7 @@ function defaultIconPos(index: number, viewportH: number): {x: number; y: number
 
 export function DesktopShell(): ReactNode {
   const [state, dispatch] = useReducer(reducer, undefined, initState);
+  const [selectedIcon, setSelectedIcon] = useState<string | null>(null);
   const [dragging, setDragging] = useState(false);
   const [snapPreview, setSnapPreview] = useState<SnapKind | null>(null);
   const saveTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
@@ -314,8 +315,23 @@ export function DesktopShell(): ReactNode {
   const openWindows = MINI_APPS.filter((app) => state.windows[app.id]);
 
   return (
-    <div className={clsx(styles.surface, dragging && styles.dragging)}>
-      <div className={styles.iconLayer}>
+    <div
+      className={clsx(styles.surface, dragging && styles.dragging)}
+      onPointerDown={(e) => {
+        // 何もない場所をクリックしたら選択解除
+        if (e.target === e.currentTarget) {
+          setSelectedIcon(null);
+        }
+      }}
+    >
+      <div
+        className={styles.iconLayer}
+        onPointerDown={(e) => {
+          if (e.target === e.currentTarget) {
+            setSelectedIcon(null);
+          }
+        }}
+      >
         {MINI_APPS.map((app, index) => {
           const saved = state.icons[app.id];
           const pos = saved ?? defaultIconPos(index, viewportH);
@@ -325,6 +341,8 @@ export function DesktopShell(): ReactNode {
               app={app}
               x={pos.x}
               y={pos.y}
+              selected={selectedIcon === app.id}
+              onSelect={() => setSelectedIcon(app.id)}
               onOpen={() => dispatch({type: 'OPEN', appId: app.id, viewport: getViewport()})}
               onMove={(x, y) =>
                 dispatch({type: 'MOVE_ICON', appId: app.id, x, y, viewport: getViewport()})

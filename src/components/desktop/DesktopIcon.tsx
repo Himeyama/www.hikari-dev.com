@@ -1,5 +1,6 @@
 import {useRef} from 'react';
 import type {ReactNode} from 'react';
+import clsx from 'clsx';
 import Translate from '@docusaurus/Translate';
 import type {MiniApp} from './apps';
 import {usePointerDrag} from './usePointerDrag';
@@ -11,12 +12,23 @@ type Props = {
   app: MiniApp;
   x: number;
   y: number;
+  selected: boolean;
   onOpen: () => void;
+  onSelect: () => void;
   onMove: (x: number, y: number) => void;
   onDragState: (dragging: boolean) => void;
 };
 
-export function DesktopIcon({app, x, y, onOpen, onMove, onDragState}: Props): ReactNode {
+export function DesktopIcon({
+  app,
+  x,
+  y,
+  selected,
+  onOpen,
+  onSelect,
+  onMove,
+  onDragState,
+}: Props): ReactNode {
   const posRef = useRef({x, y});
   posRef.current = {x, y};
   const movedRef = useRef(false);
@@ -40,9 +52,12 @@ export function DesktopIcon({app, x, y, onOpen, onMove, onDragState}: Props): Re
   return (
     <button
       type="button"
-      className={styles.icon}
+      className={clsx(styles.icon, selected && styles.iconSelected)}
       style={{left: x, top: y}}
-      onPointerDown={onPointerDown}
+      onPointerDown={(e) => {
+        onSelect();
+        onPointerDown(e);
+      }}
       onDoubleClick={onOpen}
       onKeyDown={(e) => {
         if (e.key === 'Enter' || e.key === ' ') {

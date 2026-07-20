@@ -46,6 +46,12 @@
   background: var(--ifm-color-emphasis-200);
 }
 
+.iconSelected,
+.iconSelected:hover {
+  border-color: var(--ifm-color-primary);
+  background: var(--ifm-color-primary-lightest);
+}
+
 .iconGlyph {
   display: flex;
   align-items: center;
