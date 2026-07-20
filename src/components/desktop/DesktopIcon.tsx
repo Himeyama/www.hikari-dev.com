@@ -1,15 +1,14 @@
 import {useRef} from 'react';
 import type {ReactNode} from 'react';
 import clsx from 'clsx';
-import Translate from '@docusaurus/Translate';
-import type {MiniApp} from './apps';
 import {usePointerDrag} from './usePointerDrag';
 import styles from './desktop.module.css';
 
 const DRAG_THRESHOLD = 4;
 
 type Props = {
-  app: MiniApp;
+  glyph: ReactNode;
+  label: ReactNode;
   x: number;
   y: number;
   selected: boolean;
@@ -20,7 +19,8 @@ type Props = {
 };
 
 export function DesktopIcon({
-  app,
+  glyph,
+  label,
   x,
   y,
   selected,
@@ -66,12 +66,8 @@ export function DesktopIcon({
         }
       }}
     >
-      <span className={styles.iconGlyph}>
-        <app.Icon />
-      </span>
-      <span className={styles.iconLabel}>
-        <Translate id={app.titleId}>{app.titleMessage}</Translate>
-      </span>
+      <span className={styles.iconGlyph}>{glyph}</span>
+      <span className={styles.iconLabel}>{label}</span>
     </button>
   );
 }

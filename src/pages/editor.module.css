@@ -1,0 +1,83 @@
+.app {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  overflow: hidden;
+  background: var(--ifm-background-color);
+  color: var(--ifm-font-color-base);
+}
+
+.toolbar {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  padding: 0.45rem 0.7rem;
+  border-bottom: 1px solid var(--ifm-color-emphasis-200);
+  background: var(--ifm-background-surface-color);
+  flex: 0 0 auto;
+}
+
+.filename {
+  font-weight: 600;
+  font-size: 0.9rem;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
+}
+
+.dirtyDot {
+  color: var(--ifm-color-primary);
+  font-size: 0.7rem;
+}
+
+.path {
+  font-size: 0.75rem;
+  color: var(--ifm-color-emphasis-500);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  max-width: 20rem;
+}
+
+.spacer {
+  flex: 1 1 auto;
+}
+
+.saveBtn {
+  padding: 0.3rem 1rem;
+  border: 1px solid var(--ifm-color-primary);
+  border-radius: 6px;
+  background: var(--ifm-color-primary);
+  color: #fff;
+  cursor: pointer;
+  font-size: 0.85rem;
+  font-weight: 600;
+  transition: background 0.12s, border-color 0.12s, opacity 0.12s;
+}
+
+.saveBtn:hover:not(:disabled) {
+  background: var(--ifm-color-primary-dark);
+  border-color: var(--ifm-color-primary-dark);
+}
+
+.saveBtn:disabled {
+  opacity: 0.45;
+  cursor: default;
+}
+
+.editorWrap {
+  flex: 1 1 auto;
+  min-height: 0;
+}
+
+.notice {
+  padding: 2.5rem 1.5rem;
+  text-align: center;
+  color: var(--ifm-color-emphasis-600);
+}
+
+.loading {
+  padding: 2.5rem 1.5rem;
+  text-align: center;
+  color: var(--ifm-color-emphasis-500);
+}

@@ -1,13 +1,18 @@
 import {useEffect, useReducer, useRef, useState} from 'react';
 import type {ReactNode} from 'react';
 import clsx from 'clsx';
-import {MINI_APPS, getAppById} from './apps';
+import Translate from '@docusaurus/Translate';
+import {getAppById, FolderIcon, FileIcon} from './apps';
+import type {MiniApp} from './apps';
+import * as vfs from '../../lib/desktop/vfs';
+import type {VfsEntry} from '../../lib/desktop/vfs';
 import {DesktopIcon} from './DesktopIcon';
 import {AppWindow} from './AppWindow';
 import {Taskbar} from './Taskbar';
 import styles from './desktop.module.css';
 
-const STORAGE_KEY = 'hikari.desktop.v1';
+const STORAGE_KEY = 'hikari.desktop.v2';
+const BRIDGE_SOURCE = 'hikari-desktop';
 const TASKBAR_H = 48;
 const DEFAULT_W = 960;
 const DEFAULT_H = 640;
@@ -17,7 +22,9 @@ const MIN_H = 160;
 type Rect = {x: number; y: number; w: number; h: number};
 export type SnapKind = 'none' | 'max' | 'left' | 'right';
 type WinState = {
-  appId: string;
+  windowId: string;
+  href: string;
+  param?: string;
   rect: Rect;
   snap: SnapKind;
   minimized: boolean;
@@ -25,24 +32,24 @@ type WinState = {
 };
 
 export type DesktopState = {
-  icons: Record<string, {x: number; y: number}>;
-  windows: Record<string, WinState>;
+  icons: Record<string, {x: number; y: number}>; // key = VFS 絶対パス
+  windows: Record<string, WinState>; // key = windowId
   zTop: number;
 };
 
 type Viewport = {w: number; h: number};
 
 type Action =
-  | {type: 'OPEN'; appId: string; viewport: Viewport}
-  | {type: 'CLOSE'; appId: string}
-  | {type: 'FOCUS'; appId: string}
-  | {type: 'MINIMIZE'; appId: string}
-  | {type: 'TOGGLE_MAXIMIZE'; appId: string}
-  | {type: 'SET_SNAP'; appId: string; snap: SnapKind}
-  | {type: 'RESIZE_WINDOW'; appId: string; rect: Rect; viewport: Viewport}
-  | {type: 'TASKBAR_CLICK'; appId: string}
-  | {type: 'MOVE_WINDOW'; appId: string; x: number; y: number; viewport: Viewport}
-  | {type: 'MOVE_ICON'; appId: string; x: number; y: number; viewport: Viewport};
+  | {type: 'OPEN'; windowId: string; href: string; param?: string; viewport: Viewport}
+  | {type: 'CLOSE'; windowId: string}
+  | {type: 'FOCUS'; windowId: string}
+  | {type: 'MINIMIZE'; windowId: string}
+  | {type: 'TOGGLE_MAXIMIZE'; windowId: string}
+  | {type: 'SET_SNAP'; windowId: string; snap: SnapKind}
+  | {type: 'RESIZE_WINDOW'; windowId: string; rect: Rect; viewport: Viewport}
+  | {type: 'TASKBAR_CLICK'; windowId: string}
+  | {type: 'MOVE_WINDOW'; windowId: string; x: number; y: number; viewport: Viewport}
+  | {type: 'MOVE_ICON'; iconId: string; x: number; y: number; viewport: Viewport};
 
 function clamp(v: number, min: number, max: number): number {
   if (max < min) {
@@ -54,14 +61,20 @@ function clamp(v: number, min: number, max: number): number {
 function reducer(state: DesktopState, action: Action): DesktopState {
   switch (action.type) {
     case 'OPEN': {
-      const existing = state.windows[action.appId];
+      const existing = state.windows[action.windowId];
       const zTop = state.zTop + 1;
       if (existing) {
+        // すでに開いている: パラメーターを更新 (files/editor のパス切替) して前面へ
         return {
           ...state,
           windows: {
             ...state.windows,
-            [action.appId]: {...existing, minimized: false, z: zTop},
+            [action.windowId]: {
+              ...existing,
+              param: action.param ?? existing.param,
+              minimized: false,
+              z: zTop,
+            },
           },
           zTop,
         };
@@ -77,8 +90,10 @@ function reducer(state: DesktopState, action: Action): DesktopState {
         ...state,
         windows: {
           ...state.windows,
-          [action.appId]: {
-            appId: action.appId,
+          [action.windowId]: {
+            windowId: action.windowId,
+            href: action.href,
+            param: action.param,
             rect: {x, y, w, h},
             snap: 'none',
             minimized: false,
@@ -89,33 +104,33 @@ function reducer(state: DesktopState, action: Action): DesktopState {
       };
     }
     case 'CLOSE': {
-      const {[action.appId]: _removed, ...rest} = state.windows;
+      const {[action.windowId]: _removed, ...rest} = state.windows;
       return {...state, windows: rest};
     }
     case 'FOCUS': {
-      const win = state.windows[action.appId];
+      const win = state.windows[action.windowId];
       if (!win) {
         return state;
       }
       const zTop = state.zTop + 1;
       return {
         ...state,
-        windows: {...state.windows, [action.appId]: {...win, z: zTop}},
+        windows: {...state.windows, [action.windowId]: {...win, z: zTop}},
         zTop,
       };
     }
     case 'MINIMIZE': {
-      const win = state.windows[action.appId];
+      const win = state.windows[action.windowId];
       if (!win) {
         return state;
       }
       return {
         ...state,
-        windows: {...state.windows, [action.appId]: {...win, minimized: true}},
+        windows: {...state.windows, [action.windowId]: {...win, minimized: true}},
       };
     }
     case 'TOGGLE_MAXIMIZE': {
-      const win = state.windows[action.appId];
+      const win = state.windows[action.windowId];
       if (!win) {
         return state;
       }
@@ -125,13 +140,13 @@ function reducer(state: DesktopState, action: Action): DesktopState {
         ...state,
         windows: {
           ...state.windows,
-          [action.appId]: {...win, snap, minimized: false, z: zTop},
+          [action.windowId]: {...win, snap, minimized: false, z: zTop},
         },
         zTop,
       };
     }
     case 'SET_SNAP': {
-      const win = state.windows[action.appId];
+      const win = state.windows[action.windowId];
       if (!win) {
         return state;
       }
@@ -140,13 +155,13 @@ function reducer(state: DesktopState, action: Action): DesktopState {
         ...state,
         windows: {
           ...state.windows,
-          [action.appId]: {...win, snap: action.snap, minimized: false, z: zTop},
+          [action.windowId]: {...win, snap: action.snap, minimized: false, z: zTop},
         },
         zTop,
       };
     }
     case 'RESIZE_WINDOW': {
-      const win = state.windows[action.appId];
+      const win = state.windows[action.windowId];
       if (!win) {
         return state;
       }
@@ -162,12 +177,12 @@ function reducer(state: DesktopState, action: Action): DesktopState {
         ...state,
         windows: {
           ...state.windows,
-          [action.appId]: {...win, rect: {x, y, w, h}, snap: 'none'},
+          [action.windowId]: {...win, rect: {x, y, w, h}, snap: 'none'},
         },
       };
     }
     case 'TASKBAR_CLICK': {
-      const win = state.windows[action.appId];
+      const win = state.windows[action.windowId];
       if (!win) {
         return state;
       }
@@ -176,21 +191,24 @@ function reducer(state: DesktopState, action: Action): DesktopState {
         const zTop = state.zTop + 1;
         return {
           ...state,
-          windows: {...state.windows, [action.appId]: {...win, minimized: false, z: zTop}},
+          windows: {
+            ...state.windows,
+            [action.windowId]: {...win, minimized: false, z: zTop},
+          },
           zTop,
         };
       }
       return {
         ...state,
-        windows: {...state.windows, [action.appId]: {...win, minimized: true}},
+        windows: {...state.windows, [action.windowId]: {...win, minimized: true}},
       };
     }
     case 'MOVE_WINDOW': {
-      const win = state.windows[action.appId];
+      const win = state.windows[action.windowId];
       if (!win) {
         return state;
       }
-      const {w, h} = win.rect;
+      const {w} = win.rect;
       const vw = action.viewport.w;
       const vh = action.viewport.h;
       const x = clamp(action.x, -(w - 80), vw - 80);
@@ -200,7 +218,7 @@ function reducer(state: DesktopState, action: Action): DesktopState {
         ...state,
         windows: {
           ...state.windows,
-          [action.appId]: {...win, snap: 'none', rect: {...win.rect, x, y}},
+          [action.windowId]: {...win, snap: 'none', rect: {...win.rect, x, y}},
         },
       };
     }
@@ -211,7 +229,7 @@ function reducer(state: DesktopState, action: Action): DesktopState {
       const y = clamp(action.y, 0, Math.max(0, vh - TASKBAR_H - 96));
       return {
         ...state,
-        icons: {...state.icons, [action.appId]: {x, y}},
+        icons: {...state.icons, [action.iconId]: {x, y}},
       };
     }
     default:
@@ -230,21 +248,9 @@ function initState(): DesktopState {
       return emptyState();
     }
     const parsed = JSON.parse(raw) as Partial<DesktopState>;
-    // 旧データ (maximized:boolean) を snap に正規化
-    const windows: Record<string, WinState> = {};
-    for (const [id, w] of Object.entries(parsed.windows ?? {})) {
-      const legacy = w as WinState & {maximized?: boolean};
-      windows[id] = {
-        appId: legacy.appId,
-        rect: legacy.rect,
-        snap: legacy.snap ?? (legacy.maximized ? 'max' : 'none'),
-        minimized: legacy.minimized ?? false,
-        z: legacy.z ?? 0,
-      };
-    }
     return {
       icons: parsed.icons ?? {},
-      windows,
+      windows: (parsed.windows as Record<string, WinState>) ?? {},
       zTop: parsed.zTop ?? 0,
     };
   } catch {
@@ -266,15 +272,46 @@ function defaultIconPos(index: number, viewportH: number): {x: number; y: number
   return {x: START_X + col * CELL_W, y: START_Y + row * CELL_H};
 }
 
+// ---- エントリのアイコン/ラベル解決 -----------------------------------------
+
+function EntryGlyph({entry}: {entry: VfsEntry}): ReactNode {
+  if (entry.node.type === 'folder') {
+    return <FolderIcon />;
+  }
+  if (entry.node.type === 'link') {
+    const app = entry.node.appId ? getAppById(entry.node.appId) : undefined;
+    if (app) {
+      return <app.Icon />;
+    }
+  }
+  if (entry.node.type === 'file') {
+    return <FileIcon />;
+  }
+  return <FileIcon />;
+}
+
+function EntryLabel({entry}: {entry: VfsEntry}): ReactNode {
+  if (entry.node.type === 'link' && entry.node.appId) {
+    const app = getAppById(entry.node.appId);
+    if (app) {
+      return <Translate id={app.titleId}>{app.titleMessage}</Translate>;
+    }
+  }
+  return <>{entry.name}</>;
+}
+
 export function DesktopShell(): ReactNode {
   const [state, dispatch] = useReducer(reducer, undefined, initState);
   const [selectedIcon, setSelectedIcon] = useState<string | null>(null);
   const [dragging, setDragging] = useState(false);
   const [snapPreview, setSnapPreview] = useState<SnapKind | null>(null);
+  const [vfsVersion, setVfsVersion] = useState(0);
   const saveTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
   const [viewportH, setViewportH] = useState(() =>
     typeof window !== 'undefined' ? window.innerHeight : 800,
   );
+
+  const getViewport = (): Viewport => ({w: window.innerWidth, h: window.innerHeight});
 
   // マウント中は navbar を隠す
   useEffect(() => {
@@ -282,6 +319,39 @@ export function DesktopShell(): ReactNode {
     return () => {
       document.documentElement.classList.remove('desktop-active');
     };
+  }, []);
+
+  // VFS を初期シードし、変更を購読してアイコンを再描画
+  useEffect(() => {
+    vfs.ensureSeeded();
+    setVfsVersion((v) => v + 1);
+    const unsub = vfs.subscribe(() => setVfsVersion((v) => v + 1));
+    return unsub;
+  }, []);
+
+  // Files/Editor iframe からの起動要求を受け取る
+  useEffect(() => {
+    const onMsg = (e: MessageEvent) => {
+      const d = e.data as
+        | {source?: string; type?: string; appId?: string; path?: string}
+        | null;
+      if (!d || d.source !== BRIDGE_SOURCE) {
+        return;
+      }
+      const viewport = getViewport();
+      if (d.type === 'open-app' && d.appId) {
+        const app = getAppById(d.appId);
+        if (app) {
+          dispatch({type: 'OPEN', windowId: app.id, href: app.href, viewport});
+        }
+      } else if (d.type === 'open-editor' && d.path) {
+        dispatch({type: 'OPEN', windowId: 'editor', href: '/editor', param: d.path, viewport});
+      } else if (d.type === 'open-folder' && d.path) {
+        dispatch({type: 'OPEN', windowId: 'files', href: '/files', param: d.path, viewport});
+      }
+    };
+    window.addEventListener('message', onMsg);
+    return () => window.removeEventListener('message', onMsg);
   }, []);
 
   // ビューポート高さ追従 (アイコンのデフォルト配置に使用)
@@ -310,9 +380,31 @@ export function DesktopShell(): ReactNode {
     };
   }, [state]);
 
-  const getViewport = (): Viewport => ({w: window.innerWidth, h: window.innerHeight});
+  // Desktop フォルダーのエントリ (vfsVersion 変化で再取得)
+  const desktopEntries = (() => {
+    void vfsVersion;
+    return vfs.readDir(vfs.DESKTOP_PATH);
+  })();
 
-  const openWindows = MINI_APPS.filter((app) => state.windows[app.id]);
+  const openEntry = (entry: VfsEntry) => {
+    const viewport = getViewport();
+    const {node} = entry;
+    if (node.type === 'folder') {
+      dispatch({type: 'OPEN', windowId: 'files', href: '/files', param: entry.path, viewport});
+    } else if (node.type === 'link' && node.appId && node.href) {
+      dispatch({type: 'OPEN', windowId: node.appId, href: node.href, viewport});
+    } else if (node.type === 'file') {
+      dispatch({type: 'OPEN', windowId: 'editor', href: '/editor', param: entry.path, viewport});
+    }
+  };
+
+  // 開いているウィンドウ (windowId から MiniApp メタを解決)
+  const openWindows = Object.values(state.windows)
+    .map((win) => {
+      const app = getAppById(win.windowId);
+      return app ? {win, app} : null;
+    })
+    .filter((v): v is {win: WinState; app: MiniApp} => v !== null);
 
   return (
     <div
@@ -332,20 +424,21 @@ export function DesktopShell(): ReactNode {
           }
         }}
       >
-        {MINI_APPS.map((app, index) => {
-          const saved = state.icons[app.id];
+        {desktopEntries.map((entry, index) => {
+          const saved = state.icons[entry.path];
           const pos = saved ?? defaultIconPos(index, viewportH);
           return (
             <DesktopIcon
-              key={app.id}
-              app={app}
+              key={entry.path}
+              glyph={<EntryGlyph entry={entry} />}
+              label={<EntryLabel entry={entry} />}
               x={pos.x}
               y={pos.y}
-              selected={selectedIcon === app.id}
-              onSelect={() => setSelectedIcon(app.id)}
-              onOpen={() => dispatch({type: 'OPEN', appId: app.id, viewport: getViewport()})}
+              selected={selectedIcon === entry.path}
+              onSelect={() => setSelectedIcon(entry.path)}
+              onOpen={() => openEntry(entry)}
               onMove={(x, y) =>
-                dispatch({type: 'MOVE_ICON', appId: app.id, x, y, viewport: getViewport()})
+                dispatch({type: 'MOVE_ICON', iconId: entry.path, x, y, viewport: getViewport()})
               }
               onDragState={setDragging}
             />
@@ -353,30 +446,42 @@ export function DesktopShell(): ReactNode {
         })}
       </div>
 
-      {openWindows.map((app) => {
-        const win = state.windows[app.id];
+      {openWindows.map(({win, app}) => {
         const focused = win.z === state.zTop && !win.minimized;
+        // editor ウィンドウはファイル名をタイトルに使う
+        const titleNode =
+          win.windowId === 'editor' && win.param ? (
+            <>{vfs.basename(win.param)}</>
+          ) : (
+            <Translate id={app.titleId}>{app.titleMessage}</Translate>
+          );
+        const titlePlain =
+          win.windowId === 'editor' && win.param ? vfs.basename(win.param) : app.titleMessage;
         return (
           <AppWindow
-            key={app.id}
-            app={app}
+            key={win.windowId}
+            href={win.href}
+            param={win.param}
+            Icon={app.Icon}
+            title={titleNode}
+            titlePlain={titlePlain}
             rect={win.rect}
             z={win.z}
             snap={win.snap}
             minimized={win.minimized}
             focused={focused}
-            onFocus={() => dispatch({type: 'FOCUS', appId: app.id})}
-            onClose={() => dispatch({type: 'CLOSE', appId: app.id})}
-            onMinimize={() => dispatch({type: 'MINIMIZE', appId: app.id})}
-            onToggleMaximize={() => dispatch({type: 'TOGGLE_MAXIMIZE', appId: app.id})}
+            onFocus={() => dispatch({type: 'FOCUS', windowId: win.windowId})}
+            onClose={() => dispatch({type: 'CLOSE', windowId: win.windowId})}
+            onMinimize={() => dispatch({type: 'MINIMIZE', windowId: win.windowId})}
+            onToggleMaximize={() => dispatch({type: 'TOGGLE_MAXIMIZE', windowId: win.windowId})}
             onMove={(x, y) =>
-              dispatch({type: 'MOVE_WINDOW', appId: app.id, x, y, viewport: getViewport()})
+              dispatch({type: 'MOVE_WINDOW', windowId: win.windowId, x, y, viewport: getViewport()})
             }
             onResize={(rect) =>
-              dispatch({type: 'RESIZE_WINDOW', appId: app.id, rect, viewport: getViewport()})
+              dispatch({type: 'RESIZE_WINDOW', windowId: win.windowId, rect, viewport: getViewport()})
             }
             onSnapPreview={setSnapPreview}
-            onSnapCommit={(snap) => dispatch({type: 'SET_SNAP', appId: app.id, snap})}
+            onSnapCommit={(snap) => dispatch({type: 'SET_SNAP', windowId: win.windowId, snap})}
             onDragState={setDragging}
           />
         );
@@ -395,14 +500,11 @@ export function DesktopShell(): ReactNode {
       )}
 
       <Taskbar
-        windows={openWindows.map((app) => {
-          const win = state.windows[app.id];
-          return {
-            app: getAppById(app.id)!,
-            active: win.z === state.zTop && !win.minimized,
-          };
-        })}
-        onItemClick={(appId) => dispatch({type: 'TASKBAR_CLICK', appId})}
+        windows={openWindows.map(({win, app}) => ({
+          app,
+          active: win.z === state.zTop && !win.minimized,
+        }))}
+        onItemClick={(windowId) => dispatch({type: 'TASKBAR_CLICK', windowId})}
       />
     </div>
   );

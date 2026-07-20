@@ -3,8 +3,7 @@ import type React from 'react';
 import type {ReactNode} from 'react';
 import clsx from 'clsx';
 import useBaseUrl from '@docusaurus/useBaseUrl';
-import Translate, {translate} from '@docusaurus/Translate';
-import type {MiniApp} from './apps';
+import {translate} from '@docusaurus/Translate';
 import type {SnapKind} from './DesktopShell';
 import {usePointerDrag} from './usePointerDrag';
 import styles from './desktop.module.css';
@@ -29,7 +28,11 @@ const RESIZE_DIRS: {dir: string; cls: keyof typeof styles}[] = [
 ];
 
 type Props = {
-  app: MiniApp;
+  href: string;
+  param?: string;
+  Icon: () => ReactNode;
+  title: ReactNode;
+  titlePlain: string;
   rect: Rect;
   z: number;
   snap: SnapKind;
@@ -94,7 +97,11 @@ function CloseGlyph(): ReactNode {
 }
 
 export function AppWindow({
-  app,
+  href,
+  param,
+  Icon,
+  title,
+  titlePlain,
   rect,
   z,
   snap,
@@ -120,9 +127,12 @@ export function AppWindow({
     zone: 'none',
   });
 
-  // iframe src は memo 化して再レンダリングでリロードさせない
-  const baseSrc = useBaseUrl(app.href);
-  const src = useMemo(() => `${baseSrc}?embed=1`, [baseSrc]);
+  // iframe src は memo 化して再レンダリングでリロードさせない (param 変化時のみ再構築)
+  const baseSrc = useBaseUrl(href);
+  const src = useMemo(() => {
+    const p = param ? `&path=${encodeURIComponent(param)}` : '';
+    return `${baseSrc}?embed=1${p}`;
+  }, [baseSrc, param]);
 
   const onTitleDrag = usePointerDrag({
     getStart: () => ({x: rectRef.current.x, y: rectRef.current.y}),
@@ -231,11 +241,9 @@ export function AppWindow({
         onDoubleClick={onToggleMaximize}
       >
         <span className={styles.titleGlyph}>
-          <app.Icon />
+          <Icon />
         </span>
-        <span className={styles.titleText}>
-          <Translate id={app.titleId}>{app.titleMessage}</Translate>
-        </span>
+        <span className={styles.titleText}>{title}</span>
         <div className={styles.titleButtons}>
           <button
             type="button"
@@ -270,7 +278,7 @@ export function AppWindow({
         </div>
       </div>
       <div className={styles.windowBody}>
-        <iframe className={styles.frame} src={src} title={app.titleMessage} loading="lazy" />
+        <iframe className={styles.frame} src={src} title={titlePlain} loading="lazy" />
         {!focused && (
           <div
             className={styles.clickCatcher}

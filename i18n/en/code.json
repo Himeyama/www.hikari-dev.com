@@ -1527,5 +1527,62 @@
   },
   "desktop.clock.nextMonth": {
     "message": "Next month"
+  },
+  "editor.noPath": {
+    "message": "No file specified."
+  },
+  "editor.notFound": {
+    "message": "\"{name}\" was not found."
+  },
+  "editor.save": {
+    "message": "Save"
+  },
+  "miniApps.editor.title": {
+    "message": "Editor"
+  },
+  "miniApps.editor.description": {
+    "message": "Edit text files."
+  },
+  "files.newFolderName": {
+    "message": "New folder"
+  },
+  "files.newFileName": {
+    "message": "New file.txt"
+  },
+  "files.renamePrompt": {
+    "message": "Enter a new name."
+  },
+  "files.deleteConfirm": {
+    "message": "Delete \"{name}\"?"
+  },
+  "files.up": {
+    "message": "Up"
+  },
+  "files.root": {
+    "message": "Root"
+  },
+  "files.newFolder": {
+    "message": "New folder"
+  },
+  "files.newFile": {
+    "message": "New file"
+  },
+  "files.empty": {
+    "message": "This folder is empty."
+  },
+  "files.itemCount": {
+    "message": "{count} items"
+  },
+  "files.rename": {
+    "message": "Rename"
+  },
+  "files.delete": {
+    "message": "Delete"
+  },
+  "miniApps.files.title": {
+    "message": "Files"
+  },
+  "miniApps.files.description": {
+    "message": "A file explorer for browsing and managing the virtual file system."
   }
 }

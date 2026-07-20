@@ -1515,5 +1515,62 @@
   },
   "desktop.clock.nextMonth": {
     "message": "次の月"
+  },
+  "editor.noPath": {
+    "message": "ファイルが指定されていません。"
+  },
+  "editor.notFound": {
+    "message": "「{name}」が見つかりません。"
+  },
+  "editor.save": {
+    "message": "保存"
+  },
+  "miniApps.editor.title": {
+    "message": "エディタ"
+  },
+  "miniApps.editor.description": {
+    "message": "テキスト ファイルを編集する。"
+  },
+  "files.newFolderName": {
+    "message": "新しいフォルダー"
+  },
+  "files.newFileName": {
+    "message": "新しいファイル.txt"
+  },
+  "files.renamePrompt": {
+    "message": "新しい名前を入力してください。"
+  },
+  "files.deleteConfirm": {
+    "message": "「{name}」を削除しますか?"
+  },
+  "files.up": {
+    "message": "上へ"
+  },
+  "files.root": {
+    "message": "ルート"
+  },
+  "files.newFolder": {
+    "message": "新しいフォルダー"
+  },
+  "files.newFile": {
+    "message": "新しいファイル"
+  },
+  "files.empty": {
+    "message": "このフォルダーは空です。"
+  },
+  "files.itemCount": {
+    "message": "{count} 個の項目"
+  },
+  "files.rename": {
+    "message": "名前の変更"
+  },
+  "files.delete": {
+    "message": "削除"
+  },
+  "miniApps.files.title": {
+    "message": "ファイル"
+  },
+  "miniApps.files.description": {
+    "message": "仮想ファイルシステムを閲覧・操作するファイル エクスプローラー。"
   }
 }

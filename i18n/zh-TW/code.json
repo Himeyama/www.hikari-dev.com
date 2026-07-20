@@ -1527,5 +1527,62 @@
   },
   "desktop.clock.nextMonth": {
     "message": "下個月"
+  },
+  "editor.noPath": {
+    "message": "未指定檔案。"
+  },
+  "editor.notFound": {
+    "message": "找不到「{name}」。"
+  },
+  "editor.save": {
+    "message": "儲存"
+  },
+  "miniApps.editor.title": {
+    "message": "編輯器"
+  },
+  "miniApps.editor.description": {
+    "message": "編輯文字檔案。"
+  },
+  "files.newFolderName": {
+    "message": "新資料夾"
+  },
+  "files.newFileName": {
+    "message": "新檔案.txt"
+  },
+  "files.renamePrompt": {
+    "message": "請輸入新名稱。"
+  },
+  "files.deleteConfirm": {
+    "message": "要刪除「{name}」嗎?"
+  },
+  "files.up": {
+    "message": "上一層"
+  },
+  "files.root": {
+    "message": "根目錄"
+  },
+  "files.newFolder": {
+    "message": "新資料夾"
+  },
+  "files.newFile": {
+    "message": "新檔案"
+  },
+  "files.empty": {
+    "message": "這個資料夾是空的。"
+  },
+  "files.itemCount": {
+    "message": "{count} 個項目"
+  },
+  "files.rename": {
+    "message": "重新命名"
+  },
+  "files.delete": {
+    "message": "刪除"
+  },
+  "miniApps.files.title": {
+    "message": "檔案"
+  },
+  "miniApps.files.description": {
+    "message": "用於瀏覽與操作虛擬檔案系統的檔案總管。"
   }
 }

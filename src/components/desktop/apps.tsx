@@ -167,6 +167,38 @@ function DocIcon(): ReactNode {
   );
 }
 
+function FolderIcon(): ReactNode {
+  return (
+    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+      <path
+        d="M3 6.5A1.5 1.5 0 014.5 5h4l2 2.5H20a1 1 0 011 1V18a1.5 1.5 0 01-1.5 1.5h-15A1.5 1.5 0 013 18V6.5z"
+        stroke="currentColor"
+        strokeWidth="1.5"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
+    </svg>
+  );
+}
+
+function FileIcon(): ReactNode {
+  return (
+    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+      <path
+        d="M6 3h8l4 4v14H6V3z"
+        stroke="currentColor"
+        strokeWidth="1.5"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
+      <path d="M14 3v4h4" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+      <path d="M8 12h8M8 15.5h6" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
+    </svg>
+  );
+}
+
+export {FolderIcon, FileIcon};
+
 export type MiniApp = {
   id: string;
   href: string;
@@ -297,6 +329,31 @@ export const MINI_APPS: MiniApp[] = RAW_MINI_APPS.map((app) => ({
   id: app.href.slice(1),
 }));
 
+// デスクトップから起動できるがミニアプリ一覧 (/mini-apps) には載せない特殊アプリ。
+// Files はデスクトップにシード表示され、Editor は folder/file から間接起動される。
+export const FILES_APP: MiniApp = {
+  id: 'files',
+  href: '/files',
+  Icon: FolderIcon,
+  titleId: 'miniApps.files.title',
+  titleMessage: 'ファイル',
+  descriptionId: 'miniApps.files.description',
+  descriptionMessage: '仮想ファイルシステムを閲覧・操作するファイル エクスプローラー。',
+};
+
+export const EDITOR_APP: MiniApp = {
+  id: 'editor',
+  href: '/editor',
+  Icon: FileIcon,
+  titleId: 'miniApps.editor.title',
+  titleMessage: 'エディタ',
+  descriptionId: 'miniApps.editor.description',
+  descriptionMessage: 'テキスト ファイルを編集する。',
+};
+
+// getAppById が解決できる全アプリ (ミニアプリ + Files/Editor)
+export const LAUNCHABLES: MiniApp[] = [...MINI_APPS, FILES_APP, EDITOR_APP];
+
 export function getAppById(id: string): MiniApp | undefined {
-  return MINI_APPS.find((app) => app.id === id);
+  return LAUNCHABLES.find((app) => app.id === id);
 }
