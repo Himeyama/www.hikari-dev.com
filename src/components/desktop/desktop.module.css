@@ -72,6 +72,22 @@
   word-break: break-word;
 }
 
+.iconRenameInput {
+  width: 100%;
+  padding: 0.05rem 0.2rem;
+  border: 1px solid var(--ifm-color-primary);
+  border-radius: 3px;
+  background: var(--ifm-background-color);
+  color: var(--ifm-font-color-base);
+  font-size: 0.75rem;
+  line-height: 1.2;
+  text-align: center;
+}
+
+.iconRenameInput:focus {
+  outline: none;
+}
+
 /* ===== ウィンドウ ===== */
 .window {
   position: absolute;

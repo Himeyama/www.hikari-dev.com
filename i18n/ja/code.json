@@ -1572,5 +1572,14 @@
   },
   "miniApps.files.description": {
     "message": "仮想ファイルシステムを閲覧・操作するファイル エクスプローラー。"
+  },
+  "editor.autosave": {
+    "message": "自動保存"
+  },
+  "files.open": {
+    "message": "開く"
+  },
+  "files.pathLabel": {
+    "message": "パス"
   }
 }

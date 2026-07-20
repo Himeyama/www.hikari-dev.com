@@ -1,9 +1,14 @@
+import type React from 'react';
 import type {ReactNode} from 'react';
-import {useCallback, useEffect, useState} from 'react';
+import {useCallback, useEffect, useRef, useState} from 'react';
 import Layout from '@theme/Layout';
 import BrowserOnly from '@docusaurus/BrowserOnly';
 import Translate, {translate} from '@docusaurus/Translate';
-import {getAppById, FolderIcon, FileIcon} from '@site/src/components/desktop/apps';
+import {FolderIcon, FileIcon} from '@site/src/components/desktop/apps';
+import {EntryGlyph, EntryLabel} from '@site/src/components/desktop/entryView';
+import {RenameInput} from '@site/src/components/desktop/RenameInput';
+import {ContextMenu} from '@site/src/components/desktop/ContextMenu';
+import type {ContextMenuItem} from '@site/src/components/desktop/ContextMenu';
 import * as vfs from '@site/src/lib/desktop/vfs';
 import type {VfsEntry} from '@site/src/lib/desktop/vfs';
 import styles from './files.module.css';
@@ -24,60 +29,19 @@ function initialPath(): string {
   return p ? vfs.normalizePath(p) : vfs.DESKTOP_PATH;
 }
 
-function LinkGlyph(): ReactNode {
-  return (
-    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" aria-hidden="true">
-      <path
-        d="M10 14a3.5 3.5 0 004.9 0l3-3a3.5 3.5 0 00-4.9-4.9l-1.2 1.2"
-        stroke="currentColor"
-        strokeWidth="1.5"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-      />
-      <path
-        d="M14 10a3.5 3.5 0 00-4.9 0l-3 3a3.5 3.5 0 004.9 4.9l1.2-1.2"
-        stroke="currentColor"
-        strokeWidth="1.5"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-      />
-    </svg>
-  );
-}
-
-/** エントリのアイコンを種別に応じて描画する */
-function EntryGlyph({entry}: {entry: VfsEntry}): ReactNode {
-  if (entry.node.type === 'folder') {
-    return <FolderIcon />;
-  }
-  if (entry.node.type === 'link') {
-    const app = entry.node.appId ? getAppById(entry.node.appId) : undefined;
-    if (app) {
-      return <app.Icon />;
-    }
-    return <LinkGlyph />;
-  }
-  return <FileIcon />;
-}
-
-/** エントリの表示ラベル (link はアプリ名を i18n 表示) */
-function EntryLabel({entry}: {entry: VfsEntry}): ReactNode {
-  if (entry.node.type === 'link' && entry.node.appId) {
-    const app = getAppById(entry.node.appId);
-    if (app) {
-      return <Translate id={app.titleId}>{app.titleMessage}</Translate>;
-    }
-  }
-  return <>{entry.name}</>;
-}
+type Menu = {x: number; y: number; entry: VfsEntry | null};
 
 function FilesApp(): ReactNode {
   const [path, setPath] = useState<string>(initialPath);
   const [entries, setEntries] = useState<VfsEntry[]>([]);
   const [selected, setSelected] = useState<string | null>(null);
+  const [renaming, setRenaming] = useState<string | null>(null);
+  const [menu, setMenu] = useState<Menu | null>(null);
+  const [address, setAddress] = useState<string>(initialPath);
+  const pathRef = useRef(path);
+  pathRef.current = path;
 
   const refresh = useCallback((p: string) => {
-    // パスが存在しなければ Desktop にフォールバック
     const target = vfs.exists(p) || p === '/' ? p : vfs.DESKTOP_PATH;
     setEntries(vfs.readDir(target));
     if (target !== p) {
@@ -89,12 +53,15 @@ function FilesApp(): ReactNode {
   useEffect(() => {
     vfs.ensureSeeded();
     refresh(path);
-    const unsub = vfs.subscribe(() => refresh(path));
+    setAddress(path);
+    const unsub = vfs.subscribe(() => refresh(pathRef.current));
     return unsub;
   }, [path, refresh]);
 
   const navigate = (p: string) => {
     setSelected(null);
+    setRenaming(null);
+    setMenu(null);
     setPath(vfs.normalizePath(p));
   };
 
@@ -127,65 +94,105 @@ function FilesApp(): ReactNode {
     }
   };
 
-  const onNewFolder = () => {
+  // ---- パス入力バー ----
+  const submitAddress = () => {
+    const target = vfs.normalizePath(address);
+    const node = vfs.stat(target);
+    if (target === '/' || (node && node.type === 'folder')) {
+      navigate(target);
+    } else if (node && node.type === 'file') {
+      openEntry({path: target, name: vfs.basename(target), node});
+      setAddress(path);
+    } else {
+      // 存在しないパスは元に戻す
+      setAddress(path);
+    }
+  };
+
+  // ---- 作成 / リネーム / 削除 ----
+  const newFolder = () => {
     const p = vfs.uniqueChildPath(
       path,
       translate({id: 'files.newFolderName', message: '新しいフォルダー'}),
     );
     vfs.mkdir(p);
     setSelected(p);
+    setRenaming(p);
   };
 
-  const onNewFile = () => {
+  const newFile = () => {
     const p = vfs.uniqueChildPath(
       path,
       translate({id: 'files.newFileName', message: '新しいファイル.txt'}),
     );
     vfs.createFile(p, '');
     setSelected(p);
+    setRenaming(p);
   };
 
-  const onRename = (entry: VfsEntry) => {
-    const next = window.prompt(
-      translate({id: 'files.renamePrompt', message: '新しい名前を入力してください。'}),
-      entry.name,
-    );
-    if (next && next.trim() && next !== entry.name) {
-      const newPath = vfs.rename(entry.path, next.trim());
-      if (newPath) {
-        setSelected(newPath);
-      }
+  const commitRename = (entry: VfsEntry, name: string) => {
+    const newPath = vfs.rename(entry.path, name);
+    setRenaming(null);
+    if (newPath) {
+      setSelected(newPath);
     }
   };
 
-  const onDelete = (entry: VfsEntry) => {
-    const ok = window.confirm(
-      translate(
-        {id: 'files.deleteConfirm', message: '「{name}」を削除しますか?'},
-        {name: entry.name},
-      ),
-    );
-    if (ok) {
-      vfs.remove(entry.path);
-      setSelected(null);
-    }
+  const doDelete = (entry: VfsEntry) => {
+    vfs.remove(entry.path);
+    setSelected(null);
+    setRenaming(null);
   };
 
-  // パンくず用のセグメント
-  const segments: {label: string; path: string}[] = [];
-  {
-    const norm = vfs.normalizePath(path);
-    const parts = norm === '/' ? [] : norm.slice(1).split('/');
-    let acc = '';
-    segments.push({label: '/', path: '/'});
-    for (const part of parts) {
-      acc += '/' + part;
-      segments.push({label: part, path: acc});
+  // ---- コンテキスト メニュー ----
+  const openMenu = (e: React.MouseEvent, entry: VfsEntry | null) => {
+    e.preventDefault();
+    e.stopPropagation();
+    if (entry) {
+      setSelected(entry.path);
     }
-  }
+    setMenu({x: e.clientX, y: e.clientY, entry});
+  };
+
+  const menuItems = (m: Menu): ContextMenuItem[] => {
+    const items: ContextMenuItem[] = [
+      {
+        type: 'item',
+        label: <Translate id="files.newFolder">新しいフォルダー</Translate>,
+        onClick: newFolder,
+      },
+      {
+        type: 'item',
+        label: <Translate id="files.newFile">新しいファイル</Translate>,
+        onClick: newFile,
+      },
+    ];
+    if (m.entry) {
+      const entry = m.entry;
+      items.push(
+        {type: 'separator'},
+        {
+          type: 'item',
+          label: <Translate id="files.open">開く</Translate>,
+          onClick: () => openEntry(entry),
+        },
+        {
+          type: 'item',
+          label: <Translate id="files.rename">名前の変更</Translate>,
+          onClick: () => setRenaming(entry.path),
+        },
+        {
+          type: 'item',
+          danger: true,
+          label: <Translate id="files.delete">削除</Translate>,
+          onClick: () => doDelete(entry),
+        },
+      );
+    }
+    return items;
+  };
 
   const canGoUp = vfs.normalizePath(path) !== '/';
-  const selectedEntry = entries.find((e) => e.path === selected) ?? null;
 
   return (
     <div className={styles.app}>
@@ -201,28 +208,31 @@ function FilesApp(): ReactNode {
             <path d="M12 19V6M6 12l6-6 6 6" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" />
           </svg>
         </button>
-        <nav className={styles.breadcrumb} aria-label="path">
-          {segments.map((seg, i) => (
-            <span key={seg.path} className={styles.crumbItem}>
-              {i > 0 && <span className={styles.crumbSep}>/</span>}
-              <button type="button" className={styles.crumb} onClick={() => navigate(seg.path)}>
-                {seg.label === '/' ? (
-                  <Translate id="files.root">ルート</Translate>
-                ) : (
-                  seg.label
-                )}
-              </button>
-            </span>
-          ))}
-        </nav>
-        <div className={styles.toolbarSpacer} />
-        <button type="button" className={styles.toolBtn} onClick={onNewFolder}>
+        <input
+          className={styles.addressBar}
+          value={address}
+          spellCheck={false}
+          autoComplete="off"
+          aria-label={translate({id: 'files.pathLabel', message: 'パス'})}
+          onChange={(e) => setAddress(e.target.value)}
+          onKeyDown={(e) => {
+            if (e.key === 'Enter') {
+              e.preventDefault();
+              submitAddress();
+            } else if (e.key === 'Escape') {
+              setAddress(path);
+              (e.target as HTMLInputElement).blur();
+            }
+          }}
+          onBlur={() => setAddress(path)}
+        />
+        <button type="button" className={styles.toolBtn} onClick={newFolder}>
           <FolderIcon />
           <span className={styles.toolBtnLabel}>
             <Translate id="files.newFolder">新しいフォルダー</Translate>
           </span>
         </button>
-        <button type="button" className={styles.toolBtn} onClick={onNewFile}>
+        <button type="button" className={styles.toolBtn} onClick={newFile}>
           <FileIcon />
           <span className={styles.toolBtnLabel}>
             <Translate id="files.newFile">新しいファイル</Translate>
@@ -237,6 +247,7 @@ function FilesApp(): ReactNode {
             setSelected(null);
           }
         }}
+        onContextMenu={(e) => openMenu(e, null)}
       >
         {entries.length === 0 ? (
           <p className={styles.empty}>
@@ -255,8 +266,9 @@ function FilesApp(): ReactNode {
                   }
                   onClick={() => setSelected(entry.path)}
                   onDoubleClick={() => openEntry(entry)}
+                  onContextMenu={(e) => openMenu(e, entry)}
                   onKeyDown={(e) => {
-                    if (e.key === 'Enter') {
+                    if (e.key === 'Enter' && renaming !== entry.path) {
                       openEntry(entry);
                     }
                   }}
@@ -264,9 +276,18 @@ function FilesApp(): ReactNode {
                   <span className={styles.entryGlyph}>
                     <EntryGlyph entry={entry} />
                   </span>
-                  <span className={styles.entryLabel}>
-                    <EntryLabel entry={entry} />
-                  </span>
+                  {renaming === entry.path ? (
+                    <RenameInput
+                      className={styles.renameInput}
+                      initial={entry.name}
+                      onCommit={(name) => commitRename(entry, name)}
+                      onCancel={() => setRenaming(null)}
+                    />
+                  ) : (
+                    <span className={styles.entryLabel}>
+                      <EntryLabel entry={entry} />
+                    </span>
+                  )}
                 </button>
               </li>
             ))}
@@ -276,33 +297,20 @@ function FilesApp(): ReactNode {
 
       <div className={styles.statusBar}>
         <span className={styles.statusCount}>
-          <Translate
-            id="files.itemCount"
-            values={{count: entries.length}}
-          >
+          <Translate id="files.itemCount" values={{count: entries.length}}>
             {'{count} 個の項目'}
           </Translate>
         </span>
-        <div className={styles.toolbarSpacer} />
-        {selectedEntry && (
-          <>
-            <button
-              type="button"
-              className={styles.statusBtn}
-              onClick={() => onRename(selectedEntry)}
-            >
-              <Translate id="files.rename">名前の変更</Translate>
-            </button>
-            <button
-              type="button"
-              className={`${styles.statusBtn} ${styles.statusBtnDanger}`}
-              onClick={() => onDelete(selectedEntry)}
-            >
-              <Translate id="files.delete">削除</Translate>
-            </button>
-          </>
-        )}
       </div>
+
+      {menu && (
+        <ContextMenu
+          x={menu.x}
+          y={menu.y}
+          items={menuItems(menu)}
+          onClose={() => setMenu(null)}
+        />
+      )}
     </div>
   );
 }

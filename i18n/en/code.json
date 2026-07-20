@@ -1584,5 +1584,14 @@
   },
   "miniApps.files.description": {
     "message": "A file explorer for browsing and managing the virtual file system."
+  },
+  "editor.autosave": {
+    "message": "Auto-save"
+  },
+  "files.open": {
+    "message": "Open"
+  },
+  "files.pathLabel": {
+    "message": "Path"
   }
 }

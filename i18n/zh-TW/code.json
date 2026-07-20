@@ -1584,5 +1584,14 @@
   },
   "miniApps.files.description": {
     "message": "用於瀏覽與操作虛擬檔案系統的檔案總管。"
+  },
+  "editor.autosave": {
+    "message": "自動儲存"
+  },
+  "files.open": {
+    "message": "開啟"
+  },
+  "files.pathLabel": {
+    "message": "路徑"
   }
 }

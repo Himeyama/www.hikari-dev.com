@@ -1,14 +1,18 @@
 import {useEffect, useReducer, useRef, useState} from 'react';
+import type React from 'react';
 import type {ReactNode} from 'react';
 import clsx from 'clsx';
-import Translate from '@docusaurus/Translate';
-import {getAppById, FolderIcon, FileIcon} from './apps';
+import Translate, {translate} from '@docusaurus/Translate';
+import {getAppById} from './apps';
 import type {MiniApp} from './apps';
 import * as vfs from '../../lib/desktop/vfs';
 import type {VfsEntry} from '../../lib/desktop/vfs';
+import {EntryGlyph, EntryLabel} from './entryView';
 import {DesktopIcon} from './DesktopIcon';
 import {AppWindow} from './AppWindow';
 import {Taskbar} from './Taskbar';
+import {ContextMenu} from './ContextMenu';
+import type {ContextMenuItem} from './ContextMenu';
 import styles from './desktop.module.css';
 
 const STORAGE_KEY = 'hikari.desktop.v2';
@@ -272,37 +276,11 @@ function defaultIconPos(index: number, viewportH: number): {x: number; y: number
   return {x: START_X + col * CELL_W, y: START_Y + row * CELL_H};
 }
 
-// ---- エントリのアイコン/ラベル解決 -----------------------------------------
-
-function EntryGlyph({entry}: {entry: VfsEntry}): ReactNode {
-  if (entry.node.type === 'folder') {
-    return <FolderIcon />;
-  }
-  if (entry.node.type === 'link') {
-    const app = entry.node.appId ? getAppById(entry.node.appId) : undefined;
-    if (app) {
-      return <app.Icon />;
-    }
-  }
-  if (entry.node.type === 'file') {
-    return <FileIcon />;
-  }
-  return <FileIcon />;
-}
-
-function EntryLabel({entry}: {entry: VfsEntry}): ReactNode {
-  if (entry.node.type === 'link' && entry.node.appId) {
-    const app = getAppById(entry.node.appId);
-    if (app) {
-      return <Translate id={app.titleId}>{app.titleMessage}</Translate>;
-    }
-  }
-  return <>{entry.name}</>;
-}
-
 export function DesktopShell(): ReactNode {
   const [state, dispatch] = useReducer(reducer, undefined, initState);
   const [selectedIcon, setSelectedIcon] = useState<string | null>(null);
+  const [renaming, setRenaming] = useState<string | null>(null);
+  const [menu, setMenu] = useState<{x: number; y: number; entry: VfsEntry | null} | null>(null);
   const [dragging, setDragging] = useState(false);
   const [snapPreview, setSnapPreview] = useState<SnapKind | null>(null);
   const [vfsVersion, setVfsVersion] = useState(0);
@@ -398,6 +376,88 @@ export function DesktopShell(): ReactNode {
     }
   };
 
+  // ---- 作成 / リネーム / 削除 (Desktop フォルダー内) ----
+  const newFolder = () => {
+    const p = vfs.uniqueChildPath(
+      vfs.DESKTOP_PATH,
+      translate({id: 'files.newFolderName', message: '新しいフォルダー'}),
+    );
+    vfs.mkdir(p);
+    setSelectedIcon(p);
+    setRenaming(p);
+  };
+
+  const newFile = () => {
+    const p = vfs.uniqueChildPath(
+      vfs.DESKTOP_PATH,
+      translate({id: 'files.newFileName', message: '新しいファイル.txt'}),
+    );
+    vfs.createFile(p, '');
+    setSelectedIcon(p);
+    setRenaming(p);
+  };
+
+  const commitRename = (entry: VfsEntry, name: string) => {
+    const newPath = vfs.rename(entry.path, name);
+    setRenaming(null);
+    if (newPath) {
+      setSelectedIcon(newPath);
+    }
+  };
+
+  const doDelete = (entry: VfsEntry) => {
+    vfs.remove(entry.path);
+    setSelectedIcon(null);
+    setRenaming(null);
+  };
+
+  const openMenu = (e: React.MouseEvent, entry: VfsEntry | null) => {
+    e.preventDefault();
+    e.stopPropagation();
+    if (entry) {
+      setSelectedIcon(entry.path);
+    }
+    setMenu({x: e.clientX, y: e.clientY, entry});
+  };
+
+  const menuItems = (m: {entry: VfsEntry | null}): ContextMenuItem[] => {
+    const items: ContextMenuItem[] = [
+      {
+        type: 'item',
+        label: <Translate id="files.newFolder">新しいフォルダー</Translate>,
+        onClick: newFolder,
+      },
+      {
+        type: 'item',
+        label: <Translate id="files.newFile">新しいファイル</Translate>,
+        onClick: newFile,
+      },
+    ];
+    if (m.entry) {
+      const entry = m.entry;
+      items.push(
+        {type: 'separator'},
+        {
+          type: 'item',
+          label: <Translate id="files.open">開く</Translate>,
+          onClick: () => openEntry(entry),
+        },
+        {
+          type: 'item',
+          label: <Translate id="files.rename">名前の変更</Translate>,
+          onClick: () => setRenaming(entry.path),
+        },
+        {
+          type: 'item',
+          danger: true,
+          label: <Translate id="files.delete">削除</Translate>,
+          onClick: () => doDelete(entry),
+        },
+      );
+    }
+    return items;
+  };
+
   // 開いているウィンドウ (windowId から MiniApp メタを解決)
   const openWindows = Object.values(state.windows)
     .map((win) => {
@@ -423,6 +483,11 @@ export function DesktopShell(): ReactNode {
             setSelectedIcon(null);
           }
         }}
+        onContextMenu={(e) => {
+          if (e.target === e.currentTarget) {
+            openMenu(e, null);
+          }
+        }}
       >
         {desktopEntries.map((entry, index) => {
           const saved = state.icons[entry.path];
@@ -432,6 +497,8 @@ export function DesktopShell(): ReactNode {
               key={entry.path}
               glyph={<EntryGlyph entry={entry} />}
               label={<EntryLabel entry={entry} />}
+              name={entry.name}
+              editing={renaming === entry.path}
               x={pos.x}
               y={pos.y}
               selected={selectedIcon === entry.path}
@@ -441,6 +508,9 @@ export function DesktopShell(): ReactNode {
                 dispatch({type: 'MOVE_ICON', iconId: entry.path, x, y, viewport: getViewport()})
               }
               onDragState={setDragging}
+              onContextMenu={(e) => openMenu(e, entry)}
+              onCommitRename={(name) => commitRename(entry, name)}
+              onCancelRename={() => setRenaming(null)}
             />
           );
         })}
@@ -506,6 +576,15 @@ export function DesktopShell(): ReactNode {
         }))}
         onItemClick={(windowId) => dispatch({type: 'TASKBAR_CLICK', windowId})}
       />
+
+      {menu && (
+        <ContextMenu
+          x={menu.x}
+          y={menu.y}
+          items={menuItems(menu)}
+          onClose={() => setMenu(null)}
+        />
+      )}
     </div>
   );
 }

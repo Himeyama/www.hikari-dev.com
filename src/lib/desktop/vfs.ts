@@ -126,8 +126,9 @@ function save(data: VfsData): void {
 
 // ---- シード ----------------------------------------------------------------
 
-/** 「ファイル」アプリ自身の link 情報 */
+/** デスクトップに常設シードする特殊アプリの link 情報 */
 const FILES_LINK = {appId: 'files', href: '/files'};
+const EDITOR_LINK = {appId: 'editor', href: '/editor'};
 
 function ensureFolder(data: VfsData, path: string): void {
   const p = normalizePath(path);
@@ -157,6 +158,7 @@ export function ensureSeeded(): void {
 
   const links: {appId: string; href: string}[] = [
     FILES_LINK,
+    EDITOR_LINK,
     ...MINI_APPS.map((app) => ({appId: app.id, href: app.href})),
   ];
 

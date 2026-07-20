@@ -51,42 +51,39 @@
   flex: 1 1 auto;
 }
 
-/* ===== パンくず ===== */
-.breadcrumb {
-  display: flex;
-  align-items: center;
-  flex-wrap: wrap;
-  min-width: 0;
-  overflow: hidden;
+/* ===== パス入力バー ===== */
+.addressBar {
+  flex: 1 1 auto;
+  min-width: 6rem;
+  padding: 0.32rem 0.6rem;
+  border: 1px solid var(--ifm-color-emphasis-300);
+  border-radius: 6px;
+  background: var(--ifm-background-color);
+  color: var(--ifm-font-color-base);
+  font-size: 0.82rem;
+  font-family: var(--ifm-font-family-monospace);
 }
 
-.crumbItem {
-  display: inline-flex;
-  align-items: center;
+.addressBar:focus {
+  outline: none;
+  border-color: var(--ifm-color-primary);
 }
 
-.crumbSep {
-  color: var(--ifm-color-emphasis-400);
-  margin: 0 0.1rem;
+/* ===== インライン リネーム入力 ===== */
+.renameInput {
+  width: 100%;
+  padding: 0.05rem 0.2rem;
+  border: 1px solid var(--ifm-color-primary);
+  border-radius: 3px;
+  background: var(--ifm-background-color);
+  color: var(--ifm-font-color-base);
+  font-size: 0.78rem;
+  line-height: 1.25;
+  text-align: center;
 }
 
-.crumb {
-  border: none;
-  background: transparent;
-  color: var(--ifm-color-emphasis-700);
-  cursor: pointer;
-  padding: 0.15rem 0.3rem;
-  border-radius: 4px;
-  font-size: 0.85rem;
-  max-width: 12rem;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-}
-
-.crumb:hover {
-  background: var(--ifm-color-emphasis-100);
-  color: var(--ifm-color-primary);
+.renameInput:focus {
+  outline: none;
 }
 
 /* ===== 本体 (アイコン グリッド) ===== */

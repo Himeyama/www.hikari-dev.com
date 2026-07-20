@@ -63,12 +63,22 @@ function initialPath(): string | null {
   return p ? vfs.normalizePath(p) : null;
 }
 
+const AUTOSAVE_KEY = 'hikari.editor.autosave';
+
+function loadAutosave(): boolean {
+  if (typeof window === 'undefined') {
+    return false;
+  }
+  return window.localStorage.getItem(AUTOSAVE_KEY) === '1';
+}
+
 function EditorApp(): ReactNode {
   const {colorMode} = useColorMode();
   const [path] = useState<string | null>(initialPath);
   const [content, setContent] = useState<string>('');
   const [saved, setSaved] = useState<string>('');
   const [exists, setExists] = useState<boolean>(false);
+  const [autosave, setAutosave] = useState<boolean>(loadAutosave);
   const contentRef = useRef(content);
   contentRef.current = content;
 
@@ -112,6 +122,30 @@ function EditorApp(): ReactNode {
     return () => window.removeEventListener('keydown', onKey);
   }, [save]);
 
+  // 自動保存 (有効時、変更が止まって 800ms 後に保存)
+  useEffect(() => {
+    if (!autosave || !dirty) {
+      return;
+    }
+    const t = setTimeout(save, 800);
+    return () => clearTimeout(t);
+  }, [autosave, dirty, content, save]);
+
+  const toggleAutosave = () => {
+    setAutosave((prev) => {
+      const next = !prev;
+      try {
+        window.localStorage.setItem(AUTOSAVE_KEY, next ? '1' : '0');
+      } catch {
+        /* quota 等は無視 */
+      }
+      if (next && contentRef.current !== saved) {
+        save();
+      }
+      return next;
+    });
+  };
+
   if (!path) {
     return (
       <div className={styles.app}>
@@ -143,10 +177,24 @@ function EditorApp(): ReactNode {
         </span>
         <span className={styles.path}>{path}</span>
         <div className={styles.spacer} />
+        <label className={styles.autosave}>
+          <span className={styles.autosaveLabel}>
+            <Translate id="editor.autosave">自動保存</Translate>
+          </span>
+          <button
+            type="button"
+            role="switch"
+            aria-checked={autosave}
+            className={autosave ? `${styles.toggle} ${styles.toggleOn}` : styles.toggle}
+            onClick={toggleAutosave}
+          >
+            <span className={styles.toggleKnob} />
+          </button>
+        </label>
         <button
           type="button"
           className={styles.saveBtn}
-          disabled={!dirty}
+          disabled={!dirty || autosave}
           onClick={save}
         >
           <Translate id="editor.save">保存</Translate>
