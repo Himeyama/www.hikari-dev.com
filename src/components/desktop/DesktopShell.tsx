@@ -31,6 +31,7 @@ type Rect = {x: number; y: number; w: number; h: number};
 export type SnapKind = 'none' | 'max' | 'left' | 'right';
 type WinState = {
   windowId: string;
+  appId: string;
   href: string;
   param?: string;
   rect: Rect;
@@ -48,7 +49,14 @@ export type DesktopState = {
 type Viewport = {w: number; h: number};
 
 type Action =
-  | {type: 'OPEN'; windowId: string; href: string; param?: string; viewport: Viewport}
+  | {
+      type: 'OPEN';
+      windowId: string;
+      appId: string;
+      href: string;
+      param?: string;
+      viewport: Viewport;
+    }
   | {type: 'CLOSE'; windowId: string}
   | {type: 'FOCUS'; windowId: string}
   | {type: 'MINIMIZE'; windowId: string}
@@ -101,6 +109,7 @@ function reducer(state: DesktopState, action: Action): DesktopState {
           ...state.windows,
           [action.windowId]: {
             windowId: action.windowId,
+            appId: action.appId,
             href: action.href,
             param: action.param,
             rect: {x, y, w, h},
@@ -253,6 +262,52 @@ function reducer(state: DesktopState, action: Action): DesktopState {
   }
 }
 
+// アプリごとに複数ウィンドウを開けるよう、開くたびに一意な windowId を発行する
+function newWindowId(appId: string): string {
+  const rand =
+    typeof crypto !== 'undefined' && 'randomUUID' in crypto
+      ? crypto.randomUUID()
+      : `${Date.now()}-${Math.random().toString(36).slice(2)}`;
+  return `${appId}::${rand}`;
+}
+
+// ---- 壁紙 (Picsum Photos からランダム取得し、一定間隔で切り替える) ----
+const WALLPAPER_STORAGE_KEY = 'hikari.desktop.wallpaper';
+const WALLPAPER_INTERVAL_MS = 30 * 60 * 1000;
+
+type WallpaperState = {seed: string; changedAt: number};
+
+function randomSeed(): string {
+  return Math.random().toString(36).slice(2);
+}
+
+function wallpaperUrl(seed: string): string {
+  return `https://picsum.photos/seed/${encodeURIComponent(seed)}/1920/1080`;
+}
+
+function loadWallpaperState(): WallpaperState {
+  try {
+    const raw = window.localStorage.getItem(WALLPAPER_STORAGE_KEY);
+    if (raw) {
+      const parsed = JSON.parse(raw) as Partial<WallpaperState>;
+      if (typeof parsed.seed === 'string' && typeof parsed.changedAt === 'number') {
+        return {seed: parsed.seed, changedAt: parsed.changedAt};
+      }
+    }
+  } catch {
+    /* ignore */
+  }
+  return {seed: randomSeed(), changedAt: Date.now()};
+}
+
+function saveWallpaperState(state: WallpaperState): void {
+  try {
+    window.localStorage.setItem(WALLPAPER_STORAGE_KEY, JSON.stringify(state));
+  } catch {
+    /* quota 等は無視 */
+  }
+}
+
 function emptyState(): DesktopState {
   return {icons: {}, windows: {}, zTop: 0};
 }
@@ -264,9 +319,15 @@ function initState(): DesktopState {
       return emptyState();
     }
     const parsed = JSON.parse(raw) as Partial<DesktopState>;
+    const rawWindows = (parsed.windows as Record<string, WinState>) ?? {};
+    // v2 以前の保存データには appId が無いため windowId から補完する
+    const windows: Record<string, WinState> = {};
+    for (const [id, win] of Object.entries(rawWindows)) {
+      windows[id] = {...win, appId: win.appId ?? win.windowId};
+    }
     return {
       icons: parsed.icons ?? {},
-      windows: (parsed.windows as Record<string, WinState>) ?? {},
+      windows,
       zTop: parsed.zTop ?? 0,
     };
   } catch {
@@ -296,7 +357,12 @@ export function DesktopShell(): ReactNode {
   const iconRefs = useRef(new Map<string, HTMLButtonElement>());
   const [renaming, setRenaming] = useState<string | null>(null);
   const [menu, setMenu] = useState<{x: number; y: number; entry: VfsEntry | null} | null>(null);
+  const [taskbarMenu, setTaskbarMenu] = useState<{x: number; y: number; windowId: string} | null>(
+    null,
+  );
   const [dragging, setDragging] = useState(false);
+  const [wallpaper, setWallpaper] = useState<WallpaperState>(() => loadWallpaperState());
+  const [wallpaperBgUrl, setWallpaperBgUrl] = useState<string | null>(null);
   const [snapPreview, setSnapPreview] = useState<SnapKind | null>(null);
   const [vfsVersion, setVfsVersion] = useState(0);
   const saveTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
@@ -313,6 +379,33 @@ export function DesktopShell(): ReactNode {
       document.documentElement.classList.remove('desktop-active');
     };
   }, []);
+
+  // 壁紙を Picsum Photos から先読みし、読み込み完了後に切り替える (ちらつき防止)
+  useEffect(() => {
+    let cancelled = false;
+    const img = new Image();
+    img.onload = () => {
+      if (!cancelled) {
+        setWallpaperBgUrl(wallpaperUrl(wallpaper.seed));
+      }
+    };
+    img.src = wallpaperUrl(wallpaper.seed);
+    return () => {
+      cancelled = true;
+    };
+  }, [wallpaper.seed]);
+
+  // 30 分ごとに壁紙をランダムに切り替える (前回切替時刻からの残り時間で次回をスケジュール)
+  useEffect(() => {
+    const elapsed = Date.now() - wallpaper.changedAt;
+    const remaining = Math.max(0, WALLPAPER_INTERVAL_MS - elapsed);
+    const timer = setTimeout(() => {
+      const next: WallpaperState = {seed: randomSeed(), changedAt: Date.now()};
+      saveWallpaperState(next);
+      setWallpaper(next);
+    }, remaining);
+    return () => clearTimeout(timer);
+  }, [wallpaper.changedAt]);
 
   // VFS を初期シードし、変更を購読してアイコンを再描画
   useEffect(() => {
@@ -335,12 +428,32 @@ export function DesktopShell(): ReactNode {
       if (d.type === 'open-app' && d.appId) {
         const app = getAppById(d.appId);
         if (app) {
-          dispatch({type: 'OPEN', windowId: app.id, href: app.href, viewport});
+          dispatch({
+            type: 'OPEN',
+            windowId: newWindowId(app.id),
+            appId: app.id,
+            href: app.href,
+            viewport,
+          });
         }
       } else if (d.type === 'open-editor' && d.path) {
-        dispatch({type: 'OPEN', windowId: 'editor', href: '/editor', param: d.path, viewport});
+        dispatch({
+          type: 'OPEN',
+          windowId: 'editor',
+          appId: 'editor',
+          href: '/editor',
+          param: d.path,
+          viewport,
+        });
       } else if (d.type === 'open-folder' && d.path) {
-        dispatch({type: 'OPEN', windowId: 'files', href: '/files', param: d.path, viewport});
+        dispatch({
+          type: 'OPEN',
+          windowId: 'files',
+          appId: 'files',
+          href: '/files',
+          param: d.path,
+          viewport,
+        });
       }
     };
     window.addEventListener('message', onMsg);
@@ -383,11 +496,31 @@ export function DesktopShell(): ReactNode {
     const viewport = getViewport();
     const {node} = entry;
     if (node.type === 'folder') {
-      dispatch({type: 'OPEN', windowId: 'files', href: '/files', param: entry.path, viewport});
+      dispatch({
+        type: 'OPEN',
+        windowId: 'files',
+        appId: 'files',
+        href: '/files',
+        param: entry.path,
+        viewport,
+      });
     } else if (node.type === 'link' && node.appId && node.href) {
-      dispatch({type: 'OPEN', windowId: node.appId, href: node.href, viewport});
+      dispatch({
+        type: 'OPEN',
+        windowId: newWindowId(node.appId),
+        appId: node.appId,
+        href: node.href,
+        viewport,
+      });
     } else if (node.type === 'file') {
-      dispatch({type: 'OPEN', windowId: 'editor', href: '/editor', param: entry.path, viewport});
+      dispatch({
+        type: 'OPEN',
+        windowId: 'editor',
+        appId: 'editor',
+        href: '/editor',
+        param: entry.path,
+        viewport,
+      });
     }
   };
 
@@ -602,13 +735,16 @@ export function DesktopShell(): ReactNode {
   // 開いているウィンドウ (windowId から MiniApp メタを解決)
   const openWindows = Object.values(state.windows)
     .map((win) => {
-      const app = getAppById(win.windowId);
+      const app = getAppById(win.appId);
       return app ? {win, app} : null;
     })
     .filter((v): v is {win: WinState; app: MiniApp} => v !== null);
 
   return (
-    <div className={clsx(styles.surface, dragging && styles.dragging)}>
+    <div
+      className={clsx(styles.surface, dragging && styles.dragging)}
+      style={wallpaperBgUrl ? {backgroundImage: `url(${wallpaperBgUrl})`} : undefined}
+    >
       <div
         className={styles.iconLayer}
         onPointerDown={onLayerPointerDown}
@@ -720,10 +856,16 @@ export function DesktopShell(): ReactNode {
 
       <Taskbar
         windows={openWindows.map(({win, app}) => ({
+          windowId: win.windowId,
           app,
           active: win.z === state.zTop && !win.minimized,
         }))}
         onItemClick={(windowId) => dispatch({type: 'TASKBAR_CLICK', windowId})}
+        onItemContextMenu={(e, windowId) => {
+          e.preventDefault();
+          e.stopPropagation();
+          setTaskbarMenu({x: e.clientX, y: e.clientY, windowId});
+        }}
       />
 
       {menu && (
@@ -732,6 +874,22 @@ export function DesktopShell(): ReactNode {
           y={menu.y}
           items={menuItems(menu)}
           onClose={() => setMenu(null)}
+        />
+      )}
+
+      {taskbarMenu && (
+        <ContextMenu
+          x={taskbarMenu.x}
+          y={taskbarMenu.y}
+          items={[
+            {
+              type: 'item',
+              danger: true,
+              label: <Translate id="desktop.taskbar.close">閉じる</Translate>,
+              onClick: () => dispatch({type: 'CLOSE', windowId: taskbarMenu.windowId}),
+            },
+          ]}
+          onClose={() => setTaskbarMenu(null)}
         />
       )}
     </div>

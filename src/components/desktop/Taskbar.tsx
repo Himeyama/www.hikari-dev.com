@@ -1,4 +1,5 @@
 import type {ReactNode} from 'react';
+import type React from 'react';
 import clsx from 'clsx';
 import Link from '@docusaurus/Link';
 import Translate, {translate} from '@docusaurus/Translate';
@@ -7,13 +8,15 @@ import {TaskbarClock} from './TaskbarClock';
 import styles from './desktop.module.css';
 
 type TaskbarWindow = {
+  windowId: string;
   app: MiniApp;
   active: boolean;
 };
 
 type Props = {
   windows: TaskbarWindow[];
-  onItemClick: (appId: string) => void;
+  onItemClick: (windowId: string) => void;
+  onItemContextMenu: (e: React.MouseEvent, windowId: string) => void;
 };
 
 function HomeGlyph(): ReactNode {
@@ -38,7 +41,7 @@ function HomeGlyph(): ReactNode {
   );
 }
 
-export function Taskbar({windows, onItemClick}: Props): ReactNode {
+export function Taskbar({windows, onItemClick, onItemContextMenu}: Props): ReactNode {
   const homeLabel = translate({id: 'desktop.home', message: 'ホームへ戻る'});
   return (
     <div className={styles.taskbar}>
@@ -47,12 +50,13 @@ export function Taskbar({windows, onItemClick}: Props): ReactNode {
       </Link>
       <span className={styles.taskbarDivider} />
       <div className={styles.taskbarItems}>
-        {windows.map(({app, active}) => (
+        {windows.map(({windowId, app, active}) => (
           <button
-            key={app.id}
+            key={windowId}
             type="button"
             className={clsx(styles.taskbarItem, active && styles.taskbarItemActive)}
-            onClick={() => onItemClick(app.id)}
+            onClick={() => onItemClick(windowId)}
+            onContextMenu={(e) => onItemContextMenu(e, windowId)}
           >
             <span className={styles.taskbarItemGlyph}>
               <app.Icon />

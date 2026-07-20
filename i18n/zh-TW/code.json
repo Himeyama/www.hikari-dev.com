@@ -1599,5 +1599,8 @@
   },
   "desktop.sortByType": {
     "message": "依類型排序"
+  },
+  "desktop.taskbar.close": {
+    "message": "關閉"
   }
 }

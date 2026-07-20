@@ -1587,5 +1587,8 @@
   },
   "desktop.sortByType": {
     "message": "種類ごとに整列"
+  },
+  "desktop.taskbar.close": {
+    "message": "閉じる"
   }
 }
