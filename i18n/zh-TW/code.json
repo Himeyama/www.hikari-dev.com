@@ -1602,5 +1602,44 @@
   },
   "desktop.taskbar.close": {
     "message": "關閉"
+  },
+  "editor.new": {
+    "message": "新增"
+  },
+  "editor.open": {
+    "message": "開啟..."
+  },
+  "editor.saveAs": {
+    "message": "另存新檔..."
+  },
+  "editor.wordWrap": {
+    "message": "自動換行"
+  },
+  "editor.menu.file": {
+    "message": "檔案"
+  },
+  "editor.menu.settings": {
+    "message": "設定"
+  },
+  "editor.dialog.openTitle": {
+    "message": "開啟檔案"
+  },
+  "editor.dialog.saveTitle": {
+    "message": "另存新檔"
+  },
+  "editor.dialog.fileName": {
+    "message": "檔案名稱:"
+  },
+  "editor.dialog.cancel": {
+    "message": "取消"
+  },
+  "editor.dialog.confirmOpen": {
+    "message": "開啟"
+  },
+  "editor.dialog.confirmSave": {
+    "message": "儲存"
+  },
+  "desktop.reset": {
+    "message": "重設桌面"
   }
 }

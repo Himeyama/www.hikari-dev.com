@@ -1590,5 +1590,44 @@
   },
   "desktop.taskbar.close": {
     "message": "閉じる"
+  },
+  "editor.new": {
+    "message": "新規"
+  },
+  "editor.open": {
+    "message": "開く..."
+  },
+  "editor.saveAs": {
+    "message": "名前を付けて保存..."
+  },
+  "editor.wordWrap": {
+    "message": "ワードラップ"
+  },
+  "editor.menu.file": {
+    "message": "ファイル"
+  },
+  "editor.menu.settings": {
+    "message": "設定"
+  },
+  "editor.dialog.openTitle": {
+    "message": "ファイルを開く"
+  },
+  "editor.dialog.saveTitle": {
+    "message": "名前を付けて保存"
+  },
+  "editor.dialog.fileName": {
+    "message": "ファイル名:"
+  },
+  "editor.dialog.cancel": {
+    "message": "キャンセル"
+  },
+  "editor.dialog.confirmOpen": {
+    "message": "開く"
+  },
+  "editor.dialog.confirmSave": {
+    "message": "保存"
+  },
+  "desktop.reset": {
+    "message": "デスクトップをリセット"
   }
 }

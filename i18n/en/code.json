@@ -1602,5 +1602,44 @@
   },
   "desktop.taskbar.close": {
     "message": "Close"
+  },
+  "editor.new": {
+    "message": "New"
+  },
+  "editor.open": {
+    "message": "Open..."
+  },
+  "editor.saveAs": {
+    "message": "Save As..."
+  },
+  "editor.wordWrap": {
+    "message": "Word Wrap"
+  },
+  "editor.menu.file": {
+    "message": "File"
+  },
+  "editor.menu.settings": {
+    "message": "Settings"
+  },
+  "editor.dialog.openTitle": {
+    "message": "Open File"
+  },
+  "editor.dialog.saveTitle": {
+    "message": "Save As"
+  },
+  "editor.dialog.fileName": {
+    "message": "File name:"
+  },
+  "editor.dialog.cancel": {
+    "message": "Cancel"
+  },
+  "editor.dialog.confirmOpen": {
+    "message": "Open"
+  },
+  "editor.dialog.confirmSave": {
+    "message": "Save"
+  },
+  "desktop.reset": {
+    "message": "Reset Desktop"
   }
 }

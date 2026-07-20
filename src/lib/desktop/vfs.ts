@@ -195,6 +195,18 @@ export function reseedDefaultLinks(): void {
   ensureSeeded();
 }
 
+/** VFS を初期状態に戻す (デスクトップのリセット機能用) */
+export function resetAll(): void {
+  if (typeof window === 'undefined') {
+    return;
+  }
+  try {
+    window.localStorage.removeItem(STORAGE_KEY);
+  } catch {
+    /* quota 等は無視 */
+  }
+}
+
 // ---- 読み取り API ----------------------------------------------------------
 
 export function stat(path: string): VfsNode | null {

@@ -1,7 +1,7 @@
 import type {ReactNode} from 'react';
 import type React from 'react';
 import clsx from 'clsx';
-import Link from '@docusaurus/Link';
+import {useHistory} from '@docusaurus/router';
 import Translate, {translate} from '@docusaurus/Translate';
 import type {MiniApp} from './apps';
 import {TaskbarClock} from './TaskbarClock';
@@ -17,6 +17,7 @@ type Props = {
   windows: TaskbarWindow[];
   onItemClick: (windowId: string) => void;
   onItemContextMenu: (e: React.MouseEvent, windowId: string) => void;
+  onHomeContextMenu: (e: React.MouseEvent) => void;
 };
 
 function HomeGlyph(): ReactNode {
@@ -41,13 +42,25 @@ function HomeGlyph(): ReactNode {
   );
 }
 
-export function Taskbar({windows, onItemClick, onItemContextMenu}: Props): ReactNode {
+export function Taskbar({windows, onItemClick, onItemContextMenu, onHomeContextMenu}: Props): ReactNode {
+  const history = useHistory();
   const homeLabel = translate({id: 'desktop.home', message: 'ホームへ戻る'});
+
   return (
     <div className={styles.taskbar}>
-      <Link to="/" className={styles.homeButton} aria-label={homeLabel} title={homeLabel}>
+      <button
+        type="button"
+        className={styles.homeButton}
+        aria-label={homeLabel}
+        title={homeLabel}
+        onClick={() => history.push('/')}
+        onContextMenu={(e) => {
+          e.preventDefault();
+          onHomeContextMenu(e);
+        }}
+      >
         <HomeGlyph />
-      </Link>
+      </button>
       <span className={styles.taskbarDivider} />
       <div className={styles.taskbarItems}>
         {windows.map(({windowId, app, active}) => (

@@ -305,6 +305,10 @@ html:not([lang="ja"]) .navbar__item--ja-only {
 }
 
 /* ===== 埋め込みモード (?embed=1): ナビバー/フッターを隠す ===== */
+html[data-embed='1'] {
+  /* ナビバーを隠すため、高さ計算に使う変数も 0 にしておく (calc(100vh - var(--ifm-navbar-height)) 等の余白防止) */
+  --ifm-navbar-height: 0px;
+}
 html[data-embed='1'] .navbar {
   display: none;
 }

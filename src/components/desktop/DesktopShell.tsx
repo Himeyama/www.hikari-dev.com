@@ -360,6 +360,7 @@ export function DesktopShell(): ReactNode {
   const [taskbarMenu, setTaskbarMenu] = useState<{x: number; y: number; windowId: string} | null>(
     null,
   );
+  const [homeMenu, setHomeMenu] = useState<{x: number; y: number} | null>(null);
   const [dragging, setDragging] = useState(false);
   const [wallpaper, setWallpaper] = useState<WallpaperState>(() => loadWallpaperState());
   const [wallpaperBgUrl, setWallpaperBgUrl] = useState<string | null>(null);
@@ -732,6 +733,17 @@ export function DesktopShell(): ReactNode {
     return items;
   };
 
+  // デスクトップを初期状態に戻す (VFS のファイル/フォルダー + アイコン配置・ウィンドウ状態を破棄)
+  const resetDesktop = () => {
+    vfs.resetAll();
+    try {
+      window.localStorage.removeItem(STORAGE_KEY);
+    } catch {
+      /* quota 等は無視 */
+    }
+    window.location.reload();
+  };
+
   // 開いているウィンドウ (windowId から MiniApp メタを解決)
   const openWindows = Object.values(state.windows)
     .map((win) => {
@@ -866,6 +878,11 @@ export function DesktopShell(): ReactNode {
           e.stopPropagation();
           setTaskbarMenu({x: e.clientX, y: e.clientY, windowId});
         }}
+        onHomeContextMenu={(e) => {
+          e.preventDefault();
+          e.stopPropagation();
+          setHomeMenu({x: e.clientX, y: e.clientY});
+        }}
       />
 
       {menu && (
@@ -890,6 +907,22 @@ export function DesktopShell(): ReactNode {
             },
           ]}
           onClose={() => setTaskbarMenu(null)}
+        />
+      )}
+
+      {homeMenu && (
+        <ContextMenu
+          x={homeMenu.x}
+          y={homeMenu.y}
+          items={[
+            {
+              type: 'item',
+              danger: true,
+              label: <Translate id="desktop.reset">デスクトップをリセット</Translate>,
+              onClick: resetDesktop,
+            },
+          ]}
+          onClose={() => setHomeMenu(null)}
         />
       )}
     </div>
