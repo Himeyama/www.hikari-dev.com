@@ -9,6 +9,7 @@ import * as vfs from '../../lib/desktop/vfs';
 import type {VfsEntry} from '../../lib/desktop/vfs';
 import {EntryGlyph, EntryLabel} from './entryView';
 import {DesktopIcon} from './DesktopIcon';
+import type {SelectModifiers} from './DesktopIcon';
 import {AppWindow} from './AppWindow';
 import {Taskbar} from './Taskbar';
 import {ContextMenu} from './ContextMenu';
@@ -22,6 +23,9 @@ const DEFAULT_W = 960;
 const DEFAULT_H = 640;
 const MIN_W = 240;
 const MIN_H = 160;
+const MARQUEE_THRESHOLD = 4;
+
+type MarqueeRect = {x0: number; y0: number; x1: number; y1: number};
 
 type Rect = {x: number; y: number; w: number; h: number};
 export type SnapKind = 'none' | 'max' | 'left' | 'right';
@@ -53,7 +57,8 @@ type Action =
   | {type: 'RESIZE_WINDOW'; windowId: string; rect: Rect; viewport: Viewport}
   | {type: 'TASKBAR_CLICK'; windowId: string}
   | {type: 'MOVE_WINDOW'; windowId: string; x: number; y: number; viewport: Viewport}
-  | {type: 'MOVE_ICON'; iconId: string; x: number; y: number; viewport: Viewport};
+  | {type: 'MOVE_ICON'; iconId: string; x: number; y: number; viewport: Viewport}
+  | {type: 'ARRANGE_ICONS'; paths: string[]; viewport: Viewport};
 
 function clamp(v: number, min: number, max: number): number {
   if (max < min) {
@@ -236,6 +241,13 @@ function reducer(state: DesktopState, action: Action): DesktopState {
         icons: {...state.icons, [action.iconId]: {x, y}},
       };
     }
+    case 'ARRANGE_ICONS': {
+      const icons: Record<string, {x: number; y: number}> = {};
+      action.paths.forEach((path, index) => {
+        icons[path] = defaultIconPos(index, action.viewport.h);
+      });
+      return {...state, icons};
+    }
     default:
       return state;
   }
@@ -278,7 +290,10 @@ function defaultIconPos(index: number, viewportH: number): {x: number; y: number
 
 export function DesktopShell(): ReactNode {
   const [state, dispatch] = useReducer(reducer, undefined, initState);
-  const [selectedIcon, setSelectedIcon] = useState<string | null>(null);
+  const [selectedIcons, setSelectedIcons] = useState<Set<string>>(new Set());
+  const [anchorIcon, setAnchorIcon] = useState<string | null>(null);
+  const [marquee, setMarquee] = useState<MarqueeRect | null>(null);
+  const iconRefs = useRef(new Map<string, HTMLButtonElement>());
   const [renaming, setRenaming] = useState<string | null>(null);
   const [menu, setMenu] = useState<{x: number; y: number; entry: VfsEntry | null} | null>(null);
   const [dragging, setDragging] = useState(false);
@@ -383,7 +398,8 @@ export function DesktopShell(): ReactNode {
       translate({id: 'files.newFolderName', message: '新しいフォルダー'}),
     );
     vfs.mkdir(p);
-    setSelectedIcon(p);
+    setSelectedIcons(new Set([p]));
+    setAnchorIcon(p);
     setRenaming(p);
   };
 
@@ -393,7 +409,8 @@ export function DesktopShell(): ReactNode {
       translate({id: 'files.newFileName', message: '新しいファイル.txt'}),
     );
     vfs.createFile(p, '');
-    setSelectedIcon(p);
+    setSelectedIcons(new Set([p]));
+    setAnchorIcon(p);
     setRenaming(p);
   };
 
@@ -401,21 +418,124 @@ export function DesktopShell(): ReactNode {
     const newPath = vfs.rename(entry.path, name);
     setRenaming(null);
     if (newPath) {
-      setSelectedIcon(newPath);
+      setSelectedIcons(new Set([newPath]));
+      setAnchorIcon(newPath);
     }
   };
 
-  const doDelete = (entry: VfsEntry) => {
-    vfs.remove(entry.path);
-    setSelectedIcon(null);
+  const doDelete = (paths: string[]) => {
+    paths.forEach((p) => vfs.remove(p));
+    setSelectedIcons(new Set());
+    setAnchorIcon(null);
     setRenaming(null);
+  };
+
+  // ---- 選択 (Ctrl 複数選択 / Shift 範囲選択) ----
+  const selectWith = (path: string, mods: SelectModifiers) => {
+    if (mods.shiftKey && anchorIcon) {
+      const order = desktopEntries.map((entry) => entry.path);
+      const ai = order.indexOf(anchorIcon);
+      const pi = order.indexOf(path);
+      if (ai !== -1 && pi !== -1) {
+        const [lo, hi] = ai < pi ? [ai, pi] : [pi, ai];
+        setSelectedIcons(new Set(order.slice(lo, hi + 1)));
+        return;
+      }
+    }
+    if (mods.ctrlKey || mods.metaKey) {
+      setSelectedIcons((prev) => {
+        const next = new Set(prev);
+        if (next.has(path)) {
+          next.delete(path);
+        } else {
+          next.add(path);
+        }
+        return next;
+      });
+      setAnchorIcon(path);
+      return;
+    }
+    setSelectedIcons(new Set([path]));
+    setAnchorIcon(path);
+  };
+
+  // ---- 矩形 (ラバーバンド) 選択 ----
+  const onLayerPointerDown = (e: React.PointerEvent<HTMLDivElement>) => {
+    if (e.target !== e.currentTarget || e.button !== 0) {
+      return;
+    }
+    const additive = e.ctrlKey || e.metaKey;
+    const baseSelection = additive ? new Set(selectedIcons) : new Set<string>();
+    const startX = e.clientX;
+    const startY = e.clientY;
+    const el = e.currentTarget;
+    let moved = false;
+    el.setPointerCapture(e.pointerId);
+    if (!additive) {
+      setSelectedIcons(new Set());
+      setAnchorIcon(null);
+    }
+
+    const move = (ev: PointerEvent) => {
+      const dx = ev.clientX - startX;
+      const dy = ev.clientY - startY;
+      if (!moved && Math.hypot(dx, dy) <= MARQUEE_THRESHOLD) {
+        return;
+      }
+      moved = true;
+      const rect: MarqueeRect = {
+        x0: Math.min(startX, ev.clientX),
+        y0: Math.min(startY, ev.clientY),
+        x1: Math.max(startX, ev.clientX),
+        y1: Math.max(startY, ev.clientY),
+      };
+      setMarquee(rect);
+      const hit = new Set(baseSelection);
+      iconRefs.current.forEach((iconEl, path) => {
+        const r = iconEl.getBoundingClientRect();
+        if (r.left < rect.x1 && r.right > rect.x0 && r.top < rect.y1 && r.bottom > rect.y0) {
+          hit.add(path);
+        }
+      });
+      setSelectedIcons(hit);
+    };
+    const end = () => {
+      el.removeEventListener('pointermove', move);
+      el.removeEventListener('pointerup', end);
+      el.removeEventListener('pointercancel', end);
+      setMarquee(null);
+    };
+    el.addEventListener('pointermove', move);
+    el.addEventListener('pointerup', end, {once: true});
+    el.addEventListener('pointercancel', end, {once: true});
+  };
+
+  // ---- アイコンの整列 ----
+  const TYPE_ORDER: Record<string, number> = {folder: 0, link: 1, file: 2};
+
+  const arrangeIcons = (order: 'name' | 'type') => {
+    const entries = [...desktopEntries];
+    if (order === 'name') {
+      entries.sort((a, b) => a.name.localeCompare(b.name, 'ja'));
+    } else if (order === 'type') {
+      entries.sort((a, b) => {
+        const diff = (TYPE_ORDER[a.node.type] ?? 99) - (TYPE_ORDER[b.node.type] ?? 99);
+        return diff !== 0 ? diff : a.name.localeCompare(b.name, 'ja');
+      });
+    }
+    dispatch({
+      type: 'ARRANGE_ICONS',
+      paths: entries.map((entry) => entry.path),
+      viewport: getViewport(),
+    });
   };
 
   const openMenu = (e: React.MouseEvent, entry: VfsEntry | null) => {
     e.preventDefault();
     e.stopPropagation();
-    if (entry) {
-      setSelectedIcon(entry.path);
+    if (entry && !selectedIcons.has(entry.path)) {
+      setSelectedIcons(new Set([entry.path]));
+      setAnchorIcon(entry.path);
     }
     setMenu({x: e.clientX, y: e.clientY, entry});
   };
@@ -433,27 +553,48 @@ export function DesktopShell(): ReactNode {
         onClick: newFile,
       },
     ];
-    if (m.entry) {
-      const entry = m.entry;
+    if (!m.entry) {
       items.push(
         {type: 'separator'},
         {
           type: 'item',
-          label: <Translate id="files.open">開く</Translate>,
-          onClick: () => openEntry(entry),
+          label: <Translate id="desktop.sortByName">名前順に整列</Translate>,
+          onClick: () => arrangeIcons('name'),
         },
         {
           type: 'item',
-          label: <Translate id="files.rename">名前の変更</Translate>,
-          onClick: () => setRenaming(entry.path),
-        },
-        {
-          type: 'item',
-          danger: true,
-          label: <Translate id="files.delete">削除</Translate>,
-          onClick: () => doDelete(entry),
+          label: <Translate id="desktop.sortByType">種類ごとに整列</Translate>,
+          onClick: () => arrangeIcons('type'),
         },
       );
+    }
+    if (m.entry) {
+      const entry = m.entry;
+      const targets =
+        selectedIcons.size > 1 && selectedIcons.has(entry.path)
+          ? desktopEntries.filter((e) => selectedIcons.has(e.path))
+          : [entry];
+      items.push({type: 'separator'});
+      if (targets.length === 1) {
+        items.push(
+          {
+            type: 'item',
+            label: <Translate id="files.open">開く</Translate>,
+            onClick: () => openEntry(targets[0]),
+          },
+          {
+            type: 'item',
+            label: <Translate id="files.rename">名前の変更</Translate>,
+            onClick: () => setRenaming(targets[0].path),
+          },
+        );
+      }
+      items.push({
+        type: 'item',
+        danger: true,
+        label: <Translate id="files.delete">削除</Translate>,
+        onClick: () => doDelete(targets.map((t) => t.path)),
+      });
     }
     return items;
   };
@@ -467,22 +608,10 @@ export function DesktopShell(): ReactNode {
     .filter((v): v is {win: WinState; app: MiniApp} => v !== null);
 
   return (
-    <div
-      className={clsx(styles.surface, dragging && styles.dragging)}
-      onPointerDown={(e) => {
-        // 何もない場所をクリックしたら選択解除
-        if (e.target === e.currentTarget) {
-          setSelectedIcon(null);
-        }
-      }}
-    >
+    <div className={clsx(styles.surface, dragging && styles.dragging)}>
       <div
         className={styles.iconLayer}
-        onPointerDown={(e) => {
-          if (e.target === e.currentTarget) {
-            setSelectedIcon(null);
-          }
-        }}
+        onPointerDown={onLayerPointerDown}
         onContextMenu={(e) => {
           if (e.target === e.currentTarget) {
             openMenu(e, null);
@@ -501,8 +630,8 @@ export function DesktopShell(): ReactNode {
               editing={renaming === entry.path}
               x={pos.x}
               y={pos.y}
-              selected={selectedIcon === entry.path}
-              onSelect={() => setSelectedIcon(entry.path)}
+              selected={selectedIcons.has(entry.path)}
+              onSelect={(mods) => selectWith(entry.path, mods)}
               onOpen={() => openEntry(entry)}
               onMove={(x, y) =>
                 dispatch({type: 'MOVE_ICON', iconId: entry.path, x, y, viewport: getViewport()})
@@ -511,10 +640,30 @@ export function DesktopShell(): ReactNode {
               onContextMenu={(e) => openMenu(e, entry)}
               onCommitRename={(name) => commitRename(entry, name)}
               onCancelRename={() => setRenaming(null)}
+              registerRef={(el) => {
+                if (el) {
+                  iconRefs.current.set(entry.path, el);
+                } else {
+                  iconRefs.current.delete(entry.path);
+                }
+              }}
             />
           );
         })}
       </div>
+
+      {marquee && (
+        <div
+          className={styles.marquee}
+          style={{
+            left: marquee.x0,
+            top: marquee.y0,
+            width: marquee.x1 - marquee.x0,
+            height: marquee.y1 - marquee.y0,
+          }}
+          aria-hidden="true"
+        />
+      )}
 
       {openWindows.map(({win, app}) => {
         const focused = win.z === state.zTop && !win.minimized;

@@ -17,26 +17,9 @@
   flex: 0 0 auto;
 }
 
-.filename {
-  font-weight: 600;
-  font-size: 0.9rem;
-  display: inline-flex;
-  align-items: center;
-  gap: 0.3rem;
-}
-
 .dirtyDot {
-  color: var(--ifm-color-primary);
-  font-size: 0.7rem;
-}
-
-.path {
-  font-size: 0.75rem;
-  color: var(--ifm-color-emphasis-500);
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-  max-width: 20rem;
+  color: inherit;
+  font-size: 0.6rem;
 }
 
 .spacer {
@@ -91,6 +74,9 @@
 }
 
 .saveBtn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
   padding: 0.3rem 1rem;
   border: 1px solid var(--ifm-color-primary);
   border-radius: 6px;

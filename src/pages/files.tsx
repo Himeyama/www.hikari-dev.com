@@ -9,12 +9,16 @@ import {EntryGlyph, EntryLabel} from '@site/src/components/desktop/entryView';
 import {RenameInput} from '@site/src/components/desktop/RenameInput';
 import {ContextMenu} from '@site/src/components/desktop/ContextMenu';
 import type {ContextMenuItem} from '@site/src/components/desktop/ContextMenu';
+import type {SelectModifiers} from '@site/src/components/desktop/DesktopIcon';
 import * as vfs from '@site/src/lib/desktop/vfs';
 import type {VfsEntry} from '@site/src/lib/desktop/vfs';
 import styles from './files.module.css';
 
 // 親デスクトップへ送るメッセージの共通ソース タグ
 const BRIDGE_SOURCE = 'hikari-desktop';
+const MARQUEE_THRESHOLD = 4;
+
+type MarqueeRect = {x0: number; y0: number; x1: number; y1: number};
 
 /** iframe (デスクトップ) 内で動いているか */
 function inDesktop(): boolean {
@@ -34,7 +38,10 @@ type Menu = {x: number; y: number; entry: VfsEntry | null};
 function FilesApp(): ReactNode {
   const [path, setPath] = useState<string>(initialPath);
   const [entries, setEntries] = useState<VfsEntry[]>([]);
-  const [selected, setSelected] = useState<string | null>(null);
+  const [selectedPaths, setSelectedPaths] = useState<Set<string>>(new Set());
+  const [anchorPath, setAnchorPath] = useState<string | null>(null);
+  const [marquee, setMarquee] = useState<MarqueeRect | null>(null);
+  const entryRefs = useRef(new Map<string, HTMLButtonElement>());
   const [renaming, setRenaming] = useState<string | null>(null);
   const [menu, setMenu] = useState<Menu | null>(null);
   const [address, setAddress] = useState<string>(initialPath);
@@ -59,7 +66,8 @@ function FilesApp(): ReactNode {
   }, [path, refresh]);
 
   const navigate = (p: string) => {
-    setSelected(null);
+    setSelectedPaths(new Set());
+    setAnchorPath(null);
     setRenaming(null);
     setMenu(null);
     setPath(vfs.normalizePath(p));
@@ -116,7 +124,8 @@ function FilesApp(): ReactNode {
       translate({id: 'files.newFolderName', message: '新しいフォルダー'}),
     );
     vfs.mkdir(p);
-    setSelected(p);
+    setSelectedPaths(new Set([p]));
+    setAnchorPath(p);
     setRenaming(p);
   };
 
@@ -126,7 +135,8 @@ function FilesApp(): ReactNode {
       translate({id: 'files.newFileName', message: '新しいファイル.txt'}),
     );
     vfs.createFile(p, '');
-    setSelected(p);
+    setSelectedPaths(new Set([p]));
+    setAnchorPath(p);
     setRenaming(p);
   };
 
@@ -134,22 +144,105 @@ function FilesApp(): ReactNode {
     const newPath = vfs.rename(entry.path, name);
     setRenaming(null);
     if (newPath) {
-      setSelected(newPath);
+      setSelectedPaths(new Set([newPath]));
+      setAnchorPath(newPath);
     }
   };
 
-  const doDelete = (entry: VfsEntry) => {
-    vfs.remove(entry.path);
-    setSelected(null);
+  const doDelete = (paths: string[]) => {
+    paths.forEach((p) => vfs.remove(p));
+    setSelectedPaths(new Set());
+    setAnchorPath(null);
     setRenaming(null);
+  };
+
+  // ---- 選択 (Ctrl 複数選択 / Shift 範囲選択) ----
+  const selectWith = (path: string, mods: SelectModifiers) => {
+    if (mods.shiftKey && anchorPath) {
+      const order = entries.map((entry) => entry.path);
+      const ai = order.indexOf(anchorPath);
+      const pi = order.indexOf(path);
+      if (ai !== -1 && pi !== -1) {
+        const [lo, hi] = ai < pi ? [ai, pi] : [pi, ai];
+        setSelectedPaths(new Set(order.slice(lo, hi + 1)));
+        return;
+      }
+    }
+    if (mods.ctrlKey || mods.metaKey) {
+      setSelectedPaths((prev) => {
+        const next = new Set(prev);
+        if (next.has(path)) {
+          next.delete(path);
+        } else {
+          next.add(path);
+        }
+        return next;
+      });
+      setAnchorPath(path);
+      return;
+    }
+    setSelectedPaths(new Set([path]));
+    setAnchorPath(path);
+  };
+
+  // ---- 矩形 (ラバーバンド) 選択 ----
+  const onBodyPointerDown = (e: React.PointerEvent<HTMLDivElement>) => {
+    if (e.target !== e.currentTarget || e.button !== 0) {
+      return;
+    }
+    const additive = e.ctrlKey || e.metaKey;
+    const baseSelection = additive ? new Set(selectedPaths) : new Set<string>();
+    const startX = e.clientX;
+    const startY = e.clientY;
+    const el = e.currentTarget;
+    let moved = false;
+    el.setPointerCapture(e.pointerId);
+    if (!additive) {
+      setSelectedPaths(new Set());
+      setAnchorPath(null);
+    }
+
+    const move = (ev: PointerEvent) => {
+      const dx = ev.clientX - startX;
+      const dy = ev.clientY - startY;
+      if (!moved && Math.hypot(dx, dy) <= MARQUEE_THRESHOLD) {
+        return;
+      }
+      moved = true;
+      const rect: MarqueeRect = {
+        x0: Math.min(startX, ev.clientX),
+        y0: Math.min(startY, ev.clientY),
+        x1: Math.max(startX, ev.clientX),
+        y1: Math.max(startY, ev.clientY),
+      };
+      setMarquee(rect);
+      const hit = new Set(baseSelection);
+      entryRefs.current.forEach((entryEl, p) => {
+        const r = entryEl.getBoundingClientRect();
+        if (r.left < rect.x1 && r.right > rect.x0 && r.top < rect.y1 && r.bottom > rect.y0) {
+          hit.add(p);
+        }
+      });
+      setSelectedPaths(hit);
+    };
+    const end = () => {
+      el.removeEventListener('pointermove', move);
+      el.removeEventListener('pointerup', end);
+      el.removeEventListener('pointercancel', end);
+      setMarquee(null);
+    };
+    el.addEventListener('pointermove', move);
+    el.addEventListener('pointerup', end, {once: true});
+    el.addEventListener('pointercancel', end, {once: true});
   };
 
   // ---- コンテキスト メニュー ----
   const openMenu = (e: React.MouseEvent, entry: VfsEntry | null) => {
     e.preventDefault();
     e.stopPropagation();
-    if (entry) {
-      setSelected(entry.path);
+    if (entry && !selectedPaths.has(entry.path)) {
+      setSelectedPaths(new Set([entry.path]));
+      setAnchorPath(entry.path);
     }
     setMenu({x: e.clientX, y: e.clientY, entry});
   };
@@ -169,25 +262,31 @@ function FilesApp(): ReactNode {
     ];
     if (m.entry) {
       const entry = m.entry;
-      items.push(
-        {type: 'separator'},
-        {
-          type: 'item',
-          label: <Translate id="files.open">開く</Translate>,
-          onClick: () => openEntry(entry),
-        },
-        {
-          type: 'item',
-          label: <Translate id="files.rename">名前の変更</Translate>,
-          onClick: () => setRenaming(entry.path),
-        },
-        {
-          type: 'item',
-          danger: true,
-          label: <Translate id="files.delete">削除</Translate>,
-          onClick: () => doDelete(entry),
-        },
-      );
+      const targets =
+        selectedPaths.size > 1 && selectedPaths.has(entry.path)
+          ? entries.filter((e) => selectedPaths.has(e.path))
+          : [entry];
+      items.push({type: 'separator'});
+      if (targets.length === 1) {
+        items.push(
+          {
+            type: 'item',
+            label: <Translate id="files.open">開く</Translate>,
+            onClick: () => openEntry(targets[0]),
+          },
+          {
+            type: 'item',
+            label: <Translate id="files.rename">名前の変更</Translate>,
+            onClick: () => setRenaming(targets[0].path),
+          },
+        );
+      }
+      items.push({
+        type: 'item',
+        danger: true,
+        label: <Translate id="files.delete">削除</Translate>,
+        onClick: () => doDelete(targets.map((t) => t.path)),
+      });
     }
     return items;
   };
@@ -242,11 +341,7 @@ function FilesApp(): ReactNode {
 
       <div
         className={styles.body}
-        onClick={(e) => {
-          if (e.target === e.currentTarget) {
-            setSelected(null);
-          }
-        }}
+        onPointerDown={onBodyPointerDown}
         onContextMenu={(e) => openMenu(e, null)}
       >
         {entries.length === 0 ? (
@@ -259,12 +354,25 @@ function FilesApp(): ReactNode {
               <li key={entry.path}>
                 <button
                   type="button"
+                  ref={(el) => {
+                    if (el) {
+                      entryRefs.current.set(entry.path, el);
+                    } else {
+                      entryRefs.current.delete(entry.path);
+                    }
+                  }}
                   className={
-                    entry.path === selected
+                    selectedPaths.has(entry.path)
                       ? `${styles.entry} ${styles.entrySelected}`
                       : styles.entry
                   }
-                  onClick={() => setSelected(entry.path)}
+                  onClick={(e) =>
+                    selectWith(entry.path, {
+                      ctrlKey: e.ctrlKey,
+                      metaKey: e.metaKey,
+                      shiftKey: e.shiftKey,
+                    })
+                  }
                   onDoubleClick={() => openEntry(entry)}
                   onContextMenu={(e) => openMenu(e, entry)}
                   onKeyDown={(e) => {
@@ -292,6 +400,19 @@ function FilesApp(): ReactNode {
               </li>
             ))}
           </ul>
+        )}
+
+        {marquee && (
+          <div
+            className={styles.marquee}
+            style={{
+              left: marquee.x0,
+              top: marquee.y0,
+              width: marquee.x1 - marquee.x0,
+              height: marquee.y1 - marquee.y0,
+            }}
+            aria-hidden="true"
+          />
         )}
       </div>
 

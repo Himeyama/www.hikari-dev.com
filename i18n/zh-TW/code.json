@@ -1593,5 +1593,11 @@
   },
   "files.pathLabel": {
     "message": "路徑"
+  },
+  "desktop.sortByName": {
+    "message": "依名稱排序"
+  },
+  "desktop.sortByType": {
+    "message": "依類型排序"
   }
 }

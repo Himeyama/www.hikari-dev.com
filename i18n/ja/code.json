@@ -1581,5 +1581,11 @@
   },
   "files.pathLabel": {
     "message": "パス"
+  },
+  "desktop.sortByName": {
+    "message": "名前順に整列"
+  },
+  "desktop.sortByType": {
+    "message": "種類ごとに整列"
   }
 }

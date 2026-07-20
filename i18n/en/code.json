@@ -1593,5 +1593,11 @@
   },
   "files.pathLabel": {
     "message": "Path"
+  },
+  "desktop.sortByName": {
+    "message": "Sort by Name"
+  },
+  "desktop.sortByType": {
+    "message": "Sort by Type"
   }
 }

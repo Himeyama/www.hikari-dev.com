@@ -171,11 +171,6 @@ function EditorApp(): ReactNode {
   return (
     <div className={styles.app}>
       <div className={styles.toolbar}>
-        <span className={styles.filename}>
-          {vfs.basename(path)}
-          {dirty && <span className={styles.dirtyDot} aria-hidden="true">●</span>}
-        </span>
-        <span className={styles.path}>{path}</span>
         <div className={styles.spacer} />
         <label className={styles.autosave}>
           <span className={styles.autosaveLabel}>
@@ -197,6 +192,7 @@ function EditorApp(): ReactNode {
           disabled={!dirty || autosave}
           onClick={save}
         >
+          {dirty && <span className={styles.dirtyDot} aria-hidden="true">●</span>}
           <Translate id="editor.save">保存</Translate>
         </button>
       </div>
