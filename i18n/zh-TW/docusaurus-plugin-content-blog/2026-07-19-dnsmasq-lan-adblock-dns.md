@@ -176,6 +176,50 @@ $ dig @192.168.0.10 mediavisor.doubleclick.net +short
 - 把路由器 DHCP 分配的 DNS 改成 `192.168.0.10`,可以一次套用到整個 LAN (推薦做法)。
 - 若要個別設定,則手動把各裝置的 DNS 改成 `192.168.0.10`。
 
+## 後日談: 廣告封鎖突然失效
+
+舒適地用了一陣子之後,某天發現手機上的廣告又冒出來了。一查才發現 dnsmasq 從封鎖清單只載入了 0 筆。原因是兩個 bug 交疊在一起。
+
+### 原因1: 封鎖清單的 SELinux 標籤又出錯了
+
+自動更新腳本把在 `/tmp` 產生的檔案 `mv` 到 `/etc` 時,`tmp_t` 標籤殘留了下來 — 正是「踩雷2」踩過的同一個陷阱。在 SELinux Enforcing 下 dnsmasq 讀不到而被拒絕 (`Permission denied`)。
+
+明明以為已經把 `restorecon` 加進去了,為什麼還會復發? 答案很單純: 雖然原始碼裡加了 `restorecon`,但**實際部署的腳本仍是舊版 (沒有 `restorecon`)**。原始碼的修正並沒有反映到正式環境。
+
+### 原因2: `systemctl reload dnsmasq` 每次都失敗
+
+`dnsmasq.service` 沒有定義 `ExecReload`,所以更新腳本的 `reload` 每次都以 exit 3 失敗。因此更新沒有生效,服務本身也被視為失敗。
+
+### 發生經過
+
+這兩者交疊在一起,讓故障先潛伏、再顯現:
+
+1. 原因1讓檔案被貼上錯誤標籤。
+2. 原因2讓 `reload` 失敗,dnsmasq 持續在記憶體中保留舊清單 (此時廣告封鎖還有效,所以不會發覺)。
+3. 系統重開機後重新讀取檔案,因錯誤標籤而被拒絕。
+4. 到這時封鎖才崩潰、問題才顯現。
+
+「更新明明失敗卻還能運作」這種狀態,正是拖延問題被發現的原因。
+
+### 對策
+
+| 對象 | 修正內容 |
+|---|---|
+| `/etc/dnsmasq-blocklist.hosts` | 用 `restorecon` 把標籤從 `tmp_t` 還原成 `etc_t` (應急) |
+| `/usr/local/bin/update-dns-blocklist.sh` (實際執行的更新腳本) | ① 加入 `restorecon` 處理 ② 把 `reload` 改成 `restart` |
+| `/home/hikari/dns-ads-block/setup-dns.sh` (原始碼) | 同步把 `reload` 改成 `restart`,避免重新執行時再度復發 |
+
+由於未定義 `ExecReload` 就無法使用 `reload`,索性改用 `restart`。
+
+### 驗證結果
+
+- 手動執行更新服務 → exit 0 (正常完成)。
+- 載入封鎖清單 80,886 筆,標籤維持 `etc_t`。
+- `doubleclick.net` 的廣告子網域 → `0.0.0.0` (封鎖 OK) ,`example.com` → 正常解析。
+- 提前重現下一次自動更新 (7/27),確認不會再復發。
+
+> 心得其二: 「改好了原始碼」和「正式環境修好了」是兩回事,要一路確認到部署為止。而在依賴 `reload` 之前,先確認該 service 是否有定義 `ExecReload`。
+
 ## 總結
 
 - 光靠 dnsmasq 就實現了「快取加速 + 廣告封鎖 + LAN 公開」,不需要 Pi-hole。
@@ -183,3 +227,4 @@ $ dig @192.168.0.10 mediavisor.doubleclick.net +short
   1. `conf-dir` 會把底下所有檔案都當成設定讀取 → hosts 檔要放在該目錄之外。
   2. SELinux 因 `mv` 而殘留的標籤造成問題 → 用 `restorecon` 還原。
 - 封鎖了約 8 萬個網域,名稱解析的速度也感受得到提升。手機上的廣告也消失了,相當滿意。
+- 後來,`restorecon` 的修正沒反映到正式環境、加上未定義 `ExecReload` 導致 `reload` 持續失敗,兩者交疊使廣告封鎖崩潰。原始碼的修正要一路確認到部署,`reload` 之前先確認是否有 `ExecReload`。

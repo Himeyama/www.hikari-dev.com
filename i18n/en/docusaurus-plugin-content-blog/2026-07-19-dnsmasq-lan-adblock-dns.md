@@ -176,6 +176,50 @@ The second lookup for `example.com` dropped from 27ms to 0ms — the cache is wo
 - Changing the router's DHCP-distributed DNS to `192.168.0.10` applies it across the whole LAN at once (recommended).
 - Alternatively, set each device's DNS manually to `192.168.0.10`.
 
+## Epilogue: ad blocking suddenly stopped working
+
+After using it comfortably for a while, I noticed one day that ads had come back on my phone. Digging in, I found dnsmasq had loaded zero entries from the blocklist. The cause turned out to be two bugs compounding each other.
+
+### Cause 1: the blocklist's SELinux label was wrong again
+
+When the auto-update script `mv`'d the file it generated in `/tmp` into `/etc`, the `tmp_t` label stuck around — exactly the same trap I fell into in "Pitfall 2." Under SELinux Enforcing, dnsmasq couldn't read it and was denied (`Permission denied`).
+
+But why did it recur when I thought I had built in `restorecon`? The answer is simple: I had added `restorecon` to the source, but **the script actually deployed was still an old version (without `restorecon`)**. The source fix had never made it to production.
+
+### Cause 2: `systemctl reload dnsmasq` had been failing every time
+
+`dnsmasq.service` has no `ExecReload` defined, so the update script's `reload` failed every time with exit 3. As a result, updates were never applied and the service itself was treated as failed.
+
+### How it unfolded
+
+These two combined so that the failure stayed latent before surfacing:
+
+1. Cause 1 gives the file a wrong label.
+2. Cause 2 makes `reload` fail, so dnsmasq keeps the old list in memory (ad blocking still works at this point, so nothing looks wrong).
+3. A system reboot re-reads the file, and it's denied because of the wrong label.
+4. Only now does blocking collapse and the problem become visible.
+
+The "updates are failing but it still works" state is what delayed discovery of the problem.
+
+### Fixes
+
+| Target | Fix |
+|---|---|
+| `/etc/dnsmasq-blocklist.hosts` | Restored the label from `tmp_t` to `etc_t` with `restorecon` (emergency measure) |
+| `/usr/local/bin/update-dns-blocklist.sh` (the update script that actually runs) | ① Added `restorecon` handling ② Changed `reload` to `restart` |
+| `/home/hikari/dns-ads-block/setup-dns.sh` (source) | Applied the same `reload` → `restart` change so it won't recur on re-run |
+
+Since `reload` doesn't work without `ExecReload`, I just switched to `restart`.
+
+### Verification
+
+- Ran the update service manually → exit 0 (completed successfully).
+- Loaded 80,886 blocklist entries, with the label kept as `etc_t`.
+- Ad subdomains of `doubleclick.net` → `0.0.0.0` (blocked OK); `example.com` → resolved normally.
+- Reproduced the next auto-update (7/27) ahead of schedule and confirmed it doesn't recur.
+
+> Lesson learned, part 2: "I fixed the source" and "production is fixed" are two different things — verify all the way to deployment. And before relying on `reload`, check whether the service even has an `ExecReload` defined.
+
 ## Summary
 
 - dnsmasq alone was enough to achieve "cache acceleration + ad blocking + LAN-wide availability." Pi-hole wasn't necessary.
@@ -183,3 +227,4 @@ The second lookup for `example.com` dropped from 27ms to 0ms — the cache is wo
   1. `conf-dir` loads everything underneath as configuration → keep hosts files outside that directory.
   2. SELinux labels left over from `mv` get in the way → restore them with `restorecon`.
 - With roughly 80,000 domains blocked, name resolution noticeably got faster too. My phone's ads disappeared, and I'm happy with the result.
+- Later, ad blocking collapsed when two things coincided: the `restorecon` fix had never reached production, and `reload` had been failing continuously because no `ExecReload` was defined. Verify source fixes all the way to deployment, and check for an `ExecReload` before relying on `reload`.
