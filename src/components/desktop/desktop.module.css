@@ -80,18 +80,101 @@
   overflow: hidden;
 }
 
-.windowMaximized {
-  inset: 0 0 var(--desktop-taskbar-h) 0;
-  left: 0 !important;
-  top: 0 !important;
-  width: auto !important;
-  height: auto !important;
+.windowMaximized,
+.windowSnapLeft,
+.windowSnapRight {
+  width: auto;
+  height: auto;
   border-radius: 0;
   border-width: 0;
 }
 
+/* inset: top right bottom left */
+.windowMaximized {
+  inset: 0 0 var(--desktop-taskbar-h) 0;
+}
+
+.windowSnapLeft {
+  inset: 0 50% var(--desktop-taskbar-h) 0;
+}
+
+.windowSnapRight {
+  inset: 0 0 var(--desktop-taskbar-h) 50%;
+}
+
 .windowHidden {
   display: none;
+}
+
+/* ===== リサイズ ハンドル ===== */
+.resizeHandle {
+  position: absolute;
+  z-index: 2;
+  touch-action: none;
+}
+
+.resizeN,
+.resizeS {
+  left: 8px;
+  right: 8px;
+  height: 6px;
+  cursor: ns-resize;
+}
+
+.resizeE,
+.resizeW {
+  top: 8px;
+  bottom: 8px;
+  width: 6px;
+  cursor: ew-resize;
+}
+
+.resizeN {
+  top: -1px;
+}
+
+.resizeS {
+  bottom: -1px;
+}
+
+.resizeE {
+  right: -1px;
+}
+
+.resizeW {
+  left: -1px;
+}
+
+.resizeNE,
+.resizeNW,
+.resizeSE,
+.resizeSW {
+  width: 12px;
+  height: 12px;
+}
+
+.resizeNW {
+  top: -1px;
+  left: -1px;
+  cursor: nwse-resize;
+}
+
+.resizeSE {
+  bottom: -1px;
+  right: -1px;
+  cursor: nwse-resize;
+}
+
+.resizeNE {
+  top: -1px;
+  right: -1px;
+  cursor: nesw-resize;
+}
+
+.resizeSW {
+  bottom: -1px;
+  left: -1px;
+  cursor: nesw-resize;
 }
 
 .titleBar {
@@ -189,6 +272,29 @@
   inset: 0;
   z-index: 1;
   background: transparent;
+}
+
+/* ===== スナップ プレビュー ===== */
+.snapPreview {
+  position: fixed;
+  z-index: 500;
+  pointer-events: none;
+  background: color-mix(in srgb, var(--ifm-color-primary) 22%, transparent);
+  border: 2px solid var(--ifm-color-primary);
+  border-radius: 8px;
+  transition: inset 0.12s ease;
+}
+
+.snapPreviewMax {
+  inset: 8px 8px calc(var(--desktop-taskbar-h) + 8px) 8px;
+}
+
+.snapPreviewLeft {
+  inset: 8px 50% calc(var(--desktop-taskbar-h) + 8px) 8px;
+}
+
+.snapPreviewRight {
+  inset: 8px 8px calc(var(--desktop-taskbar-h) + 8px) 50%;
 }
 
 /* ===== タスクバー ===== */

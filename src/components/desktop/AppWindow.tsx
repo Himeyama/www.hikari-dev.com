@@ -1,19 +1,38 @@
 import {useMemo, useRef} from 'react';
+import type React from 'react';
 import type {ReactNode} from 'react';
 import clsx from 'clsx';
 import useBaseUrl from '@docusaurus/useBaseUrl';
 import Translate, {translate} from '@docusaurus/Translate';
 import type {MiniApp} from './apps';
+import type {SnapKind} from './DesktopShell';
 import {usePointerDrag} from './usePointerDrag';
 import styles from './desktop.module.css';
 
 type Rect = {x: number; y: number; w: number; h: number};
 
+const MIN_W = 240;
+const MIN_H = 160;
+// 画面端スナップの検出しきい値 (px)
+const EDGE = 12;
+
+// 8 方向のリサイズ ハンドル定義
+const RESIZE_DIRS: {dir: string; cls: keyof typeof styles}[] = [
+  {dir: 'n', cls: 'resizeN'},
+  {dir: 's', cls: 'resizeS'},
+  {dir: 'e', cls: 'resizeE'},
+  {dir: 'w', cls: 'resizeW'},
+  {dir: 'ne', cls: 'resizeNE'},
+  {dir: 'nw', cls: 'resizeNW'},
+  {dir: 'se', cls: 'resizeSE'},
+  {dir: 'sw', cls: 'resizeSW'},
+];
+
 type Props = {
   app: MiniApp;
   rect: Rect;
   z: number;
-  maximized: boolean;
+  snap: SnapKind;
   minimized: boolean;
   focused: boolean;
   onFocus: () => void;
@@ -21,8 +40,25 @@ type Props = {
   onMinimize: () => void;
   onToggleMaximize: () => void;
   onMove: (x: number, y: number) => void;
+  onResize: (rect: Rect) => void;
+  onSnapPreview: (snap: SnapKind | null) => void;
+  onSnapCommit: (snap: SnapKind) => void;
   onDragState: (dragging: boolean) => void;
 };
+
+// 生ポインタ座標から吸着ゾーンを判定
+function detectZone(cx: number, cy: number): SnapKind {
+  if (cy <= EDGE) {
+    return 'max';
+  }
+  if (cx <= EDGE) {
+    return 'left';
+  }
+  if (cx >= window.innerWidth - EDGE) {
+    return 'right';
+  }
+  return 'none';
+}
 
 function MinimizeGlyph(): ReactNode {
   return (
@@ -61,7 +97,7 @@ export function AppWindow({
   app,
   rect,
   z,
-  maximized,
+  snap,
   minimized,
   focused,
   onFocus,
@@ -69,24 +105,96 @@ export function AppWindow({
   onMinimize,
   onToggleMaximize,
   onMove,
+  onResize,
+  onSnapPreview,
+  onSnapCommit,
   onDragState,
 }: Props): ReactNode {
   const rectRef = useRef(rect);
   rectRef.current = rect;
+  const snapRef = useRef(snap);
+  snapRef.current = snap;
+  // タイトル ドラッグ中の状態 (開始時スナップ・現在の吸着ゾーン)
+  const titleDragRef = useRef<{snapAtStart: SnapKind; zone: SnapKind}>({
+    snapAtStart: 'none',
+    zone: 'none',
+  });
 
   // iframe src は memo 化して再レンダリングでリロードさせない
   const baseSrc = useBaseUrl(app.href);
   const src = useMemo(() => `${baseSrc}?embed=1`, [baseSrc]);
 
-  const onTitlePointerDown = usePointerDrag({
+  const onTitleDrag = usePointerDrag({
     getStart: () => ({x: rectRef.current.x, y: rectRef.current.y}),
     onDragState,
-    onMove: (nx, ny) => {
-      if (!maximized) {
+    onMove: (nx, ny, _moved, cx, cy) => {
+      const t = titleDragRef.current;
+      if (t.snapAtStart !== 'none') {
+        // スナップ状態から掴んだ場合はフローティングに戻し、カーソル中心へ追従
+        const r = rectRef.current;
+        onMove(cx - r.w / 2, cy - 18);
+      } else {
         onMove(nx, ny);
+      }
+      const zone = detectZone(cx, cy);
+      t.zone = zone;
+      onSnapPreview(zone === 'none' ? null : zone);
+    },
+    onEnd: () => {
+      const {zone} = titleDragRef.current;
+      onSnapPreview(null);
+      titleDragRef.current = {snapAtStart: 'none', zone: 'none'};
+      if (zone !== 'none') {
+        onSnapCommit(zone);
       }
     },
   });
+
+  // リサイズ ハンドル (usePointerDrag を介さず方向別に rect を計算)
+  const onResizeHandleDown = (e: React.PointerEvent<HTMLElement>): void => {
+    if (e.button !== 0) {
+      return;
+    }
+    const el = e.currentTarget;
+    const dir = el.dataset.dir ?? '';
+    const start = {...rectRef.current};
+    const right = start.x + start.w;
+    const bottom = start.y + start.h;
+    const px = e.clientX;
+    const py = e.clientY;
+    el.setPointerCapture(e.pointerId);
+    onDragState(true);
+
+    const move = (ev: PointerEvent) => {
+      const dx = ev.clientX - px;
+      const dy = ev.clientY - py;
+      let {x, y, w, h} = start;
+      if (dir.includes('e')) {
+        w = Math.max(MIN_W, start.w + dx);
+      }
+      if (dir.includes('s')) {
+        h = Math.max(MIN_H, start.h + dy);
+      }
+      if (dir.includes('w')) {
+        x = Math.max(0, Math.min(start.x + dx, right - MIN_W));
+        w = right - x;
+      }
+      if (dir.includes('n')) {
+        y = Math.max(0, Math.min(start.y + dy, bottom - MIN_H));
+        h = bottom - y;
+      }
+      onResize({x, y, w, h});
+    };
+    const end = () => {
+      el.removeEventListener('pointermove', move);
+      el.removeEventListener('pointerup', end);
+      el.removeEventListener('pointercancel', end);
+      onDragState(false);
+    };
+    el.addEventListener('pointermove', move);
+    el.addEventListener('pointerup', end, {once: true});
+    el.addEventListener('pointercancel', end, {once: true});
+  };
 
   const restoreLabel = translate({id: 'desktop.window.restore', message: '元のサイズに戻す'});
   const maximizeLabel = translate({id: 'desktop.window.maximize', message: '最大化'});
@@ -98,13 +206,15 @@ export function AppWindow({
       className={clsx(
         styles.window,
         focused && styles.windowFocused,
-        maximized && styles.windowMaximized,
+        snap === 'max' && styles.windowMaximized,
+        snap === 'left' && styles.windowSnapLeft,
+        snap === 'right' && styles.windowSnapRight,
         minimized && styles.windowHidden,
       )}
       style={
-        maximized
-          ? {zIndex: z}
-          : {left: rect.x, top: rect.y, width: rect.w, height: rect.h, zIndex: z}
+        snap === 'none'
+          ? {left: rect.x, top: rect.y, width: rect.w, height: rect.h, zIndex: z}
+          : {zIndex: z}
       }
       onPointerDownCapture={onFocus}
     >
@@ -115,7 +225,8 @@ export function AppWindow({
           if ((e.target as HTMLElement).closest('button')) {
             return;
           }
-          onTitlePointerDown(e);
+          titleDragRef.current = {snapAtStart: snapRef.current, zone: 'none'};
+          onTitleDrag(e);
         }}
         onDoubleClick={onToggleMaximize}
       >
@@ -139,12 +250,12 @@ export function AppWindow({
           <button
             type="button"
             className={styles.titleButton}
-            aria-label={maximized ? restoreLabel : maximizeLabel}
-            title={maximized ? restoreLabel : maximizeLabel}
+            aria-label={snap === 'max' ? restoreLabel : maximizeLabel}
+            title={snap === 'max' ? restoreLabel : maximizeLabel}
             onClick={onToggleMaximize}
             onDoubleClick={(e) => e.stopPropagation()}
           >
-            {maximized ? <RestoreGlyph /> : <MaximizeGlyph />}
+            {snap === 'max' ? <RestoreGlyph /> : <MaximizeGlyph />}
           </button>
           <button
             type="button"
@@ -168,6 +279,16 @@ export function AppWindow({
           />
         )}
       </div>
+      {snap === 'none' &&
+        RESIZE_DIRS.map(({dir, cls}) => (
+          <div
+            key={dir}
+            className={clsx(styles.resizeHandle, styles[cls])}
+            data-dir={dir}
+            onPointerDown={onResizeHandleDown}
+            aria-hidden="true"
+          />
+        ))}
     </div>
   );
 }

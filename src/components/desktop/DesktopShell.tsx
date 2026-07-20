@@ -11,12 +11,15 @@ const STORAGE_KEY = 'hikari.desktop.v1';
 const TASKBAR_H = 48;
 const DEFAULT_W = 960;
 const DEFAULT_H = 640;
+const MIN_W = 240;
+const MIN_H = 160;
 
 type Rect = {x: number; y: number; w: number; h: number};
+export type SnapKind = 'none' | 'max' | 'left' | 'right';
 type WinState = {
   appId: string;
   rect: Rect;
-  maximized: boolean;
+  snap: SnapKind;
   minimized: boolean;
   z: number;
 };
@@ -35,6 +38,8 @@ type Action =
   | {type: 'FOCUS'; appId: string}
   | {type: 'MINIMIZE'; appId: string}
   | {type: 'TOGGLE_MAXIMIZE'; appId: string}
+  | {type: 'SET_SNAP'; appId: string; snap: SnapKind}
+  | {type: 'RESIZE_WINDOW'; appId: string; rect: Rect; viewport: Viewport}
   | {type: 'TASKBAR_CLICK'; appId: string}
   | {type: 'MOVE_WINDOW'; appId: string; x: number; y: number; viewport: Viewport}
   | {type: 'MOVE_ICON'; appId: string; x: number; y: number; viewport: Viewport};
@@ -75,7 +80,7 @@ function reducer(state: DesktopState, action: Action): DesktopState {
           [action.appId]: {
             appId: action.appId,
             rect: {x, y, w, h},
-            maximized: false,
+            snap: 'none',
             minimized: false,
             z: zTop,
           },
@@ -115,13 +120,50 @@ function reducer(state: DesktopState, action: Action): DesktopState {
         return state;
       }
       const zTop = state.zTop + 1;
+      const snap: SnapKind = win.snap === 'max' ? 'none' : 'max';
       return {
         ...state,
         windows: {
           ...state.windows,
-          [action.appId]: {...win, maximized: !win.maximized, minimized: false, z: zTop},
+          [action.appId]: {...win, snap, minimized: false, z: zTop},
         },
         zTop,
+      };
+    }
+    case 'SET_SNAP': {
+      const win = state.windows[action.appId];
+      if (!win) {
+        return state;
+      }
+      const zTop = state.zTop + 1;
+      return {
+        ...state,
+        windows: {
+          ...state.windows,
+          [action.appId]: {...win, snap: action.snap, minimized: false, z: zTop},
+        },
+        zTop,
+      };
+    }
+    case 'RESIZE_WINDOW': {
+      const win = state.windows[action.appId];
+      if (!win) {
+        return state;
+      }
+      const vw = action.viewport.w;
+      const vh = action.viewport.h;
+      const maxBottom = Math.max(0, vh - TASKBAR_H);
+      // 幅・高さを最小値以上、ビューポート内に収める
+      const w = clamp(action.rect.w, MIN_W, Math.max(MIN_W, vw));
+      const h = clamp(action.rect.h, MIN_H, Math.max(MIN_H, maxBottom));
+      const x = clamp(action.rect.x, 0, Math.max(0, vw - w));
+      const y = clamp(action.rect.y, 0, Math.max(0, maxBottom - h));
+      return {
+        ...state,
+        windows: {
+          ...state.windows,
+          [action.appId]: {...win, rect: {x, y, w, h}, snap: 'none'},
+        },
       };
     }
     case 'TASKBAR_CLICK': {
@@ -145,7 +187,7 @@ function reducer(state: DesktopState, action: Action): DesktopState {
     }
     case 'MOVE_WINDOW': {
       const win = state.windows[action.appId];
-      if (!win || win.maximized) {
+      if (!win) {
         return state;
       }
       const {w, h} = win.rect;
@@ -153,9 +195,13 @@ function reducer(state: DesktopState, action: Action): DesktopState {
       const vh = action.viewport.h;
       const x = clamp(action.x, -(w - 80), vw - 80);
       const y = clamp(action.y, 0, Math.max(0, vh - TASKBAR_H - 32));
+      // スナップ中のウィンドウをドラッグしたら解除してフローティングに戻す
       return {
         ...state,
-        windows: {...state.windows, [action.appId]: {...win, rect: {...win.rect, x, y}}},
+        windows: {
+          ...state.windows,
+          [action.appId]: {...win, snap: 'none', rect: {...win.rect, x, y}},
+        },
       };
     }
     case 'MOVE_ICON': {
@@ -184,9 +230,21 @@ function initState(): DesktopState {
       return emptyState();
     }
     const parsed = JSON.parse(raw) as Partial<DesktopState>;
+    // 旧データ (maximized:boolean) を snap に正規化
+    const windows: Record<string, WinState> = {};
+    for (const [id, w] of Object.entries(parsed.windows ?? {})) {
+      const legacy = w as WinState & {maximized?: boolean};
+      windows[id] = {
+        appId: legacy.appId,
+        rect: legacy.rect,
+        snap: legacy.snap ?? (legacy.maximized ? 'max' : 'none'),
+        minimized: legacy.minimized ?? false,
+        z: legacy.z ?? 0,
+      };
+    }
     return {
       icons: parsed.icons ?? {},
-      windows: parsed.windows ?? {},
+      windows,
       zTop: parsed.zTop ?? 0,
     };
   } catch {
@@ -211,6 +269,7 @@ function defaultIconPos(index: number, viewportH: number): {x: number; y: number
 export function DesktopShell(): ReactNode {
   const [state, dispatch] = useReducer(reducer, undefined, initState);
   const [dragging, setDragging] = useState(false);
+  const [snapPreview, setSnapPreview] = useState<SnapKind | null>(null);
   const saveTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
   const [viewportH, setViewportH] = useState(() =>
     typeof window !== 'undefined' ? window.innerHeight : 800,
@@ -285,7 +344,7 @@ export function DesktopShell(): ReactNode {
             app={app}
             rect={win.rect}
             z={win.z}
-            maximized={win.maximized}
+            snap={win.snap}
             minimized={win.minimized}
             focused={focused}
             onFocus={() => dispatch({type: 'FOCUS', appId: app.id})}
@@ -295,10 +354,27 @@ export function DesktopShell(): ReactNode {
             onMove={(x, y) =>
               dispatch({type: 'MOVE_WINDOW', appId: app.id, x, y, viewport: getViewport()})
             }
+            onResize={(rect) =>
+              dispatch({type: 'RESIZE_WINDOW', appId: app.id, rect, viewport: getViewport()})
+            }
+            onSnapPreview={setSnapPreview}
+            onSnapCommit={(snap) => dispatch({type: 'SET_SNAP', appId: app.id, snap})}
             onDragState={setDragging}
           />
         );
       })}
+
+      {snapPreview && snapPreview !== 'none' && (
+        <div
+          className={clsx(
+            styles.snapPreview,
+            snapPreview === 'max' && styles.snapPreviewMax,
+            snapPreview === 'left' && styles.snapPreviewLeft,
+            snapPreview === 'right' && styles.snapPreviewRight,
+          )}
+          aria-hidden="true"
+        />
+      )}
 
       <Taskbar
         windows={openWindows.map((app) => {

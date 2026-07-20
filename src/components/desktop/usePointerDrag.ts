@@ -2,7 +2,7 @@ import type React from 'react';
 
 type DragOptions = {
   getStart: () => {x: number; y: number};
-  onMove: (x: number, y: number, moved: number) => void;
+  onMove: (x: number, y: number, moved: number, clientX: number, clientY: number) => void;
   onDragState?: (dragging: boolean) => void;
   onEnd?: () => void;
 };
@@ -28,7 +28,7 @@ export function usePointerDrag(opts: DragOptions) {
       const dx = ev.clientX - px;
       const dy = ev.clientY - py;
       const moved = Math.hypot(dx, dy);
-      opts.onMove(start.x + dx, start.y + dy, moved);
+      opts.onMove(start.x + dx, start.y + dy, moved, ev.clientX, ev.clientY);
     };
     const end = () => {
       el.removeEventListener('pointermove', move);
