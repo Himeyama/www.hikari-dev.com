@@ -46,6 +46,18 @@ function Base64Icon(): ReactNode {
   );
 }
 
+function QrIcon(): ReactNode {
+  return (
+    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+      <rect x="2" y="2" width="20" height="20" rx="6" fill="#0F172A" />
+      <rect x="5.5" y="5.5" width="5" height="5" rx="1" stroke="white" strokeWidth="1.3" />
+      <rect x="13.5" y="5.5" width="5" height="5" rx="1" stroke="white" strokeWidth="1.3" />
+      <rect x="5.5" y="13.5" width="5" height="5" rx="1" stroke="white" strokeWidth="1.3" />
+      <path d="M13.5 13.5h2v2h-2zM16.5 16.5h2v2h-2zM13.5 17.5h1.5v1.5h-1.5z" fill="white" />
+    </svg>
+  );
+}
+
 function UuidIcon(): ReactNode {
   return (
     <svg width="22" height="22" viewBox="0 0 24 24" fill="none" aria-hidden="true">
@@ -265,6 +277,14 @@ const RAW_MINI_APPS: Omit<MiniApp, 'id'>[] = [
     titleMessage: '証明書ジェネレーター',
     descriptionId: 'miniApps.certGen.description',
     descriptionMessage: 'ルート CA 証明書とサーバー証明書 (オレオレ証明書) を生成する。',
+  },
+  {
+    href: '/qr-code',
+    Icon: QrIcon,
+    titleId: 'miniApps.qrCode.title',
+    titleMessage: 'QR コード生成',
+    descriptionId: 'miniApps.qrCode.description',
+    descriptionMessage: 'テキストやファイルを QR コードに変換する。',
   },
   {
     href: '/uuid',

@@ -1656,5 +1656,98 @@
   },
   "files.deleteConfirmMessageMultiple": {
     "message": "確定要刪除選取的 {count} 個項目嗎?"
+  },
+  "qrCode.errorTooBig": {
+    "message": "資料太大，無法放進 QR Code。請降低錯誤更正等級或縮短內容。"
+  },
+  "qrCode.ecLevel": {
+    "message": "錯誤更正等級"
+  },
+  "qrCode.size": {
+    "message": "尺寸"
+  },
+  "qrCode.margin": {
+    "message": "邊界"
+  },
+  "qrCode.color": {
+    "message": "前景色"
+  },
+  "qrCode.transparent": {
+    "message": "背景透明"
+  },
+  "qrCode.errorCopy": {
+    "message": "複製失敗。請手動選取後複製。"
+  },
+  "qrCode.errorFileRead": {
+    "message": "讀取檔案失敗。"
+  },
+  "qrCode.title": {
+    "message": "QR Code 產生器"
+  },
+  "qrCode.description": {
+    "message": "將文字或檔案轉換成 QR Code 的工具。全部在瀏覽器內處理，內容不會傳送到伺服器。"
+  },
+  "qrCode.subtitle": {
+    "message": "輸入文字或拖放檔案即可產生 QR Code。所有處理都在瀏覽器內完成，內容不會傳送到伺服器。"
+  },
+  "qrCode.textSectionTitle": {
+    "message": "從文字產生"
+  },
+  "qrCode.textLabel": {
+    "message": "文字"
+  },
+  "qrCode.placeholder": {
+    "message": "輸入網址或文字"
+  },
+  "qrCode.qrLabel": {
+    "message": "QR Code"
+  },
+  "qrCode.copied": {
+    "message": "已複製"
+  },
+  "qrCode.copyDataUri": {
+    "message": "複製 data: URI"
+  },
+  "qrCode.previewEmpty": {
+    "message": "輸入文字後即會顯示 QR Code。"
+  },
+  "qrCode.downloadPng": {
+    "message": "下載 PNG"
+  },
+  "qrCode.downloadSvg": {
+    "message": "下載 SVG"
+  },
+  "qrCode.fileSectionTitle": {
+    "message": "從檔案產生"
+  },
+  "qrCode.dropHint": {
+    "message": "將檔案拖放到這裡，或點選以選擇"
+  },
+  "qrCode.clearAll": {
+    "message": "全部清除"
+  },
+  "qrCode.remove": {
+    "message": "刪除"
+  },
+  "qrCode.notesTitle": {
+    "message": "關於這個工具"
+  },
+  "qrCode.note1": {
+    "message": "產生過程全部在瀏覽器內完成，輸入的內容與檔案不會傳送到伺服器。"
+  },
+  "qrCode.note2": {
+    "message": "QR Code 可儲存的資料量有上限，二進位資料最多為 2,953 位元組 (錯誤更正等級 L)。"
+  },
+  "qrCode.note3": {
+    "message": "錯誤更正等級可從 L (7%) 選到 H (30%)。等級愈高愈能容忍污損，但可儲存的資料量愈少。"
+  },
+  "qrCode.note4": {
+    "message": "檔案會直接以位元組序列嵌入。要還原成檔案，需要支援二進位的讀取器。"
+  },
+  "miniApps.qrCode.title": {
+    "message": "QR Code 產生器"
+  },
+  "miniApps.qrCode.description": {
+    "message": "將文字或檔案轉換成 QR Code。"
   }
 }

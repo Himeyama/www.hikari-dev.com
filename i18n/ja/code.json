@@ -1644,5 +1644,98 @@
   },
   "files.deleteConfirmMessageMultiple": {
     "message": "選択した {count} 個の項目を削除しますか?"
+  },
+  "qrCode.errorTooBig": {
+    "message": "データが大きすぎて QR コードに収まらない。誤り訂正レベルを下げるか、内容を短くしてください。"
+  },
+  "qrCode.ecLevel": {
+    "message": "誤り訂正レベル"
+  },
+  "qrCode.size": {
+    "message": "サイズ"
+  },
+  "qrCode.margin": {
+    "message": "余白"
+  },
+  "qrCode.color": {
+    "message": "前景色"
+  },
+  "qrCode.transparent": {
+    "message": "背景を透過"
+  },
+  "qrCode.errorCopy": {
+    "message": "コピーに失敗した。手動で選択してコピーしてください。"
+  },
+  "qrCode.errorFileRead": {
+    "message": "ファイルの読み込みに失敗した。"
+  },
+  "qrCode.title": {
+    "message": "QR コード生成"
+  },
+  "qrCode.description": {
+    "message": "テキストやファイルを QR コードに変換するツール。ブラウザ内で処理されるためサーバーに内容は送信されない。"
+  },
+  "qrCode.subtitle": {
+    "message": "テキストを入力するか、ファイルをドロップして QR コードを生成する。生成はすべてブラウザ内で完結し、内容はサーバーに送信されない。"
+  },
+  "qrCode.textSectionTitle": {
+    "message": "テキストから生成"
+  },
+  "qrCode.textLabel": {
+    "message": "テキスト"
+  },
+  "qrCode.placeholder": {
+    "message": "URL やテキストを入力"
+  },
+  "qrCode.qrLabel": {
+    "message": "QR コード"
+  },
+  "qrCode.copied": {
+    "message": "コピーしました"
+  },
+  "qrCode.copyDataUri": {
+    "message": "data: URI をコピー"
+  },
+  "qrCode.previewEmpty": {
+    "message": "テキストを入力すると QR コードが表示される。"
+  },
+  "qrCode.downloadPng": {
+    "message": "PNG をダウンロード"
+  },
+  "qrCode.downloadSvg": {
+    "message": "SVG をダウンロード"
+  },
+  "qrCode.fileSectionTitle": {
+    "message": "ファイルから生成"
+  },
+  "qrCode.dropHint": {
+    "message": "ここにファイルをドロップ、またはクリックして選択"
+  },
+  "qrCode.clearAll": {
+    "message": "すべてクリア"
+  },
+  "qrCode.remove": {
+    "message": "削除"
+  },
+  "qrCode.notesTitle": {
+    "message": "このツールについて"
+  },
+  "qrCode.note1": {
+    "message": "生成はブラウザ内で完結し、入力内容やファイルがサーバーに送信されることはない。"
+  },
+  "qrCode.note2": {
+    "message": "QR コードに格納できるデータ量には上限があり、バイナリの場合は最大 2,953 バイト (誤り訂正レベル L) である。"
+  },
+  "qrCode.note3": {
+    "message": "誤り訂正レベルは L (7%) から H (30%) まで選べる。レベルを上げるほど汚れや欠けに強くなるが、格納できるデータ量は減る。"
+  },
+  "qrCode.note4": {
+    "message": "ファイルは中身をそのままバイト列として埋め込む。読み取り側でファイルとして復元するにはバイナリ対応のリーダーが必要である。"
+  },
+  "miniApps.qrCode.title": {
+    "message": "QR コード生成"
+  },
+  "miniApps.qrCode.description": {
+    "message": "テキストやファイルを QR コードに変換する。"
   }
 }

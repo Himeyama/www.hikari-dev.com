@@ -1656,5 +1656,98 @@
   },
   "files.deleteConfirmMessageMultiple": {
     "message": "Delete {count} selected items?"
+  },
+  "qrCode.errorTooBig": {
+    "message": "The data is too large to fit in a QR code. Lower the error correction level or shorten the content."
+  },
+  "qrCode.ecLevel": {
+    "message": "Error correction"
+  },
+  "qrCode.size": {
+    "message": "Size"
+  },
+  "qrCode.margin": {
+    "message": "Margin"
+  },
+  "qrCode.color": {
+    "message": "Foreground"
+  },
+  "qrCode.transparent": {
+    "message": "Transparent background"
+  },
+  "qrCode.errorCopy": {
+    "message": "Copy failed. Please select and copy manually."
+  },
+  "qrCode.errorFileRead": {
+    "message": "Failed to read the file."
+  },
+  "qrCode.title": {
+    "message": "QR Code Generator"
+  },
+  "qrCode.description": {
+    "message": "A tool that turns text or files into QR codes. Everything is processed in the browser, so nothing is sent to a server."
+  },
+  "qrCode.subtitle": {
+    "message": "Enter text or drop a file to generate a QR code. Generation happens entirely in the browser and no content is sent to a server."
+  },
+  "qrCode.textSectionTitle": {
+    "message": "Generate from text"
+  },
+  "qrCode.textLabel": {
+    "message": "Text"
+  },
+  "qrCode.placeholder": {
+    "message": "Enter a URL or text"
+  },
+  "qrCode.qrLabel": {
+    "message": "QR code"
+  },
+  "qrCode.copied": {
+    "message": "Copied"
+  },
+  "qrCode.copyDataUri": {
+    "message": "Copy data: URI"
+  },
+  "qrCode.previewEmpty": {
+    "message": "Enter text to see the QR code."
+  },
+  "qrCode.downloadPng": {
+    "message": "Download PNG"
+  },
+  "qrCode.downloadSvg": {
+    "message": "Download SVG"
+  },
+  "qrCode.fileSectionTitle": {
+    "message": "Generate from a file"
+  },
+  "qrCode.dropHint": {
+    "message": "Drop files here, or click to select"
+  },
+  "qrCode.clearAll": {
+    "message": "Clear all"
+  },
+  "qrCode.remove": {
+    "message": "Remove"
+  },
+  "qrCode.notesTitle": {
+    "message": "About this tool"
+  },
+  "qrCode.note1": {
+    "message": "Generation happens entirely in the browser; input text and files are never sent to a server."
+  },
+  "qrCode.note2": {
+    "message": "A QR code has a capacity limit: at most 2,953 bytes of binary data (error correction level L)."
+  },
+  "qrCode.note3": {
+    "message": "The error correction level ranges from L (7%) to H (30%). A higher level tolerates more damage but stores less data."
+  },
+  "qrCode.note4": {
+    "message": "Files are embedded as their raw bytes. A binary-capable reader is required to restore them as a file."
+  },
+  "miniApps.qrCode.title": {
+    "message": "QR Code Generator"
+  },
+  "miniApps.qrCode.description": {
+    "message": "Turn text or files into a QR code."
   }
 }
