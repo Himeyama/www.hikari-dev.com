@@ -7,6 +7,7 @@
 // vfs-change CustomEvent (同一ウィンドウ発) の両方を購読して同期する。
 
 import {MINI_APPS} from '../../components/desktop/apps';
+import {clearBlobs, deleteBlobs} from './blobStore';
 
 const STORAGE_KEY = 'hikari.vfs.v1';
 const CHANGE_EVENT = 'vfs-change';
@@ -19,12 +20,23 @@ export interface VfsNode {
   type: VfsNodeType;
   createdAt: number;
   modifiedAt: number;
-  /** file: 中身 */
+  /** file: 中身 (テキスト ファイルのみ。バイナリは blobId 側に持つ) */
   content?: string;
+  /** file: バイナリ本体の IndexedDB キー (画像・動画・音声) */
+  blobId?: string;
+  /** file: バイナリの MIME タイプ */
+  mime?: string;
+  /** file: バイナリのバイト数 */
+  size?: number;
   /** link: ミニアプリのルート (例 "/uuid") */
   href?: string;
   /** link: アイコン/翻訳解決用の appId (例 "uuid") */
   appId?: string;
+}
+
+/** 実体を IndexedDB に持つバイナリ ファイルか */
+export function isBinaryFile(node: VfsNode): boolean {
+  return node.type === 'file' && typeof node.blobId === 'string';
 }
 
 /** readDir が返すエントリ (絶対パス付き) */
@@ -205,6 +217,9 @@ export function resetAll(): void {
   } catch {
     /* quota 等は無視 */
   }
+  void clearBlobs().catch(() => {
+    /* 実体が残っても VFS 上は消えているため無視 */
+  });
 }
 
 // ---- 読み取り API ----------------------------------------------------------
@@ -271,6 +286,25 @@ export function createFile(path: string, content = ''): void {
   }
   const now = Date.now();
   data.nodes[p] = {type: 'file', content, createdAt: now, modifiedAt: now};
+  save(data);
+}
+
+/** 実体を IndexedDB に置いたバイナリ ファイルのノードを作る */
+export function createBinaryFile(
+  path: string,
+  opts: {blobId: string; mime: string; size: number},
+): void {
+  const p = normalizePath(path);
+  const data = load();
+  const now = Date.now();
+  data.nodes[p] = {
+    type: 'file',
+    blobId: opts.blobId,
+    mime: opts.mime,
+    size: opts.size,
+    createdAt: now,
+    modifiedAt: now,
+  };
   save(data);
 }
 
@@ -371,13 +405,21 @@ export function remove(path: string): void {
   if (node.type === 'link' && node.appId && !data.removedLinks.includes(node.appId)) {
     data.removedLinks.push(node.appId);
   }
-  // 自身 + 子孫を削除
+  // 自身 + 子孫を削除 (バイナリの実体は IndexedDB からも消す)
   const prefix = p + '/';
+  const orphanedBlobs: string[] = [];
   for (const childPath of Object.keys(data.nodes)) {
     if (childPath === p || childPath.startsWith(prefix)) {
+      const blobId = data.nodes[childPath].blobId;
+      if (blobId) {
+        orphanedBlobs.push(blobId);
+      }
       delete data.nodes[childPath];
     }
   }
+  void deleteBlobs(orphanedBlobs).catch(() => {
+    /* 実体が残っても VFS 上は消えているため無視 */
+  });
   save(data);
 }
 

@@ -1749,5 +1749,38 @@
   },
   "miniApps.qrCode.description": {
     "message": "將文字或檔案轉換成 QR Code。"
+  },
+  "editor.binaryNotice": {
+    "message": "「{name}」無法以文字方式編輯。"
+  },
+  "editor.openInViewer": {
+    "message": "以檢視器開啟"
+  },
+  "viewer.notFound": {
+    "message": "找不到「{name}」。"
+  },
+  "viewer.unsupported": {
+    "message": "檢視器無法顯示這種格式的檔案。"
+  },
+  "viewer.broken": {
+    "message": "找不到檔案本體。請重新匯入。"
+  },
+  "viewer.zoomOut": {
+    "message": "縮小"
+  },
+  "viewer.fit": {
+    "message": "顯示全部"
+  },
+  "viewer.zoomIn": {
+    "message": "放大"
+  },
+  "viewer.actualSize": {
+    "message": "實際大小"
+  },
+  "miniApps.viewer.title": {
+    "message": "檢視器"
+  },
+  "miniApps.viewer.description": {
+    "message": "顯示圖片、影片與音訊檔案。"
   }
 }

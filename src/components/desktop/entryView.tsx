@@ -1,7 +1,15 @@
 import type {ReactNode} from 'react';
 import Translate from '@docusaurus/Translate';
-import {getAppById, FolderIcon, FileIcon} from './apps';
+import {
+  getAppById,
+  FolderIcon,
+  FileIcon,
+  ImageFileIcon,
+  VideoFileIcon,
+  AudioFileIcon,
+} from './apps';
 import type {VfsEntry} from '../../lib/desktop/vfs';
+import {mediaKindOf} from '../../lib/desktop/mediaTypes';
 
 function LinkGlyph(): ReactNode {
   return (
@@ -45,7 +53,16 @@ export function EntryGlyph({entry}: {entry: VfsEntry}): ReactNode {
     }
     return <LinkGlyph />;
   }
-  return <FileIcon />;
+  switch (mediaKindOf(entry.name)) {
+    case 'image':
+      return <ImageFileIcon />;
+    case 'video':
+      return <VideoFileIcon />;
+    case 'audio':
+      return <AudioFileIcon />;
+    default:
+      return <FileIcon />;
+  }
 }
 
 /**

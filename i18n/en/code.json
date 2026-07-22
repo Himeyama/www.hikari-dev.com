@@ -1749,5 +1749,38 @@
   },
   "miniApps.qrCode.description": {
     "message": "Turn text or files into a QR code."
+  },
+  "editor.binaryNotice": {
+    "message": "\"{name}\" cannot be edited as text."
+  },
+  "editor.openInViewer": {
+    "message": "Open in Viewer"
+  },
+  "viewer.notFound": {
+    "message": "\"{name}\" was not found."
+  },
+  "viewer.unsupported": {
+    "message": "This file type cannot be shown in the viewer."
+  },
+  "viewer.broken": {
+    "message": "The file contents are missing. Please import the file again."
+  },
+  "viewer.zoomOut": {
+    "message": "Zoom out"
+  },
+  "viewer.fit": {
+    "message": "Fit"
+  },
+  "viewer.zoomIn": {
+    "message": "Zoom in"
+  },
+  "viewer.actualSize": {
+    "message": "Actual size"
+  },
+  "miniApps.viewer.title": {
+    "message": "Viewer"
+  },
+  "miniApps.viewer.description": {
+    "message": "View image, video, and audio files."
   }
 }

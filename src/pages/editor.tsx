@@ -88,6 +88,16 @@ function gotoPath(target: string): void {
   }
 }
 
+/** バイナリ ファイルをビューアへ引き継ぐ */
+function openInViewer(target: string): void {
+  const norm = vfs.normalizePath(target);
+  if (inDesktop()) {
+    window.parent.postMessage({source: BRIDGE_SOURCE, type: 'open-viewer', path: norm}, '*');
+  } else {
+    window.location.href = `/viewer?path=${encodeURIComponent(norm)}`;
+  }
+}
+
 const AUTOSAVE_KEY = 'hikari.editor.autosave';
 const WORDWRAP_KEY = 'hikari.editor.wordwrap';
 
@@ -115,6 +125,7 @@ function EditorApp(): ReactNode {
   const [content, setContent] = useState<string>('');
   const [saved, setSaved] = useState<string>('');
   const [exists, setExists] = useState<boolean>(false);
+  const [binary, setBinary] = useState<boolean>(false);
   const [autosave, setAutosave] = useState<boolean>(loadAutosave);
   const [wordWrap, setWordWrap] = useState<boolean>(loadWordWrap);
   const [menu, setMenu] = useState<MenuState | null>(null);
@@ -133,11 +144,14 @@ function EditorApp(): ReactNode {
     }
     const node = vfs.stat(path);
     if (node && node.type === 'file') {
+      // 画像などバイナリの実体を持つファイルはテキストとして編集できない
+      setBinary(vfs.isBinaryFile(node));
       const text = node.content ?? '';
       setContent(text);
       setSaved(text);
       setExists(true);
     } else {
+      setBinary(false);
       setExists(false);
     }
   }, [path]);
@@ -216,6 +230,24 @@ function EditorApp(): ReactNode {
           <Translate id="editor.notFound" values={{name: vfs.basename(path)}}>
             {'「{name}」が見つかりません。'}
           </Translate>
+        </div>
+      </div>
+    );
+  }
+
+  // バイナリ ファイルは編集できないため、ビューアへの導線だけを出す
+  if (binary && path) {
+    return (
+      <div className={styles.app}>
+        <div className={styles.notice}>
+          <p>
+            <Translate id="editor.binaryNotice" values={{name: vfs.basename(path)}}>
+              {'「{name}」はテキストとして編集できません。'}
+            </Translate>
+          </p>
+          <button type="button" className={styles.saveBtn} onClick={() => openInViewer(path)}>
+            <Translate id="editor.openInViewer">ビューアで開く</Translate>
+          </button>
         </div>
       </div>
     );

@@ -1737,5 +1737,38 @@
   },
   "miniApps.qrCode.description": {
     "message": "テキストやファイルを QR コードに変換する。"
+  },
+  "editor.binaryNotice": {
+    "message": "「{name}」はテキストとして編集できません。"
+  },
+  "editor.openInViewer": {
+    "message": "ビューアで開く"
+  },
+  "viewer.notFound": {
+    "message": "「{name}」が見つかりません。"
+  },
+  "viewer.unsupported": {
+    "message": "この形式のファイルはビューアで表示できません。"
+  },
+  "viewer.broken": {
+    "message": "ファイルの実体が見つかりません。取り込み直してください。"
+  },
+  "viewer.zoomOut": {
+    "message": "縮小"
+  },
+  "viewer.fit": {
+    "message": "全体表示"
+  },
+  "viewer.zoomIn": {
+    "message": "拡大"
+  },
+  "viewer.actualSize": {
+    "message": "実際のサイズ"
+  },
+  "miniApps.viewer.title": {
+    "message": "ビューア"
+  },
+  "miniApps.viewer.description": {
+    "message": "画像・動画・音声ファイルを表示する。"
   }
 }

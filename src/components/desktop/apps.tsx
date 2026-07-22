@@ -217,7 +217,53 @@ function EditorIcon(): ReactNode {
   );
 }
 
-export {FolderIcon, FileIcon};
+function ImageFileIcon(): ReactNode {
+  return (
+    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+      <path d="M6 3h8l4 4v14H6V3z" fill="#F8FAFC" stroke="#CBD5E1" strokeWidth="1" />
+      <path d="M14 3v4h4" fill="#E2E8F0" stroke="#CBD5E1" strokeWidth="1" strokeLinejoin="round" />
+      <rect x="8" y="11" width="8" height="7" rx="1" fill="#DBEAFE" stroke="#3B82F6" strokeWidth="1" />
+      <circle cx="10.3" cy="13.3" r="0.9" fill="#3B82F6" />
+      <path d="M8.4 17l2.4-2.4a1 1 0 011.4 0L15.6 18" stroke="#3B82F6" strokeWidth="1.1" strokeLinecap="round" strokeLinejoin="round" />
+    </svg>
+  );
+}
+
+function VideoFileIcon(): ReactNode {
+  return (
+    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+      <path d="M6 3h8l4 4v14H6V3z" fill="#F8FAFC" stroke="#CBD5E1" strokeWidth="1" />
+      <path d="M14 3v4h4" fill="#E2E8F0" stroke="#CBD5E1" strokeWidth="1" strokeLinejoin="round" />
+      <circle cx="12" cy="14.5" r="4" fill="#EDE9FE" stroke="#8B5CF6" strokeWidth="1" />
+      <path d="M11 12.8l2.6 1.7-2.6 1.7v-3.4z" fill="#8B5CF6" />
+    </svg>
+  );
+}
+
+function AudioFileIcon(): ReactNode {
+  return (
+    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+      <path d="M6 3h8l4 4v14H6V3z" fill="#F8FAFC" stroke="#CBD5E1" strokeWidth="1" />
+      <path d="M14 3v4h4" fill="#E2E8F0" stroke="#CBD5E1" strokeWidth="1" strokeLinejoin="round" />
+      <path d="M15 11l-4 1v4.6" stroke="#10B981" strokeWidth="1.3" strokeLinecap="round" strokeLinejoin="round" />
+      <circle cx="9.8" cy="17" r="1.5" fill="#10B981" />
+      <circle cx="13.8" cy="16" r="1.5" fill="#10B981" />
+      <path d="M15 11v5" stroke="#10B981" strokeWidth="1.3" strokeLinecap="round" />
+    </svg>
+  );
+}
+
+function ViewerIcon(): ReactNode {
+  return (
+    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+      <rect x="2" y="2" width="20" height="20" rx="6" fill="#7C3AED" />
+      <rect x="5" y="7" width="14" height="10" rx="1.5" fill="white" />
+      <path d="M10.5 10.2l4 1.8-4 1.8v-3.6z" fill="#7C3AED" />
+    </svg>
+  );
+}
+
+export {FolderIcon, FileIcon, ImageFileIcon, VideoFileIcon, AudioFileIcon};
 
 export type MiniApp = {
   id: string;
@@ -358,7 +404,7 @@ export const MINI_APPS: MiniApp[] = RAW_MINI_APPS.map((app) => ({
 }));
 
 // デスクトップから起動できるがミニアプリ一覧 (/mini-apps) には載せない特殊アプリ。
-// Files はデスクトップにシード表示され、Editor は folder/file から間接起動される。
+// Files はデスクトップにシード表示され、Editor と Viewer は folder/file から間接起動される。
 export const FILES_APP: MiniApp = {
   id: 'files',
   href: '/files',
@@ -379,8 +425,18 @@ export const EDITOR_APP: MiniApp = {
   descriptionMessage: 'テキスト ファイルを編集する。',
 };
 
-// getAppById が解決できる全アプリ (ミニアプリ + Files/Editor)
-export const LAUNCHABLES: MiniApp[] = [...MINI_APPS, FILES_APP, EDITOR_APP];
+export const VIEWER_APP: MiniApp = {
+  id: 'viewer',
+  href: '/viewer',
+  Icon: ViewerIcon,
+  titleId: 'miniApps.viewer.title',
+  titleMessage: 'ビューア',
+  descriptionId: 'miniApps.viewer.description',
+  descriptionMessage: '画像・動画・音声ファイルを表示する。',
+};
+
+// getAppById が解決できる全アプリ (ミニアプリ + Files/Editor/Viewer)
+export const LAUNCHABLES: MiniApp[] = [...MINI_APPS, FILES_APP, EDITOR_APP, VIEWER_APP];
 
 export function getAppById(id: string): MiniApp | undefined {
   return LAUNCHABLES.find((app) => app.id === id);

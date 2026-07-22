@@ -15,7 +15,8 @@ import {Taskbar} from './Taskbar';
 import {ContextMenu} from './ContextMenu';
 import type {ContextMenuItem} from './ContextMenu';
 import {ConfirmDialog} from './ConfirmDialog';
-import {downloadTextFile, importDroppedFiles} from '../../lib/desktop/fileTransfer';
+import {downloadVfsFile, importDroppedFiles} from '../../lib/desktop/fileTransfer';
+import {isViewable} from '../../lib/desktop/mediaTypes';
 import {VFS_ITEM_MIME, readVfsItemDrag} from '../../lib/desktop/dragDrop';
 import wikimediaWallpaperFiles from '../../lib/desktop/wikimediaWallpapers.json';
 import styles from './desktop.module.css';
@@ -471,6 +472,15 @@ export function DesktopShell(): ReactNode {
           param: d.path,
           viewport,
         });
+      } else if (d.type === 'open-viewer' && d.path) {
+        dispatch({
+          type: 'OPEN',
+          windowId: 'viewer',
+          appId: 'viewer',
+          href: '/viewer',
+          param: d.path,
+          viewport,
+        });
       } else if (d.type === 'open-folder' && d.path) {
         dispatch({
           type: 'OPEN',
@@ -539,11 +549,13 @@ export function DesktopShell(): ReactNode {
         viewport,
       });
     } else if (node.type === 'file') {
+      // 画像・動画・音声はビューア、それ以外はエディタで開く
+      const viewable = isViewable(entry.name);
       dispatch({
         type: 'OPEN',
-        windowId: 'editor',
-        appId: 'editor',
-        href: '/editor',
+        windowId: viewable ? 'viewer' : 'editor',
+        appId: viewable ? 'viewer' : 'editor',
+        href: viewable ? '/viewer' : '/editor',
         param: entry.path,
         viewport,
       });
@@ -590,10 +602,7 @@ export function DesktopShell(): ReactNode {
   };
 
   const downloadFile = (entry: VfsEntry) => {
-    const content = vfs.readFile(entry.path);
-    if (content !== null) {
-      downloadTextFile(entry.name, content);
-    }
+    void downloadVfsFile(entry.path);
   };
 
   // ---- キーボード ショートカット (F2: 名前の変更 / Delete: 削除確認ダイアログ) ----
@@ -960,15 +969,17 @@ export function DesktopShell(): ReactNode {
 
       {openWindows.map(({win, app}) => {
         const focused = win.z === state.zTop && !win.minimized;
-        // editor ウィンドウはファイル名をタイトルに使う
-        const titleNode =
-          win.windowId === 'editor' && win.param ? (
-            <>{vfs.basename(win.param)}</>
-          ) : (
-            <Translate id={app.titleId}>{app.titleMessage}</Translate>
-          );
-        const titlePlain =
-          win.windowId === 'editor' && win.param ? vfs.basename(win.param) : app.titleMessage;
+        // editor / viewer ウィンドウはファイル名をタイトルに使う
+        const fileName =
+          (win.windowId === 'editor' || win.windowId === 'viewer') && win.param
+            ? vfs.basename(win.param)
+            : null;
+        const titleNode = fileName ? (
+          <>{fileName}</>
+        ) : (
+          <Translate id={app.titleId}>{app.titleMessage}</Translate>
+        );
+        const titlePlain = fileName ?? app.titleMessage;
         return (
           <AppWindow
             key={win.windowId}

@@ -12,7 +12,8 @@ import type {ContextMenuItem} from '@site/src/components/desktop/ContextMenu';
 import type {SelectModifiers} from '@site/src/components/desktop/DesktopIcon';
 import * as vfs from '@site/src/lib/desktop/vfs';
 import type {VfsEntry} from '@site/src/lib/desktop/vfs';
-import {downloadTextFile, importDroppedFiles} from '@site/src/lib/desktop/fileTransfer';
+import {downloadVfsFile, importDroppedFiles} from '@site/src/lib/desktop/fileTransfer';
+import {isViewable} from '@site/src/lib/desktop/mediaTypes';
 import {VFS_ITEM_MIME, readVfsItemDrag} from '@site/src/lib/desktop/dragDrop';
 import styles from './files.module.css';
 
@@ -106,13 +107,17 @@ function FilesApp(): ReactNode {
       return;
     }
     if (node.type === 'file') {
+      // 画像・動画・音声はビューア、それ以外はエディタで開く
+      const app = isViewable(entry.name)
+        ? {type: 'open-viewer', href: '/viewer'}
+        : {type: 'open-editor', href: '/editor'};
       if (inDesktop()) {
         window.parent.postMessage(
-          {source: BRIDGE_SOURCE, type: 'open-editor', path: entry.path},
+          {source: BRIDGE_SOURCE, type: app.type, path: entry.path},
           '*',
         );
       } else {
-        window.location.href = `/editor?path=${encodeURIComponent(entry.path)}`;
+        window.location.href = `${app.href}?path=${encodeURIComponent(entry.path)}`;
       }
     }
   };
@@ -172,10 +177,7 @@ function FilesApp(): ReactNode {
   };
 
   const downloadFile = (entry: VfsEntry) => {
-    const content = vfs.readFile(entry.path);
-    if (content !== null) {
-      downloadTextFile(entry.name, content);
-    }
+    void downloadVfsFile(entry.path);
   };
 
   // ---- ドラッグ&ドロップでの移動 (デスクトップ/他の Files ウィンドウとの間も含む) ----
