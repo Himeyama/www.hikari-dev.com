@@ -10,6 +10,14 @@
   overflow: hidden;
   --desktop-taskbar-h: 48px;
   user-select: none;
+  font-family: 'Zen Maru Gothic', 'Noto Sans JP', sans-serif;
+}
+
+.surface button,
+.surface input,
+.surface select,
+.surface textarea {
+  font-family: inherit;
 }
 
 .surface::before {
@@ -562,7 +570,6 @@
   background: var(--ifm-background-surface-color);
   border: 1px solid var(--ifm-color-emphasis-300);
   border-radius: 8px;
-  font-family: 'Segoe UI', sans-serif;
 }
 
 .calendarHeader {
