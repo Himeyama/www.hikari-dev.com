@@ -14,6 +14,10 @@ import {AppWindow} from './AppWindow';
 import {Taskbar} from './Taskbar';
 import {ContextMenu} from './ContextMenu';
 import type {ContextMenuItem} from './ContextMenu';
+import {ConfirmDialog} from './ConfirmDialog';
+import {downloadTextFile, importDroppedFiles} from '../../lib/desktop/fileTransfer';
+import {VFS_ITEM_MIME, readVfsItemDrag} from '../../lib/desktop/dragDrop';
+import wikimediaWallpaperFiles from '../../lib/desktop/wikimediaWallpapers.json';
 import styles from './desktop.module.css';
 
 const STORAGE_KEY = 'hikari.desktop.v2';
@@ -271,41 +275,47 @@ function newWindowId(appId: string): string {
   return `${appId}::${rand}`;
 }
 
-// ---- 壁紙 (Picsum Photos からランダム取得し、一定間隔で切り替える) ----
-const WALLPAPER_STORAGE_KEY = 'hikari.desktop.wallpaper';
+// ---- 壁紙 (Wikimedia Commons の Picture of the Day から 30 分ごとに切り替える) ----
+// パブリックドメイン/CC ライセンスの高解像度画像のみを使用する。
+// 参照元: https://commons.wikimedia.org/wiki/Commons:Picture_of_the_day
 const WALLPAPER_INTERVAL_MS = 30 * 60 * 1000;
+const WALLPAPER_CACHE_NAME = 'hikari-desktop-wallpaper-v2';
 
-type WallpaperState = {seed: string; changedAt: number};
-
-function randomSeed(): string {
-  return Math.random().toString(36).slice(2);
+function wallpaperUrl(filename: string): string {
+  return `https://commons.wikimedia.org/wiki/Special:FilePath/${encodeURIComponent(filename)}?width=3840`;
 }
 
-function wallpaperUrl(seed: string): string {
-  return `https://picsum.photos/seed/${encodeURIComponent(seed)}/1920/1080`;
-}
-
-function loadWallpaperState(): WallpaperState {
-  try {
-    const raw = window.localStorage.getItem(WALLPAPER_STORAGE_KEY);
-    if (raw) {
-      const parsed = JSON.parse(raw) as Partial<WallpaperState>;
-      if (typeof parsed.seed === 'string' && typeof parsed.changedAt === 'number') {
-        return {seed: parsed.seed, changedAt: parsed.changedAt};
-      }
-    }
-  } catch {
-    /* ignore */
+// 時刻を 30 分単位のスロットに丸め、ハッシュ値で壁紙を選ぶ
+// (同じスロット内は常に同じ画像になり、リロードしても変化しない)
+function hashString(input: string): number {
+  let hash = 0;
+  for (let i = 0; i < input.length; i += 1) {
+    hash = (hash * 31 + input.charCodeAt(i)) | 0;
   }
-  return {seed: randomSeed(), changedAt: Date.now()};
+  return hash >>> 0;
 }
 
-function saveWallpaperState(state: WallpaperState): void {
-  try {
-    window.localStorage.setItem(WALLPAPER_STORAGE_KEY, JSON.stringify(state));
-  } catch {
-    /* quota 等は無視 */
+function currentWallpaperId(now: number): string {
+  const slot = Math.floor(now / WALLPAPER_INTERVAL_MS);
+  const index = hashString(String(slot)) % wikimediaWallpaperFiles.length;
+  return wikimediaWallpaperFiles[index];
+}
+
+// Cache Storage に画像をキャッシュしつつ blob URL を返す。
+// 肥大化を防ぐため、新規取得時に他スロットの古いキャッシュは削除する。
+async function getCachedWallpaperBlobUrl(url: string): Promise<string> {
+  const cache = await caches.open(WALLPAPER_CACHE_NAME);
+  let response = await cache.match(url);
+  if (!response) {
+    response = await fetch(url);
+    await cache.put(url, response.clone());
+    const keys = await cache.keys();
+    await Promise.all(
+      keys.filter((request) => request.url !== url).map((request) => cache.delete(request)),
+    );
   }
+  const blob = await response.blob();
+  return URL.createObjectURL(blob);
 }
 
 function emptyState(): DesktopState {
@@ -362,8 +372,13 @@ export function DesktopShell(): ReactNode {
   );
   const [homeMenu, setHomeMenu] = useState<{x: number; y: number} | null>(null);
   const [dragging, setDragging] = useState(false);
-  const [wallpaper, setWallpaper] = useState<WallpaperState>(() => loadWallpaperState());
+  const [confirmDeletePaths, setConfirmDeletePaths] = useState<string[] | null>(null);
+  const [osDragOver, setOsDragOver] = useState(false);
+  const [fileDragActive, setFileDragActive] = useState(false);
+  const fileDragCounter = useRef(0);
+  const [wallpaperId, setWallpaperId] = useState<string>(() => currentWallpaperId(Date.now()));
   const [wallpaperBgUrl, setWallpaperBgUrl] = useState<string | null>(null);
+  const wallpaperObjectUrlRef = useRef<string | null>(null);
   const [snapPreview, setSnapPreview] = useState<SnapKind | null>(null);
   const [vfsVersion, setVfsVersion] = useState(0);
   const saveTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
@@ -381,32 +396,42 @@ export function DesktopShell(): ReactNode {
     };
   }, []);
 
-  // 壁紙を Picsum Photos から先読みし、読み込み完了後に切り替える (ちらつき防止)
+  // 壁紙画像をキャッシュ経由で取得し、読み込み完了後に切り替える (ちらつき防止)
   useEffect(() => {
     let cancelled = false;
-    const img = new Image();
-    img.onload = () => {
-      if (!cancelled) {
-        setWallpaperBgUrl(wallpaperUrl(wallpaper.seed));
-      }
-    };
-    img.src = wallpaperUrl(wallpaper.seed);
+    const url = wallpaperUrl(wallpaperId);
+    getCachedWallpaperBlobUrl(url)
+      .then((blobUrl) => {
+        if (cancelled) {
+          URL.revokeObjectURL(blobUrl);
+          return;
+        }
+        const prev = wallpaperObjectUrlRef.current;
+        wallpaperObjectUrlRef.current = blobUrl;
+        setWallpaperBgUrl(blobUrl);
+        if (prev) {
+          URL.revokeObjectURL(prev);
+        }
+      })
+      .catch(() => {
+        if (!cancelled) {
+          setWallpaperBgUrl(url);
+        }
+      });
     return () => {
       cancelled = true;
     };
-  }, [wallpaper.seed]);
+  }, [wallpaperId]);
 
-  // 30 分ごとに壁紙をランダムに切り替える (前回切替時刻からの残り時間で次回をスケジュール)
+  // 30 分ごとの時刻スロット境界で壁紙を切り替える
   useEffect(() => {
-    const elapsed = Date.now() - wallpaper.changedAt;
-    const remaining = Math.max(0, WALLPAPER_INTERVAL_MS - elapsed);
+    const now = Date.now();
+    const remaining = WALLPAPER_INTERVAL_MS - (now % WALLPAPER_INTERVAL_MS);
     const timer = setTimeout(() => {
-      const next: WallpaperState = {seed: randomSeed(), changedAt: Date.now()};
-      saveWallpaperState(next);
-      setWallpaper(next);
+      setWallpaperId(currentWallpaperId(Date.now()));
     }, remaining);
     return () => clearTimeout(timer);
-  }, [wallpaper.changedAt]);
+  }, [wallpaperId]);
 
   // VFS を初期シードし、変更を購読してアイコンを再描画
   useEffect(() => {
@@ -563,6 +588,78 @@ export function DesktopShell(): ReactNode {
     setAnchorIcon(null);
     setRenaming(null);
   };
+
+  const downloadFile = (entry: VfsEntry) => {
+    const content = vfs.readFile(entry.path);
+    if (content !== null) {
+      downloadTextFile(entry.name, content);
+    }
+  };
+
+  // ---- キーボード ショートカット (F2: 名前の変更 / Delete: 削除確認ダイアログ) ----
+  useEffect(() => {
+    const onKeyDown = (e: KeyboardEvent) => {
+      const target = e.target as HTMLElement | null;
+      const isEditable =
+        !!target &&
+        (target.tagName === 'INPUT' || target.tagName === 'TEXTAREA' || target.isContentEditable);
+      if (isEditable || renaming || menu || taskbarMenu || homeMenu || confirmDeletePaths) {
+        return;
+      }
+      if (e.key === 'F2') {
+        if (selectedIcons.size === 1) {
+          e.preventDefault();
+          setRenaming([...selectedIcons][0]);
+        }
+      } else if (e.key === 'Delete') {
+        if (selectedIcons.size > 0) {
+          e.preventDefault();
+          setConfirmDeletePaths([...selectedIcons]);
+        }
+      }
+    };
+    window.addEventListener('keydown', onKeyDown);
+    return () => window.removeEventListener('keydown', onKeyDown);
+  }, [selectedIcons, renaming, menu, taskbarMenu, homeMenu, confirmDeletePaths]);
+
+  // ---- ファイルのドラッグ中はフォーカスのないウィンドウの clickCatcher を無効化する ----
+  // (無効にしないと、フォーカスのないアプリ ウィンドウの iframe にドロップが届かない)
+  useEffect(() => {
+    const isFileDrag = (e: DragEvent) =>
+      !!e.dataTransfer &&
+      (e.dataTransfer.types.includes('Files') || e.dataTransfer.types.includes(VFS_ITEM_MIME));
+    const onDragEnter = (e: DragEvent) => {
+      if (isFileDrag(e)) {
+        fileDragCounter.current += 1;
+        setFileDragActive(true);
+      }
+    };
+    const onDragLeave = (e: DragEvent) => {
+      if (isFileDrag(e)) {
+        fileDragCounter.current = Math.max(0, fileDragCounter.current - 1);
+        if (fileDragCounter.current === 0) {
+          setFileDragActive(false);
+        }
+      }
+    };
+    // capture フェーズで登録する (アイコン/フォルダー側の onDrop が
+    // stopPropagation しても、ここでのリセットは必ず実行されるようにするため)
+    const onDropOrEnd = () => {
+      fileDragCounter.current = 0;
+      setFileDragActive(false);
+      setOsDragOver(false);
+    };
+    window.addEventListener('dragenter', onDragEnter);
+    window.addEventListener('dragleave', onDragLeave);
+    window.addEventListener('drop', onDropOrEnd, true);
+    window.addEventListener('dragend', onDropOrEnd, true);
+    return () => {
+      window.removeEventListener('dragenter', onDragEnter);
+      window.removeEventListener('dragleave', onDragLeave);
+      window.removeEventListener('drop', onDropOrEnd, true);
+      window.removeEventListener('dragend', onDropOrEnd, true);
+    };
+  }, []);
 
   // ---- 選択 (Ctrl 複数選択 / Shift 範囲選択) ----
   const selectWith = (path: string, mods: SelectModifiers) => {
@@ -722,12 +819,19 @@ export function DesktopShell(): ReactNode {
             onClick: () => setRenaming(targets[0].path),
           },
         );
+        if (targets[0].node.type === 'file') {
+          items.push({
+            type: 'item',
+            label: <Translate id="files.download">ダウンロード</Translate>,
+            onClick: () => downloadFile(targets[0]),
+          });
+        }
       }
       items.push({
         type: 'item',
         danger: true,
         label: <Translate id="files.delete">削除</Translate>,
-        onClick: () => doDelete(targets.map((t) => t.path)),
+        onClick: () => setConfirmDeletePaths(targets.map((t) => t.path)),
       });
     }
     return items;
@@ -758,12 +862,50 @@ export function DesktopShell(): ReactNode {
       style={wallpaperBgUrl ? {backgroundImage: `url(${wallpaperBgUrl})`} : undefined}
     >
       <div
-        className={styles.iconLayer}
+        className={clsx(styles.iconLayer, osDragOver && styles.iconLayerDropActive)}
         onPointerDown={onLayerPointerDown}
         onContextMenu={(e) => {
           if (e.target === e.currentTarget) {
             openMenu(e, null);
           }
+        }}
+        onDragOver={(e) => {
+          if (
+            e.dataTransfer.types.includes('Files') ||
+            e.dataTransfer.types.includes(VFS_ITEM_MIME)
+          ) {
+            e.preventDefault();
+            e.dataTransfer.dropEffect = e.dataTransfer.types.includes(VFS_ITEM_MIME)
+              ? 'move'
+              : 'copy';
+            setOsDragOver(true);
+          }
+        }}
+        onDragLeave={(e) => {
+          if (e.target === e.currentTarget) {
+            setOsDragOver(false);
+          }
+        }}
+        onDrop={(e) => {
+          if (e.dataTransfer.types.includes(VFS_ITEM_MIME)) {
+            e.preventDefault();
+            const dragged = readVfsItemDrag(e.dataTransfer);
+            if (dragged) {
+              const moved = vfs.move(dragged.path, vfs.DESKTOP_PATH);
+              const finalPath = moved ?? dragged.path;
+              dispatch({
+                type: 'MOVE_ICON',
+                iconId: finalPath,
+                x: Math.max(0, e.clientX - dragged.offsetX),
+                y: Math.max(0, e.clientY - dragged.offsetY),
+                viewport: getViewport(),
+              });
+            }
+          } else if (e.dataTransfer.files.length > 0) {
+            e.preventDefault();
+            void importDroppedFiles(e.dataTransfer.files, vfs.DESKTOP_PATH);
+          }
+          setOsDragOver(false);
         }}
       >
         {desktopEntries.map((entry, index) => {
@@ -772,6 +914,8 @@ export function DesktopShell(): ReactNode {
           return (
             <DesktopIcon
               key={entry.path}
+              path={entry.path}
+              isFolder={entry.node.type === 'folder'}
               glyph={<EntryGlyph entry={entry} />}
               label={<EntryLabel entry={entry} />}
               name={entry.name}
@@ -781,10 +925,11 @@ export function DesktopShell(): ReactNode {
               selected={selectedIcons.has(entry.path)}
               onSelect={(mods) => selectWith(entry.path, mods)}
               onOpen={() => openEntry(entry)}
-              onMove={(x, y) =>
-                dispatch({type: 'MOVE_ICON', iconId: entry.path, x, y, viewport: getViewport()})
+              onDropItem={
+                entry.node.type === 'folder'
+                  ? (sourcePath) => vfs.move(sourcePath, entry.path)
+                  : undefined
               }
-              onDragState={setDragging}
               onContextMenu={(e) => openMenu(e, entry)}
               onCommitRename={(name) => commitRename(entry, name)}
               onCancelRename={() => setRenaming(null)}
@@ -837,6 +982,7 @@ export function DesktopShell(): ReactNode {
             snap={win.snap}
             minimized={win.minimized}
             focused={focused}
+            dragPassthrough={fileDragActive}
             onFocus={() => dispatch({type: 'FOCUS', windowId: win.windowId})}
             onClose={() => dispatch({type: 'CLOSE', windowId: win.windowId})}
             onMinimize={() => dispatch({type: 'MINIMIZE', windowId: win.windowId})}
@@ -923,6 +1069,36 @@ export function DesktopShell(): ReactNode {
             },
           ]}
           onClose={() => setHomeMenu(null)}
+        />
+      )}
+
+      {confirmDeletePaths && (
+        <ConfirmDialog
+          title={<Translate id="files.deleteConfirmTitle">削除の確認</Translate>}
+          message={
+            confirmDeletePaths.length === 1 ? (
+              <Translate
+                id="files.deleteConfirmMessageSingle"
+                values={{name: vfs.basename(confirmDeletePaths[0])}}
+              >
+                {'"{name}" を削除しますか?'}
+              </Translate>
+            ) : (
+              <Translate
+                id="files.deleteConfirmMessageMultiple"
+                values={{count: confirmDeletePaths.length}}
+              >
+                {'選択した {count} 個の項目を削除しますか?'}
+              </Translate>
+            )
+          }
+          confirmLabel={<Translate id="files.delete">削除</Translate>}
+          danger
+          onConfirm={() => {
+            doDelete(confirmDeletePaths);
+            setConfirmDeletePaths(null);
+          }}
+          onCancel={() => setConfirmDeletePaths(null)}
         />
       )}
     </div>

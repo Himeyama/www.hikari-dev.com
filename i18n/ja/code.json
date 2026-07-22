@@ -1629,5 +1629,20 @@
   },
   "desktop.reset": {
     "message": "デスクトップをリセット"
+  },
+  "editor.download": {
+    "message": "ダウンロード"
+  },
+  "files.download": {
+    "message": "ダウンロード"
+  },
+  "files.deleteConfirmTitle": {
+    "message": "削除の確認"
+  },
+  "files.deleteConfirmMessageSingle": {
+    "message": "\"{name}\" を削除しますか?"
+  },
+  "files.deleteConfirmMessageMultiple": {
+    "message": "選択した {count} 個の項目を削除しますか?"
   }
 }

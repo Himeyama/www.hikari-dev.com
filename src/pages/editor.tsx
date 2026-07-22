@@ -11,6 +11,7 @@ import {ContextMenu} from '@site/src/components/desktop/ContextMenu';
 import type {ContextMenuItem} from '@site/src/components/desktop/ContextMenu';
 import {FileDialog} from '@site/src/components/desktop/FileDialog';
 import type {FileDialogMode} from '@site/src/components/desktop/FileDialog';
+import {downloadTextFile} from '@site/src/lib/desktop/fileTransfer';
 import styles from './editor.module.css';
 
 const BRIDGE_SOURCE = 'hikari-desktop';
@@ -245,6 +246,11 @@ function EditorApp(): ReactNode {
     });
   };
 
+  const doDownload = () => {
+    const name = path ? vfs.basename(path) : translate({id: 'files.newFileName', message: '新しいファイル.txt'});
+    downloadTextFile(name, contentRef.current);
+  };
+
   const handleDialogConfirm = (target: string) => {
     if (!dialog) {
       return;
@@ -270,6 +276,12 @@ function EditorApp(): ReactNode {
       type: 'item',
       label: <Translate id="editor.saveAs">名前を付けて保存...</Translate>,
       onClick: doSaveAs,
+    },
+    {type: 'separator'},
+    {
+      type: 'item',
+      label: <Translate id="editor.download">ダウンロード</Translate>,
+      onClick: doDownload,
     },
   ];
 

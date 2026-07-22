@@ -23,8 +23,6 @@ const DEFAULT_TEX = String.raw`e^{i\pi} + 1 = 0
 
 \sum_{n=1}^{\infty} \frac{1}{n^2} = \frac{\pi^2}{6}
 
-f(x) = \int_{-\infty}^{\infty} \hat{f}(\xi)\, e^{2 \pi i \xi x} \, d\xi
-
 \lim_{x \to 0} \frac{\sin x}{x} = 1`;
 
 const SOURCE_STORAGE_KEY = 'tex-preview-source';

@@ -2,7 +2,7 @@
   position: fixed;
   inset: 0;
   z-index: 300;
-  background-color: var(--ifm-color-emphasis-100);
+  background-color: #0163ae;
   background-position: center;
   background-size: cover;
   background-attachment: fixed;
@@ -30,6 +30,12 @@
 .iconLayer {
   position: absolute;
   inset: 0 0 var(--desktop-taskbar-h) 0;
+}
+
+.iconLayerDropActive {
+  outline: 3px dashed rgba(255, 255, 255, 0.8);
+  outline-offset: -3px;
+  background: rgba(255, 255, 255, 0.06);
 }
 
 .icon {
@@ -310,6 +316,65 @@
   background: var(--ifm-background-color);
 }
 
+/* ===== 確認ウィンドウ (削除確認など、アプリではなくデスクトップ自身が出す小さなウィンドウ) ===== */
+.confirmBody {
+  display: flex;
+  flex-direction: column;
+  gap: 0.9rem;
+  padding: 1rem;
+}
+
+.confirmMessage {
+  margin: 0;
+  font-size: 0.85rem;
+  line-height: 1.6;
+  color: var(--ifm-font-color-base);
+}
+
+.confirmActions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 0.5rem;
+}
+
+.confirmCancelBtn {
+  padding: 0.35rem 0.9rem;
+  border: 1px solid var(--ifm-color-emphasis-300);
+  border-radius: 6px;
+  background: var(--ifm-background-color);
+  color: inherit;
+  cursor: pointer;
+  font-size: 0.83rem;
+}
+
+.confirmCancelBtn:hover {
+  background: var(--ifm-color-emphasis-100);
+}
+
+.confirmOkBtn {
+  padding: 0.35rem 1rem;
+  border: 1px solid var(--ifm-color-primary);
+  border-radius: 6px;
+  background: var(--ifm-color-primary);
+  color: #fff;
+  cursor: pointer;
+  font-size: 0.83rem;
+  font-weight: 600;
+}
+
+.confirmOkBtn:hover {
+  background: var(--ifm-color-primary-dark);
+}
+
+.confirmOkBtnDanger {
+  border-color: var(--ifm-color-danger);
+  background: var(--ifm-color-danger);
+}
+
+.confirmOkBtnDanger:hover {
+  background: var(--ifm-color-danger-dark);
+}
+
 /* 非フォーカスウィンドウの iframe を覆う透明キャッチャー */
 .clickCatcher {
   position: absolute;
@@ -361,8 +426,8 @@
   align-items: center;
   gap: 6px;
   padding: 0 8px;
-  background: color-mix(in srgb, var(--ifm-background-surface-color) 55%, transparent);
-  border-top: 1px solid var(--ifm-color-emphasis-300);
+  background: color-mix(in srgb, #ffffff 78%, transparent);
+  border-top: 1px solid rgba(255, 255, 255, 0.6);
   -webkit-backdrop-filter: blur(24px) saturate(160%);
   backdrop-filter: blur(24px) saturate(160%);
   z-index: 400;

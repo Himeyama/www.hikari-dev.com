@@ -1641,5 +1641,20 @@
   },
   "desktop.reset": {
     "message": "Reset Desktop"
+  },
+  "editor.download": {
+    "message": "Download"
+  },
+  "files.download": {
+    "message": "Download"
+  },
+  "files.deleteConfirmTitle": {
+    "message": "Confirm Delete"
+  },
+  "files.deleteConfirmMessageSingle": {
+    "message": "Delete \"{name}\"?"
+  },
+  "files.deleteConfirmMessageMultiple": {
+    "message": "Delete {count} selected items?"
   }
 }

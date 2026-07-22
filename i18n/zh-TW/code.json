@@ -1641,5 +1641,20 @@
   },
   "desktop.reset": {
     "message": "重設桌面"
+  },
+  "editor.download": {
+    "message": "下載"
+  },
+  "files.download": {
+    "message": "下載"
+  },
+  "files.deleteConfirmTitle": {
+    "message": "確認刪除"
+  },
+  "files.deleteConfirmMessageSingle": {
+    "message": "確定要刪除「{name}」嗎?"
+  },
+  "files.deleteConfirmMessageMultiple": {
+    "message": "確定要刪除選取的 {count} 個項目嗎?"
   }
 }

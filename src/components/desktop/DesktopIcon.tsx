@@ -1,16 +1,15 @@
-import {useRef} from 'react';
 import type React from 'react';
 import type {ReactNode} from 'react';
 import clsx from 'clsx';
-import {usePointerDrag} from './usePointerDrag';
 import {RenameInput} from './RenameInput';
+import {VFS_ITEM_MIME, readVfsItemDrag} from '../../lib/desktop/dragDrop';
 import styles from './desktop.module.css';
-
-const DRAG_THRESHOLD = 4;
 
 export type SelectModifiers = {ctrlKey: boolean; metaKey: boolean; shiftKey: boolean};
 
 type Props = {
+  path: string;
+  isFolder: boolean;
   glyph: ReactNode;
   label: ReactNode;
   name: string;
@@ -20,8 +19,7 @@ type Props = {
   selected: boolean;
   onOpen: () => void;
   onSelect: (mods: SelectModifiers) => void;
-  onMove: (x: number, y: number) => void;
-  onDragState: (dragging: boolean) => void;
+  onDropItem?: (sourcePath: string) => void;
   onContextMenu: (e: React.MouseEvent) => void;
   onCommitRename: (name: string) => void;
   onCancelRename: () => void;
@@ -29,6 +27,8 @@ type Props = {
 };
 
 export function DesktopIcon({
+  path,
+  isFolder,
   glyph,
   label,
   name,
@@ -38,39 +38,19 @@ export function DesktopIcon({
   selected,
   onOpen,
   onSelect,
-  onMove,
-  onDragState,
+  onDropItem,
   onContextMenu,
   onCommitRename,
   onCancelRename,
   registerRef,
 }: Props): ReactNode {
-  const posRef = useRef({x, y});
-  posRef.current = {x, y};
-  const movedRef = useRef(false);
-
-  const onPointerDown = usePointerDrag({
-    getStart: () => posRef.current,
-    onDragState: (d) => {
-      if (d) {
-        movedRef.current = false;
-      }
-      onDragState(d);
-    },
-    onMove: (nx, ny, moved) => {
-      if (moved > DRAG_THRESHOLD) {
-        movedRef.current = true;
-        onMove(nx, ny);
-      }
-    },
-  });
-
   return (
     <button
       type="button"
       ref={registerRef}
       className={clsx(styles.icon, selected && styles.iconSelected)}
       style={{left: x, top: y}}
+      draggable={!editing}
       onPointerDown={(e) => {
         if (editing) {
           return;
@@ -80,7 +60,39 @@ export function DesktopIcon({
         if (e.button === 0) {
           onSelect({ctrlKey: e.ctrlKey, metaKey: e.metaKey, shiftKey: e.shiftKey});
         }
-        onPointerDown(e);
+      }}
+      onDragStart={(e) => {
+        if (editing) {
+          e.preventDefault();
+          return;
+        }
+        const rect = e.currentTarget.getBoundingClientRect();
+        e.dataTransfer.effectAllowed = 'move';
+        e.dataTransfer.setData(
+          VFS_ITEM_MIME,
+          JSON.stringify({
+            path,
+            offsetX: e.clientX - rect.left,
+            offsetY: e.clientY - rect.top,
+          }),
+        );
+      }}
+      onDragOver={(e) => {
+        if (isFolder && e.dataTransfer.types.includes(VFS_ITEM_MIME)) {
+          e.preventDefault();
+          e.dataTransfer.dropEffect = 'move';
+        }
+      }}
+      onDrop={(e) => {
+        if (!isFolder || !onDropItem || !e.dataTransfer.types.includes(VFS_ITEM_MIME)) {
+          return;
+        }
+        e.preventDefault();
+        e.stopPropagation();
+        const dragged = readVfsItemDrag(e.dataTransfer);
+        if (dragged && dragged.path !== path) {
+          onDropItem(dragged.path);
+        }
       }}
       onDoubleClick={editing ? undefined : onOpen}
       onContextMenu={onContextMenu}

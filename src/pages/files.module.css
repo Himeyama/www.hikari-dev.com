@@ -93,6 +93,12 @@
   padding: 0.75rem;
 }
 
+.bodyDropActive {
+  outline: 3px dashed var(--ifm-color-primary);
+  outline-offset: -3px;
+  background: color-mix(in srgb, var(--ifm-color-primary) 8%, transparent);
+}
+
 /* ===== 矩形選択 (ラバーバンド) ===== */
 .marquee {
   position: fixed;
@@ -162,7 +168,7 @@
 }
 
 .empty {
-  color: var(--ifm-color-emphasis-500);
+  color: var(--ifm-color-emphasis-700);
   text-align: center;
   margin-top: 3rem;
 }

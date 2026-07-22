@@ -12,6 +12,8 @@ import type {ContextMenuItem} from '@site/src/components/desktop/ContextMenu';
 import type {SelectModifiers} from '@site/src/components/desktop/DesktopIcon';
 import * as vfs from '@site/src/lib/desktop/vfs';
 import type {VfsEntry} from '@site/src/lib/desktop/vfs';
+import {downloadTextFile, importDroppedFiles} from '@site/src/lib/desktop/fileTransfer';
+import {VFS_ITEM_MIME, readVfsItemDrag} from '@site/src/lib/desktop/dragDrop';
 import styles from './files.module.css';
 
 // 親デスクトップへ送るメッセージの共通ソース タグ
@@ -45,6 +47,7 @@ function FilesApp(): ReactNode {
   const [renaming, setRenaming] = useState<string | null>(null);
   const [menu, setMenu] = useState<Menu | null>(null);
   const [address, setAddress] = useState<string>(initialPath);
+  const [osDragOver, setOsDragOver] = useState(false);
   const pathRef = useRef(path);
   pathRef.current = path;
 
@@ -64,6 +67,18 @@ function FilesApp(): ReactNode {
     const unsub = vfs.subscribe(() => refresh(pathRef.current));
     return unsub;
   }, [path, refresh]);
+
+  // ドロップ先の要素 (フォルダー項目など) が stopPropagation しても、
+  // ドラッグ中のハイライトは必ず解除されるよう capture フェーズで監視する
+  useEffect(() => {
+    const onDropOrEnd = () => setOsDragOver(false);
+    window.addEventListener('drop', onDropOrEnd, true);
+    window.addEventListener('dragend', onDropOrEnd, true);
+    return () => {
+      window.removeEventListener('drop', onDropOrEnd, true);
+      window.removeEventListener('dragend', onDropOrEnd, true);
+    };
+  }, []);
 
   const navigate = (p: string) => {
     setSelectedPaths(new Set());
@@ -154,6 +169,21 @@ function FilesApp(): ReactNode {
     setSelectedPaths(new Set());
     setAnchorPath(null);
     setRenaming(null);
+  };
+
+  const downloadFile = (entry: VfsEntry) => {
+    const content = vfs.readFile(entry.path);
+    if (content !== null) {
+      downloadTextFile(entry.name, content);
+    }
+  };
+
+  // ---- ドラッグ&ドロップでの移動 (デスクトップ/他の Files ウィンドウとの間も含む) ----
+  const moveItemInto = (sourcePath: string, targetDir: string) => {
+    if (sourcePath === targetDir) {
+      return;
+    }
+    vfs.move(sourcePath, targetDir);
   };
 
   // ---- 選択 (Ctrl 複数選択 / Shift 範囲選択) ----
@@ -280,6 +310,13 @@ function FilesApp(): ReactNode {
             onClick: () => setRenaming(targets[0].path),
           },
         );
+        if (targets[0].node.type === 'file') {
+          items.push({
+            type: 'item',
+            label: <Translate id="files.download">ダウンロード</Translate>,
+            onClick: () => downloadFile(targets[0]),
+          });
+        }
       }
       items.push({
         type: 'item',
@@ -340,9 +377,39 @@ function FilesApp(): ReactNode {
       </div>
 
       <div
-        className={styles.body}
+        className={osDragOver ? `${styles.body} ${styles.bodyDropActive}` : styles.body}
         onPointerDown={onBodyPointerDown}
         onContextMenu={(e) => openMenu(e, null)}
+        onDragOver={(e) => {
+          if (
+            e.dataTransfer.types.includes('Files') ||
+            e.dataTransfer.types.includes(VFS_ITEM_MIME)
+          ) {
+            e.preventDefault();
+            e.dataTransfer.dropEffect = e.dataTransfer.types.includes(VFS_ITEM_MIME)
+              ? 'move'
+              : 'copy';
+            setOsDragOver(true);
+          }
+        }}
+        onDragLeave={(e) => {
+          if (e.target === e.currentTarget) {
+            setOsDragOver(false);
+          }
+        }}
+        onDrop={(e) => {
+          if (e.dataTransfer.types.includes(VFS_ITEM_MIME)) {
+            e.preventDefault();
+            const dragged = readVfsItemDrag(e.dataTransfer);
+            if (dragged) {
+              moveItemInto(dragged.path, path);
+            }
+          } else if (e.dataTransfer.files.length > 0) {
+            e.preventDefault();
+            void importDroppedFiles(e.dataTransfer.files, path);
+          }
+          setOsDragOver(false);
+        }}
       >
         {entries.length === 0 ? (
           <p className={styles.empty}>
@@ -366,6 +433,41 @@ function FilesApp(): ReactNode {
                       ? `${styles.entry} ${styles.entrySelected}`
                       : styles.entry
                   }
+                  draggable={renaming !== entry.path}
+                  onDragStart={(e) => {
+                    if (renaming === entry.path) {
+                      e.preventDefault();
+                      return;
+                    }
+                    e.dataTransfer.effectAllowed = 'move';
+                    e.dataTransfer.setData(
+                      VFS_ITEM_MIME,
+                      JSON.stringify({path: entry.path, offsetX: 0, offsetY: 0}),
+                    );
+                  }}
+                  onDragOver={(e) => {
+                    if (
+                      entry.node.type === 'folder' &&
+                      e.dataTransfer.types.includes(VFS_ITEM_MIME)
+                    ) {
+                      e.preventDefault();
+                      e.dataTransfer.dropEffect = 'move';
+                    }
+                  }}
+                  onDrop={(e) => {
+                    if (
+                      entry.node.type !== 'folder' ||
+                      !e.dataTransfer.types.includes(VFS_ITEM_MIME)
+                    ) {
+                      return;
+                    }
+                    e.preventDefault();
+                    e.stopPropagation();
+                    const dragged = readVfsItemDrag(e.dataTransfer);
+                    if (dragged) {
+                      moveItemInto(dragged.path, entry.path);
+                    }
+                  }}
                   onClick={(e) =>
                     selectWith(entry.path, {
                       ctrlKey: e.ctrlKey,

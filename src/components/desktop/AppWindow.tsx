@@ -38,6 +38,7 @@ type Props = {
   snap: SnapKind;
   minimized: boolean;
   focused: boolean;
+  dragPassthrough: boolean;
   onFocus: () => void;
   onClose: () => void;
   onMinimize: () => void;
@@ -107,6 +108,7 @@ export function AppWindow({
   snap,
   minimized,
   focused,
+  dragPassthrough,
   onFocus,
   onClose,
   onMinimize,
@@ -279,7 +281,7 @@ export function AppWindow({
       </div>
       <div className={styles.windowBody}>
         <iframe className={styles.frame} src={src} title={titlePlain} loading="lazy" />
-        {!focused && (
+        {!focused && !dragPassthrough && (
           <div
             className={styles.clickCatcher}
             onPointerDown={onFocus}
