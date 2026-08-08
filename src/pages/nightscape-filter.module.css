@@ -16,6 +16,108 @@
   font-size: 1rem;
 }
 
+/* ── Big preview ──────────────────────────────── */
+.bigPreviewSection {
+  margin-bottom: 1.5rem;
+}
+
+.bigPreviewPair {
+  display: flex;
+  gap: 1rem;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.bigPreviewCol {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.4rem;
+  flex: 1 1 260px;
+  max-width: 480px;
+}
+
+.bigPreviewImg {
+  width: 100%;
+  max-height: 420px;
+  object-fit: contain;
+  border-radius: 6px;
+  background: var(--ifm-color-emphasis-100);
+}
+
+.bigPreviewPlaceholder {
+  border: 1px dashed var(--ifm-color-emphasis-400);
+  border-radius: 6px;
+  padding: 3.5rem 1.5rem;
+  text-align: center;
+  color: var(--ifm-color-emphasis-500);
+  font-size: 0.95rem;
+}
+
+/* ── Preset selector ───────────────────────────── */
+.presetSection {
+  margin-bottom: 1.5rem;
+}
+
+.presetSectionLabel {
+  display: block;
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: var(--ifm-color-emphasis-700);
+  margin-bottom: 0.6rem;
+  text-align: center;
+}
+
+.presetGrid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 0.6rem;
+}
+
+@media (max-width: 640px) {
+  .presetGrid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+.presetItem {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.4rem;
+  border: 2px solid var(--ifm-color-emphasis-200);
+  border-radius: 6px;
+  background: var(--ifm-background-surface-color);
+  padding: 0.5rem;
+  cursor: pointer;
+  transition: border-color 0.12s, background 0.12s;
+}
+
+.presetItem:hover {
+  border-color: var(--ifm-color-emphasis-400);
+}
+
+.presetItemActive {
+  border-color: var(--ifm-color-primary);
+  background: var(--ifm-color-emphasis-100);
+}
+
+.presetThumb {
+  width: 100%;
+  aspect-ratio: 3 / 2;
+  border-radius: 4px;
+  background-color: var(--ifm-color-emphasis-100);
+  background-size: cover;
+  background-position: center;
+}
+
+.presetLabel {
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: var(--ifm-font-color-base);
+  text-align: center;
+}
+
 /* ── Controls ──────────────────────────────────── */
 .controlsRow {
   display: flex;
@@ -110,6 +212,53 @@
   width: 16px;
   height: 16px;
   cursor: pointer;
+}
+
+/* ── Manual parameter adjustment ─────────────────── */
+.details {
+  margin-bottom: 1.5rem;
+  border: 1px solid var(--ifm-color-emphasis-200);
+  border-radius: 4px;
+  padding: 0.75rem 1rem;
+  background: var(--ifm-background-surface-color);
+}
+
+.detailsSummary {
+  cursor: pointer;
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: var(--ifm-color-emphasis-700);
+  user-select: none;
+}
+
+.paramPanel {
+  margin-top: 0.9rem;
+}
+
+.paramGrid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 0.6rem 1.5rem;
+  margin-top: 0.75rem;
+}
+
+@media (max-width: 640px) {
+  .paramGrid {
+    grid-template-columns: 1fr;
+  }
+}
+
+.paramGrid .qualityRow {
+  justify-content: space-between;
+}
+
+.paramGrid .qualityLabel {
+  min-width: 6em;
+}
+
+.paramGrid .qualitySlider {
+  width: auto;
+  flex: 1;
 }
 
 /* ── Dropzone ──────────────────────────────────── */

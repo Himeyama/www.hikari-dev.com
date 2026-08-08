@@ -1851,5 +1851,86 @@
   },
   "miniApps.nightscape.description": {
     "message": "Deepen blacks and make light sources glow in night photos."
+  },
+  "nightscape.presetLabel": {
+    "message": "Presets"
+  },
+  "nightscape.preset.standard": {
+    "message": "Standard"
+  },
+  "nightscape.preset.warmStreet": {
+    "message": "Warm Street"
+  },
+  "nightscape.preset.coolBlue": {
+    "message": "Cool Blue"
+  },
+  "nightscape.preset.neon": {
+    "message": "Neon"
+  },
+  "nightscape.preset.cinematic": {
+    "message": "Cinematic"
+  },
+  "nightscape.preset.noir": {
+    "message": "Noir"
+  },
+  "nightscape.preset.softGlow": {
+    "message": "Soft Glow"
+  },
+  "nightscape.preset.highContrast": {
+    "message": "High Contrast"
+  },
+  "nightscape.param.exposure": {
+    "message": "Exposure"
+  },
+  "nightscape.param.contrast": {
+    "message": "Contrast"
+  },
+  "nightscape.param.whiteGain": {
+    "message": "Whites"
+  },
+  "nightscape.param.blackOffset": {
+    "message": "Blacks"
+  },
+  "nightscape.param.rTemp": {
+    "message": "Red channel"
+  },
+  "nightscape.param.bTemp": {
+    "message": "Blue channel"
+  },
+  "nightscape.param.gTint": {
+    "message": "Green tint"
+  },
+  "nightscape.param.vibrance": {
+    "message": "Vibrance"
+  },
+  "nightscape.param.saturation": {
+    "message": "Saturation"
+  },
+  "nightscape.param.clarity": {
+    "message": "Clarity"
+  },
+  "nightscape.param.sharpen": {
+    "message": "Sharpen"
+  },
+  "nightscape.param.vignette": {
+    "message": "Vignette"
+  },
+  "nightscape.param.highlightRolloff": {
+    "message": "Highlight rolloff"
+  },
+  "nightscape.param.shadowLift": {
+    "message": "Shadow lift"
+  },
+  "nightscape.paramSummary": {
+    "message": "Advanced settings (manual adjustment)"
+  },
+  "nightscape.paramReset": {
+    "message": "Reset to preset values"
+  },
+  "nightscape.bigPreviewPlaceholder": {
+    "message": "Upload an image to see a large preview here."
+  },
+  "nightscape.resizeToPortrait": {
+    "message": "Resize to 1080 x 1350"
   }
 }

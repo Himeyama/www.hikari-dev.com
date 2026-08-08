@@ -1851,5 +1851,86 @@
   },
   "miniApps.nightscape.description": {
     "message": "加深夜景照片的黑色並讓光源更加突出。"
+  },
+  "nightscape.presetLabel": {
+    "message": "預設"
+  },
+  "nightscape.preset.standard": {
+    "message": "標準"
+  },
+  "nightscape.preset.warmStreet": {
+    "message": "暖色街景"
+  },
+  "nightscape.preset.coolBlue": {
+    "message": "冷色藍調"
+  },
+  "nightscape.preset.neon": {
+    "message": "霓虹"
+  },
+  "nightscape.preset.cinematic": {
+    "message": "電影感"
+  },
+  "nightscape.preset.noir": {
+    "message": "黑色電影"
+  },
+  "nightscape.preset.softGlow": {
+    "message": "柔光"
+  },
+  "nightscape.preset.highContrast": {
+    "message": "高對比"
+  },
+  "nightscape.param.exposure": {
+    "message": "曝光"
+  },
+  "nightscape.param.contrast": {
+    "message": "對比度"
+  },
+  "nightscape.param.whiteGain": {
+    "message": "白色階"
+  },
+  "nightscape.param.blackOffset": {
+    "message": "黑色階"
+  },
+  "nightscape.param.rTemp": {
+    "message": "紅色通道"
+  },
+  "nightscape.param.bTemp": {
+    "message": "藍色通道"
+  },
+  "nightscape.param.gTint": {
+    "message": "綠色偏色"
+  },
+  "nightscape.param.vibrance": {
+    "message": "鮮豔度"
+  },
+  "nightscape.param.saturation": {
+    "message": "飽和度"
+  },
+  "nightscape.param.clarity": {
+    "message": "清晰度"
+  },
+  "nightscape.param.sharpen": {
+    "message": "銳化"
+  },
+  "nightscape.param.vignette": {
+    "message": "邊角失光"
+  },
+  "nightscape.param.highlightRolloff": {
+    "message": "高光壓縮"
+  },
+  "nightscape.param.shadowLift": {
+    "message": "陰影提升"
+  },
+  "nightscape.paramSummary": {
+    "message": "進階設定 (手動調整)"
+  },
+  "nightscape.paramReset": {
+    "message": "還原為預設值"
+  },
+  "nightscape.bigPreviewPlaceholder": {
+    "message": "上傳圖片後，將在此顯示大尺寸預覽。"
+  },
+  "nightscape.resizeToPortrait": {
+    "message": "縮小為 1080 x 1350"
   }
 }

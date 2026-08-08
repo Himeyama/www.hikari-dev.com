@@ -1839,5 +1839,86 @@
   },
   "miniApps.nightscape.description": {
     "message": "夜景写真の黒を引き締め、光源を美しく強調する。"
+  },
+  "nightscape.presetLabel": {
+    "message": "プリセット"
+  },
+  "nightscape.preset.standard": {
+    "message": "スタンダード"
+  },
+  "nightscape.preset.warmStreet": {
+    "message": "ウォームストリート"
+  },
+  "nightscape.preset.coolBlue": {
+    "message": "クールブルー"
+  },
+  "nightscape.preset.neon": {
+    "message": "ネオン"
+  },
+  "nightscape.preset.cinematic": {
+    "message": "シネマティック"
+  },
+  "nightscape.preset.noir": {
+    "message": "ノワール"
+  },
+  "nightscape.preset.softGlow": {
+    "message": "ソフトグロー"
+  },
+  "nightscape.preset.highContrast": {
+    "message": "ハイコントラスト"
+  },
+  "nightscape.param.exposure": {
+    "message": "露出"
+  },
+  "nightscape.param.contrast": {
+    "message": "コントラスト"
+  },
+  "nightscape.param.whiteGain": {
+    "message": "白レベル"
+  },
+  "nightscape.param.blackOffset": {
+    "message": "黒レベル"
+  },
+  "nightscape.param.rTemp": {
+    "message": "赤チャンネル"
+  },
+  "nightscape.param.bTemp": {
+    "message": "青チャンネル"
+  },
+  "nightscape.param.gTint": {
+    "message": "緑かぶり"
+  },
+  "nightscape.param.vibrance": {
+    "message": "鮮やかさ"
+  },
+  "nightscape.param.saturation": {
+    "message": "彩度"
+  },
+  "nightscape.param.clarity": {
+    "message": "明瞭度"
+  },
+  "nightscape.param.sharpen": {
+    "message": "シャープ"
+  },
+  "nightscape.param.vignette": {
+    "message": "周辺減光"
+  },
+  "nightscape.param.highlightRolloff": {
+    "message": "ハイライト圧縮"
+  },
+  "nightscape.param.shadowLift": {
+    "message": "シャドウ持ち上げ"
+  },
+  "nightscape.paramSummary": {
+    "message": "詳細設定 (手動調整)"
+  },
+  "nightscape.paramReset": {
+    "message": "プリセットの値に戻す"
+  },
+  "nightscape.bigPreviewPlaceholder": {
+    "message": "画像をアップロードすると、ここに大きいプレビューが表示される。"
+  },
+  "nightscape.resizeToPortrait": {
+    "message": "1080 x 1350 に縮小"
   }
 }

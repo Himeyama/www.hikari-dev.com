@@ -32,6 +32,163 @@ function clamp01(v: number): number {
   return v < 0 ? 0 : v > 1 ? 1 : v;
 }
 
+interface NightscapeCoeffs {
+  exposure: number;
+  contrast: number;
+  whiteGain: number;
+  blackOffset: number;
+  rTemp: number;
+  bTemp: number;
+  gTint: number;
+  vibrance: number;
+  saturation: number;
+  clarity: number;
+  sharpen: number;
+  vignette: number;
+  highlightRolloff: number;
+  shadowLift: number;
+}
+
+interface NightscapePreset {
+  id: string;
+  gradient: string;
+  coeffs: NightscapeCoeffs;
+  defaultNoiseReduction: boolean;
+}
+
+const STANDARD_COEFFS: NightscapeCoeffs = {
+  exposure: 0.3,
+  contrast: 0.45,
+  whiteGain: 0.08,
+  blackOffset: -0.05,
+  rTemp: -0.04,
+  bTemp: 0.04,
+  gTint: -0.015,
+  vibrance: 0.3,
+  saturation: 0.08,
+  clarity: 0.3,
+  sharpen: 0.2,
+  vignette: 0.15,
+  highlightRolloff: 0.4,
+  shadowLift: 0.25,
+};
+
+const NIGHTSCAPE_PRESETS: NightscapePreset[] = [
+  {
+    id: 'standard',
+    gradient: 'linear-gradient(135deg, #3a3f52, #1c1e2a)',
+    coeffs: STANDARD_COEFFS,
+    defaultNoiseReduction: true,
+  },
+  {
+    id: 'warmStreet',
+    gradient: 'linear-gradient(135deg, #f6a541, #7a3b12)',
+    coeffs: {
+      ...STANDARD_COEFFS,
+      rTemp: -0.09,
+      bTemp: 0.02,
+      gTint: -0.02,
+      contrast: 0.5,
+      whiteGain: 0.1,
+      vibrance: 0.32,
+      saturation: 0.12,
+    },
+    defaultNoiseReduction: true,
+  },
+  {
+    id: 'coolBlue',
+    gradient: 'linear-gradient(135deg, #4d8dff, #0b1c3d)',
+    coeffs: {
+      ...STANDARD_COEFFS,
+      rTemp: -0.02,
+      bTemp: 0.09,
+      gTint: -0.01,
+      contrast: 0.4,
+      blackOffset: -0.07,
+      vibrance: 0.26,
+      saturation: 0.06,
+    },
+    defaultNoiseReduction: true,
+  },
+  {
+    id: 'neon',
+    gradient: 'linear-gradient(135deg, #ff2fd6, #29e0ff)',
+    coeffs: {
+      ...STANDARD_COEFFS,
+      contrast: 0.5,
+      vibrance: 0.55,
+      saturation: 0.3,
+      clarity: 0.4,
+      sharpen: 0.28,
+      whiteGain: 0.1,
+    },
+    defaultNoiseReduction: true,
+  },
+  {
+    id: 'cinematic',
+    gradient: 'linear-gradient(135deg, #d98a3d, #14313a)',
+    coeffs: {
+      ...STANDARD_COEFFS,
+      contrast: 0.6,
+      rTemp: -0.05,
+      bTemp: 0.02,
+      gTint: -0.02,
+      vibrance: 0.18,
+      saturation: 0.02,
+      vignette: 0.22,
+      shadowLift: 0.2,
+    },
+    defaultNoiseReduction: true,
+  },
+  {
+    id: 'noir',
+    gradient: 'linear-gradient(135deg, #8a8f9c, #0a0a0d)',
+    coeffs: {
+      ...STANDARD_COEFFS,
+      contrast: 0.75,
+      vibrance: 0.02,
+      saturation: -0.2,
+      whiteGain: 0.1,
+      blackOffset: -0.09,
+      vignette: 0.32,
+      clarity: 0.35,
+    },
+    defaultNoiseReduction: true,
+  },
+  {
+    id: 'softGlow',
+    gradient: 'linear-gradient(135deg, #ffd9c2, #6f5a7d)',
+    coeffs: {
+      ...STANDARD_COEFFS,
+      contrast: 0.22,
+      clarity: 0.1,
+      sharpen: 0.06,
+      shadowLift: 0.4,
+      highlightRolloff: 0.55,
+      vibrance: 0.2,
+      saturation: 0.05,
+      vignette: 0.08,
+    },
+    defaultNoiseReduction: true,
+  },
+  {
+    id: 'highContrast',
+    gradient: 'linear-gradient(135deg, #ffe14d, #1a0e2e)',
+    coeffs: {
+      ...STANDARD_COEFFS,
+      contrast: 0.8,
+      whiteGain: 0.14,
+      blackOffset: -0.1,
+      vibrance: 0.45,
+      saturation: 0.2,
+      clarity: 0.42,
+      sharpen: 0.3,
+      vignette: 0.18,
+    },
+    defaultNoiseReduction: true,
+  },
+];
+
 // 分離型ボックスぼかし (スライディングウィンドウ)
 function boxBlur1D(
   src: Float32Array,
@@ -85,6 +242,7 @@ function applyNightscapeGrading(
   h: number,
   t: number,
   noiseReduction: boolean,
+  coeffs: NightscapeCoeffs,
 ): void {
   const n = w * h;
 
@@ -113,15 +271,15 @@ function applyNightscapeGrading(
   }
 
   // 2. トーン・色調補正 (露出・コントラスト・ハイライト/シャドウ・黒/白レベル・色温度・自然な彩度)
-  const exposureGain = 2 ** (0.3 * t);
-  const contrast = 0.3 * t + 0.15 * t; // コントラスト + かすみ除去の簡易統合
-  const whiteGain = 1 + 0.08 * t;
-  const blackOffset = -0.05 * t;
-  const rTemp = 1 - 0.04 * t;
-  const bTemp = 1 + 0.04 * t;
-  const gTint = 1 - 0.015 * t;
-  const vibranceAmt = 0.3 * t;
-  const saturationAmt = 0.08 * t;
+  const exposureGain = 2 ** (coeffs.exposure * t);
+  const contrast = coeffs.contrast * t;
+  const whiteGain = 1 + coeffs.whiteGain * t;
+  const blackOffset = coeffs.blackOffset * t;
+  const rTemp = 1 + coeffs.rTemp * t;
+  const bTemp = 1 + coeffs.bTemp * t;
+  const gTint = 1 + coeffs.gTint * t;
+  const vibranceAmt = coeffs.vibrance * t;
+  const saturationAmt = coeffs.saturation * t;
 
   for (let i = 0; i < n; i++) {
     const o = i * 4;
@@ -132,13 +290,13 @@ function applyNightscapeGrading(
     const y1 = 0.2126 * r + 0.7152 * g + 0.0722 * b;
     if (y1 > 0.7) {
       const hl = (y1 - 0.7) / 0.3;
-      const factor = 1 - 0.4 * t * hl * 0.6;
+      const factor = 1 - coeffs.highlightRolloff * t * hl * 0.6;
       r *= factor;
       g *= factor;
       b *= factor;
     } else if (y1 < 0.3) {
       const sh = (0.3 - y1) / 0.3;
-      const lift = 0.25 * t * sh * 0.5;
+      const lift = coeffs.shadowLift * t * sh * 0.5;
       r += lift;
       g += lift;
       b += lift;
@@ -179,8 +337,8 @@ function applyNightscapeGrading(
     }
     const clarityBlur = boxBlur2D(lum, w, h, 4);
     const sharpenBlur = boxBlur2D(lum, w, h, 1);
-    const clarityAmt = 0.3 * t; // clarity + texture 統合
-    const sharpenAmt = 0.2 * t;
+    const clarityAmt = coeffs.clarity * t; // clarity + texture 統合
+    const sharpenAmt = coeffs.sharpen * t;
     for (let i = 0; i < n; i++) {
       const o = i * 4;
       const delta =
@@ -196,7 +354,7 @@ function applyNightscapeGrading(
     const cx = w / 2;
     const cy = h / 2;
     const maxDist2 = cx * cx + cy * cy;
-    const strength = 0.15 * t;
+    const strength = coeffs.vignette * t;
     for (let y = 0; y < h; y++) {
       const dy = y - cy;
       for (let x = 0; x < w; x++) {
@@ -219,23 +377,33 @@ interface FilterResult {
   height: number;
 }
 
+const RESIZE_MAX_WIDTH = 1080;
+const RESIZE_MAX_HEIGHT = 1350;
+
 function processImage(
   sourceUrl: string,
   intensity: number,
   noiseReduction: boolean,
+  coeffs: NightscapeCoeffs,
+  resize: boolean,
 ): Promise<FilterResult> {
   return new Promise((resolve, reject) => {
     const img = new Image();
     img.onload = () => {
+      const scale = resize
+        ? Math.min(1, RESIZE_MAX_WIDTH / img.naturalWidth, RESIZE_MAX_HEIGHT / img.naturalHeight)
+        : 1;
+      const targetWidth = Math.max(1, Math.round(img.naturalWidth * scale));
+      const targetHeight = Math.max(1, Math.round(img.naturalHeight * scale));
       const canvas = document.createElement('canvas');
-      canvas.width = img.naturalWidth;
-      canvas.height = img.naturalHeight;
+      canvas.width = targetWidth;
+      canvas.height = targetHeight;
       const ctx = canvas.getContext('2d');
       if (!ctx) {
         reject(new Error('canvas context unavailable'));
         return;
       }
-      ctx.drawImage(img, 0, 0);
+      ctx.drawImage(img, 0, 0, targetWidth, targetHeight);
       const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
       applyNightscapeGrading(
         imageData.data,
@@ -243,6 +411,7 @@ function processImage(
         canvas.height,
         intensity / 100,
         noiseReduction,
+        coeffs,
       );
       ctx.putImageData(imageData, 0, 0);
       canvas.toBlob(
@@ -254,8 +423,8 @@ function processImage(
           resolve({
             filteredUrl: URL.createObjectURL(blob),
             filteredSize: blob.size,
-            width: img.naturalWidth,
-            height: img.naturalHeight,
+            width: canvas.width,
+            height: canvas.height,
           });
         },
         'image/jpeg',
@@ -271,9 +440,11 @@ async function createNightscapeImage(
   file: File,
   intensity: number,
   noiseReduction: boolean,
+  coeffs: NightscapeCoeffs,
+  resize: boolean,
 ): Promise<NightscapeImage> {
   const originalUrl = URL.createObjectURL(file);
-  const result = await processImage(originalUrl, intensity, noiseReduction);
+  const result = await processImage(originalUrl, intensity, noiseReduction, coeffs, resize);
   return {
     id: `${file.name}-${file.lastModified}-${Math.random().toString(36).slice(2)}`,
     originalName: file.name,
@@ -283,14 +454,166 @@ async function createNightscapeImage(
   };
 }
 
+function makeThumbnailSource(sourceUrl: string, maxDim: number): Promise<string> {
+  return new Promise((resolve, reject) => {
+    const img = new Image();
+    img.onload = () => {
+      const scale = Math.min(1, maxDim / Math.max(img.naturalWidth, img.naturalHeight));
+      const canvas = document.createElement('canvas');
+      canvas.width = Math.max(1, Math.round(img.naturalWidth * scale));
+      canvas.height = Math.max(1, Math.round(img.naturalHeight * scale));
+      const ctx = canvas.getContext('2d');
+      if (!ctx) {
+        reject(new Error('canvas context unavailable'));
+        return;
+      }
+      ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+      resolve(canvas.toDataURL('image/jpeg', 0.85));
+    };
+    img.onerror = () => reject(new Error('image load failed'));
+    img.src = sourceUrl;
+  });
+}
+
+interface NightscapeParamDef {
+  key: keyof NightscapeCoeffs;
+  label: ReactNode;
+  min: number;
+  max: number;
+  step: number;
+}
+
+const NIGHTSCAPE_PARAM_DEFS: NightscapeParamDef[] = [
+  {
+    key: 'exposure',
+    label: <Translate id="nightscape.param.exposure">露出</Translate>,
+    min: -0.3,
+    max: 0.8,
+    step: 0.01,
+  },
+  {
+    key: 'contrast',
+    label: <Translate id="nightscape.param.contrast">コントラスト</Translate>,
+    min: -0.3,
+    max: 1,
+    step: 0.01,
+  },
+  {
+    key: 'whiteGain',
+    label: <Translate id="nightscape.param.whiteGain">白レベル</Translate>,
+    min: -0.2,
+    max: 0.3,
+    step: 0.01,
+  },
+  {
+    key: 'blackOffset',
+    label: <Translate id="nightscape.param.blackOffset">黒レベル</Translate>,
+    min: -0.3,
+    max: 0.2,
+    step: 0.01,
+  },
+  {
+    key: 'rTemp',
+    label: <Translate id="nightscape.param.rTemp">赤チャンネル</Translate>,
+    min: -0.2,
+    max: 0.2,
+    step: 0.005,
+  },
+  {
+    key: 'bTemp',
+    label: <Translate id="nightscape.param.bTemp">青チャンネル</Translate>,
+    min: -0.2,
+    max: 0.2,
+    step: 0.005,
+  },
+  {
+    key: 'gTint',
+    label: <Translate id="nightscape.param.gTint">緑かぶり</Translate>,
+    min: -0.15,
+    max: 0.15,
+    step: 0.005,
+  },
+  {
+    key: 'vibrance',
+    label: <Translate id="nightscape.param.vibrance">鮮やかさ</Translate>,
+    min: -0.3,
+    max: 0.8,
+    step: 0.01,
+  },
+  {
+    key: 'saturation',
+    label: <Translate id="nightscape.param.saturation">彩度</Translate>,
+    min: -0.4,
+    max: 0.5,
+    step: 0.01,
+  },
+  {
+    key: 'clarity',
+    label: <Translate id="nightscape.param.clarity">明瞭度</Translate>,
+    min: -0.2,
+    max: 0.6,
+    step: 0.01,
+  },
+  {
+    key: 'sharpen',
+    label: <Translate id="nightscape.param.sharpen">シャープ</Translate>,
+    min: -0.2,
+    max: 0.4,
+    step: 0.01,
+  },
+  {
+    key: 'vignette',
+    label: <Translate id="nightscape.param.vignette">周辺減光</Translate>,
+    min: -0.3,
+    max: 0.6,
+    step: 0.01,
+  },
+  {
+    key: 'highlightRolloff',
+    label: <Translate id="nightscape.param.highlightRolloff">ハイライト圧縮</Translate>,
+    min: 0,
+    max: 1,
+    step: 0.01,
+  },
+  {
+    key: 'shadowLift',
+    label: <Translate id="nightscape.param.shadowLift">シャドウ持ち上げ</Translate>,
+    min: 0,
+    max: 0.8,
+    step: 0.01,
+  },
+];
+
 export default function NightscapeFilterPage(): ReactNode {
+  const [selectedPreset, setSelectedPreset] = useState('standard');
+  const [customCoeffs, setCustomCoeffs] = useState<NightscapeCoeffs>({...STANDARD_COEFFS});
   const [intensity, setIntensity] = useState(100);
   const [noiseReduction, setNoiseReduction] = useState(true);
+  const [resizeToPortrait, setResizeToPortrait] = useState(false);
   const [images, setImages] = useState<NightscapeImage[]>([]);
+  const [presetPreviews, setPresetPreviews] = useState<Record<string, string>>({});
   const [isDragging, setIsDragging] = useState(false);
   const [isProcessing, setIsProcessing] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const inputRef = useRef<HTMLInputElement>(null);
+
+  const selectPreset = (presetId: string) => {
+    setSelectedPreset(presetId);
+    const preset = NIGHTSCAPE_PRESETS.find((p) => p.id === presetId);
+    if (preset) {
+      setNoiseReduction(preset.defaultNoiseReduction);
+      setCustomCoeffs({...preset.coeffs});
+    }
+  };
+
+  const updateParam = (key: keyof NightscapeCoeffs, value: number) => {
+    setCustomCoeffs((prev) => ({...prev, [key]: value}));
+  };
+
+  const resetParams = () => {
+    const preset = NIGHTSCAPE_PRESETS.find((p) => p.id === selectedPreset);
+    setCustomCoeffs({...(preset?.coeffs ?? STANDARD_COEFFS)});
+  };
 
   const handleFiles = useCallback(
     async (fileList: FileList | null) => {
@@ -306,7 +629,9 @@ export default function NightscapeFilterPage(): ReactNode {
       setIsProcessing(true);
       try {
         const results = await Promise.all(
-          files.map((f) => createNightscapeImage(f, intensity, noiseReduction)),
+          files.map((f) =>
+            createNightscapeImage(f, intensity, noiseReduction, customCoeffs, resizeToPortrait),
+          ),
         );
         setImages((prev) => [...results, ...prev]);
       } catch {
@@ -317,7 +642,7 @@ export default function NightscapeFilterPage(): ReactNode {
         setIsProcessing(false);
       }
     },
-    [intensity, noiseReduction],
+    [intensity, noiseReduction, customCoeffs, resizeToPortrait],
   );
 
   const requeryRef = useRef<number | null>(null);
@@ -330,7 +655,13 @@ export default function NightscapeFilterPage(): ReactNode {
         const updated = await Promise.all(
           images.map(async (img) => {
             try {
-              const result = await processImage(img.originalUrl, intensity, noiseReduction);
+              const result = await processImage(
+                img.originalUrl,
+                intensity,
+                noiseReduction,
+                customCoeffs,
+                resizeToPortrait,
+              );
               URL.revokeObjectURL(img.filteredUrl);
               return {...img, ...result};
             } catch {
@@ -345,7 +676,50 @@ export default function NightscapeFilterPage(): ReactNode {
       if (requeryRef.current) window.clearTimeout(requeryRef.current);
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [intensity, noiseReduction]);
+  }, [intensity, noiseReduction, customCoeffs, resizeToPortrait]);
+
+  const previewRequeryRef = useRef<number | null>(null);
+
+  useEffect(() => {
+    const firstUrl = images[0]?.originalUrl;
+    if (!firstUrl) {
+      setPresetPreviews((prev) => {
+        Object.values(prev).forEach((url) => URL.revokeObjectURL(url));
+        return {};
+      });
+      return;
+    }
+    if (previewRequeryRef.current) window.clearTimeout(previewRequeryRef.current);
+    previewRequeryRef.current = window.setTimeout(() => {
+      (async () => {
+        try {
+          const thumbSource = await makeThumbnailSource(firstUrl, 200);
+          const entries = await Promise.all(
+            NIGHTSCAPE_PRESETS.map(async (preset) => {
+              const result = await processImage(
+                thumbSource,
+                intensity,
+                noiseReduction,
+                preset.coeffs,
+                false,
+              );
+              return [preset.id, result.filteredUrl] as const;
+            }),
+          );
+          setPresetPreviews((prev) => {
+            Object.values(prev).forEach((url) => URL.revokeObjectURL(url));
+            return Object.fromEntries(entries);
+          });
+        } catch {
+          // プレビュー生成に失敗してもプレースホルダー表示にフォールバックする
+        }
+      })();
+    }, 200);
+    return () => {
+      if (previewRequeryRef.current) window.clearTimeout(previewRequeryRef.current);
+    };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [images[0]?.originalUrl, intensity, noiseReduction]);
 
   const onDrop = (e: React.DragEvent<HTMLDivElement>) => {
     e.preventDefault();
@@ -399,6 +773,97 @@ export default function NightscapeFilterPage(): ReactNode {
           </Translate>
         </p>
 
+        {/* Big preview */}
+        <div className={styles.bigPreviewSection}>
+          {images[0] ? (
+            <div className={styles.bigPreviewPair}>
+              <div className={styles.bigPreviewCol}>
+                <img
+                  src={images[0].originalUrl}
+                  alt={images[0].originalName}
+                  className={styles.bigPreviewImg}
+                />
+                <span className={styles.compareLabel}>
+                  <Translate id="nightscape.before">加工前</Translate>
+                </span>
+              </div>
+              <div className={styles.bigPreviewCol}>
+                <img
+                  src={images[0].filteredUrl}
+                  alt={images[0].originalName}
+                  className={styles.bigPreviewImg}
+                />
+                <span className={styles.compareLabel}>
+                  <Translate id="nightscape.after">加工後</Translate>
+                </span>
+              </div>
+            </div>
+          ) : (
+            <div className={styles.bigPreviewPlaceholder}>
+              <Translate id="nightscape.bigPreviewPlaceholder">
+                画像をアップロードすると、ここに大きいプレビューが表示される。
+              </Translate>
+            </div>
+          )}
+        </div>
+
+        {/* Preset selector */}
+        <div className={styles.presetSection}>
+          <span className={styles.presetSectionLabel}>
+            <Translate id="nightscape.presetLabel">プリセット</Translate>
+          </span>
+          <div className={styles.presetGrid}>
+            {NIGHTSCAPE_PRESETS.map((preset) => {
+              const previewUrl = presetPreviews[preset.id];
+              return (
+                <button
+                  key={preset.id}
+                  type="button"
+                  className={`${styles.presetItem} ${
+                    selectedPreset === preset.id ? styles.presetItemActive : ''
+                  }`}
+                  onClick={() => selectPreset(preset.id)}
+                >
+                  <span
+                    className={styles.presetThumb}
+                    style={
+                      previewUrl
+                        ? {backgroundImage: `url(${previewUrl})`}
+                        : {backgroundImage: preset.gradient}
+                    }
+                  />
+                  <span className={styles.presetLabel}>
+                    {preset.id === 'standard' && (
+                      <Translate id="nightscape.preset.standard">スタンダード</Translate>
+                    )}
+                    {preset.id === 'warmStreet' && (
+                      <Translate id="nightscape.preset.warmStreet">ウォームストリート</Translate>
+                    )}
+                    {preset.id === 'coolBlue' && (
+                      <Translate id="nightscape.preset.coolBlue">クールブルー</Translate>
+                    )}
+                    {preset.id === 'neon' && (
+                      <Translate id="nightscape.preset.neon">ネオン</Translate>
+                    )}
+                    {preset.id === 'cinematic' && (
+                      <Translate id="nightscape.preset.cinematic">シネマティック</Translate>
+                    )}
+                    {preset.id === 'noir' && (
+                      <Translate id="nightscape.preset.noir">ノワール</Translate>
+                    )}
+                    {preset.id === 'softGlow' && (
+                      <Translate id="nightscape.preset.softGlow">ソフトグロー</Translate>
+                    )}
+                    {preset.id === 'highContrast' && (
+                      <Translate id="nightscape.preset.highContrast">ハイコントラスト</Translate>
+                    )}
+                  </span>
+                </button>
+              );
+            })}
+          </div>
+        </div>
+
         {/* Intensity slider */}
         <div className={styles.controlsRow}>
           <div className={styles.qualityRow}>
@@ -426,7 +891,46 @@ export default function NightscapeFilterPage(): ReactNode {
               <Translate id="nightscape.noiseReduction">ノイズ除去</Translate>
             </span>
           </label>
+          <label className={styles.checkboxRow}>
+            <input
+              type="checkbox"
+              checked={resizeToPortrait}
+              onChange={(e) => setResizeToPortrait(e.target.checked)}
+            />
+            <span>
+              <Translate id="nightscape.resizeToPortrait">1080 x 1350 に縮小</Translate>
+            </span>
+          </label>
         </div>
+
+        {/* Manual parameter adjustment */}
+        <details className={styles.details}>
+          <summary className={styles.detailsSummary}>
+            <Translate id="nightscape.paramSummary">詳細設定 (手動調整)</Translate>
+          </summary>
+          <div className={styles.paramPanel}>
+            <button type="button" className={styles.actionBtnGhost} onClick={resetParams}>
+              <Translate id="nightscape.paramReset">プリセットの値に戻す</Translate>
+            </button>
+            <div className={styles.paramGrid}>
+              {NIGHTSCAPE_PARAM_DEFS.map((def) => (
+                <div key={def.key} className={styles.qualityRow}>
+                  <span className={styles.qualityLabel}>{def.label}</span>
+                  <input
+                    type="range"
+                    min={def.min}
+                    max={def.max}
+                    step={def.step}
+                    value={customCoeffs[def.key]}
+                    onChange={(e) => updateParam(def.key, Number(e.target.value))}
+                    className={styles.qualitySlider}
+                  />
+                  <span className={styles.qualityValue}>{customCoeffs[def.key].toFixed(2)}</span>
+                </div>
+              ))}
+            </div>
+          </div>
+        </details>
 
         {/* Dropzone */}
         <div
