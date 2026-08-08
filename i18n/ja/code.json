@@ -1770,5 +1770,74 @@
   },
   "miniApps.viewer.description": {
     "message": "画像・動画・音声ファイルを表示する。"
+  },
+  "nightscape.errorNoImage": {
+    "message": "画像ファイルを選択してください。"
+  },
+  "nightscape.errorConvert": {
+    "message": "処理に失敗した画像があります。"
+  },
+  "nightscape.title": {
+    "message": "夜景美化フィルター"
+  },
+  "nightscape.description": {
+    "message": "夜景写真の黒を引き締め、光源を美しく強調するフィルター。ブラウザ内で処理されるためサーバーに画像は送信されない。"
+  },
+  "nightscape.subtitle": {
+    "message": "夜景写真をドラッグ＆ドロップすると、黒を引き締め光源を強調した画像に加工される。すべてブラウザ内で処理され、画像はサーバーに送信されない。"
+  },
+  "nightscape.intensity": {
+    "message": "強度"
+  },
+  "nightscape.noiseReduction": {
+    "message": "ノイズ除去"
+  },
+  "nightscape.processing": {
+    "message": "処理中..."
+  },
+  "nightscape.dropHint": {
+    "message": "ここに夜景写真をドロップ、またはクリックして選択"
+  },
+  "nightscape.downloadAll": {
+    "message": "すべてダウンロード"
+  },
+  "nightscape.clearAll": {
+    "message": "すべてクリア"
+  },
+  "nightscape.before": {
+    "message": "加工前"
+  },
+  "nightscape.after": {
+    "message": "加工後"
+  },
+  "nightscape.download": {
+    "message": "保存"
+  },
+  "nightscape.remove": {
+    "message": "削除"
+  },
+  "nightscape.notesTitle": {
+    "message": "このツールについて"
+  },
+  "nightscape.note1": {
+    "message": "処理はブラウザ内で完結し、画像がサーバーに送信されることはない。"
+  },
+  "nightscape.note2": {
+    "message": "黒の引き締め、光源の強調、夜空のクリア化、周辺減光などを組み合わせて夜景を美しく仕上げる。"
+  },
+  "nightscape.note3": {
+    "message": "強度スライダーで効果の強さを調整できる (0% で加工なし、100% が標準)。"
+  },
+  "nightscape.note4": {
+    "message": "ノイズ除去はスマートフォン写真などノイズの多い画像に有効。輝度は保持したまま色ノイズのみを軽減する。"
+  },
+  "nightscape.note5": {
+    "message": "昼間の写真や室内写真、天体写真には適さない。夜景・街灯・都市夜景での使用を想定している。"
+  },
+  "miniApps.nightscape.title": {
+    "message": "夜景美化フィルター"
+  },
+  "miniApps.nightscape.description": {
+    "message": "夜景写真の黒を引き締め、光源を美しく強調する。"
   }
 }

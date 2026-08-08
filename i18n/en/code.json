@@ -1782,5 +1782,74 @@
   },
   "miniApps.viewer.description": {
     "message": "View image, video, and audio files."
+  },
+  "nightscape.errorNoImage": {
+    "message": "Please select an image file."
+  },
+  "nightscape.errorConvert": {
+    "message": "Some images failed to process."
+  },
+  "nightscape.title": {
+    "message": "Nightscape Filter"
+  },
+  "nightscape.description": {
+    "message": "A filter that deepens blacks and makes light sources glow in night photos. Everything runs in the browser, so no images are sent to a server."
+  },
+  "nightscape.subtitle": {
+    "message": "Drop a night photo here to deepen its blacks and make light sources glow. Everything runs in the browser, so no images are sent to a server."
+  },
+  "nightscape.intensity": {
+    "message": "Intensity"
+  },
+  "nightscape.noiseReduction": {
+    "message": "Noise reduction"
+  },
+  "nightscape.processing": {
+    "message": "Processing..."
+  },
+  "nightscape.dropHint": {
+    "message": "Drop a night photo here, or click to select"
+  },
+  "nightscape.downloadAll": {
+    "message": "Download all"
+  },
+  "nightscape.clearAll": {
+    "message": "Clear all"
+  },
+  "nightscape.before": {
+    "message": "Before"
+  },
+  "nightscape.after": {
+    "message": "After"
+  },
+  "nightscape.download": {
+    "message": "Save"
+  },
+  "nightscape.remove": {
+    "message": "Remove"
+  },
+  "nightscape.notesTitle": {
+    "message": "About this tool"
+  },
+  "nightscape.note1": {
+    "message": "Processing runs entirely in the browser; images are never sent to a server."
+  },
+  "nightscape.note2": {
+    "message": "Combines black deepening, light source enhancement, sky clarity, and vignetting to make night scenes look their best."
+  },
+  "nightscape.note3": {
+    "message": "Use the intensity slider to adjust the effect strength (0% for no effect, 100% for the standard preset)."
+  },
+  "nightscape.note4": {
+    "message": "Noise reduction is useful for noisy smartphone photos. It reduces color noise while preserving luminance detail."
+  },
+  "nightscape.note5": {
+    "message": "Not suited for daytime photos, indoor photos, or astrophotography. Intended for night scenes, streetlights, and city nightscapes."
+  },
+  "miniApps.nightscape.title": {
+    "message": "Nightscape Filter"
+  },
+  "miniApps.nightscape.description": {
+    "message": "Deepen blacks and make light sources glow in night photos."
   }
 }

@@ -1782,5 +1782,74 @@
   },
   "miniApps.viewer.description": {
     "message": "顯示圖片、影片與音訊檔案。"
+  },
+  "nightscape.errorNoImage": {
+    "message": "請選擇圖片檔案。"
+  },
+  "nightscape.errorConvert": {
+    "message": "部分圖片處理失敗。"
+  },
+  "nightscape.title": {
+    "message": "夜景美化濾鏡"
+  },
+  "nightscape.description": {
+    "message": "讓夜景照片的黑色更深邃、光源更加突出的濾鏡。所有處理都在瀏覽器內完成,圖片不會傳送到伺服器。"
+  },
+  "nightscape.subtitle": {
+    "message": "將夜景照片拖曳到這裡,即可加深黑色並讓光源更加突出。所有處理都在瀏覽器內完成,圖片不會傳送到伺服器。"
+  },
+  "nightscape.intensity": {
+    "message": "強度"
+  },
+  "nightscape.noiseReduction": {
+    "message": "雜訊消除"
+  },
+  "nightscape.processing": {
+    "message": "處理中..."
+  },
+  "nightscape.dropHint": {
+    "message": "將夜景照片拖曳到這裡,或點擊選擇檔案"
+  },
+  "nightscape.downloadAll": {
+    "message": "全部下載"
+  },
+  "nightscape.clearAll": {
+    "message": "全部清除"
+  },
+  "nightscape.before": {
+    "message": "處理前"
+  },
+  "nightscape.after": {
+    "message": "處理後"
+  },
+  "nightscape.download": {
+    "message": "儲存"
+  },
+  "nightscape.remove": {
+    "message": "刪除"
+  },
+  "nightscape.notesTitle": {
+    "message": "關於此工具"
+  },
+  "nightscape.note1": {
+    "message": "處理完全在瀏覽器內完成,圖片不會傳送到伺服器。"
+  },
+  "nightscape.note2": {
+    "message": "結合黑色加深、光源強調、夜空清晰化、暗角等效果,讓夜景呈現最佳美感。"
+  },
+  "nightscape.note3": {
+    "message": "可透過強度滑桿調整效果強弱 (0% 為無效果、100% 為標準值)。"
+  },
+  "nightscape.note4": {
+    "message": "雜訊消除適用於雜訊較多的手機照片,能在保留亮度細節的同時降低色彩雜訊。"
+  },
+  "nightscape.note5": {
+    "message": "不適用於白天照片、室內照片或天文攝影,適合用於夜景、街燈、城市夜景等場景。"
+  },
+  "miniApps.nightscape.title": {
+    "message": "夜景美化濾鏡"
+  },
+  "miniApps.nightscape.description": {
+    "message": "加深夜景照片的黑色並讓光源更加突出。"
   }
 }

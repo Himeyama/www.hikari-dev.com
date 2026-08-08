@@ -12,6 +12,22 @@ function ImageIcon(): ReactNode {
   );
 }
 
+function NightscapeIcon(): ReactNode {
+  return (
+    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+      <rect x="2" y="2" width="20" height="20" rx="6" fill="#1E293B" />
+      <path
+        d="M15.2 6.5a4.6 4.6 0 105.1 6.7 5.6 5.6 0 01-5.1-6.7z"
+        fill="#FDE68A"
+      />
+      <path d="M4.5 18.5h15" stroke="#38BDF8" strokeWidth="1.4" strokeLinecap="round" />
+      <path d="M6.5 18.5v-4h2.4v4M10 18.5v-6h2.4v6M13.6 18.5v-3h2.4v3" fill="#38BDF8" />
+      <circle cx="6.8" cy="8" r="0.7" fill="white" />
+      <circle cx="9.2" cy="6.5" r="0.5" fill="white" />
+    </svg>
+  );
+}
+
 function SwapIcon(): ReactNode {
   return (
     <svg width="22" height="22" viewBox="0 0 24 24" fill="none" aria-hidden="true">
@@ -283,6 +299,14 @@ const RAW_MINI_APPS: Omit<MiniApp, 'id'>[] = [
     titleMessage: 'WebP 変換',
     descriptionId: 'miniApps.webp.description',
     descriptionMessage: '画像を WebP 形式に変換する。',
+  },
+  {
+    href: '/nightscape-filter',
+    Icon: NightscapeIcon,
+    titleId: 'miniApps.nightscape.title',
+    titleMessage: '夜景美化フィルター',
+    descriptionId: 'miniApps.nightscape.description',
+    descriptionMessage: '夜景写真の黒を引き締め、光源を美しく強調する。',
   },
   {
     href: '/svg-to-ico',
