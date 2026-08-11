@@ -214,3 +214,5 @@ systemctl is-active wsdd    # → inactive
 - 由於 Windows 的 OpenSSH 沒有 `xauth`,**`ForwardX11Trusted yes`** 實際上是必要的。僅限用於信任的對象。
 
 若之後想要完整的桌面環境,可以改用安裝 `xrdp` + `xorgxrdp` + GNOME,再透過 Windows 內建的遠端桌面連線的架構。屆時還需要另外在 firewalld 開放 3389/tcp。
+
+曾遇過 `xeyes` 能顯示,但唯獨 `nautilus` 怎麼都啟動不了的情況,該排查過程整理在[後續文章](/blog/2026/08/11/fedora-nautilus-x11-crash)中。

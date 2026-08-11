@@ -214,3 +214,5 @@ systemctl is-active wsdd    # → inactive
 - Windows の OpenSSH には `xauth` が無いため、**`ForwardX11Trusted yes`** が実質必要になる。信頼できる相手に限って使うこと。
 
 デスクトップ全体が欲しくなったら、`xrdp` + `xorgxrdp` + GNOME を入れて Windows 標準のリモートデスクトップで繋ぐ構成に切り替える。その場合は firewalld で 3389/tcp の開放が別途必要になる。
+
+`xeyes` は表示できても `nautilus` だけがどうしても起動しないケースがあった。その切り分けは [続編](/blog/2026/08/11/fedora-nautilus-x11-crash) にまとめた。

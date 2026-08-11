@@ -214,3 +214,5 @@ it was disabled by default, so no action was needed. Also checked for new reside
 - Since Windows OpenSSH lacks `xauth`, **`ForwardX11Trusted yes`** is effectively required. Use it only with hosts you trust.
 
 If a full desktop ends up being wanted, the setup could switch to installing `xrdp` + `xorgxrdp` + GNOME and connecting with Windows' standard Remote Desktop client. In that case, opening 3389/tcp in firewalld would additionally be required.
+
+There was a case where `xeyes` displayed fine but `nautilus` alone simply refused to launch. That investigation is covered in [the follow-up post](/blog/2026/08/11/fedora-nautilus-x11-crash).
