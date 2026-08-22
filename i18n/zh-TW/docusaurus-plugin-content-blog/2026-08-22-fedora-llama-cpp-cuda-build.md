@@ -1,17 +1,17 @@
 ---
-title: 在 WSL2 (Fedora) 上以 CUDA 建置 llama.cpp
+title: 在 Fedora 上以 CUDA 建置 llama.cpp
 authors: hikari
-tags: [LLM, llama.cpp, WSL2, Fedora, CUDA, GPU]
-image: /img/ogp/2026-08-22-wsl2-fedora-llama-cpp-cuda-build.webp
+tags: [LLM, llama.cpp, Fedora, CUDA, GPU]
+image: /img/ogp/2026-08-22-fedora-llama-cpp-cuda-build.webp
 ---
 
-參考先前寫的 [在 Windows 上以 CUDA 建置 llama.cpp 的文章](/blog/2026/08/22/windows-llama-cpp-cuda-build)，這次在 WSL2 上的 Fedora 43 環境嘗試相同的做法。只有工具鏈不同，流程幾乎一樣。
+參考先前寫的 [在 Windows 上以 CUDA 建置 llama.cpp 的文章](/blog/2026/08/22/windows-llama-cpp-cuda-build)，這次在 Fedora 43 環境嘗試相同的做法。只有工具鏈不同，流程幾乎一樣。
 
 {/* truncate */}
 
 ## 環境
 
-- OS: Fedora (於 Hyper-V 上)
+- OS: Fedora Linux 43
 - GPU: NVIDIA GeForce RTX 3080 (Ampere, compute capability 8.6)
 - GPU 驅動程式: 由 Windows 端透通傳遞 (可透過 `/usr/lib/wsl/drivers`、`/usr/lib/wsl/lib` 確認)
 - 編譯器: GCC 15.3.1
@@ -104,7 +104,7 @@ llama-cli -m model.gguf -p "hi" -n 8 -ngl 99 -st
 
 ## 與 Windows 版的差異整理
 
-| 項目 | Windows | WSL2 (Fedora) |
+| 項目 | Windows | Fedora |
 |---|---|---|
 | 安裝建置工具 | winget | dnf |
 | 安裝 CUDA Toolkit | NVIDIA 安裝程式 (12.4) | NVIDIA dnf 儲存庫 (13.2) |

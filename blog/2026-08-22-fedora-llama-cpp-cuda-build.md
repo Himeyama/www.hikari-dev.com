@@ -1,15 +1,15 @@
 ---
-title: WSL2 (Fedora) で llama.cpp を CUDA ビルドする
+title: Fedora で llama.cpp を CUDA ビルドする
 authors: hikari
-tags: [LLM, llama.cpp, WSL2, Fedora, CUDA, GPU]
-image: /img/ogp/2026-08-22-wsl2-fedora-llama-cpp-cuda-build.webp
+tags: [LLM, llama.cpp, Fedora, CUDA, GPU]
+image: /img/ogp/2026-08-22-fedora-llama-cpp-cuda-build.webp
 ---
 
 {/* truncate */}
 
 ## 環境
 
-- OS: Fedora (Hyper-V 上)
+- OS: Fedora Linux 43
 - GPU: NVIDIA GeForce RTX 3080 (Ampere, compute capability 8.6)
 - GPU ドライバ: Windows 側からパススルー (`/usr/lib/wsl/drivers`, `/usr/lib/wsl/lib` で確認)
 - コンパイラ: GCC 15.3.1
@@ -102,7 +102,7 @@ llama-cli -m model.gguf -p "hi" -n 8 -ngl 99 -st
 
 ## Windows 版との違いまとめ
 
-| 項目 | Windows | WSL2 (Fedora) |
+| 項目 | Windows | Fedora |
 |---|---|---|
 | ビルドツール導入 | winget | dnf |
 | CUDA Toolkit 導入 | NVIDIA インストーラ (12.4) | NVIDIA dnf リポジトリ (13.2) |

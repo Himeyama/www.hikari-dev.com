@@ -1,17 +1,17 @@
 ---
-title: Building llama.cpp with CUDA on WSL2 (Fedora)
+title: Building llama.cpp with CUDA on Fedora
 authors: hikari
-tags: [LLM, llama.cpp, WSL2, Fedora, CUDA, GPU]
-image: /img/ogp/2026-08-22-wsl2-fedora-llama-cpp-cuda-build.webp
+tags: [LLM, llama.cpp, Fedora, CUDA, GPU]
+image: /img/ogp/2026-08-22-fedora-llama-cpp-cuda-build.webp
 ---
 
-Following up on [the earlier article about building llama.cpp with CUDA support on Windows](/blog/2026/08/22/windows-llama-cpp-cuda-build), I tried the same thing on a Fedora 43 environment running under WSL2. Only the toolchain changes — the overall flow is almost identical.
+Following up on [the earlier article about building llama.cpp with CUDA support on Windows](/blog/2026/08/22/windows-llama-cpp-cuda-build), I tried the same thing on a Fedora 43 environment. Only the toolchain changes — the overall flow is almost identical.
 
 {/* truncate */}
 
 ## Environment
 
-- OS: Fedora (on Hyper-V)
+- OS: Fedora Linux 43
 - GPU: NVIDIA GeForce RTX 3080 (Ampere, compute capability 8.6)
 - GPU driver: passed through from the Windows side (confirmed via `/usr/lib/wsl/drivers`, `/usr/lib/wsl/lib`)
 - Compiler: GCC 15.3.1
@@ -104,7 +104,7 @@ llama-cli -m model.gguf -p "hi" -n 8 -ngl 99 -st
 
 ## Summary of differences from the Windows version
 
-| Item | Windows | WSL2 (Fedora) |
+| Item | Windows | Fedora |
 |---|---|---|
 | Installing build tools | winget | dnf |
 | Installing CUDA Toolkit | NVIDIA installer (12.4) | NVIDIA dnf repository (13.2) |
