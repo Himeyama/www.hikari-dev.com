@@ -1315,6 +1315,12 @@
   "miniApps.nslookup.description": {
     "message": "ドメイン名の DNS レコード (A・AAAA・MX・TXT・NS・CNAME) を取得する。"
   },
+  "miniApps.vramCalculator.title": {
+    "message": "LLM VRAM 使用量計算"
+  },
+  "miniApps.vramCalculator.description": {
+    "message": "パラメータ数と量子化方式から必要な VRAM 容量を概算する。"
+  },
   "miniApps.chat.title": {
     "message": "チャット"
   },
@@ -1920,5 +1926,62 @@
   },
   "nightscape.resizeToPortrait": {
     "message": "1080 x 1350 に縮小"
+  },
+  "vramCalculator.params": {
+    "message": "パラメータ数 (B)"
+  },
+  "vramCalculator.quant": {
+    "message": "量子化"
+  },
+  "vramCalculator.quantCustom": {
+    "message": "カスタム"
+  },
+  "vramCalculator.bits": {
+    "message": "ビット数 / 重み (bits/weight)"
+  },
+  "vramCalculator.overhead": {
+    "message": "実行時オーバーヘッド (%)"
+  },
+  "vramCalculator.resultLabel": {
+    "message": "推定 VRAM 使用量"
+  },
+  "vramCalculator.resultSub": {
+    "message": "(≈ {gb} GB、モデル重みのみ: {base} GiB)"
+  },
+  "vramCalculator.formulaTitle": {
+    "message": "計算式"
+  },
+  "vramCalculator.legendN": {
+    "message": "N: パラメータ数 (例: 9B なら 9 × 10⁹)"
+  },
+  "vramCalculator.legendBw": {
+    "message": "b_w: 1 パラメータあたりのビット数 (量子化方式によって決まる、K-quant のスケール値分のオーバーヘッドを含む)"
+  },
+  "vramCalculator.legendR": {
+    "message": "r: 実行時オーバーヘッド率 (%) (KV キャッシュ・アクティベーション・CUDA コンテキストなど、モデル重み以外に必要な分)"
+  },
+  "vramCalculator.title": {
+    "message": "LLM VRAM 使用量計算"
+  },
+  "vramCalculator.description": {
+    "message": "LLM のパラメータ数と量子化方式から必要な VRAM 容量を概算するツール。ブラウザ内で処理されるためサーバーに送信されない。"
+  },
+  "vramCalculator.subtitle": {
+    "message": "パラメータ数と量子化方式を指定すると、推論に必要な VRAM 容量の目安を計算する。"
+  },
+  "vramCalculator.notesTitle": {
+    "message": "このツールについて"
+  },
+  "vramCalculator.note1": {
+    "message": "計算結果はモデルの重み容量を基にした概算値であり、実際の VRAM 使用量とは異なる場合がある。"
+  },
+  "vramCalculator.note2": {
+    "message": "ビット数 / 重みは量子化方式のプリセットから選べるほか、既知の GGUF ファイルサイズなどに合わせて手動で調整できる。"
+  },
+  "vramCalculator.note3": {
+    "message": "長いコンテキストで推論する場合、KV キャッシュの消費が大きくなるため実行時オーバーヘッドを高めに設定する。"
+  },
+  "vramCalculator.note4": {
+    "message": "計算はすべてブラウザ内で完結し、入力内容がサーバーに送信されることはない。"
   }
 }

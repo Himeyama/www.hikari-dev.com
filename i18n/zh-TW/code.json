@@ -1321,6 +1321,12 @@
   "miniApps.nslookup.description": {
     "message": "查詢網域名稱的 DNS 記錄 (A、AAAA、MX、TXT、NS、CNAME)。"
   },
+  "miniApps.vramCalculator.title": {
+    "message": "LLM VRAM 用量計算"
+  },
+  "miniApps.vramCalculator.description": {
+    "message": "根據參數量與量化方式，概算所需的 VRAM 容量。"
+  },
   "miniApps.chat.title": {
     "message": "Chat"
   },
@@ -1932,5 +1938,62 @@
   },
   "nightscape.resizeToPortrait": {
     "message": "縮小為 1080 x 1350"
+  },
+  "vramCalculator.params": {
+    "message": "參數量 (B)"
+  },
+  "vramCalculator.quant": {
+    "message": "量化方式"
+  },
+  "vramCalculator.quantCustom": {
+    "message": "自訂"
+  },
+  "vramCalculator.bits": {
+    "message": "位元數 / 參數 (bits/weight)"
+  },
+  "vramCalculator.overhead": {
+    "message": "執行時額外開銷 (%)"
+  },
+  "vramCalculator.resultLabel": {
+    "message": "推估 VRAM 用量"
+  },
+  "vramCalculator.resultSub": {
+    "message": "(≈ {gb} GB、僅模型權重: {base} GiB)"
+  },
+  "vramCalculator.formulaTitle": {
+    "message": "計算公式"
+  },
+  "vramCalculator.legendN": {
+    "message": "N: 參數量 (例如 9B 即 9 × 10⁹)"
+  },
+  "vramCalculator.legendBw": {
+    "message": "b_w: 每個參數的位元數 (由量化方式決定，已包含 K-quant 縮放值的額外開銷)"
+  },
+  "vramCalculator.legendR": {
+    "message": "r: 執行時額外開銷比例 (%) (KV 快取、活化值、CUDA context 等模型權重以外所需的部分)"
+  },
+  "vramCalculator.title": {
+    "message": "LLM VRAM 用量計算"
+  },
+  "vramCalculator.description": {
+    "message": "根據 LLM 的參數量與量化方式，概算所需 VRAM 容量的工具。所有運算皆在瀏覽器內完成，不會傳送到伺服器。"
+  },
+  "vramCalculator.subtitle": {
+    "message": "輸入參數量與量化方式，即可估算推論所需的 VRAM 容量。"
+  },
+  "vramCalculator.notesTitle": {
+    "message": "關於此工具"
+  },
+  "vramCalculator.note1": {
+    "message": "計算結果是以模型權重容量為基礎的概算值，可能與實際 VRAM 用量有所差異。"
+  },
+  "vramCalculator.note2": {
+    "message": "位元數 / 參數可從量化方式的預設值選擇，也可依據已知的 GGUF 檔案大小手動調整。"
+  },
+  "vramCalculator.note3": {
+    "message": "以較長的上下文進行推論時，KV 快取的用量會增加，建議將執行時額外開銷設定得高一些。"
+  },
+  "vramCalculator.note4": {
+    "message": "所有計算皆在瀏覽器內完成，輸入內容不會傳送到伺服器。"
   }
 }

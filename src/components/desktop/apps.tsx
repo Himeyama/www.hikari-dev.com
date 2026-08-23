@@ -185,6 +185,17 @@ function SigmaIcon(): ReactNode {
   );
 }
 
+function GpuIcon(): ReactNode {
+  return (
+    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+      <rect x="2" y="2" width="20" height="20" rx="6" fill="#0891B2" />
+      <rect x="5" y="7" width="14" height="9" rx="1.2" stroke="white" strokeWidth="1.4" />
+      <path d="M7.5 9.5v4M10 9.5v4M12.5 9.5v4M15 9.5v4" stroke="white" strokeWidth="1.2" strokeLinecap="round" />
+      <path d="M8 16v2M12 16v2M16 16v2M8 5v2M12 5v2M16 5v2" stroke="white" strokeWidth="1.2" strokeLinecap="round" />
+    </svg>
+  );
+}
+
 function DocIcon(): ReactNode {
   return (
     <svg width="22" height="22" viewBox="0 0 24 24" fill="none" aria-hidden="true">
@@ -411,6 +422,14 @@ const RAW_MINI_APPS: Omit<MiniApp, 'id'>[] = [
     titleMessage: 'TeX 数式プレビュー',
     descriptionId: 'miniApps.texPreview.description',
     descriptionMessage: 'TeX 記法の数式をリアルタイムでプレビューする。',
+  },
+  {
+    href: '/vram-calculator',
+    Icon: GpuIcon,
+    titleId: 'miniApps.vramCalculator.title',
+    titleMessage: 'LLM VRAM 使用量計算',
+    descriptionId: 'miniApps.vramCalculator.description',
+    descriptionMessage: 'パラメータ数と量子化方式から必要な VRAM 容量を概算する。',
   },
   {
     href: '/chat',

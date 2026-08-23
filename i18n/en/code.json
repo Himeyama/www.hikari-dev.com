@@ -1321,6 +1321,12 @@
   "miniApps.nslookup.description": {
     "message": "Look up a domain's DNS records (A, AAAA, MX, TXT, NS, CNAME)."
   },
+  "miniApps.vramCalculator.title": {
+    "message": "LLM VRAM Calculator"
+  },
+  "miniApps.vramCalculator.description": {
+    "message": "Estimate the VRAM required from a model's parameter count and quantization."
+  },
   "miniApps.chat.title": {
     "message": "Chat"
   },
@@ -1932,5 +1938,62 @@
   },
   "nightscape.resizeToPortrait": {
     "message": "Resize to 1080 x 1350"
+  },
+  "vramCalculator.params": {
+    "message": "Parameter count (B)"
+  },
+  "vramCalculator.quant": {
+    "message": "Quantization"
+  },
+  "vramCalculator.quantCustom": {
+    "message": "Custom"
+  },
+  "vramCalculator.bits": {
+    "message": "Bits / weight (bits/weight)"
+  },
+  "vramCalculator.overhead": {
+    "message": "Runtime overhead (%)"
+  },
+  "vramCalculator.resultLabel": {
+    "message": "Estimated VRAM usage"
+  },
+  "vramCalculator.resultSub": {
+    "message": "(≈ {gb} GB; weights only: {base} GiB)"
+  },
+  "vramCalculator.formulaTitle": {
+    "message": "Formula"
+  },
+  "vramCalculator.legendN": {
+    "message": "N: parameter count (e.g. 9B = 9 × 10⁹)"
+  },
+  "vramCalculator.legendBw": {
+    "message": "b_w: bits per parameter (determined by the quantization method, including the K-quant scale overhead)"
+  },
+  "vramCalculator.legendR": {
+    "message": "r: runtime overhead ratio (%) (KV cache, activations, CUDA context, etc. — anything beyond the model weights)"
+  },
+  "vramCalculator.title": {
+    "message": "LLM VRAM Calculator"
+  },
+  "vramCalculator.description": {
+    "message": "A tool that estimates the VRAM required for an LLM from its parameter count and quantization method. Everything runs in the browser, so nothing is sent to a server."
+  },
+  "vramCalculator.subtitle": {
+    "message": "Enter the parameter count and quantization method to estimate the VRAM needed for inference."
+  },
+  "vramCalculator.notesTitle": {
+    "message": "About this tool"
+  },
+  "vramCalculator.note1": {
+    "message": "The result is a rough estimate based on the model's weight size, and may differ from actual VRAM usage."
+  },
+  "vramCalculator.note2": {
+    "message": "Bits / weight can be picked from quantization presets or adjusted manually to match a known GGUF file size."
+  },
+  "vramCalculator.note3": {
+    "message": "For inference with a long context, KV cache usage grows, so set the runtime overhead higher."
+  },
+  "vramCalculator.note4": {
+    "message": "All calculation happens in the browser; input is never sent to a server."
   }
 }
