@@ -1,0 +1,91 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="1500" viewBox="0 0 1200 1500" role="img" aria-labelledby="title desc">
+  <title id="title">NVMe root を LUKS2 化し、自動解除する流れ</title>
+  <desc id="desc">Raspberry Pi 5 の AlmaLinux で、NVMe root をバックアップしてLUKS2へ変換し、initramfsに鍵を取り込んで自動解除を確認するまでの8段階の流れ。</desc>
+  <rect width="1200" height="1500" fill="#ffffff"/>
+  <style>
+    .jp { font-family: "Noto Sans JP", "Hiragino Sans", "Yu Gothic", "Meiryo", sans-serif; }
+    .mono { font-family: "Noto Sans Mono CJK JP", "SFMono-Regular", Consolas, monospace; }
+    .title { font-size: 34px; font-weight: 600; fill: #171717; }
+    .subtitle { font-size: 20px; font-weight: 400; fill: #64686d; }
+    .phase { font-size: 18px; font-weight: 600; letter-spacing: 1px; fill: #335f87; }
+    .main { font-size: 24px; font-weight: 600; fill: #171717; }
+    .detail { font-size: 18px; font-weight: 400; fill: #64686d; }
+    .code { font-size: 17px; font-weight: 400; fill: #32363a; }
+    .line { stroke: #c9cdd2; stroke-width: 2; }
+    .dot { fill: #ffffff; stroke: #335f87; stroke-width: 3; }
+    .result-label { font-size: 19px; font-weight: 600; fill: #335f87; }
+    .result { font-size: 20px; font-weight: 400; fill: #171717; }
+    .note { font-size: 17px; font-weight: 400; fill: #64686d; }
+  </style>
+
+  <text x="90" y="92" class="jp title">NVMe root を LUKS2 化し、自動解除する流れ</text>
+  <text x="90" y="130" class="jp subtitle">Raspberry Pi 5 ／ AlmaLinux 10.1</text>
+
+  <line x1="119" y1="207" x2="119" y2="1188" class="line"/>
+
+  <g transform="translate(0,205)">
+    <circle cx="119" cy="0" r="8" class="dot"/>
+    <text x="165" y="7" class="jp phase">準備</text>
+    <text x="335" y="7" class="jp main">対象を特定し、別媒体へバックアップ</text>
+    <text x="335" y="42" class="jp detail">モデル・シリアル・UUID・マウント先を記録。復元できることまで確認</text>
+  </g>
+
+  <g transform="translate(0,345)">
+    <circle cx="119" cy="0" r="8" class="dot"/>
+    <text x="165" y="7" class="jp phase">救援環境</text>
+    <text x="335" y="7" class="jp main">USB / microSD など別の root から起動</text>
+    <text x="335" y="42" class="jp detail">暗号化対象の NVMe root を確実にアンマウント</text>
+  </g>
+
+  <g transform="translate(0,485)">
+    <circle cx="119" cy="0" r="8" class="dot"/>
+    <text x="165" y="7" class="jp phase">暗号化</text>
+    <text x="335" y="7" class="jp main">ext4 を検査・縮小 → LUKS2 へ変換</text>
+    <text x="335" y="42" class="mono code">cryptsetup reencrypt --encrypt --type luks2</text>
+    <text x="335" y="73" class="jp detail">既存データを消す luksFormat は使わない</text>
+  </g>
+
+  <g transform="translate(0,640)">
+    <circle cx="119" cy="0" r="8" class="dot"/>
+    <text x="165" y="7" class="jp phase">起動設定</text>
+    <text x="335" y="7" class="jp main">UUID と起動設定を更新</text>
+    <text x="335" y="42" class="jp detail">crypttab＝LUKS UUID ／ fstab＝root ext4 UUID</text>
+    <text x="335" y="73" class="jp detail">cmdline.txt＝両方の UUID</text>
+  </g>
+
+  <g transform="translate(0,795)">
+    <circle cx="119" cy="0" r="8" class="dot"/>
+    <text x="165" y="7" class="jp phase">一次確認</text>
+    <text x="335" y="7" class="jp main">initramfs を再生成</text>
+    <text x="335" y="42" class="jp detail">まずパスフレーズで起動し、正しい mapper から root が開くことを確認</text>
+  </g>
+
+  <g transform="translate(0,935)">
+    <circle cx="119" cy="0" r="8" class="dot"/>
+    <text x="165" y="7" class="jp phase">自動解除</text>
+    <text x="335" y="7" class="jp main">鍵を追加し、initramfs に取り込む</text>
+    <text x="335" y="42" class="jp detail">/boot の元鍵 → /etc/cryptsetup-keys.d/ → crypttab → initramfs</text>
+  </g>
+
+  <g transform="translate(0,1075)">
+    <circle cx="119" cy="0" r="8" class="dot"/>
+    <text x="165" y="7" class="jp phase">Pi 固有</text>
+    <text x="335" y="7" class="jp main">/boot/initramfs8 も更新・内容を確認</text>
+    <text x="335" y="42" class="jp detail">auto_initramfs=1 では、版付き initramfs の更新だけでは不十分</text>
+  </g>
+
+  <g transform="translate(0,1188)">
+    <circle cx="119" cy="0" r="8" class="dot"/>
+    <text x="165" y="7" class="jp phase">最終確認</text>
+    <text x="335" y="7" class="jp main">鍵をテスト → 再起動 → 自動解除を確認</text>
+    <text x="335" y="42" class="jp detail">root・mapper・/boot・起動ログを確認。復旧用パスフレーズは残す</text>
+  </g>
+
+  <line x1="165" y1="1288" x2="1110" y2="1288" class="line"/>
+  <text x="165" y="1334" class="jp result-label">完成形</text>
+  <text x="335" y="1334" class="mono result">/dev/nvme0n1p1</text>
+  <text x="625" y="1334" class="jp result">/boot（VFAT・暗号化なし）</text>
+  <text x="335" y="1380" class="mono result">/dev/nvme0n1p2</text>
+  <text x="625" y="1380" class="jp result">LUKS2 → mapper → /（ext4）</text>
+  <text x="335" y="1432" class="jp note">※ /boot に鍵を置くため、利便性は上がりますが物理的な盗難対策にはなりません。</text>
+</svg>
