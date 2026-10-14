@@ -1,9 +1,8 @@
 import type React from 'react';
 import type {ReactNode} from 'react';
 import {useCallback, useEffect, useRef, useState} from 'react';
-import Editor from '@monaco-editor/react';
+import Editor from '@site/src/components/HikariEditor';
 import BrowserOnly from '@docusaurus/BrowserOnly';
-import {useColorMode} from '@docusaurus/theme-common';
 import Layout from '@theme/Layout';
 import Translate, {translate} from '@docusaurus/Translate';
 import * as vfs from '@site/src/lib/desktop/vfs';
@@ -120,7 +119,6 @@ type DialogState = {mode: FileDialogMode; initialDir: string; suggestedName?: st
 type MenuState = {kind: 'file' | 'settings'; x: number; y: number};
 
 function EditorApp(): ReactNode {
-  const {colorMode} = useColorMode();
   const [path] = useState<string | null>(initialPath);
   const [content, setContent] = useState<string>('');
   const [saved, setSaved] = useState<string>('');
@@ -369,7 +367,6 @@ function EditorApp(): ReactNode {
         <Editor
           height="100%"
           language={languageOf(path)}
-          theme={colorMode === 'dark' ? 'vs-dark' : 'light'}
           value={content}
           onChange={(v) => setContent(v ?? '')}
           options={{...EDITOR_OPTIONS, wordWrap: wordWrap ? 'on' : 'off'}}

@@ -1,4 +1,4 @@
-import {themes as prismThemes} from 'prism-react-renderer';
+import prismTheme from './src/theme/prismTheme';
 import type {Config} from '@docusaurus/types';
 import type * as Preset from '@docusaurus/preset-classic';
 
@@ -170,7 +170,7 @@ const config: Config = {
           onUntruncatedBlogPosts: 'ignore'
         },
         theme: {
-          customCss: './src/css/custom.css',
+          customCss: ['./src/css/custom.css', './src/css/hikari-interactions.css'],
         },
       } satisfies Preset.Options,
     ],
@@ -212,6 +212,11 @@ const config: Config = {
   ],
 
   themeConfig: {
+    colorMode: {
+      defaultMode: 'dark',
+      disableSwitch: true,
+      respectPrefersColorScheme: false,
+    },
     image: 'img/docusaurus-social-card.png',
     metadata: [
       {property: 'og:type', content: 'website'},
@@ -289,8 +294,8 @@ const config: Config = {
       copyright: `Copyright © ${new Date().getFullYear()} ひかりの備忘録 (Hikari's Notebook). Built with Docusaurus.`,
     },
     prism: {
-      theme: prismThemes.github,
-      darkTheme: prismThemes.dracula,
+      theme: prismTheme,
+      darkTheme: prismTheme,
       additionalLanguages: ['bash', 'csharp', 'ruby', 'latex', 'rust', 'powershell'],
     },
   } satisfies Preset.ThemeConfig,

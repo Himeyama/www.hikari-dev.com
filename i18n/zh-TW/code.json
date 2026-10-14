@@ -1995,5 +1995,8 @@
   },
   "vramCalculator.note4": {
     "message": "所有計算皆在瀏覽器內完成，輸入內容不會傳送到伺服器。"
+  },
+  "theme.fontSwitcher.articleSerif": {
+    "message": "一般"
   }
 }

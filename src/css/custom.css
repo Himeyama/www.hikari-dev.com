@@ -4,37 +4,101 @@
  * work well for content-centric websites.
  */
 
-/* You can override the default Infima variables here. */
-:root {
-  --ifm-font-family-base: 'Noto Sans JP', system-ui, -apple-system, sans-serif;
-  --ifm-font-weight-base: 700;
-  /* ライトモード: オレンジベース */
-  --ifm-color-primary: #F26E1D;
-  --ifm-color-primary-dark: #D85A10;
-  --ifm-color-primary-darker: #C44F0A;
-  --ifm-color-primary-darkest: #A23D07;
-  --ifm-color-primary-light: #F78E4A;
-  --ifm-color-primary-lighter: #FAA876;
-  --ifm-color-primary-lightest: #FCC4A2;
+/* Hikari DESIGN.md: ANSI VGA palette, shared by both theme preferences. */
+:root,
+html[data-theme='light'],
+html[data-theme='dark'] {
+  color-scheme: dark;
+  --hikari-black: #000000;
+  --hikari-white: #ffffff;
+  --hikari-muted: #aaaaaa;
+  --hikari-disabled: #555555;
+  --hikari-blue: #0000aa;
+  --hikari-blue-hover: #5555ff;
+  --hikari-cyan: #00aaaa;
+  --hikari-cyan-bright: #55ffff;
+  --hikari-green: #55ff55;
+  --hikari-yellow: #ffff55;
+  --hikari-red: #aa0000;
+  --hikari-red-bright: #ff5555;
+  --ifm-font-family-base: 'MS Gothic', 'ＭＳ ゴシック', monospace;
+  --ifm-font-family-monospace: 'MS Gothic', 'ＭＳ ゴシック', monospace;
+  --ifm-font-size-base: 15px;
+  --ifm-font-weight-base: 400;
+  --ifm-heading-font-weight: 400;
+  --ifm-color-primary: var(--hikari-blue);
+  --ifm-color-primary-dark: var(--hikari-blue-hover);
+  --ifm-color-primary-darker: var(--hikari-blue-hover);
+  --ifm-color-primary-darkest: var(--hikari-blue);
+  --ifm-color-primary-light: var(--hikari-blue-hover);
+  --ifm-color-primary-lighter: var(--hikari-blue-hover);
+  --ifm-color-primary-lightest: var(--hikari-blue-hover);
+  --ifm-color-primary-contrast-background: var(--hikari-blue);
+  --ifm-color-primary-contrast-foreground: var(--hikari-white);
+  --ifm-background-color: var(--hikari-black);
+  --ifm-background-surface-color: var(--hikari-black);
+  --ifm-font-color-base: var(--hikari-white);
+  --ifm-font-color-secondary: var(--hikari-muted);
+  --ifm-heading-color: var(--hikari-white);
+  --ifm-color-content: var(--hikari-white);
+  --ifm-color-content-secondary: var(--hikari-muted);
+  --ifm-color-emphasis-0: var(--hikari-black);
+  --ifm-color-emphasis-100: var(--hikari-black);
+  --ifm-color-emphasis-200: var(--hikari-cyan);
+  --ifm-color-emphasis-300: var(--hikari-cyan);
+  --ifm-color-emphasis-400: var(--hikari-cyan-bright);
+  --ifm-color-emphasis-500: var(--hikari-muted);
+  --ifm-color-emphasis-600: var(--hikari-muted);
+  --ifm-color-emphasis-700: var(--hikari-muted);
+  --ifm-color-emphasis-800: var(--hikari-white);
+  --ifm-color-emphasis-900: var(--hikari-white);
+  --ifm-color-emphasis-1000: var(--hikari-white);
+  --ifm-link-color: var(--hikari-cyan-bright);
+  --ifm-link-hover-color: var(--hikari-black);
+  --ifm-link-decoration: underline;
+  --ifm-navbar-background-color: var(--hikari-black);
+  --ifm-navbar-link-color: var(--hikari-cyan-bright);
+  --ifm-navbar-link-hover-color: var(--hikari-cyan-bright);
+  --ifm-menu-color: var(--hikari-white);
+  --ifm-menu-color-active: var(--hikari-white);
+  --ifm-menu-color-background-active: var(--hikari-blue);
+  --ifm-menu-color-background-hover: var(--hikari-blue-hover);
+  --ifm-dropdown-background-color: var(--hikari-black);
+  --ifm-dropdown-link-color: var(--hikari-cyan-bright);
+  --ifm-hover-overlay: var(--hikari-blue);
+  --ifm-toc-border-color: var(--hikari-cyan);
+  --ifm-hr-background-color: var(--hikari-cyan);
+  --ifm-table-border-color: var(--hikari-cyan);
+  --ifm-table-stripe-background: var(--hikari-black);
+  --ifm-code-background: var(--hikari-black);
+  --ifm-pre-background: var(--hikari-black);
+  --ifm-pre-color: var(--hikari-white);
+  --ifm-blockquote-color: var(--hikari-muted);
+  --ifm-blockquote-border-color: var(--hikari-cyan);
+  --ifm-scrollbar-track-background-color: var(--hikari-black);
+  --ifm-scrollbar-thumb-background-color: var(--hikari-cyan);
+  --ifm-scrollbar-thumb-hover-background-color: var(--hikari-cyan-bright);
+  --ifm-color-secondary: var(--hikari-cyan);
+  --ifm-color-secondary-dark: var(--hikari-cyan-bright);
+  --ifm-color-secondary-contrast-foreground: var(--hikari-black);
+  --ifm-color-success: var(--hikari-green);
+  --ifm-color-info: var(--hikari-cyan-bright);
+  --ifm-color-warning: var(--hikari-yellow);
+  --ifm-color-danger: var(--hikari-red-bright);
+  --ifm-color-danger-dark: var(--hikari-red);
+  --ifm-color-danger-contrast-background: var(--hikari-black);
+  --ifm-color-danger-contrast-foreground: var(--hikari-red-bright);
+  --ifm-global-shadow-lw: none;
+  --ifm-global-shadow-md: none;
+  --ifm-global-shadow-tl: none;
+  --ifm-transition-fast: 0s;
+  --ifm-transition-slow: 0s;
   --ifm-code-font-size: 95%;
-  --docusaurus-highlighted-code-line-bg: rgba(242, 110, 29, 0.1);
-  --post-date-color: #595959;
+  --docusaurus-highlighted-code-line-bg: var(--hikari-blue);
+  --post-date-color: var(--hikari-muted);
   /* ブログ記事のフォント */
-  --article-serif-font: Georgia, "Times New Roman", 'Noto Serif JP', 'ヒラギノ明朝 ProN', serif;
-  --article-serif-bold-font: Georgia, "Times New Roman", 'Noto Sans JP', 'ヒラギノ角ゴ ProN', serif;
-}
-
-/* ダークモード: オレンジベース (高コントラスト) */
-[data-theme='dark'] {
-  --ifm-color-primary: #FB8E54;
-  --ifm-color-primary-dark: #F5724D;
-  --ifm-color-primary-darker: #EE5F48;
-  --ifm-color-primary-darkest: #D63A2B;
-  --ifm-color-primary-light: #FDAA7A;
-  --ifm-color-primary-lighter: #FDC5A0;
-  --ifm-color-primary-lightest: #FDD9C4;
-  --docusaurus-highlighted-code-line-bg: rgba(251, 142, 84, 0.3);
-  --post-date-color: #9e9e9e;
+  --article-serif-font: var(--ifm-font-family-base);
+  --article-serif-bold-font: var(--ifm-font-family-base);
 }
 
 /* ブログ: 本文・タイトル・見出し・年号のフォント */
@@ -51,7 +115,8 @@ article h3,
 article h4,
 article h5,
 article h6,
-article strong {
+article strong,
+article b {
   font-family: var(--article-serif-bold-font);
 }
 
@@ -83,26 +148,17 @@ article header time {
   font-size: 20px;
 }
 
-/* Navbar: すりガラス効果 */
+/* Navbar: keep the existing placement and dimensions. */
 .navbar {
-  background: rgba(255, 255, 255, 0.7);
-  -webkit-backdrop-filter: blur(12px);
-  backdrop-filter: blur(12px);
+  background: var(--hikari-black);
+  border-bottom: 2px solid var(--hikari-cyan);
+  font-family: 'MS Gothic', 'ＭＳ ゴシック', monospace;
 }
 
-[data-theme='dark'] .navbar {
-  background: rgba(24, 24, 27, 0.7);
-}
-
-/*
- * backdrop-filter を持つ要素は position: fixed な子要素の containing block に
- * なってしまう (特に iOS Safari)。.navbar-sidebar (ハンバーガーメニュー) が
- * .navbar の子要素で position: fixed のため、開いている間は無効化して
- * メニューがナビバーの高さに押し潰される不具合を防ぐ。
- */
-.navbar.navbar-sidebar--show {
-  -webkit-backdrop-filter: none;
-  backdrop-filter: none;
+.navbar__title {
+  color: var(--hikari-green);
+  font-size: 15px;
+  font-weight: 700;
 }
 
 /* 日本語以外のロケールでは非表示 */
@@ -116,74 +172,87 @@ html:not([lang="ja"]) .navbar__item--ja-only {
 }
 
 /* フォント切り替え */
-[data-font='ud-digi'] {
+/* Latin stays serif; Japanese bold text falls back to a Gothic face. */
+html[data-font='article-serif'] {
+  --article-serif-font: Georgia, 'Times New Roman', 'Noto Serif JP', serif;
+  --article-serif-bold-font: Georgia, 'Times New Roman', 'Noto Sans JP', sans-serif;
+  --ifm-font-family-monospace: 'Cascadia Code', monospace;
+  --ifm-heading-font-weight: 700;
+  --ifm-font-weight-bold: 700;
+}
+
+html[data-font='article-serif'] :is(h1, h2, h3, h4, h5, h6, strong, b) {
+  font-weight: 700;
+}
+
+html[data-font='ud-digi'] {
   --ifm-font-family-base: "UD Digi Kyokasho NK", "UD デジタル 教科書体 NK", sans-serif;
   --article-serif-font: "UD Digi Kyokasho NK", "UD デジタル 教科書体 NK", sans-serif;
   --article-serif-bold-font: "UD Digi Kyokasho NK", "UD デジタル 教科書体 NK", sans-serif;
 }
 
-[data-font='ud-digi'] article strong,
-[data-font='ud-digi'] article b,
-[data-font='ud-digi'] article h1,
-[data-font='ud-digi'] article h2,
-[data-font='ud-digi'] article h3,
-[data-font='ud-digi'] article h4,
-[data-font='ud-digi'] article h5,
-[data-font='ud-digi'] article h6 {
+html[data-font='ud-digi'] article strong,
+html[data-font='ud-digi'] article b,
+html[data-font='ud-digi'] article h1,
+html[data-font='ud-digi'] article h2,
+html[data-font='ud-digi'] article h3,
+html[data-font='ud-digi'] article h4,
+html[data-font='ud-digi'] article h5,
+html[data-font='ud-digi'] article h6 {
   font-family: "UD Digi Kyokasho NK", "UD デジタル 教科書体 NK", sans-serif;
 }
 
 /* BIZ UDP ゴシック */
-[data-font='biz-gothic'] {
+html[data-font='biz-gothic'] {
   --ifm-font-family-base: 'BIZ UDPGothic', sans-serif;
   --article-serif-font: 'BIZ UDPGothic', sans-serif;
   --article-serif-bold-font: 'BIZ UDPGothic', sans-serif;
 }
 
-[data-font='biz-gothic'] article strong,
-[data-font='biz-gothic'] article b,
-[data-font='biz-gothic'] article h1,
-[data-font='biz-gothic'] article h2,
-[data-font='biz-gothic'] article h3,
-[data-font='biz-gothic'] article h4,
-[data-font='biz-gothic'] article h5,
-[data-font='biz-gothic'] article h6 {
+html[data-font='biz-gothic'] article strong,
+html[data-font='biz-gothic'] article b,
+html[data-font='biz-gothic'] article h1,
+html[data-font='biz-gothic'] article h2,
+html[data-font='biz-gothic'] article h3,
+html[data-font='biz-gothic'] article h4,
+html[data-font='biz-gothic'] article h5,
+html[data-font='biz-gothic'] article h6 {
   font-family: 'BIZ UDPGothic', sans-serif;
 }
 
 /* BIZ UDP 明朝 (本文: 明朝、見出し・強調: ゴシック) */
-[data-font='biz-mincho'] {
+html[data-font='biz-mincho'] {
   --ifm-font-family-base: 'BIZ UDPMincho', serif;
   --article-serif-font: 'BIZ UDPMincho', serif;
   --article-serif-bold-font: 'BIZ UDPGothic', sans-serif;
 }
 
-[data-font='biz-mincho'] strong,
-[data-font='biz-mincho'] b,
-[data-font='biz-mincho'] h1,
-[data-font='biz-mincho'] h2,
-[data-font='biz-mincho'] h3,
-[data-font='biz-mincho'] h4,
-[data-font='biz-mincho'] h5,
-[data-font='biz-mincho'] h6 {
+html[data-font='biz-mincho'] strong,
+html[data-font='biz-mincho'] b,
+html[data-font='biz-mincho'] h1,
+html[data-font='biz-mincho'] h2,
+html[data-font='biz-mincho'] h3,
+html[data-font='biz-mincho'] h4,
+html[data-font='biz-mincho'] h5,
+html[data-font='biz-mincho'] h6 {
   font-family: 'BIZ UDPGothic', sans-serif;
 }
 
 /* Microsoft Yahei (微软雅黑) */
-[data-font='ms-yahei'] {
+html[data-font='ms-yahei'] {
   --ifm-font-family-base: 'Microsoft Yahei', '微软雅黑', sans-serif;
   --article-serif-font: 'Microsoft Yahei', '微软雅黑', sans-serif;
   --article-serif-bold-font: 'Microsoft Yahei', '微软雅黑', sans-serif;
 }
 
-[data-font='ms-yahei'] article strong,
-[data-font='ms-yahei'] article b,
-[data-font='ms-yahei'] article h1,
-[data-font='ms-yahei'] article h2,
-[data-font='ms-yahei'] article h3,
-[data-font='ms-yahei'] article h4,
-[data-font='ms-yahei'] article h5,
-[data-font='ms-yahei'] article h6 {
+html[data-font='ms-yahei'] article strong,
+html[data-font='ms-yahei'] article b,
+html[data-font='ms-yahei'] article h1,
+html[data-font='ms-yahei'] article h2,
+html[data-font='ms-yahei'] article h3,
+html[data-font='ms-yahei'] article h4,
+html[data-font='ms-yahei'] article h5,
+html[data-font='ms-yahei'] article h6 {
   font-family: 'Microsoft Yahei', '微软雅黑', sans-serif;
 }
 
@@ -193,10 +262,10 @@ html:not([lang="ja"]) .navbar__item--ja-only {
   display: none;
 }
 
-/* Doc プレビューのコードブロック: highlight.js によるシンタックスハイライト (VS Code の vs-light 相当、ダークモードでも固定) */
+/* Doc プレビューのコードブロック: highlight.js によるシンタックスハイライト (ANSI VGA パレット) */
 .doc-page-wrapper .hljs {
-  color: #000000;
-  background: #f2f2f2;
+  color: var(--hikari-white);
+  background: var(--hikari-black);
 }
 
 /* コードブロックのコピー ボタン (アイコンのみ、ホバーで表示) */
@@ -214,10 +283,10 @@ html:not([lang="ja"]) .navbar__item--ja-only {
   width: 28px;
   height: 28px;
   padding: 0;
-  border: 1px solid rgba(0, 0, 0, 0.12);
+  border: 1px solid var(--hikari-cyan);
   border-radius: 6px;
-  background: rgba(255, 255, 255, 0.85);
-  color: #555555;
+  background: var(--hikari-black);
+  color: var(--hikari-cyan-bright);
   cursor: pointer;
   opacity: 0;
   transition: opacity 0.15s ease, color 0.15s ease, background 0.15s ease;
@@ -229,71 +298,73 @@ html:not([lang="ja"]) .navbar__item--ja-only {
 }
 
 .doc-page-wrapper .doc-code-copy:hover {
-  color: #1a1a1a;
-  background: #ffffff;
+  color: var(--hikari-black);
+  background: var(--hikari-cyan-bright);
 }
 
 .doc-page-wrapper .doc-code-copy--done {
-  color: #098658;
+  color: #55ff55;
   opacity: 1;
 }
 
 .doc-page-wrapper .hljs-comment,
 .doc-page-wrapper .hljs-quote {
-  color: #008000;
+  color: #aaaaaa;
   font-style: italic;
 }
 
 .doc-page-wrapper .hljs-keyword,
 .doc-page-wrapper .hljs-selector-tag,
 .doc-page-wrapper .hljs-literal {
-  color: #0000ff;
+  color: #ff5555;
 }
 
 .doc-page-wrapper .hljs-type,
 .doc-page-wrapper .hljs-built_in,
 .doc-page-wrapper .hljs-title.class_ {
-  color: #267f99;
+  color: #55ffff;
 }
 
 .doc-page-wrapper .hljs-string,
 .doc-page-wrapper .hljs-template-tag,
 .doc-page-wrapper .hljs-template-variable {
-  color: #a31515;
+  color: #55ff55;
 }
 
 .doc-page-wrapper .hljs-attr,
 .doc-page-wrapper .hljs-attribute {
-  color: #ff0000;
+  color: #55ffff;
 }
 
 .doc-page-wrapper .hljs-number,
 .doc-page-wrapper .hljs-symbol,
 .doc-page-wrapper .hljs-bullet {
-  color: #098658;
+  color: #55ff55;
 }
 
 .doc-page-wrapper .hljs-title,
 .doc-page-wrapper .hljs-title.function_,
 .doc-page-wrapper .hljs-section {
-  color: #795e26;
+  color: #ffff55;
 }
 
 .doc-page-wrapper .hljs-variable,
 .doc-page-wrapper .hljs-name {
-  color: #001080;
+  color: #ffffff;
 }
 
 .doc-page-wrapper .hljs-tag {
-  color: #800000;
+  color: #ff5555;
 }
 
 .doc-page-wrapper .hljs-deletion {
-  background: #ffeef0;
+  color: #ff5555;
+  background: #000000;
 }
 
 .doc-page-wrapper .hljs-addition {
-  background: #f0fff4;
+  color: #55ff55;
+  background: #000000;
 }
 
 .doc-page-wrapper .hljs-emphasis {

@@ -1,9 +1,9 @@
 import type {CSSProperties, DragEvent, ReactNode} from 'react';
 import {useEffect, useMemo, useRef, useState} from 'react';
-import Editor, {type OnMount} from '@monaco-editor/react';
+import type {OnMount} from '@monaco-editor/react';
+import Editor from '@site/src/components/HikariEditor';
 import DOMPurify from 'dompurify';
 import BrowserOnly from '@docusaurus/BrowserOnly';
-import {useColorMode} from '@docusaurus/theme-common';
 import Layout from '@theme/Layout';
 import Translate, {translate} from '@docusaurus/Translate';
 import {md, markdownToDocumentXml} from '../lib/doc/markdown-to-ooxml';
@@ -463,7 +463,6 @@ function downloadBlob(filename: string, blob: Blob) {
 }
 
 function DocApp(): ReactNode {
-  const {colorMode} = useColorMode();
   const [source, setSource] = useState(loadStoredSource);
   const [tab, setTab] = useState<PreviewTab>('preview');
   const [downloading, setDownloading] = useState(false);
@@ -745,7 +744,6 @@ function DocApp(): ReactNode {
     if (file) void importFile(file);
   };
 
-  const editorTheme = colorMode === 'dark' ? 'vs-dark' : 'light';
 
   return (
     <div
@@ -908,7 +906,6 @@ function DocApp(): ReactNode {
           <Editor
             language="markdown"
             value={source}
-            theme={editorTheme}
             options={EDITOR_OPTIONS}
             onChange={(value) => setSource(value ?? '')}
             onMount={(editor) => {
@@ -947,7 +944,6 @@ function DocApp(): ReactNode {
               <Editor
                 language={tab === 'latex' ? 'plaintext' : 'xml'}
                 value={tab === 'latex' ? latex : ooxml}
-                theme={editorTheme}
                 options={{...EDITOR_OPTIONS, readOnly: true}}
               />
             </div>

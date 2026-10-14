@@ -96,7 +96,7 @@
 .bodyDropActive {
   outline: 3px dashed var(--ifm-color-primary);
   outline-offset: -3px;
-  background: color-mix(in srgb, var(--ifm-color-primary) 8%, transparent);
+  background: var(--hikari-blue);
 }
 
 /* ===== 矩形選択 (ラバーバンド) ===== */
@@ -104,7 +104,7 @@
   position: fixed;
   z-index: 10;
   pointer-events: none;
-  background: color-mix(in srgb, var(--ifm-color-primary) 15%, transparent);
+  background: var(--hikari-blue);
   border: 1px solid var(--ifm-color-primary);
 }
 
@@ -138,8 +138,8 @@
 }
 
 .entrySelected {
-  background: color-mix(in srgb, var(--ifm-color-primary) 16%, transparent);
-  border-color: color-mix(in srgb, var(--ifm-color-primary) 45%, transparent);
+  background: var(--hikari-blue);
+  border-color: var(--hikari-cyan-bright);
 }
 
 .entryGlyph {
@@ -148,7 +148,7 @@
   justify-content: center;
   width: 40px;
   height: 40px;
-  color: var(--ifm-color-primary);
+  color: var(--hikari-cyan-bright);
 }
 
 .entryGlyph svg {

@@ -1,9 +1,8 @@
 import type {ReactNode} from 'react';
 import {useState, useCallback, useEffect} from 'react';
 import {parse as parseYaml, stringify as stringifyYaml} from 'yaml';
-import Editor from '@monaco-editor/react';
+import Editor from '@site/src/components/HikariEditor';
 import BrowserOnly from '@docusaurus/BrowserOnly';
-import {useColorMode} from '@docusaurus/theme-common';
 import Layout from '@theme/Layout';
 import Heading from '@theme/Heading';
 import Translate, {translate} from '@docusaurus/Translate';
@@ -38,7 +37,6 @@ function convert(input: string, direction: Direction): string {
 }
 
 function YamlJsonEditors(): ReactNode {
-  const {colorMode} = useColorMode();
   const [direction, setDirection] = useState<Direction>('yaml-to-json');
   const [source, setSource] = useState(SAMPLE_YAML);
   const [output, setOutput] = useState('');
@@ -94,7 +92,6 @@ function YamlJsonEditors(): ReactNode {
     ) : (
       <Translate id="yamlJson.yamlLabel">YAML</Translate>
     );
-  const editorTheme = colorMode === 'dark' ? 'vs-dark' : 'light';
 
   return (
     <>
@@ -107,7 +104,6 @@ function YamlJsonEditors(): ReactNode {
             <Editor
               language={sourceLanguage}
               value={source}
-              theme={editorTheme}
               options={EDITOR_OPTIONS}
               onChange={handleSourceChange}
             />
@@ -139,7 +135,6 @@ function YamlJsonEditors(): ReactNode {
             <Editor
               language={outputLanguage}
               value={output}
-              theme={editorTheme}
               options={{...EDITOR_OPTIONS, readOnly: true}}
             />
           </div>

@@ -15,18 +15,24 @@ export default function Root({children}: {children: React.ReactNode}) {
   const defaultPath = pathname.replace(/^\/en(?=\/|$)/, '') || '/';
   const xDefaultUrl = `${siteConfig.url}${defaultPath}`;
 
-  // モバイルかつ Noto フォント未搭載の端末のみ Google Fonts を読み込む
-  // iOS・Pixel・Samsung は Noto 系フォントをプリインストールしているため除外
+  // 「一般」の選択時に、端末を問わず指定の Noto フォントを読み込む。
   useEffect(() => {
-    if (!window.matchMedia('(max-width: 768px)').matches) return;
-    const ua = navigator.userAgent;
-    if (/iPhone|iPad|iPod/i.test(ua)) return;
-    if (/Pixel/i.test(ua)) return;
-    if (/Samsung/i.test(ua)) return;
-    const link = document.createElement('link');
-    link.rel = 'stylesheet';
-    link.href = FONTS_URL;
-    document.head.appendChild(link);
+    const loadFonts = () => {
+      if (document.documentElement.dataset.font !== 'article-serif') return;
+      if (document.querySelector('link[data-hikari-article-fonts]')) return;
+      const link = document.createElement('link');
+      link.rel = 'stylesheet';
+      link.href = FONTS_URL;
+      link.dataset.hikariArticleFonts = '';
+      document.head.appendChild(link);
+    };
+    loadFonts();
+    const observer = new MutationObserver(loadFonts);
+    observer.observe(document.documentElement, {
+      attributes: true,
+      attributeFilter: ['data-font'],
+    });
+    return () => observer.disconnect();
   }, []);
 
   return (

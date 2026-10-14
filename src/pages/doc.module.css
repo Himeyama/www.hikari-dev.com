@@ -198,7 +198,7 @@
 }
 
 .fontOptionActive {
-  color: var(--ifm-color-primary);
+  color: var(--hikari-cyan-bright);
 }
 
 .fontOptionActive svg {
@@ -261,7 +261,7 @@
 
 .iconBtnActive,
 .iconBtnActive:hover:not(:disabled) {
-  color: var(--ifm-color-primary);
+  color: var(--hikari-cyan-bright);
   border-color: var(--ifm-color-primary);
   background: var(--ifm-color-emphasis-100);
 }

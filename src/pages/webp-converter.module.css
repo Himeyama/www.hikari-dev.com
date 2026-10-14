@@ -83,7 +83,7 @@
   font-weight: 700;
   min-width: 3.2em;
   text-align: right;
-  color: var(--ifm-color-primary);
+  color: var(--hikari-cyan-bright);
   font-variant-numeric: tabular-nums;
 }
 
@@ -161,7 +161,7 @@
 }
 
 .savedValue {
-  color: var(--ifm-color-primary);
+  color: var(--hikari-cyan-bright);
 }
 
 .growValue {

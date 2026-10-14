@@ -69,7 +69,7 @@
 }
 
 .modelBadge:hover .modelName {
-  color: var(--ifm-color-primary);
+  color: var(--hikari-cyan-bright);
 }
 
 .headerActions {
@@ -95,7 +95,7 @@
 
 .headerBtn:hover:not(:disabled) {
   background: var(--ifm-color-emphasis-200);
-  color: var(--ifm-color-primary);
+  color: var(--hikari-cyan-bright);
 }
 
 .headerBtn:disabled {
@@ -243,7 +243,7 @@
 
 .applyBtn:hover:not(:disabled) {
   border-color: var(--ifm-color-primary);
-  color: var(--ifm-color-primary);
+  color: var(--hikari-cyan-bright);
 }
 
 .applyBtn:disabled {
@@ -254,7 +254,7 @@
 .error {
   font-size: 0.8rem;
   color: var(--ifm-color-danger);
-  background: var(--ifm-color-danger-contrast-background, rgba(255, 0, 0, 0.08));
+  background: var(--ifm-color-danger-contrast-background, var(--hikari-black));
   border-radius: 6px;
   padding: 0.5rem 0.6rem;
   word-break: break-word;
@@ -323,7 +323,7 @@
 .modalOverlay {
   position: fixed;
   inset: 0;
-  background: rgba(0, 0, 0, 0.35);
+  background: var(--hikari-black);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -339,7 +339,7 @@
   max-height: calc(100vh - 4rem);
   display: flex;
   flex-direction: column;
-  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.18);
+  box-shadow: none;
   color: var(--ifm-font-color-base);
 }
 
@@ -428,7 +428,7 @@
 
 .keyToggle:hover {
   border-color: var(--ifm-color-primary);
-  color: var(--ifm-color-primary);
+  color: var(--hikari-cyan-bright);
 }
 
 .modalHint {

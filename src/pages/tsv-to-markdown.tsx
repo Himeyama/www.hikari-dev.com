@@ -1,8 +1,7 @@
 import type {ReactNode} from 'react';
 import {useState, useCallback, useEffect} from 'react';
-import Editor from '@monaco-editor/react';
+import Editor from '@site/src/components/HikariEditor';
 import BrowserOnly from '@docusaurus/BrowserOnly';
-import {useColorMode} from '@docusaurus/theme-common';
 import Layout from '@theme/Layout';
 import Heading from '@theme/Heading';
 import Translate, {translate} from '@docusaurus/Translate';
@@ -47,7 +46,6 @@ function convert(input: string): string {
 }
 
 function TsvToMarkdownEditors(): ReactNode {
-  const {colorMode} = useColorMode();
   const [source, setSource] = useState(SAMPLE_TSV);
   const [output, setOutput] = useState('');
   const [copied, setCopied] = useState(false);
@@ -74,7 +72,6 @@ function TsvToMarkdownEditors(): ReactNode {
     setTimeout(() => setCopied(false), 1500);
   };
 
-  const editorTheme = colorMode === 'dark' ? 'vs-dark' : 'light';
 
   return (
     <div className={styles.panes}>
@@ -88,7 +85,6 @@ function TsvToMarkdownEditors(): ReactNode {
           <Editor
             language="plaintext"
             value={source}
-            theme={editorTheme}
             options={EDITOR_OPTIONS}
             onChange={handleSourceChange}
           />
@@ -112,7 +108,6 @@ function TsvToMarkdownEditors(): ReactNode {
           <Editor
             language="markdown"
             value={output}
-            theme={editorTheme}
             options={{...EDITOR_OPTIONS, readOnly: true}}
           />
         </div>

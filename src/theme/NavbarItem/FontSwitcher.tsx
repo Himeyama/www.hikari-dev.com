@@ -58,6 +58,19 @@ export default function FontSwitcher(): JSX.Element | null {
         <li>
           <a
             className={clsx('dropdown__link', {
+              'dropdown__link--active': font === 'article-serif',
+            })}
+            href="#"
+            onClick={(e) => {
+              e.preventDefault();
+              changeFont('article-serif');
+            }}>
+            <Translate id="theme.fontSwitcher.articleSerif">一般</Translate>
+          </a>
+        </li>
+        <li>
+          <a
+            className={clsx('dropdown__link', {
               'dropdown__link--active': font === 'ud-digi',
             })}
             href="#"

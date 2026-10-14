@@ -7,7 +7,7 @@
 .sectionTitle {
   font-size: 1.5rem;
   margin-bottom: 1.5rem;
-  color: var(--ifm-color-primary);
+  color: var(--hikari-cyan-bright);
 }
 
 /* コメント一覧 */
@@ -74,7 +74,7 @@
 }
 
 .starFilled {
-  color: var(--ifm-color-primary);
+  color: var(--hikari-cyan-bright);
   transform: scale(1.2);
 }
 
@@ -94,7 +94,7 @@
 .formTitle {
   font-size: 1.1rem;
   margin-bottom: 1rem;
-  color: var(--ifm-color-primary);
+  color: var(--hikari-cyan-bright);
 }
 
 .form {
@@ -115,7 +115,7 @@
 }
 
 .required {
-  color: var(--ifm-color-primary);
+  color: var(--hikari-cyan-bright);
 }
 
 .input,
@@ -134,7 +134,7 @@
 .textarea:focus {
   outline: none;
   border-color: var(--ifm-color-primary);
-  box-shadow: 0 0 0 2px rgba(241, 94, 180, 0.15);
+  box-shadow: none;
 }
 
 .textarea {

@@ -1,0 +1,167 @@
+/* Shared visual states. Page structure, spacing and media stay in their own styles. */
+/* Keep text and corners consistent even in component-local and inline styles. */
+html:root body *,
+html:root body *::before,
+html:root body *::after {
+  font-size: 15px !important;
+  border-radius: 0 !important;
+}
+
+html body {
+  background-color: var(--hikari-black);
+  color: var(--hikari-white);
+}
+
+::selection {
+  background: var(--hikari-blue);
+  color: var(--hikari-white);
+}
+
+a:hover {
+  background-color: var(--hikari-cyan);
+  color: var(--hikari-black);
+}
+
+/* Docusaurus uses the action color for active sidebar and TOC text. */
+aside nav,
+.table-of-contents {
+  --ifm-color-primary: var(--hikari-cyan-bright);
+}
+
+.navbar__brand:hover {
+  background-color: var(--hikari-black);
+}
+
+.navbar a,
+.navbar a:hover {
+  text-decoration: none;
+}
+
+.navbar__link--active,
+.dropdown__link--active,
+.menu__link--active,
+.tabs__item--active {
+  background-color: var(--hikari-blue);
+  color: var(--hikari-white);
+  border-color: var(--hikari-blue);
+}
+
+.navbar__link--active:hover,
+.dropdown__link--active:hover,
+.menu__link--active:hover,
+.tabs__item--active:hover {
+  background-color: var(--hikari-blue-hover);
+  color: var(--hikari-white);
+}
+
+.footer {
+  --ifm-footer-background-color: var(--hikari-black);
+  --ifm-footer-color: var(--hikari-muted);
+  --ifm-footer-title-color: var(--hikari-white);
+  --ifm-footer-link-color: var(--hikari-cyan-bright);
+  --ifm-footer-link-hover-color: var(--hikari-black);
+  border-top: 1px solid var(--hikari-cyan);
+}
+
+.dropdown__menu {
+  border: 1px solid var(--hikari-cyan);
+}
+
+button,
+input,
+select,
+textarea {
+  font-family: inherit;
+}
+
+/* Low specificity lets each app identify its primary and destructive actions. */
+:where(button, .button) {
+  background-color: var(--hikari-blue);
+  border-color: var(--hikari-blue);
+  color: var(--hikari-white);
+}
+
+.button--primary {
+  --ifm-button-background-color: var(--hikari-blue);
+  --ifm-button-border-color: var(--hikari-blue);
+  color: var(--hikari-white);
+}
+
+.button--primary:hover {
+  --ifm-button-background-color: var(--hikari-blue-hover);
+  --ifm-button-border-color: var(--hikari-blue-hover);
+  color: var(--hikari-white);
+}
+
+.button--secondary {
+  --ifm-button-background-color: var(--hikari-cyan);
+  --ifm-button-border-color: var(--hikari-cyan);
+  color: var(--hikari-black);
+}
+
+.button--secondary:hover {
+  --ifm-button-background-color: var(--hikari-cyan-bright);
+  --ifm-button-border-color: var(--hikari-cyan-bright);
+  color: var(--hikari-black);
+}
+
+.button--danger {
+  --ifm-button-background-color: var(--hikari-red);
+  --ifm-button-border-color: var(--hikari-red);
+  color: var(--hikari-white);
+}
+
+.button--danger:hover {
+  --ifm-button-background-color: var(--hikari-red-bright);
+  --ifm-button-border-color: var(--hikari-red-bright);
+  color: var(--hikari-white);
+}
+
+html input:not([type='checkbox']):not([type='radio']):not([type='range']):not([type='color']),
+html textarea,
+html select {
+  background-color: var(--hikari-black);
+  color: var(--hikari-white);
+  border-color: var(--hikari-cyan);
+}
+
+html :is(input, textarea, select):is(:hover, :focus-visible):not(:disabled) {
+  border-color: var(--hikari-cyan-bright);
+}
+
+input::placeholder,
+textarea::placeholder {
+  color: var(--hikari-muted);
+  opacity: 1;
+}
+
+input:is([type='checkbox'], [type='radio'], [type='range']) {
+  accent-color: var(--hikari-blue);
+}
+
+html body :is(button, input, select, textarea, a, [tabindex]):focus-visible {
+  outline: 2px solid var(--hikari-cyan-bright);
+  outline-offset: 3px;
+}
+
+html body :is(button, .button):disabled,
+html body .button--disabled {
+  background: var(--hikari-disabled);
+  border-color: var(--hikari-disabled);
+  color: var(--hikari-muted);
+  opacity: 1;
+}
+
+html body :is(input, textarea, select):disabled {
+  background: var(--hikari-black);
+  border-color: var(--hikari-disabled);
+  color: var(--hikari-muted);
+  opacity: 1;
+}
+
+/* Switch colors directly, including component-local hover declarations. */
+*,
+*::before,
+*::after {
+  transition-property: none !important;
+}

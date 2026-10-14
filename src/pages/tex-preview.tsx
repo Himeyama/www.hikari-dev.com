@@ -1,8 +1,7 @@
 import type {ReactNode} from 'react';
 import {useEffect, useMemo, useRef, useState} from 'react';
-import Editor from '@monaco-editor/react';
+import Editor from '@site/src/components/HikariEditor';
 import BrowserOnly from '@docusaurus/BrowserOnly';
-import {useColorMode} from '@docusaurus/theme-common';
 import Layout from '@theme/Layout';
 import Heading from '@theme/Heading';
 import Translate, {translate} from '@docusaurus/Translate';
@@ -43,7 +42,6 @@ function splitBlocks(source: string): string[] {
 }
 
 function TexPreviewEditor(): ReactNode {
-  const {colorMode} = useColorMode();
   const [source, setSource] = useState(loadStoredSource);
   const previewRef = useRef<HTMLDivElement>(null);
 
@@ -93,7 +91,6 @@ function TexPreviewEditor(): ReactNode {
     }
   }, [blocks]);
 
-  const editorTheme = colorMode === 'dark' ? 'vs-dark' : 'light';
 
   return (
     <>
@@ -103,7 +100,6 @@ function TexPreviewEditor(): ReactNode {
         <Editor
           language="plaintext"
           value={source}
-          theme={editorTheme}
           options={EDITOR_OPTIONS}
           onChange={(value) => setSource(value ?? '')}
         />

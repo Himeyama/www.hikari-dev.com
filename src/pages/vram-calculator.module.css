@@ -82,7 +82,7 @@
 .resultValue {
   font-size: 2.2rem;
   font-weight: 700;
-  color: var(--ifm-color-primary);
+  color: var(--hikari-cyan-bright);
 }
 
 .resultSub {

@@ -18,7 +18,7 @@ import {ConfirmDialog} from './ConfirmDialog';
 import {downloadVfsFile, importDroppedFiles} from '../../lib/desktop/fileTransfer';
 import {isViewable} from '../../lib/desktop/mediaTypes';
 import {VFS_ITEM_MIME, readVfsItemDrag} from '../../lib/desktop/dragDrop';
-import wikimediaWallpaperFiles from '../../lib/desktop/wikimediaWallpapers.json';
+// import wikimediaWallpaperFiles from '../../lib/desktop/wikimediaWallpapers.json';
 import styles from './desktop.module.css';
 
 const STORAGE_KEY = 'hikari.desktop.v2';
@@ -276,6 +276,7 @@ function newWindowId(appId: string): string {
   return `${appId}::${rand}`;
 }
 
+/* 黒背景を使用するため、従来の壁紙選択・キャッシュ処理を保存する。
 // ---- 壁紙 (Wikimedia Commons の Picture of the Day から 30 分ごとに切り替える) ----
 // パブリックドメイン/CC ライセンスの高解像度画像のみを使用する。
 // 参照元: https://commons.wikimedia.org/wiki/Commons:Picture_of_the_day
@@ -318,6 +319,8 @@ async function getCachedWallpaperBlobUrl(url: string): Promise<string> {
   const blob = await response.blob();
   return URL.createObjectURL(blob);
 }
+
+*/
 
 function emptyState(): DesktopState {
   return {icons: {}, windows: {}, zTop: 0};
@@ -377,9 +380,12 @@ export function DesktopShell(): ReactNode {
   const [osDragOver, setOsDragOver] = useState(false);
   const [fileDragActive, setFileDragActive] = useState(false);
   const fileDragCounter = useRef(0);
+/* 壁紙を再び使う場合の状態。
   const [wallpaperId, setWallpaperId] = useState<string>(() => currentWallpaperId(Date.now()));
   const [wallpaperBgUrl, setWallpaperBgUrl] = useState<string | null>(null);
   const wallpaperObjectUrlRef = useRef<string | null>(null);
+*/
+
   const [snapPreview, setSnapPreview] = useState<SnapKind | null>(null);
   const [vfsVersion, setVfsVersion] = useState(0);
   const saveTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
@@ -397,6 +403,7 @@ export function DesktopShell(): ReactNode {
     };
   }, []);
 
+/* 黒背景では壁紙の取得と定期切り替えを停止する。
   // 壁紙画像をキャッシュ経由で取得し、読み込み完了後に切り替える (ちらつき防止)
   useEffect(() => {
     let cancelled = false;
@@ -433,6 +440,8 @@ export function DesktopShell(): ReactNode {
     }, remaining);
     return () => clearTimeout(timer);
   }, [wallpaperId]);
+
+*/
 
   // VFS を初期シードし、変更を購読してアイコンを再描画
   useEffect(() => {
@@ -857,6 +866,9 @@ export function DesktopShell(): ReactNode {
     window.location.reload();
   };
 
+  // 壁紙を再び使う場合は surface 要素に次の属性を戻す。
+  // style={wallpaperBgUrl ? {backgroundImage: `url(${wallpaperBgUrl})`} : undefined}
+
   // 開いているウィンドウ (windowId から MiniApp メタを解決)
   const openWindows = Object.values(state.windows)
     .map((win) => {
@@ -868,7 +880,6 @@ export function DesktopShell(): ReactNode {
   return (
     <div
       className={clsx(styles.surface, dragging && styles.dragging)}
-      style={wallpaperBgUrl ? {backgroundImage: `url(${wallpaperBgUrl})`} : undefined}
     >
       <div
         className={clsx(styles.iconLayer, osDragOver && styles.iconLayerDropActive)}

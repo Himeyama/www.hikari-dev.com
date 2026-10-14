@@ -168,7 +168,7 @@ export default function Home(): ReactNode {
   });
   return (
     <Layout title={`${siteConfig.title}`} description={description}>
-      <HomepageHeader />
+      {/* <HomepageHeader /> */}
       <main className={styles.mainContent}>
         <div className={styles.mainColumn}>
           {ranking.length > 0 && <Carousel items={ranking} />}

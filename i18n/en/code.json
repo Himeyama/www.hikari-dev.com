@@ -1995,5 +1995,8 @@
   },
   "vramCalculator.note4": {
     "message": "All calculation happens in the browser; input is never sent to a server."
+  },
+  "theme.fontSwitcher.articleSerif": {
+    "message": "General"
   }
 }

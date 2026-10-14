@@ -1983,5 +1983,8 @@
   },
   "vramCalculator.note4": {
     "message": "計算はすべてブラウザ内で完結し、入力内容がサーバーに送信されることはない。"
+  },
+  "theme.fontSwitcher.articleSerif": {
+    "message": "一般"
   }
 }

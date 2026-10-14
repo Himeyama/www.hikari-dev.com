@@ -12,41 +12,41 @@ import { defaultKeymap, history, historyKeymap } from "@codemirror/commands";
 import { markdown } from "@codemirror/lang-markdown";
 import { syntaxHighlighting, defaultHighlightStyle } from "@codemirror/language";
 
-const lightTheme = EditorView.theme(
+const hikariTheme = EditorView.theme(
   {
     "&": {
-      color: "#24292e",
-      backgroundColor: "#ffffff",
+      color: "#ffffff",
+      backgroundColor: "#000000",
       height: "100%",
     },
     ".cm-content": {
-      caretColor: "#24292e",
-      fontFamily: "'Cascadia Code', 'BIZ UDGothic', monospace",
-      fontSize: "14px",
+      caretColor: "#ffffff",
+      fontFamily: "var(--ifm-font-family-monospace)",
+      fontSize: "15px",
     },
     "&.cm-focused .cm-selectionBackground, .cm-selectionBackground": {
-      backgroundColor: "#b3d7ff !important",
+      backgroundColor: "#0000aa !important",
     },
     ".cm-activeLine": {
-      backgroundColor: "#f8f9fa",
+      backgroundColor: "#000000",
     },
     ".cm-gutters": {
-      backgroundColor: "#f6f8fa",
-      color: "#959da5",
+      backgroundColor: "#000000",
+      color: "#aaaaaa",
       border: "none",
-      borderRight: "1px solid #e1e4e8",
+      borderRight: "1px solid #00aaaa",
     },
     ".cm-activeLineGutter": {
-      backgroundColor: "#eff1f3",
+      backgroundColor: "#0000aa",
     },
     ".cm-cursor, .cm-dropCursor": {
-      borderLeftColor: "#24292e",
+      borderLeftColor: "#ffffff",
     },
     ".cm-scroller": {
       overflow: "auto",
     },
   },
-  { dark: false },
+  { dark: true },
 );
 
 interface EditorProps {
@@ -95,7 +95,7 @@ export function Editor({ value, onChange, onImageDrop }: EditorProps) {
         keymap.of([...defaultKeymap, ...historyKeymap]),
         markdown(),
         syntaxHighlighting(defaultHighlightStyle),
-        lightTheme,
+        hikariTheme,
         updateListener,
         dropHandler,
         EditorView.lineWrapping,

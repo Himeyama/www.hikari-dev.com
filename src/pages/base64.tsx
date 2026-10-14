@@ -1,8 +1,7 @@
 import type {ReactNode} from 'react';
 import {useState, useCallback, useRef} from 'react';
-import Editor from '@monaco-editor/react';
+import Editor from '@site/src/components/HikariEditor';
 import BrowserOnly from '@docusaurus/BrowserOnly';
-import {useColorMode} from '@docusaurus/theme-common';
 import Layout from '@theme/Layout';
 import Heading from '@theme/Heading';
 import Translate, {translate} from '@docusaurus/Translate';
@@ -107,7 +106,6 @@ function readFileAsDataUrl(file: File): Promise<string> {
 }
 
 function Base64TextEditors(): ReactNode {
-  const {colorMode} = useColorMode();
   const [direction, setDirection] = useState<Direction>('encode');
   const [source, setSource] = useState('');
   const [output, setOutput] = useState('');
@@ -199,7 +197,6 @@ function Base64TextEditors(): ReactNode {
     ) : (
       <Translate id="base64.textLabel">テキスト</Translate>
     );
-  const editorTheme = colorMode === 'dark' ? 'vs-dark' : 'light';
 
   return (
     <>
@@ -212,7 +209,6 @@ function Base64TextEditors(): ReactNode {
             <Editor
               language="plaintext"
               value={source}
-              theme={editorTheme}
               options={EDITOR_OPTIONS}
               onChange={handleSourceChange}
             />
@@ -248,7 +244,6 @@ function Base64TextEditors(): ReactNode {
             <Editor
               language="plaintext"
               value={output}
-              theme={editorTheme}
               options={{...EDITOR_OPTIONS, readOnly: true}}
             />
           </div>

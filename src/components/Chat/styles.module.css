@@ -7,7 +7,7 @@
   max-width: 860px;
   margin: 0 auto;
   width: 100%;
-  font-family: Georgia, 'Noto Serif JP', serif;
+  font-family: var(--ifm-font-family-base);
 }
 
 .container strong,
@@ -19,7 +19,7 @@
 .container h4,
 .container h5,
 .container h6 {
-  font-family: Georgia, 'Noto Sans JP', sans-serif;
+  font-family: var(--ifm-font-family-base);
 }
 
 /* ─── Header ──────────────────────────────────────────────────────────────── */
@@ -48,7 +48,7 @@
 
 .titleIcon {
   font-size: 1.1rem;
-  color: var(--ifm-color-primary);
+  color: var(--hikari-cyan-bright);
   line-height: 1;
 }
 
@@ -78,7 +78,7 @@
 .iconButton:hover:not(:disabled) {
   background: var(--ifm-hover-overlay);
   border-color: var(--ifm-color-primary-light);
-  color: var(--ifm-color-primary);
+  color: var(--hikari-cyan-bright);
 }
 
 .iconButton:disabled {
@@ -87,9 +87,9 @@
 }
 
 .iconButtonActive {
-  background: color-mix(in srgb, var(--ifm-color-primary) 12%, transparent);
+  background: var(--hikari-blue);
   border-color: var(--ifm-color-primary);
-  color: var(--ifm-color-primary);
+  color: var(--hikari-cyan-bright);
 }
 
 /* ─── Model Select ────────────────────────────────────────────────────────── */
@@ -116,7 +116,7 @@
 
 .selectTrigger:focus-visible {
   border-color: var(--ifm-color-primary);
-  box-shadow: 0 0 0 2px color-mix(in srgb, var(--ifm-color-primary) 25%, transparent);
+  box-shadow: none;
 }
 
 .selectIcon {
@@ -129,7 +129,7 @@
   border: 1px solid var(--ifm-toc-border-color);
   border-radius: 10px;
   padding: 4px;
-  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12), 0 2px 8px rgba(0, 0, 0, 0.06);
+  box-shadow: none;
   z-index: 9999;
   min-width: 170px;
 }
@@ -153,12 +153,12 @@
 }
 
 .selectItem[data-highlighted] {
-  background: color-mix(in srgb, var(--ifm-color-primary) 10%, transparent);
-  color: var(--ifm-color-primary);
+  background: var(--hikari-blue);
+  color: var(--hikari-cyan-bright);
 }
 
 .selectItemIndicator {
-  color: var(--ifm-color-primary);
+  color: var(--hikari-cyan-bright);
 }
 
 /* ─── Settings Panel ──────────────────────────────────────────────────────── */
@@ -209,7 +209,7 @@
 .apiKeyInput:focus {
   outline: none;
   border-color: var(--ifm-color-primary);
-  box-shadow: 0 0 0 2px color-mix(in srgb, var(--ifm-color-primary) 15%, transparent);
+  box-shadow: none;
 }
 
 .apiKeyToggle {
@@ -299,7 +299,7 @@
 
 .welcomeEmoji {
   font-size: 2.5rem;
-  color: var(--ifm-color-primary);
+  color: var(--hikari-cyan-bright);
   margin: 0 0 4px;
   line-height: 1;
 }
@@ -411,12 +411,12 @@
 }
 
 .assistantContent th {
-  background: color-mix(in srgb, var(--ifm-color-primary) 8%, transparent);
+  background: var(--hikari-blue);
   font-weight: 600;
 }
 
 .assistantContent a {
-  color: var(--ifm-color-primary);
+  color: var(--hikari-cyan-bright);
   text-decoration: underline;
   text-underline-offset: 2px;
 }
@@ -433,7 +433,7 @@
   display: inline-block;
   animation: blink 1s step-end infinite;
   margin-left: 1px;
-  color: var(--ifm-color-primary);
+  color: var(--hikari-cyan-bright);
   vertical-align: middle;
 }
 
@@ -514,7 +514,7 @@
 
 .copyButton:hover {
   border-color: var(--ifm-color-primary);
-  color: var(--ifm-color-primary);
+  color: var(--hikari-cyan-bright);
 }
 
 .codeBlock {
@@ -531,7 +531,7 @@
   width: 2.2em;
   margin-right: 1em;
   text-align: right;
-  color: rgba(127, 127, 127, 0.45);
+  color: var(--hikari-muted);
   user-select: none;
   flex-shrink: 0;
 }
@@ -583,17 +583,17 @@
 .errorBanner {
   padding: 10px 14px;
   border-radius: 8px;
-  background: color-mix(in srgb, #ef4444 8%, transparent);
-  border: 1px solid color-mix(in srgb, #ef4444 30%, transparent);
+  background: var(--hikari-black);
+  border: 1px solid var(--hikari-red-bright);
 }
 
 .errorText {
   font-size: 0.875rem;
-  color: #dc2626;
+  color: var(--hikari-red-bright);
 }
 
 [data-theme='dark'] .errorText {
-  color: #f87171;
+  color: var(--hikari-red-bright);
 }
 
 /* ─── Input Area ──────────────────────────────────────────────────────────── */
@@ -636,7 +636,7 @@
 .textarea:focus {
   outline: none;
   border-color: var(--ifm-color-primary);
-  box-shadow: 0 0 0 2px color-mix(in srgb, var(--ifm-color-primary) 15%, transparent);
+  box-shadow: none;
 }
 
 .textarea:disabled {
@@ -688,7 +688,7 @@
   border-radius: 6px;
   font-size: 0.75rem;
   z-index: 9999;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+  box-shadow: none;
 }
 
 [data-theme='dark'] .tooltip {

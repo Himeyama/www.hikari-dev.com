@@ -1,14 +1,14 @@
 .admin-root {
-  --admin-bg: #f9fafb;
-  --admin-surface: #ffffff;
-  --admin-surface-2: #f3f4f6;
-  --admin-text: #111827;
-  --admin-muted: #6b7280;
-  --admin-accent: #3b82f6;
-  --admin-accent-hover: #2563eb;
-  --admin-border: #e5e7eb;
-  --admin-danger: #ef4444;
-  --admin-mono: "BIZ UDPGothic", ui-monospace, monospace;
+  --admin-bg: var(--hikari-black);
+  --admin-surface: var(--hikari-black);
+  --admin-surface-2: var(--hikari-black);
+  --admin-text: var(--hikari-white);
+  --admin-muted: var(--hikari-muted);
+  --admin-accent: var(--hikari-blue);
+  --admin-accent-hover: var(--hikari-blue-hover);
+  --admin-border: var(--hikari-cyan);
+  --admin-danger: var(--hikari-red-bright);
+  --admin-mono: var(--ifm-font-family-monospace);
   --admin-sidebar-width: 260px;
   --admin-toolbar-height: 48px;
 
@@ -24,7 +24,7 @@
 .admin-loading {
   padding: 2rem;
   text-align: center;
-  color: #6b7280;
+  color: var(--hikari-muted);
 }
 
 .admin-root *,
@@ -152,8 +152,8 @@
 }
 
 .admin-status-badge.draft {
-  background: #fef3c7;
-  color: #92400e;
+  background: var(--hikari-black);
+  color: var(--hikari-yellow);
 }
 
 /* Editor pane */
@@ -297,7 +297,7 @@
 .admin-field select:focus,
 .admin-field textarea:focus {
   border-color: var(--admin-accent);
-  box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.15);
+  box-shadow: none;
 }
 
 .admin-field input:disabled {
@@ -349,12 +349,12 @@
 .admin-preview-area h2 { font-size: 1.25rem; margin: 1.5rem 0 0.5rem; }
 .admin-preview-area h3 { font-size: 1.1rem; margin: 1.25rem 0 0.5rem; }
 .admin-preview-area p { margin: 0 0 1rem; }
-.admin-preview-area pre { background: #f6f8fa; padding: 1rem; border-radius: 6px; overflow-x: auto; border: 1px solid var(--admin-border); }
+.admin-preview-area pre { background: var(--hikari-black); padding: 1rem; border-radius: 6px; overflow-x: auto; border: 1px solid var(--admin-border); }
 .admin-preview-area code { font-family: var(--admin-mono); font-size: 0.8125rem; }
 .admin-preview-area pre code { background: none; padding: 0; border: none; }
-.admin-preview-area code:not(pre code) { background: #f6f8fa; padding: 0.1em 0.3em; border-radius: 3px; border: 1px solid var(--admin-border); }
+.admin-preview-area code:not(pre code) { background: var(--hikari-black); padding: 0.1em 0.3em; border-radius: 3px; border: 1px solid var(--admin-border); }
 .admin-preview-area blockquote { border-left: 3px solid var(--admin-border); margin-left: 0; padding-left: 1rem; color: var(--admin-muted); }
-.admin-preview-area a { color: var(--admin-accent); }
+.admin-preview-area a { color: var(--hikari-cyan-bright); }
 .admin-preview-area ul,
 .admin-preview-area ol { padding-left: 1.5rem; }
 .admin-preview-area hr { border: none; border-top: 1px solid var(--admin-border); margin: 2rem 0; }
@@ -406,7 +406,7 @@
 .admin-modal-overlay {
   position: fixed;
   inset: 0;
-  background: rgba(0, 0, 0, 0.35);
+  background: var(--hikari-black);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -422,7 +422,7 @@
   max-height: calc(100vh - 4rem);
   display: flex;
   flex-direction: column;
-  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.12);
+  box-shadow: none;
   color: var(--admin-text);
 }
 
@@ -655,7 +655,7 @@
 
 .admin-ai-prompt-textarea:focus {
   border-color: var(--admin-accent);
-  box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.15);
+  box-shadow: none;
 }
 
 .admin-ai-prompt-textarea:disabled {

@@ -11,7 +11,8 @@ import Translate, { translate } from '@docusaurus/Translate';
 import OpenAI from 'openai';
 import ReactMarkdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
-import { Highlight, themes } from 'prism-react-renderer';
+import { Highlight } from 'prism-react-renderer';
+import prismTheme from '@site/src/theme/prismTheme';
 import styles from './styles.module.css';
 
 function useDarkMode(): boolean {
@@ -160,7 +161,7 @@ function MermaidBlock({ code, isDark }: { code: string; isDark: boolean }) {
 
 function CodeBlock({ code, language, isDark }: { code: string; language: string; isDark: boolean }) {
   const [copied, setCopied] = useState(false);
-  const theme = isDark ? themes.dracula : themes.github;
+  const theme = prismTheme;
 
   const handleCopy = async () => {
     await navigator.clipboard.writeText(code);
