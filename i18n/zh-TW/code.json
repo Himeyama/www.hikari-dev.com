@@ -2040,5 +2040,11 @@
   },
   "doc.apiKey": {
     "message": "API 金鑰"
+  },
+  "doc.menu.edit": {
+    "message": "編輯"
+  },
+  "doc.chatReset": {
+    "message": "重設 AI 聊天"
   }
 }

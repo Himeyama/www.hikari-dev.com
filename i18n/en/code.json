@@ -2040,5 +2040,11 @@
   },
   "doc.apiKey": {
     "message": "API key"
+  },
+  "doc.menu.edit": {
+    "message": "Edit"
+  },
+  "doc.chatReset": {
+    "message": "Reset AI chat"
   }
 }

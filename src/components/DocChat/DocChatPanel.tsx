@@ -25,50 +25,7 @@ interface DocChatPanelProps {
   hasSelection: boolean;
   onApplyToSelection: (text: string) => void;
   onApplyToDocument: (text: string) => void;
-  onClose: () => void;
   onOpenSettings: () => void;
-}
-
-function ClearIcon(): ReactNode {
-  return (
-    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true">
-      <path
-        d="M4 7h16M9 7V5h6v2M6 7l1 12h10l1-12"
-        stroke="currentColor"
-        strokeWidth="1.6"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-      />
-    </svg>
-  );
-}
-
-
-function CloseIcon(): ReactNode {
-  return (
-    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true">
-      <path
-        d="M6 6l12 12M18 6L6 18"
-        stroke="currentColor"
-        strokeWidth="1.8"
-        strokeLinecap="round"
-      />
-    </svg>
-  );
-}
-
-function SendIcon(): ReactNode {
-  return (
-    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true">
-      <path
-        d="M4 12l16-7-7 16-2.5-6.5L4 12z"
-        stroke="currentColor"
-        strokeWidth="1.6"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-      />
-    </svg>
-  );
 }
 
 function AssistantMarkdown({content}: {content: string}): ReactNode {
@@ -132,7 +89,6 @@ export function DocChatPanel({
   hasSelection,
   onApplyToSelection,
   onApplyToDocument,
-  onClose,
   onOpenSettings,
 }: DocChatPanelProps): ReactNode {
   const [messages, setMessages] = useState<ChatMsg[]>([]);
@@ -141,6 +97,9 @@ export function DocChatPanel({
   const [streamingId, setStreamingId] = useState<string | null>(null);
   const [error, setError] = useState<string | null>(null);
   const [copiedId, setCopiedId] = useState<string | null>(null);
+
+  const requestRef = useRef<AbortController | null>(null);
+  useEffect(() => () => requestRef.current?.abort(), []);
 
   const historyRef = useRef<ChatMessageParam[]>([]);
   const messagesEndRef = useRef<HTMLDivElement>(null);
@@ -188,12 +147,15 @@ export function DocChatPanel({
     const historySnapshot = historyRef.current;
     historyRef.current = [...historyRef.current, {role: 'user', content: trimmed}];
 
+    const controller = new AbortController();
+    requestRef.current = controller;
     const startedAt = Date.now();
     try {
       // 毎回、最新の文書全体と選択範囲を文脈として先頭に付与する
       const context = buildContextMessages(sourceRef.current, selectionRef.current, new URL(baseURL).hostname === 'openrouter.ai');
       const {text: accumulated, usage} = await streamChat({
         apiKey,
+        signal: controller.signal,
         baseURL,
         model,
         messages: [...context, ...historyRef.current],
@@ -215,11 +177,13 @@ export function DocChatPanel({
         cachedTokens: usage?.cachedTokens,
       });
     } catch (err: unknown) {
+      if (controller.signal.aborted) return;
       const errMsg = err instanceof Error ? err.message : String(err);
       setError(errMsg);
       setMessages((prev) => prev.filter((m) => m.id !== assistantId && m.id !== userId));
       historyRef.current = historySnapshot;
     } finally {
+      if (requestRef.current === controller) requestRef.current = null;
       setIsLoading(false);
       setStreamingId(null);
     }
@@ -233,11 +197,6 @@ export function DocChatPanel({
     }
   };
 
-  const handleClear = () => {
-    setMessages([]);
-    historyRef.current = [];
-    setError(null);
-  };
 
   const handleCopy = (id: string, text: string) => {
     void navigator.clipboard.writeText(text).then(() => {
@@ -255,28 +214,7 @@ export function DocChatPanel({
           </span>
 
         </div>
-        <div className={styles.headerActions}>
-          <button
-            type="button"
-            className={styles.headerBtn}
-            onClick={handleClear}
-            disabled={messages.length === 0}
-            title={translate({id: 'doc.chatClear', message: 'チャットをクリア'})}
-            aria-label={translate({id: 'doc.chatClear', message: 'チャットをクリア'})}
-          >
-            <ClearIcon />
-          </button>
 
-          <button
-            type="button"
-            className={styles.headerBtn}
-            onClick={onClose}
-            title={translate({id: 'doc.close', message: '閉じる'})}
-            aria-label={translate({id: 'doc.close', message: '閉じる'})}
-          >
-            <CloseIcon />
-          </button>
-        </div>
       </div>
 
       <div className={styles.messages}>
@@ -368,7 +306,7 @@ export function DocChatPanel({
           title={translate({id: 'doc.send', message: '送信'})}
           aria-label={translate({id: 'doc.send', message: '送信'})}
         >
-          <SendIcon />
+          <Translate id="doc.send">送信</Translate>
         </button>
       </div>
 

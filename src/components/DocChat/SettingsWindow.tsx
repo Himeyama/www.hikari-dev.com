@@ -59,7 +59,12 @@ export function SettingsWindow({onClose}: {onClose: () => void}): ReactNode {
         }}>
         <span id="doc-settings-title" className="title-bar-text"><Translate id="doc.apiSettings">API 設定</Translate></span>
         <div className="title-bar-controls">
-          <button type="button" onClick={onClose} aria-label={translate({id: 'doc.close', message: '閉じる'})} />
+          <button type="button" className={styles.settingsClose} onClick={onClose}
+            aria-label={translate({id: 'doc.close', message: '閉じる'})}>
+            <svg width="8" height="8" viewBox="0 0 8 8" aria-hidden="true">
+              <path d="M1 1l6 6M7 1L1 7" stroke="currentColor" strokeWidth="1.5" />
+            </svg>
+          </button>
         </div>
       </div>
       <form className={styles.settingsForm} onSubmit={event => {

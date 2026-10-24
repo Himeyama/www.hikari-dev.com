@@ -2028,5 +2028,11 @@
   },
   "doc.apiKey": {
     "message": "API キー"
+  },
+  "doc.menu.edit": {
+    "message": "編集"
+  },
+  "doc.chatReset": {
+    "message": "AI チャットをリセット"
   }
 }

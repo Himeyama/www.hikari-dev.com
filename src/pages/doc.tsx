@@ -382,6 +382,7 @@ function DocApp(): ReactNode {
   const [hasSelection, setHasSelection] = useState(false);
   const [selectedText, setSelectedText] = useState('');
   const [settingsOpen, setSettingsOpen] = useState(false);
+  const [chatSession, setChatSession] = useState(0);
   const [chatOpen, setChatOpenState] = useState(loadChatOpen);
   const [chatPct, setChatPct] = useState(() => (loadChatOpen() ? 20 : 30));
   const [chatDragging, setChatDragging] = useState(false);
@@ -686,6 +687,11 @@ function DocApp(): ReactNode {
           <button disabled={downloading} onClick={downloadDocx}><Translate id="doc.downloadDocx">docx をダウンロード</Translate></button>
           <button onClick={downloadLatex}><Translate id="doc.downloadTex">LaTeX (.tex) をダウンロード</Translate></button>
         </DocMenu>
+        <DocMenu label={translate({id: 'doc.menu.edit', message: '編集'})}>
+          <button disabled={!chatOpen} onClick={() => setChatSession(value => value + 1)}>
+            <Translate id="doc.chatReset">AI チャットをリセット</Translate>
+          </button>
+        </DocMenu>
         <DocMenu label={translate({id: 'doc.menu.format', message: '書式'})}>
           <button disabled={!hasSelection} aria-pressed={marks.bold} onClick={() => applyDeco('bold')}><Translate id="doc.bold">太字</Translate></button>
           <button disabled={!hasSelection} aria-pressed={marks.italic} onClick={() => applyDeco('italic')}><Translate id="doc.italic">斜体</Translate></button>
@@ -777,17 +783,13 @@ function DocApp(): ReactNode {
             />
             <div className={styles.chatPane} style={{width: `${chatPct}%`}}>
               <DocChatPanel
+                key={chatSession}
                 onOpenSettings={() => setSettingsOpen(true)}
                 source={source}
                 selectedText={selectedText}
                 hasSelection={hasSelection}
                 onApplyToSelection={applyToSelection}
                 onApplyToDocument={applyToDocument}
-                onClose={() => {
-                  // 閉じるときはエディターとプレビューを 1:1 (50% / 50%) に戻す
-                  setLeftPct(50);
-                  setChatOpen(false);
-                }}
               />
             </div>
           </>

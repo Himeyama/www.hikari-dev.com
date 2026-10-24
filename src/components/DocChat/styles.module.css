@@ -298,8 +298,9 @@
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  width: 32px;
-  height: 32px;
+  width: auto;
+  height: 28px;
+  padding: 0 12px;
   border: none;
   border-radius: 8px;
   background: var(--ifm-color-primary);
@@ -324,12 +325,34 @@
   width: 380px;
   max-width: 100%;
   max-height: 100%;
+  height: max-content;
   display: flex;
   flex-direction: column;
   color: #222;
 }
 .settingsTitleBar { cursor: move; touch-action: none; flex-shrink: 0; }
-.settingsForm { padding: 12px; overflow: auto; min-height: 0; }
+:global(html body .mini-app-98) .settingsTitleBar {
+  height: 22px;
+  box-sizing: border-box;
+  padding: 2px 4px;
+}
+:global(html body .mini-app-98) .settingsWindow .settingsClose {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 16px;
+  min-width: 16px;
+  height: 14px;
+  min-height: 14px;
+  padding: 0;
+  background-image: none;
+  color: #000;
+}
+.settingsForm { padding: 8px; overflow: auto; min-height: 0; }
+.settingsForm .field { margin-bottom: 8px; }
+.settingsForm .field label { margin-bottom: 3px; }
+.settingsForm .keyRow { align-items: center; }
+:global(html body .mini-app-98) .settingsForm button { min-height: 23px; padding: 3px 10px; }
 .settingsActions { display: flex; justify-content: flex-end; gap: 8px; }
 .settingsForm .keyRow input { min-width: 0; }
 
