@@ -3,6 +3,8 @@ import OriginalLayout from '@theme-original/Layout';
 import type LayoutType from '@theme/Layout';
 import Head from '@docusaurus/Head';
 import useDocusaurusContext from '@docusaurus/useDocusaurusContext';
+import {useLocation} from '@docusaurus/router';
+import {LAUNCHABLES} from '@site/src/components/desktop/apps';
 
 type Props = React.ComponentProps<typeof LayoutType>;
 
@@ -18,6 +20,9 @@ const DESCRIPTIONS = {
 
 export default function Layout(props: Props) {
   const {i18n} = useDocusaurusContext();
+  const {pathname} = useLocation();
+  const localPath = pathname.replace(/^\/(en|zh-TW)(?=\/|$)/, '').replace(/\/$/, '') || '/';
+  const isMiniApp = localPath === '/mini-apps' || LAUNCHABLES.some((app) => app.href === localPath);
   const desc =
     DESCRIPTIONS[i18n.currentLocale as keyof typeof DESCRIPTIONS] ??
     DESCRIPTIONS.ja;
@@ -28,7 +33,18 @@ export default function Layout(props: Props) {
         <meta name="description" content={desc} />
         <meta property="og:description" content={desc} />
       </Head>
-      <OriginalLayout {...props} />
+      <OriginalLayout {...props}>
+        {isMiniApp ? (
+          <div className="mini-app-98 mini-app-98-shell">
+            <div className="mini-app-98-window window">
+              <div className="title-bar">
+                <span className="title-bar-text">{props.title}</span>
+              </div>
+              <div className="window-body">{props.children}</div>
+            </div>
+          </div>
+        ) : props.children}
+      </OriginalLayout>
     </>
   );
 }

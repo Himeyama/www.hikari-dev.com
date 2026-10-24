@@ -62,8 +62,8 @@
 }
 
 .colorInput {
-  width: 2.4rem;
-  height: 1.9rem;
+  width: 28px;
+  height: 21px;
   padding: 0;
   border: 1px solid var(--ifm-color-emphasis-300);
   border-radius: 4px;

@@ -25,12 +25,6 @@ function formatTime(d: Date): string {
   return `${d.getHours()}:${String(d.getMinutes()).padStart(2, '0')}`;
 }
 
-function formatDate(d: Date): string {
-  const m = String(d.getMonth() + 1).padStart(2, '0');
-  const day = String(d.getDate()).padStart(2, '0');
-  return `${d.getFullYear()}/${m}/${day}`;
-}
-
 export function TaskbarClock(): ReactNode {
   const {i18n} = useDocusaurusContext();
   const locale = i18n.currentLocale;
@@ -125,7 +119,6 @@ export function TaskbarClock(): ReactNode {
         }}
       >
         <span className={styles.clockTime}>{formatTime(now)}</span>
-        <span className={styles.clockDate}>{formatDate(now)}</span>
       </button>
       {open && (
         <div className={styles.calendar} role="dialog" aria-label={calendarLabel}>

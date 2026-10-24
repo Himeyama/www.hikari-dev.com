@@ -1180,52 +1180,49 @@
     "message": "コピー"
   },
   "chat.model.label": {
-    "message": "モデル"
+    "message": "モデル名"
   },
   "chat.error.noApiKey": {
-    "message": "OpenAI API キーを設定してください。"
+    "message": "API キーを設定してください。"
   },
   "chat.settings": {
-    "message": "設定"
+    "message": "API キー設定"
   },
   "chat.reset": {
     "message": "リセット"
   },
   "chat.apiKey.label": {
-    "message": "OpenAI API キー"
+    "message": "API キー"
   },
   "chat.apiKey.placeholder": {
     "message": "sk-..."
   },
-  "chat.apiKey.hide": {
-    "message": "隠す"
-  },
   "chat.apiKey.show": {
-    "message": "表示"
+    "message": "キー表示"
   },
   "chat.apiKey.save": {
     "message": "保存"
   },
   "chat.apiKey.note": {
-    "message": "API キーはブラウザの localStorage にのみ保存されます。"
+    "message": "API キーは、このブラウザーの localStorage に保存される。"
   },
   "chat.apiKey.current": {
     "message": "現在のキー:"
   },
   "chat.welcome": {
-    "message": "こんにちは！何でも聞いてください。"
+    "message": "質問や相談を入力してください。"
   },
   "chat.welcome.noKey": {
-    "message": "まず右上の設定から API キーを設定してください。"
+    "message": "API キー設定から API キーを設定してください。"
   },
   "chat.input.placeholder": {
-    "message": "メッセージを送信... (Shift+Enter で改行)"
+    "message": "メッセージを入力..."
   },
   "chat.send": {
     "message": "送信"
   },
   "chat.input.note": {
-    "message": "Enter で送信、Shift+Enter で改行。会話はページを閉じるとリセットされます。"
+    "message": "Enter で送信、Shift + Enter で改行。会話はページを閉じるとリセットされる。"
   },
   "theme.fontSwitcher.bizGothic": {
     "message": "BIZ UDP ゴシック"
@@ -1986,5 +1983,26 @@
   },
   "theme.fontSwitcher.articleSerif": {
     "message": "一般"
+  },
+  "chat.model.placeholder": {
+    "message": "モデル ID を入力"
+  },
+  "chat.input.label": {
+    "message": "メッセージ"
+  },
+  "chat.thinking": {
+    "message": "応答を生成中..."
+  },
+  "chat.error.noModel": {
+    "message": "モデル名を入力してください。"
+  },
+  "chat.endpoint.label": {
+    "message": "カスタム エンドポイント"
+  },
+  "chat.endpoint.note": {
+    "message": "OpenAI 互換 API のベース URL (例: https://example.com/v1)。空欄の場合は OpenAI を使用する。API キーとメッセージは、保存した接続先に送信される。"
+  },
+  "chat.endpoint.invalid": {
+    "message": "有効な HTTP または HTTPS のベース URL を入力してください。"
   }
 }

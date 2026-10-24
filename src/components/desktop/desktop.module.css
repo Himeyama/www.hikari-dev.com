@@ -1,4 +1,5 @@
 .surface {
+  composes: mini-app-98 desktop-98 from global;
   position: fixed;
   inset: 0;
   z-index: 300;
@@ -10,7 +11,7 @@
   background-repeat: no-repeat;
   */
   overflow: hidden;
-  --desktop-taskbar-h: 48px;
+  --desktop-taskbar-h: 28px;
   user-select: none;
   font-family: var(--ifm-font-family-base);
 }
@@ -121,6 +122,7 @@
 
 /* ===== ウィンドウ ===== */
 .window {
+  composes: window from global;
   position: absolute;
   display: flex;
   flex-direction: column;
@@ -231,6 +233,7 @@
 }
 
 .titleBar {
+  composes: title-bar from global;
   display: flex;
   align-items: center;
   gap: 8px;
@@ -250,17 +253,8 @@
   color: #fff;
 }
 
-.titleGlyph {
-  display: flex;
-  align-items: center;
-}
-
-.titleGlyph svg {
-  width: 18px;
-  height: 18px;
-}
-
 .titleText {
+  composes: title-bar-text from global;
   flex: 1 1 auto;
   overflow: hidden;
   white-space: nowrap;
@@ -270,41 +264,18 @@
 }
 
 .titleButtons {
+  composes: title-bar-controls from global;
   display: flex;
-  gap: 2px;
+  gap: 0;
   flex: 0 0 auto;
 }
 
 .titleButton {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 28px;
-  height: 24px;
-  padding: 0;
-  border: none;
-  border-radius: 4px;
-  background: transparent;
-  color: inherit;
-  cursor: pointer;
+  cursor: default;
 }
 
-.titleButton:hover {
-  background: var(--hikari-black);
-}
-
-.windowFocused .titleButton:hover {
-  background: var(--hikari-black);
-}
-
-.titleButtonClose:hover {
-  background: var(--hikari-red-bright);
-  color: #fff;
-}
-
-.titleButton svg {
-  width: 14px;
-  height: 14px;
+.titleButtonClose {
+  composes: close from global;
 }
 
 .windowBody {
@@ -501,6 +472,7 @@
 }
 
 .taskbarItemActive {
+  composes: mini-app-98-selected from global;
   background: var(--ifm-color-primary);
   color: #fff;
 }
@@ -554,10 +526,6 @@
 }
 
 .clockTime {
-  font-size: 0.75rem;
-}
-
-.clockDate {
   font-size: 0.75rem;
 }
 
@@ -643,7 +611,133 @@
   font-weight: 600;
 }
 
-[data-theme='dark'] .titleButtonClose:hover {
-  background: var(--hikari-red-bright);
-  color: #000;
+/* Appearance only: keep the existing drag, resize and snap geometry. */
+:global(html body .desktop-98) {
+  background: #008080;
+}
+
+:global(html body .desktop-98) .icon,
+:global(html body .desktop-98) .icon:is(:hover, :focus, :focus-visible),
+:global(html body .desktop-98) .icon:not(:disabled):active {
+  min-width: 0;
+  padding: 8px 4px;
+  background: transparent;
+  border: 1px solid transparent;
+  box-shadow: none;
+  text-shadow: none;
+  outline: none;
+}
+
+:global(html body .desktop-98) .iconLabel {
+  background: #008080;
+  padding: 1px 2px;
+  color: #fff;
+}
+
+:global(html body .desktop-98) .iconSelected .iconLabel,
+:global(html body .desktop-98) .icon:focus-visible .iconLabel {
+  background: #000080;
+  outline: 1px dotted #fff;
+  outline-offset: -1px;
+}
+
+:global(html body .desktop-98) .window {
+  border: 0;
+  padding: 3px;
+}
+
+:global(html body .desktop-98) .titleBar {
+  height: 22px;
+  line-height: 1;
+  padding: 3px 2px 3px 3px;
+  background: linear-gradient(90deg, #808080, #b5b5b5);
+  color: #dfdfdf;
+  backdrop-filter: none;
+}
+
+:global(html body .desktop-98) .windowFocused .titleBar {
+  background: linear-gradient(90deg, #000080, #1084d0);
+  color: #fff;
+}
+
+:global(html body .desktop-98) .titleText {
+  color: inherit;
+}
+
+:global(html body .desktop-98) .titleButtons .titleButton {
+  width: 16px;
+  height: 14px;
+  min-width: 16px;
+  min-height: 14px;
+  background-color: #c0c0c0;
+  /* Infima also defines .close and otherwise makes this control translucent. */
+  opacity: 1;
+}
+
+:global(html body .desktop-98) .windowBody {
+  background: #c0c0c0;
+  backdrop-filter: none;
+}
+
+:global(html body .desktop-98) .taskbar {
+  padding: 2px 4px;
+  gap: 4px;
+  background: #c0c0c0;
+  border-top: 0;
+  box-shadow: inset 0 1px #dfdfdf, inset 0 2px #fff;
+  backdrop-filter: none;
+}
+
+:global(html body .desktop-98) .homeButton {
+  min-width: 40px;
+  padding: 0;
+}
+
+:global(html body .desktop-98) .homeButton,
+:global(html body .desktop-98) .taskbarItem,
+:global(html body .desktop-98) .clockButton {
+  height: 22px;
+  min-height: 22px;
+  line-height: 1;
+}
+
+:global(html body .desktop-98) .homeButton svg,
+:global(html body .desktop-98) .taskbarItemGlyph svg {
+  width: 16px;
+  height: 16px;
+}
+
+:global(html body .desktop-98) .taskbarDivider {
+  width: 2px;
+  height: 20px;
+  background: #808080;
+  box-shadow: 1px 0 #fff;
+}
+
+:global(html body .desktop-98) .taskbarItem {
+  padding: 0 10px;
+}
+
+:global(html body .desktop-98) .clockButton {
+  min-width: 0;
+  box-shadow: inset 1px 1px #808080, inset -1px -1px #fff;
+  padding: 0 10px;
+}
+
+:global(html body .desktop-98) .calendar {
+  border: 0;
+  background: #c0c0c0;
+  box-shadow: inset -1px -1px #0a0a0a, inset 1px 1px #fff,
+    inset -2px -2px #808080, inset 2px 2px #dfdfdf;
+}
+
+:global(html body .desktop-98) .calendarNav {
+  min-width: 28px;
+  padding: 0;
+}
+
+:global(html body .desktop-98) .snapPreview,
+:global(html body .desktop-98) .marquee {
+  background: rgb(0 0 128 / 20%);
+  border: 1px dotted #fff;
 }

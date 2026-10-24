@@ -1,225 +1,41 @@
 import type {ReactNode} from 'react';
+import {createUtilityIcon} from './UtilityIcon';
 
-function ImageIcon(): ReactNode {
-  return (
-    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" aria-hidden="true">
-      <rect x="2" y="2" width="20" height="20" rx="6" fill="#3B82F6" />
-      <rect x="6" y="7" width="12" height="10" rx="1.2" stroke="white" strokeWidth="1.4" />
-      <circle cx="9.2" cy="10.2" r="1.1" fill="white" />
-      <path d="M6 15l3.5-3.5a1.2 1.2 0 011.7 0L15 15" stroke="white" strokeWidth="1.4" strokeLinecap="round" strokeLinejoin="round" />
-      <path d="M12.5 14l1-1a1.2 1.2 0 011.7 0L18 15.5" stroke="white" strokeWidth="1.4" strokeLinecap="round" strokeLinejoin="round" />
-    </svg>
-  );
-}
+const ImageIcon = createUtilityIcon(0);
 
-function NightscapeIcon(): ReactNode {
-  return (
-    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" aria-hidden="true">
-      <rect x="2" y="2" width="20" height="20" rx="6" fill="#1E293B" />
-      <path
-        d="M15.2 6.5a4.6 4.6 0 105.1 6.7 5.6 5.6 0 01-5.1-6.7z"
-        fill="#FDE68A"
-      />
-      <path d="M4.5 18.5h15" stroke="#38BDF8" strokeWidth="1.4" strokeLinecap="round" />
-      <path d="M6.5 18.5v-4h2.4v4M10 18.5v-6h2.4v6M13.6 18.5v-3h2.4v3" fill="#38BDF8" />
-      <circle cx="6.8" cy="8" r="0.7" fill="white" />
-      <circle cx="9.2" cy="6.5" r="0.5" fill="white" />
-    </svg>
-  );
-}
+const NightscapeIcon = createUtilityIcon(1);
 
-function SwapIcon(): ReactNode {
-  return (
-    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" aria-hidden="true">
-      <rect x="2" y="2" width="20" height="20" rx="6" fill="#6366F1" />
-      <path d="M6 9h9" stroke="white" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" />
-      <path d="M13 6l3 3-3 3" stroke="white" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" />
-      <path d="M18 15H9" stroke="white" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" />
-      <path d="M11 18l-3-3 3-3" stroke="white" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" />
-    </svg>
-  );
-}
+const SwapIcon = createUtilityIcon(2);
 
-function CodeIcon(): ReactNode {
-  return (
-    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" aria-hidden="true">
-      <rect x="2" y="2" width="20" height="20" rx="6" fill="#8B5CF6" />
-      <path d="M9.5 8L6 12l3.5 4" stroke="white" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" />
-      <path d="M14.5 8L18 12l-3.5 4" stroke="white" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" />
-    </svg>
-  );
-}
+const CodeIcon = createUtilityIcon(3);
 
-function Base64Icon(): ReactNode {
-  return (
-    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" aria-hidden="true">
-      <rect x="2" y="2" width="20" height="20" rx="6" fill="#A855F7" />
-      <rect x="5.5" y="9" width="13" height="7" rx="1.2" stroke="white" strokeWidth="1.3" />
-      <path d="M8 11.5v3M8 11.5h1a1.1 1.1 0 010 2.2H8" stroke="white" strokeWidth="1.3" strokeLinecap="round" strokeLinejoin="round" />
-      <path d="M12.2 11.5v3h1.6" stroke="white" strokeWidth="1.3" strokeLinecap="round" strokeLinejoin="round" />
-      <path d="M17 11.5l-1.6 3M15.6 11.5l1.6 3" stroke="white" strokeWidth="1.3" strokeLinecap="round" strokeLinejoin="round" />
-    </svg>
-  );
-}
+const Base64Icon = createUtilityIcon(4);
 
-function QrIcon(): ReactNode {
-  return (
-    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" aria-hidden="true">
-      <rect x="2" y="2" width="20" height="20" rx="6" fill="#0F172A" />
-      <rect x="5.5" y="5.5" width="5" height="5" rx="1" stroke="white" strokeWidth="1.3" />
-      <rect x="13.5" y="5.5" width="5" height="5" rx="1" stroke="white" strokeWidth="1.3" />
-      <rect x="5.5" y="13.5" width="5" height="5" rx="1" stroke="white" strokeWidth="1.3" />
-      <path d="M13.5 13.5h2v2h-2zM16.5 16.5h2v2h-2zM13.5 17.5h1.5v1.5h-1.5z" fill="white" />
-    </svg>
-  );
-}
+const QrIcon = createUtilityIcon(7);
 
-function UuidIcon(): ReactNode {
-  return (
-    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" aria-hidden="true">
-      <rect x="2" y="2" width="20" height="20" rx="6" fill="#F43F5E" />
-      <rect x="5" y="8" width="14" height="8" rx="1.2" stroke="white" strokeWidth="1.4" />
-      <path d="M8 8v8M10.5 8v8M13 8v8M15.5 8v8" stroke="white" strokeWidth="1.4" strokeLinecap="round" />
-    </svg>
-  );
-}
+const UuidIcon = createUtilityIcon(8);
 
-function LockIcon(): ReactNode {
-  return (
-    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" aria-hidden="true">
-      <rect x="2" y="2" width="20" height="20" rx="6" fill="#EF4444" />
-      <rect x="7" y="11.5" width="10" height="7.5" rx="1.4" fill="white" />
-      <path d="M9 11.5V9a3 3 0 016 0v2.5" stroke="white" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
-      <circle cx="12" cy="15" r="1.2" fill="#EF4444" />
-    </svg>
-  );
-}
+const LockIcon = createUtilityIcon(9);
 
-function ChatIcon(): ReactNode {
-  return (
-    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" aria-hidden="true">
-      <rect x="2" y="2" width="20" height="20" rx="6" fill="#06B6D4" />
-      <path
-        d="M5.5 6.5h13v9H10l-3.5 3v-3h-1v-9z"
-        fill="white"
-      />
-      <path d="M8 10.5h8M8 13.2h5" stroke="#06B6D4" strokeWidth="1.3" strokeLinecap="round" />
-    </svg>
-  );
-}
+const ChatIcon = createUtilityIcon(0, 'windows-98-desktop.png', 26);
 
-function HashIcon(): ReactNode {
-  return (
-    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" aria-hidden="true">
-      <rect x="2" y="2" width="20" height="20" rx="6" fill="#D946EF" />
-      <path
-        d="M9.5 6.5L8 17.5M15.5 6.5L14 17.5M5.5 10h13M5 14h13"
-        stroke="white"
-        strokeWidth="1.4"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-      />
-    </svg>
-  );
-}
+const HashIcon = createUtilityIcon(5);
 
-function CertIcon(): ReactNode {
-  return (
-    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" aria-hidden="true">
-      <rect x="2" y="2" width="20" height="20" rx="6" fill="#EC4899" />
-      <path
-        d="M12 5.5l5 2v3.5c0 3.5-2.2 5.8-5 6.8-2.8-1-5-3.3-5-6.8V7.5l5-2z"
-        fill="white"
-      />
-      <path d="M9.7 11.3l1.6 1.6 3-3.2" stroke="#EC4899" strokeWidth="1.4" strokeLinecap="round" strokeLinejoin="round" />
-    </svg>
-  );
-}
+const CertIcon = createUtilityIcon(6);
 
-function TableIcon(): ReactNode {
-  return (
-    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" aria-hidden="true">
-      <rect x="2" y="2" width="20" height="20" rx="6" fill="#F97316" />
-      <rect x="5.5" y="6.5" width="13" height="11" rx="1.2" stroke="white" strokeWidth="1.4" />
-      <path d="M5.5 10.5h13M10 6.5v11M14.5 6.5v11" stroke="white" strokeWidth="1.4" strokeLinecap="round" />
-    </svg>
-  );
-}
+const TableIcon = createUtilityIcon(10);
 
-function GlobeIcon(): ReactNode {
-  return (
-    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" aria-hidden="true">
-      <rect x="2" y="2" width="20" height="20" rx="6" fill="#F59E0B" />
-      <circle cx="12" cy="12" r="6.5" stroke="white" strokeWidth="1.4" />
-      <ellipse cx="12" cy="12" rx="2.7" ry="6.5" stroke="white" strokeWidth="1.4" />
-      <path d="M5.5 12h13M6.2 8.7h11.6M6.2 15.3h11.6" stroke="white" strokeWidth="1.2" strokeLinecap="round" />
-    </svg>
-  );
-}
+const GlobeIcon = createUtilityIcon(11);
 
-function ServerIcon(): ReactNode {
-  return (
-    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" aria-hidden="true">
-      <rect x="2" y="2" width="20" height="20" rx="6" fill="#84CC16" />
-      <rect x="5.5" y="6" width="13" height="4.5" rx="1" stroke="white" strokeWidth="1.3" />
-      <rect x="5.5" y="13.5" width="13" height="4.5" rx="1" stroke="white" strokeWidth="1.3" />
-      <circle cx="8" cy="8.25" r="0.75" fill="white" />
-      <circle cx="8" cy="15.75" r="0.75" fill="white" />
-      <path d="M11 8.25h5M11 15.75h5" stroke="white" strokeWidth="1.3" strokeLinecap="round" />
-    </svg>
-  );
-}
+const ServerIcon = createUtilityIcon(12);
 
-function SigmaIcon(): ReactNode {
-  return (
-    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" aria-hidden="true">
-      <rect x="2" y="2" width="20" height="20" rx="6" fill="#14B8A6" />
-      <path
-        d="M7.5 7h9l-4.5 5 4.5 5h-9l3.7-4.6"
-        stroke="white"
-        strokeWidth="1.5"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-      />
-    </svg>
-  );
-}
+const SigmaIcon = createUtilityIcon(14);
 
-function GpuIcon(): ReactNode {
-  return (
-    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" aria-hidden="true">
-      <rect x="2" y="2" width="20" height="20" rx="6" fill="#0891B2" />
-      <rect x="5" y="7" width="14" height="9" rx="1.2" stroke="white" strokeWidth="1.4" />
-      <path d="M7.5 9.5v4M10 9.5v4M12.5 9.5v4M15 9.5v4" stroke="white" strokeWidth="1.2" strokeLinecap="round" />
-      <path d="M8 16v2M12 16v2M16 16v2M8 5v2M12 5v2M16 5v2" stroke="white" strokeWidth="1.2" strokeLinecap="round" />
-    </svg>
-  );
-}
+const GpuIcon = createUtilityIcon(15);
 
-function DocIcon(): ReactNode {
-  return (
-    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" aria-hidden="true">
-      <rect x="2" y="2" width="20" height="20" rx="6" fill="#22C55E" />
-      <path d="M8 5.5h5.5l3 3v10H8v-13z" fill="white" />
-      <path d="M13.5 5.5v3h3" fill="#16A34A" />
-      <path d="M10 13h5M10 15.8h5" stroke="#22C55E" strokeWidth="1.2" strokeLinecap="round" />
-    </svg>
-  );
-}
+const DocIcon = createUtilityIcon(13);
 
-function FolderIcon(): ReactNode {
-  return (
-    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" aria-hidden="true">
-      <path d="M3 6.5A1.5 1.5 0 014.5 5h4l2 2.5H20a1 1 0 011 1V9H3V6.5z" fill="#FDE68A" />
-      <path
-        d="M3 8h18v9.5A1.5 1.5 0 0119.5 19h-15A1.5 1.5 0 013 17.5V8z"
-        fill="#FBBF24"
-        stroke="#F59E0B"
-        strokeWidth="0.6"
-      />
-    </svg>
-  );
-}
+const FolderIcon = createUtilityIcon(1, 'windows-98-desktop.png', 26);
 
 function FileIcon(): ReactNode {
   return (
@@ -231,18 +47,7 @@ function FileIcon(): ReactNode {
   );
 }
 
-function EditorIcon(): ReactNode {
-  return (
-    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" aria-hidden="true">
-      <rect x="2" y="2" width="20" height="20" rx="6" fill="#0EA5E9" />
-      <path
-        d="M8 16.5l-0.7 3 3-0.7 8-8-2.3-2.3-8 8z"
-        fill="white"
-      />
-      <path d="M15.3 6.2l2.3 2.3 1.4-1.4a1.5 1.5 0 000-2.1l-0.2-0.2a1.5 1.5 0 00-2.1 0l-1.4 1.4z" fill="white" />
-    </svg>
-  );
-}
+const EditorIcon = createUtilityIcon(2, 'windows-98-desktop.png', 26);
 
 function ImageFileIcon(): ReactNode {
   return (
@@ -280,15 +85,7 @@ function AudioFileIcon(): ReactNode {
   );
 }
 
-function ViewerIcon(): ReactNode {
-  return (
-    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" aria-hidden="true">
-      <rect x="2" y="2" width="20" height="20" rx="6" fill="#7C3AED" />
-      <rect x="5" y="7" width="14" height="10" rx="1.5" fill="white" />
-      <path d="M10.5 10.2l4 1.8-4 1.8v-3.6z" fill="#7C3AED" />
-    </svg>
-  );
-}
+const ViewerIcon = createUtilityIcon(3, 'windows-98-desktop.png', 26);
 
 export {FolderIcon, FileIcon, ImageFileIcon, VideoFileIcon, AudioFileIcon};
 

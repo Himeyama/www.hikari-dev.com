@@ -4,7 +4,6 @@ import {useCallback, useEffect, useRef, useState} from 'react';
 import Layout from '@theme/Layout';
 import BrowserOnly from '@docusaurus/BrowserOnly';
 import Translate, {translate} from '@docusaurus/Translate';
-import {FolderIcon, FileIcon} from '@site/src/components/desktop/apps';
 import {EntryGlyph, EntryLabel} from '@site/src/components/desktop/entryView';
 import {RenameInput} from '@site/src/components/desktop/RenameInput';
 import {ContextMenu} from '@site/src/components/desktop/ContextMenu';
@@ -337,7 +336,7 @@ function FilesApp(): ReactNode {
       <div className={styles.toolbar}>
         <button
           type="button"
-          className={styles.toolBtn}
+          className={`${styles.toolBtn} ${styles.upBtn}`}
           disabled={!canGoUp}
           onClick={() => navigate(vfs.parentPath(path))}
           title={translate({id: 'files.up', message: '上へ'})}
@@ -365,13 +364,11 @@ function FilesApp(): ReactNode {
           onBlur={() => setAddress(path)}
         />
         <button type="button" className={styles.toolBtn} onClick={newFolder}>
-          <FolderIcon />
           <span className={styles.toolBtnLabel}>
             <Translate id="files.newFolder">新しいフォルダー</Translate>
           </span>
         </button>
         <button type="button" className={styles.toolBtn} onClick={newFile}>
-          <FileIcon />
           <span className={styles.toolBtnLabel}>
             <Translate id="files.newFile">新しいファイル</Translate>
           </span>

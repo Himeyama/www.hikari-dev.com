@@ -170,7 +170,7 @@ const config: Config = {
           onUntruncatedBlogPosts: 'ignore'
         },
         theme: {
-          customCss: ['./src/css/custom.css', './src/css/hikari-interactions.css'],
+          customCss: ['./src/css/custom.css', './src/css/hikari-interactions.css', require.resolve('98.css/dist/98.css'), './src/css/mini-app-98.css'],
         },
       } satisfies Preset.Options,
     ],
@@ -179,6 +179,7 @@ const config: Config = {
   clientModules: ['./src/clientModules/gtag.js', './src/clientModules/embedMode.ts'],
 
   plugins: [
+    './plugins/mini-app-98.cjs',
     './plugins/recent-blog-posts.js',
     './plugins/ga-ranking.js',
     [

@@ -30,7 +30,6 @@ const RESIZE_DIRS: {dir: string; cls: keyof typeof styles}[] = [
 type Props = {
   href: string;
   param?: string;
-  Icon: () => ReactNode;
   title: ReactNode;
   titlePlain: string;
   rect: Rect;
@@ -64,43 +63,9 @@ function detectZone(cx: number, cy: number): SnapKind {
   return 'none';
 }
 
-function MinimizeGlyph(): ReactNode {
-  return (
-    <svg viewBox="0 0 16 16" fill="none" aria-hidden="true">
-      <path d="M3 8h10" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
-    </svg>
-  );
-}
-
-function MaximizeGlyph(): ReactNode {
-  return (
-    <svg viewBox="0 0 16 16" fill="none" aria-hidden="true">
-      <rect x="3" y="3" width="10" height="10" rx="1" stroke="currentColor" strokeWidth="1.5" />
-    </svg>
-  );
-}
-
-function RestoreGlyph(): ReactNode {
-  return (
-    <svg viewBox="0 0 16 16" fill="none" aria-hidden="true">
-      <rect x="3" y="5" width="8" height="8" rx="1" stroke="currentColor" strokeWidth="1.5" />
-      <path d="M5.5 5V3.5h7.5V11h-1.5" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
-    </svg>
-  );
-}
-
-function CloseGlyph(): ReactNode {
-  return (
-    <svg viewBox="0 0 16 16" fill="none" aria-hidden="true">
-      <path d="M4 4l8 8M12 4l-8 8" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
-    </svg>
-  );
-}
-
 export function AppWindow({
   href,
   param,
-  Icon,
   title,
   titlePlain,
   rect,
@@ -242,31 +207,24 @@ export function AppWindow({
         }}
         onDoubleClick={onToggleMaximize}
       >
-        <span className={styles.titleGlyph}>
-          <Icon />
-        </span>
         <span className={styles.titleText}>{title}</span>
         <div className={styles.titleButtons}>
           <button
             type="button"
-            className={styles.titleButton}
+            className={clsx(styles.titleButton, 'minimize')}
             aria-label={minimizeLabel}
             title={minimizeLabel}
             onClick={onMinimize}
             onDoubleClick={(e) => e.stopPropagation()}
-          >
-            <MinimizeGlyph />
-          </button>
+          />
           <button
             type="button"
-            className={styles.titleButton}
+            className={clsx(styles.titleButton, snap === 'max' ? 'restore' : 'maximize')}
             aria-label={snap === 'max' ? restoreLabel : maximizeLabel}
             title={snap === 'max' ? restoreLabel : maximizeLabel}
             onClick={onToggleMaximize}
             onDoubleClick={(e) => e.stopPropagation()}
-          >
-            {snap === 'max' ? <RestoreGlyph /> : <MaximizeGlyph />}
-          </button>
+          />
           <button
             type="button"
             className={clsx(styles.titleButton, styles.titleButtonClose)}
@@ -274,9 +232,7 @@ export function AppWindow({
             title={closeLabel}
             onClick={onClose}
             onDoubleClick={(e) => e.stopPropagation()}
-          >
-            <CloseGlyph />
-          </button>
+          />
         </div>
       </div>
       <div className={styles.windowBody}>

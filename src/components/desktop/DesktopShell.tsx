@@ -23,7 +23,7 @@ import styles from './desktop.module.css';
 
 const STORAGE_KEY = 'hikari.desktop.v2';
 const BRIDGE_SOURCE = 'hikari-desktop';
-const TASKBAR_H = 48;
+const TASKBAR_H = 28;
 const DEFAULT_W = 960;
 const DEFAULT_H = 640;
 const MIN_W = 240;
@@ -996,7 +996,6 @@ export function DesktopShell(): ReactNode {
             key={win.windowId}
             href={win.href}
             param={win.param}
-            Icon={app.Icon}
             title={titleNode}
             titlePlain={titlePlain}
             rect={win.rect}

@@ -83,3 +83,35 @@
   text-align: center;
   color: var(--ifm-color-emphasis-500);
 }
+
+:global(html body .mini-app-98) .menuBar {
+  height: 22px;
+  padding: 1px 2px;
+  gap: 0;
+}
+
+:global(html body .mini-app-98) .menuBtn,
+:global(html body .mini-app-98) .menuBtn:is(:hover, :active, :focus-visible) {
+  min-width: 0;
+  height: 18px;
+  min-height: 18px;
+  line-height: 1;
+  padding: 2px 8px;
+  border: 0;
+  background: transparent;
+  color: #222;
+  box-shadow: none;
+  text-shadow: none;
+}
+
+:global(html body .mini-app-98) .menuBtn:is(:hover, :focus-visible) {
+  background: #000080;
+  color: #fff;
+}
+
+:global(html body .mini-app-98) .saveBtn {
+  height: 18px;
+  min-height: 18px;
+  line-height: 1;
+  padding: 0 10px;
+}

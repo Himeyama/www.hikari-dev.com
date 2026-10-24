@@ -5,31 +5,12 @@ import {
   useCallback,
   type ReactNode,
 } from 'react';
-import * as Select from '@radix-ui/react-select';
-import * as Tooltip from '@radix-ui/react-tooltip';
 import Translate, { translate } from '@docusaurus/Translate';
 import OpenAI from 'openai';
 import ReactMarkdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
-import { Highlight } from 'prism-react-renderer';
-import prismTheme from '@site/src/theme/prismTheme';
+import { Highlight, themes } from 'prism-react-renderer';
 import styles from './styles.module.css';
-
-function useDarkMode(): boolean {
-  const [isDark, setIsDark] = useState(() => {
-    if (typeof document === 'undefined') return false;
-    return document.documentElement.getAttribute('data-theme') === 'dark';
-  });
-  useEffect(() => {
-    const el = document.documentElement;
-    const observer = new MutationObserver(() => {
-      setIsDark(el.getAttribute('data-theme') === 'dark');
-    });
-    observer.observe(el, { attributes: true, attributeFilter: ['data-theme'] });
-    return () => observer.disconnect();
-  }, []);
-  return isDark;
-}
 
 // ─── Types ───────────────────────────────────────────────────────────────────
 
@@ -41,17 +22,19 @@ interface Message {
 
 // ─── Constants ───────────────────────────────────────────────────────────────
 
-const MODELS: { id: string; label: string }[] = [
-  { id: 'gpt-4o-mini', label: 'GPT-4o mini' },
-  { id: 'gpt-4o', label: 'GPT-4o' },
-  { id: 'gpt-5.4-mini', label: 'GPT-5.4 mini' },
-  { id: 'gpt-5.4', label: 'GPT-5.4' },
-  { id: 'gpt-5.4-nano', label: 'GPT-5.4 nano' },
-];
-
 const DEFAULT_MODEL = 'gpt-4o-mini';
 const LS_API_KEY = 'hikari-chat-api-key';
 const LS_MODEL = 'hikari-chat-model';
+const LS_ENDPOINT = 'hikari-chat-endpoint';
+const DEFAULT_ENDPOINT = 'https://api.openai.com/v1';
+
+function normalizeEndpoint(value: string): string {
+  const url = new URL(value.trim() || DEFAULT_ENDPOINT);
+  if (!['http:', 'https:'].includes(url.protocol) || url.username || url.password || url.search || url.hash) {
+    throw new Error('Invalid endpoint');
+  }
+  return url.href.replace(/\/+$/, '');
+}
 const SYSTEM_PROMPT = `You are Hikari, a friendly and knowledgeable AI assistant on hikari-dev.com — a personal tech blog about programming, web development, and software engineering.
 
 You help users with:
@@ -66,52 +49,6 @@ Guidelines:
 - Use Mermaid diagrams (\`\`\`mermaid) when helpful for explaining flows or architectures
 - Respond in the same language the user writes in (Japanese, English, Traditional Chinese, etc.)
 - When uncertain, say so honestly rather than guessing`;
-
-// ─── Icons ───────────────────────────────────────────────────────────────────
-
-const ChevronDownIcon = () => (
-  <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true">
-    <path d="M3 5l4 4 4-4" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
-  </svg>
-);
-
-const CheckIcon = () => (
-  <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true">
-    <path d="M2.5 7l3.5 3.5 5.5-6" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
-  </svg>
-);
-
-const SendIcon = () => (
-  <svg width="18" height="18" viewBox="0 0 18 18" fill="none" aria-hidden="true">
-    <path d="M15.5 9L2 2.5 5.5 9 2 15.5 15.5 9z" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
-  </svg>
-);
-
-const RefreshIcon = () => (
-  <svg width="15" height="15" viewBox="0 0 15 15" fill="none" aria-hidden="true">
-    <path d="M12.5 7.5a5 5 0 1 1-1.5-3.5L13 2v4h-4l1.5-1.5" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round" strokeLinejoin="round"/>
-  </svg>
-);
-
-const EyeIcon = () => (
-  <svg width="15" height="15" viewBox="0 0 15 15" fill="none" aria-hidden="true">
-    <ellipse cx="7.5" cy="7.5" rx="6.5" ry="4.5" stroke="currentColor" strokeWidth="1.3"/>
-    <circle cx="7.5" cy="7.5" r="2" stroke="currentColor" strokeWidth="1.3"/>
-  </svg>
-);
-
-const EyeOffIcon = () => (
-  <svg width="15" height="15" viewBox="0 0 15 15" fill="none" aria-hidden="true">
-    <path d="M2 2l11 11M6 6.2A2 2 0 0 0 8.8 9M3.5 4A6.5 6.5 0 0 0 1 7.5s2.3 4.5 6.5 4.5A6 6 0 0 0 11 11M6.5 3a6 6 0 0 1 1 0c4 0 6.5 4.5 6.5 4.5a8 8 0 0 1-1.3 2" stroke="currentColor" strokeWidth="1.3" strokeLinecap="round"/>
-  </svg>
-);
-
-const SettingsIcon = () => (
-  <svg width="15" height="15" viewBox="0 0 15 15" fill="none" aria-hidden="true">
-    <circle cx="7.5" cy="7.5" r="2.2" stroke="currentColor" strokeWidth="1.3"/>
-    <path d="M7.5 1v1.5M7.5 12.5V14M1 7.5h1.5M12.5 7.5H14M3 3l1 1M11 11l1 1M11 3l-1 1M3 11l1-1" stroke="currentColor" strokeWidth="1.3" strokeLinecap="round"/>
-  </svg>
-);
 
 // ─── Mermaid Block ────────────────────────────────────────────────────────────
 
@@ -161,7 +98,7 @@ function MermaidBlock({ code, isDark }: { code: string; isDark: boolean }) {
 
 function CodeBlock({ code, language, isDark }: { code: string; language: string; isDark: boolean }) {
   const [copied, setCopied] = useState(false);
-  const theme = prismTheme;
+  const theme = {...themes.vsLight, plain: {...themes.vsLight.plain, backgroundColor: '#c0c0c0', color: '#222'}};
 
   const handleCopy = async () => {
     await navigator.clipboard.writeText(code);
@@ -201,7 +138,7 @@ function CodeBlock({ code, language, isDark }: { code: string; language: string;
 // ─── Markdown Renderer ────────────────────────────────────────────────────────
 
 function MarkdownContent({ content, isStreaming }: { content: string; isStreaming?: boolean }) {
-  const isDark = useDarkMode();
+  const isDark = false;
 
   return (
     <div className={styles.assistantContent}>
@@ -240,9 +177,9 @@ function MarkdownContent({ content, isStreaming }: { content: string; isStreamin
 
 function TypingIndicator() {
   return (
-    <div className={styles.typingIndicator} aria-label="thinking">
-      <span /><span /><span />
-    </div>
+    <p className={styles.typingIndicator} role="status">
+      <Translate id="chat.thinking">応答を生成中...</Translate>
+    </p>
   );
 }
 
@@ -272,38 +209,6 @@ function MessageBubble({ message, isStreaming }: { message: Message; isStreaming
   );
 }
 
-// ─── Model Selector ───────────────────────────────────────────────────────────
-
-function ModelSelector({ value, onChange }: { value: string; onChange: (v: string) => void }) {
-  return (
-    <Select.Root value={value} onValueChange={onChange}>
-      <Select.Trigger
-        className={styles.selectTrigger}
-        aria-label={translate({ id: 'chat.model.label', message: 'モデル' })}
-      >
-        <Select.Value />
-        <Select.Icon className={styles.selectIcon}>
-          <ChevronDownIcon />
-        </Select.Icon>
-      </Select.Trigger>
-      <Select.Portal>
-        <Select.Content className={styles.selectContent} position="popper" sideOffset={6}>
-          <Select.Viewport className={styles.selectViewport}>
-            {MODELS.map((model) => (
-              <Select.Item key={model.id} value={model.id} className={styles.selectItem}>
-                <Select.ItemText>{model.label}</Select.ItemText>
-                <Select.ItemIndicator className={styles.selectItemIndicator}>
-                  <CheckIcon />
-                </Select.ItemIndicator>
-              </Select.Item>
-            ))}
-          </Select.Viewport>
-        </Select.Content>
-      </Select.Portal>
-    </Select.Root>
-  );
-}
-
 // ─── Main Component ───────────────────────────────────────────────────────────
 
 export default function HikariChat(): ReactNode {
@@ -312,6 +217,9 @@ export default function HikariChat(): ReactNode {
   const [isLoading, setIsLoading] = useState(false);
   const [apiKey, setApiKey] = useState('');
   const [apiKeyInput, setApiKeyInput] = useState('');
+  const [endpoint, setEndpoint] = useState(DEFAULT_ENDPOINT);
+  const [endpointInput, setEndpointInput] = useState('');
+  const [settingsError, setSettingsError] = useState('');
   const [showApiKeyValue, setShowApiKeyValue] = useState(false);
   const [selectedModel, setSelectedModel] = useState(DEFAULT_MODEL);
   const [error, setError] = useState<string | null>(null);
@@ -328,6 +236,15 @@ export default function HikariChat(): ReactNode {
     setApiKey(savedKey);
     setApiKeyInput(savedKey);
     setSelectedModel(savedModel);
+    const savedEndpoint = localStorage.getItem(LS_ENDPOINT) ?? '';
+    setEndpointInput(savedEndpoint);
+    try {
+      setEndpoint(normalizeEndpoint(savedEndpoint));
+    } catch {
+      setEndpoint('');
+      setSettingsOpen(true);
+      setSettingsError(translate({id: 'chat.endpoint.invalid', message: '有効な HTTP または HTTPS のベース URL を入力してください。'}));
+    }
     if (!savedKey) setSettingsOpen(true);
   }, []);
 
@@ -343,9 +260,23 @@ export default function HikariChat(): ReactNode {
   };
 
   const handleSaveApiKey = () => {
-    localStorage.setItem(LS_API_KEY, apiKeyInput);
-    setApiKey(apiKeyInput);
-    if (apiKeyInput) setSettingsOpen(false);
+    let nextEndpoint: string;
+    try {
+      nextEndpoint = normalizeEndpoint(endpointInput);
+    } catch {
+      setSettingsError(translate({id: 'chat.endpoint.invalid', message: '有効な HTTP または HTTPS のベース URL を入力してください。'}));
+      return;
+    }
+    const nextKey = apiKeyInput.trim();
+    localStorage.setItem(LS_API_KEY, nextKey);
+    localStorage.setItem(LS_ENDPOINT, endpointInput.trim() ? nextEndpoint : '');
+    setApiKey(nextKey);
+    setEndpoint(nextEndpoint);
+    setEndpointInput(endpointInput.trim() ? nextEndpoint : '');
+    setSettingsError('');
+    setShowApiKeyValue(false);
+    setError(null);
+    if (nextKey) setSettingsOpen(false);
   };
 
   const handleModelChange = (model: string) => {
@@ -365,9 +296,19 @@ export default function HikariChat(): ReactNode {
   const handleSend = useCallback(async () => {
     const trimmed = input.trim();
     if (!trimmed || isLoading) return;
+    const model = selectedModel.trim();
+    if (!model) {
+      setError(translate({id: 'chat.error.noModel', message: 'モデル名を入力してください。'}));
+      return;
+    }
 
     if (!apiKey) {
-      setError(translate({ id: 'chat.error.noApiKey', message: 'OpenAI API キーを設定してください。' }));
+      setError(translate({ id: 'chat.error.noApiKey', message: 'API キーを設定してください。' }));
+      setSettingsOpen(true);
+      return;
+    }
+
+    if (!endpoint) {
       setSettingsOpen(true);
       return;
     }
@@ -390,10 +331,10 @@ export default function HikariChat(): ReactNode {
     historyRef.current = [...historyRef.current, { role: 'user', content: trimmed }];
 
     try {
-      const openai = new OpenAI({ apiKey, dangerouslyAllowBrowser: true });
+      const openai = new OpenAI({ apiKey, baseURL: endpoint, dangerouslyAllowBrowser: true });
 
       const stream = await openai.chat.completions.create({
-        model: selectedModel,
+        model,
         messages: [{ role: 'system', content: SYSTEM_PROMPT }, ...historyRef.current],
         stream: true,
       });
@@ -422,9 +363,10 @@ export default function HikariChat(): ReactNode {
       setIsLoading(false);
       setStreamingId(null);
     }
-  }, [input, isLoading, apiKey, selectedModel]);
+  }, [input, isLoading, apiKey, selectedModel, endpoint]);
 
   const handleKeyDown = (e: React.KeyboardEvent<HTMLTextAreaElement>) => {
+    if (e.nativeEvent.isComposing) return;
     if (e.key === 'Enter' && !e.shiftKey) {
       e.preventDefault();
       handleSend();
@@ -436,178 +378,160 @@ export default function HikariChat(): ReactNode {
     : '';
 
   return (
-    <Tooltip.Provider delayDuration={400}>
-      <div className={styles.container}>
-
-        {/* ── ヘッダー ── */}
-        <header className={styles.header}>
-          <div className={styles.headerLeft}>
-            <span className={styles.titleIcon} aria-hidden="true">✦</span>
-            <h1 className={styles.title}>
-              <Translate id="chat.title">ひかりチャット</Translate>
-            </h1>
-          </div>
-          <div className={styles.headerRight}>
-            <ModelSelector value={selectedModel} onChange={handleModelChange} />
-
-            <Tooltip.Root>
-              <Tooltip.Trigger asChild>
-                <button
-                  type="button"
-                  className={`${styles.iconButton} ${settingsOpen ? styles.iconButtonActive : ''}`}
-                  onClick={() => setSettingsOpen((v) => !v)}
-                  aria-label={translate({ id: 'chat.settings', message: '設定' })}
-                >
-                  <SettingsIcon />
-                </button>
-              </Tooltip.Trigger>
-              <Tooltip.Portal>
-                <Tooltip.Content className={styles.tooltip} sideOffset={6}>
-                  <Translate id="chat.settings">設定</Translate>
-                  <Tooltip.Arrow className={styles.tooltipArrow} />
-                </Tooltip.Content>
-              </Tooltip.Portal>
-            </Tooltip.Root>
-
-            <Tooltip.Root>
-              <Tooltip.Trigger asChild>
-                <button
-                  type="button"
-                  className={styles.iconButton}
-                  onClick={handleReset}
-                  disabled={messages.length === 0}
-                  aria-label={translate({ id: 'chat.reset', message: 'リセット' })}
-                >
-                  <RefreshIcon />
-                </button>
-              </Tooltip.Trigger>
-              <Tooltip.Portal>
-                <Tooltip.Content className={styles.tooltip} sideOffset={6}>
-                  <Translate id="chat.reset">リセット</Translate>
-                  <Tooltip.Arrow className={styles.tooltipArrow} />
-                </Tooltip.Content>
-              </Tooltip.Portal>
-            </Tooltip.Root>
-          </div>
-        </header>
-
-        {/* ── 設定パネル ── */}
-        {settingsOpen && (
-          <div className={styles.settingsPanel}>
-            <label className={styles.settingsLabel} htmlFor="chat-api-key">
-              <Translate id="chat.apiKey.label">OpenAI API キー</Translate>
-            </label>
-            <div className={styles.apiKeyRow}>
-              <div className={styles.apiKeyInputWrapper}>
-                <input
-                  id="chat-api-key"
-                  type={showApiKeyValue ? 'text' : 'password'}
-                  className={styles.apiKeyInput}
-                  value={apiKeyInput}
-                  onChange={(e) => setApiKeyInput(e.target.value)}
-                  onKeyDown={(e) => e.key === 'Enter' && handleSaveApiKey()}
-                  placeholder={translate({ id: 'chat.apiKey.placeholder', message: 'sk-...' })}
-                  autoComplete="off"
-                  spellCheck={false}
-                />
-                <button
-                  type="button"
-                  className={styles.apiKeyToggle}
-                  onClick={() => setShowApiKeyValue((v) => !v)}
-                  aria-label={showApiKeyValue
-                    ? translate({ id: 'chat.apiKey.hide', message: '隠す' })
-                    : translate({ id: 'chat.apiKey.show', message: '表示' })
-                  }
-                >
-                  {showApiKeyValue ? <EyeOffIcon /> : <EyeIcon />}
-                </button>
-              </div>
-              <button type="button" className={styles.saveButton} onClick={handleSaveApiKey}>
-                <Translate id="chat.apiKey.save">保存</Translate>
-              </button>
-            </div>
-            <p className={styles.apiKeyNote}>
-              <Translate id="chat.apiKey.note">
-                API キーはブラウザの localStorage にのみ保存されます。
-              </Translate>
-            </p>
-            {maskedKey && (
-              <p className={styles.apiKeyHint}>
-                <Translate id="chat.apiKey.current">現在のキー: </Translate>
-                <span className={styles.maskedKey}>{maskedKey}</span>
-              </p>
-            )}
-          </div>
-        )}
-
-        {/* ── メッセージ一覧 ── */}
-        <div className={styles.messages}>
-          {messages.length === 0 && (
-            <div className={styles.welcome}>
-              <p className={styles.welcomeEmoji} aria-hidden="true">✦</p>
-              <p className={styles.welcomeText}>
-                <Translate id="chat.welcome">こんにちは！何でも聞いてください。</Translate>
-              </p>
-              {!apiKey && (
-                <p className={styles.welcomeHint}>
-                  <Translate id="chat.welcome.noKey">
-                    まず右上の設定から API キーを設定してください。
-                  </Translate>
-                </p>
-              )}
-            </div>
-          )}
-
-          {messages.map((msg) => (
-            <MessageBubble
-              key={msg.id}
-              message={msg}
-              isStreaming={msg.id === streamingId}
+    <div className={styles.container}>
+      <header className={styles.header}>
+        <h1 className={styles.title}>
+          <Translate id="chat.title">ひかりチャット</Translate>
+        </h1>
+        <div className={styles.toolbar}>
+          <label className={styles.modelField} htmlFor="chat-model">
+            <Translate id="chat.model.label">モデル名</Translate>
+            <input
+              id="chat-model"
+              type="text"
+              className={styles.modelInput}
+              value={selectedModel}
+              onChange={(e) => handleModelChange(e.target.value)}
+              placeholder={translate({id: 'chat.model.placeholder', message: 'モデル ID を入力'})}
+              autoComplete="off"
+              spellCheck={false}
+              disabled={isLoading}
             />
-          ))}
-
-          {error && (
-            <div className={styles.errorBanner} role="alert">
-              <span className={styles.errorText}>{error}</span>
-            </div>
-          )}
-
-          <div ref={messagesEndRef} />
+          </label>
+          <button
+            type="button"
+            className={styles.controlButton}
+            onClick={() => setSettingsOpen((v) => !v)}
+            aria-expanded={settingsOpen}
+            aria-controls="chat-api-settings"
+          >
+            <Translate id="chat.settings">API キー設定</Translate>
+          </button>
+          <button
+            type="button"
+            className={styles.controlButton}
+            onClick={handleReset}
+            disabled={isLoading || (messages.length === 0 && !input && !error)}
+          >
+            <Translate id="chat.reset">リセット</Translate>
+          </button>
         </div>
+      </header>
 
-        {/* ── 入力エリア ── */}
-        <div className={styles.inputArea}>
-          <div className={styles.inputRow}>
-            <textarea
-              ref={textareaRef}
-              className={styles.textarea}
-              value={input}
-              onChange={handleInputChange}
-              onKeyDown={handleKeyDown}
-              placeholder={translate({
-                id: 'chat.input.placeholder',
-                message: 'メッセージを送信... (Shift+Enter で改行)',
-              })}
-              rows={1}
+      {settingsOpen && (
+        <fieldset id="chat-api-settings" className={styles.settingsPanel}>
+          <legend><Translate id="chat.settings">API キー設定</Translate></legend>
+          <label className={styles.settingsLabel} htmlFor="chat-api-key">
+            <Translate id="chat.apiKey.label">API キー</Translate>
+          </label>
+          <div className={styles.apiKeyRow}>
+            <input
+              id="chat-api-key"
+              type={showApiKeyValue ? 'text' : 'password'}
+              className={styles.apiKeyInput}
+              value={apiKeyInput}
+              onChange={(e) => setApiKeyInput(e.target.value)}
+              onKeyDown={(e) => e.key === 'Enter' && handleSaveApiKey()}
+              placeholder={translate({id: 'chat.apiKey.placeholder', message: 'sk-...'})}
+              autoComplete="off"
+              spellCheck={false}
               disabled={isLoading}
             />
             <button
               type="button"
-              className={styles.sendButton}
-              onClick={handleSend}
-              disabled={!input.trim() || isLoading}
-              aria-label={translate({ id: 'chat.send', message: '送信' })}
+              className={styles.controlButton}
+              onClick={() => setShowApiKeyValue((v) => !v)}
+              aria-pressed={showApiKeyValue}
+              aria-controls="chat-api-key"
             >
-              <SendIcon />
+              <Translate id="chat.apiKey.show">キー表示</Translate>
+            </button>
+            <button type="button" className={styles.controlButton} onClick={handleSaveApiKey} disabled={isLoading}>
+              <Translate id="chat.apiKey.save">保存</Translate>
             </button>
           </div>
-          <p className={styles.inputNote}>
-            <Translate id="chat.input.note">
-              Enter で送信、Shift+Enter で改行。会話はページを閉じるとリセットされます。
-            </Translate>
+          <label className={styles.endpointLabel} htmlFor="chat-endpoint">
+            <Translate id="chat.endpoint.label">カスタム エンドポイント</Translate>
+          </label>
+          <input
+            id="chat-endpoint"
+            type="url"
+            className={styles.endpointInput}
+            value={endpointInput}
+            onChange={(e) => setEndpointInput(e.target.value)}
+            onKeyDown={(e) => e.key === 'Enter' && handleSaveApiKey()}
+            placeholder={DEFAULT_ENDPOINT}
+            aria-describedby="chat-endpoint-note"
+            autoComplete="off"
+            spellCheck={false}
+            disabled={isLoading}
+          />
+          <p id="chat-endpoint-note" className={styles.apiKeyNote}>
+            <Translate id="chat.endpoint.note">OpenAI 互換 API のベース URL (例: https://example.com/v1)。空欄の場合は OpenAI を使用する。API キーとメッセージは、保存した接続先に送信される。</Translate>
           </p>
-        </div>
+          {settingsError && <p className={styles.errorText} role="alert">{settingsError}</p>}
+          <p className={styles.apiKeyNote}>
+            <Translate id="chat.apiKey.note">API キーは、このブラウザーの localStorage に保存される。</Translate>
+          </p>
+          {maskedKey && (
+            <p className={styles.apiKeyHint}>
+              <Translate id="chat.apiKey.current">現在のキー:</Translate>{' '}
+              <span className={styles.maskedKey}>{maskedKey}</span>
+            </p>
+          )}
+        </fieldset>
+      )}
+
+      <div className={styles.messages} aria-live="polite" aria-busy={isLoading}>
+        {messages.length === 0 && (
+          <div className={styles.welcome}>
+            <p className={styles.welcomeText}>
+              <Translate id="chat.welcome">質問や相談を入力してください。</Translate>
+            </p>
+            {!apiKey && (
+              <p className={styles.welcomeHint}>
+                <Translate id="chat.welcome.noKey">API キー設定から API キーを設定してください。</Translate>
+              </p>
+            )}
+          </div>
+        )}
+        {messages.map((msg) => (
+          <MessageBubble key={msg.id} message={msg} isStreaming={msg.id === streamingId} />
+        ))}
+        {error && (
+          <div className={styles.errorBanner} role="alert">
+            <span className={styles.errorText}>{error}</span>
+          </div>
+        )}
+        <div ref={messagesEndRef} />
       </div>
-    </Tooltip.Provider>
+
+      <div className={styles.inputArea}>
+        <div className={styles.inputRow}>
+          <textarea
+            ref={textareaRef}
+            className={styles.textarea}
+            value={input}
+            onChange={handleInputChange}
+            onKeyDown={handleKeyDown}
+            aria-label={translate({id: 'chat.input.label', message: 'メッセージ'})}
+            placeholder={translate({id: 'chat.input.placeholder', message: 'メッセージを入力...'})}
+            rows={2}
+            disabled={isLoading}
+          />
+          <button
+            type="button"
+            className={styles.controlButton}
+            onClick={handleSend}
+            disabled={!input.trim() || !selectedModel.trim() || isLoading}
+          >
+            <Translate id="chat.send">送信</Translate>
+          </button>
+        </div>
+        <p className={styles.inputNote}>
+          <Translate id="chat.input.note">Enter で送信、Shift + Enter で改行。会話はページを閉じるとリセットされる。</Translate>
+        </p>
+      </div>
+    </div>
   );
 }

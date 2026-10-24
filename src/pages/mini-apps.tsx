@@ -27,7 +27,7 @@ export default function MiniAppsPage(): ReactNode {
 
         <div className={styles.grid}>
           {MINI_APPS.map((app) => (
-            <Link key={app.href} to={app.href} className={styles.card}>
+            <Link key={app.href} to={app.href} className={`${styles.card} window mini-app-98-card`}>
               <span className={styles.cardIcon}>
                 <app.Icon />
               </span>

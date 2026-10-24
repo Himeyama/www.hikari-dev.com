@@ -1,0 +1,217 @@
+/* The upstream rules are scoped by plugins/mini-app-98.cjs. */
+html:root:has(.mini-app-98) {
+  color-scheme: light;
+}
+
+/* Non-auto standard scrollbar colors override ::-webkit-scrollbar in Chromium. */
+html:root:has(.mini-app-98),
+html body .mini-app-98,
+html body .mini-app-98 * {
+  scrollbar-color: auto;
+  scrollbar-width: auto;
+}
+
+/* Match 98.css's window/control text size, overriding the site's 15px rule. */
+html:root body .mini-app-98,
+html:root body .mini-app-98 *,
+html:root body .mini-app-98 *::before,
+html:root body .mini-app-98 *::after {
+  font-size: 11px !important;
+}
+
+html body .mini-app-98 {
+  color-scheme: light;
+  --hikari-black: #ffffff;
+  --hikari-white: #222222;
+  --hikari-muted: #555555;
+  --hikari-disabled: #808080;
+  --hikari-blue: #000080;
+  --hikari-blue-hover: #1084d0;
+  --hikari-cyan: #808080;
+  --hikari-cyan-bright: #000080;
+  --hikari-red: #800000;
+  --hikari-red-bright: #800000;
+  --hikari-green: #008000;
+  --hikari-yellow: #808000;
+  --ifm-color-primary: #000080;
+  --ifm-background-color: #ffffff;
+  --ifm-background-surface-color: #c0c0c0;
+  --ifm-font-color-base: #222222;
+  --ifm-font-color-secondary: #555555;
+  --ifm-heading-color: #222222;
+  --ifm-color-content: #222222;
+  --ifm-color-content-secondary: #555555;
+  --ifm-color-emphasis-0: #ffffff;
+  --ifm-color-emphasis-100: #dfdfdf;
+  --ifm-color-emphasis-200: #808080;
+  --ifm-color-emphasis-300: #808080;
+  --ifm-color-emphasis-400: #808080;
+  --ifm-color-emphasis-500: #555555;
+  --ifm-color-emphasis-600: #555555;
+  --ifm-color-emphasis-700: #222222;
+  --ifm-color-emphasis-800: #222222;
+  --ifm-color-emphasis-900: #222222;
+  --ifm-color-emphasis-1000: #000000;
+  --ifm-code-background: #ffffff;
+  --ifm-font-family-base: 'MS UI Gothic', sans-serif;
+  --ifm-font-family-monospace: 'MS UI Gothic', monospace;
+  font-family: 'MS UI Gothic', sans-serif;
+  background: #c0c0c0;
+  color: #222;
+}
+
+html body .mini-app-98-shell {
+  flex: 1;
+  min-width: 0;
+  padding: 24px;
+  background: #008080;
+}
+
+html body .mini-app-98-window {
+  max-width: 1200px;
+  min-width: 0;
+  margin: 0 auto;
+}
+
+html body .mini-app-98-window.window {
+  font-family: inherit;
+}
+
+html body .mini-app-98 .title-bar {
+  color: #fff;
+  padding: 5px 8px;
+}
+
+html body .mini-app-98 .window-body {
+  min-width: 0;
+  margin: 8px;
+}
+
+html body .mini-app-98 .mini-app-98-card {
+  padding: 20px;
+  border: 0;
+}
+
+html body .mini-app-98 .mini-app-98-card:hover {
+  background: #dfdfdf;
+  color: #222;
+}
+
+html body .mini-app-98 .mini-app-98-card:hover :is(h2, p) {
+  color: #222;
+}
+
+/* Respect each tool's sizing, flex/grid layout and responsive breakpoints. */
+html body .mini-app-98 :is(.window, .title-bar, .title-bar-text, button, input, select, textarea, option, label, legend, table, li[role='tab'], ul.tree-view) {
+  font-family: inherit;
+}
+
+html body .mini-app-98 button {
+  color: #222;
+  text-shadow: none;
+  min-height: 28px;
+}
+
+html body .mini-app-98 button:is(:hover, :focus-visible) {
+  background-color: #c0c0c0;
+  color: #222;
+  border-color: transparent;
+}
+
+html body .mini-app-98 button.mini-app-98-selected,
+html body .mini-app-98 button[aria-pressed='true'],
+html body .mini-app-98 button[aria-selected='true'] {
+  background: #dfdfdf;
+  color: #000;
+  box-shadow: inset -1px -1px #fff, inset 1px 1px #0a0a0a,
+    inset -2px -2px #dfdfdf, inset 2px 2px #808080;
+}
+
+html body .mini-app-98 :is(button, input, select, textarea, a, [tabindex]):focus-visible {
+  outline: 1px dotted #000;
+  outline-offset: -4px;
+}
+
+html body .mini-app-98 input:not([type='checkbox']):not([type='radio']):not([type='range']):not([type='color']) {
+  min-height: 21px;
+  height: 21px;
+  color: #222;
+}
+
+html body .mini-app-98 select {
+  min-height: 21px;
+  height: 21px;
+  line-height: normal;
+  padding: 3px 20px 3px 4px;
+  background-position: right 2px center;
+}
+
+html body .mini-app-98 textarea {
+  color: #222;
+}
+
+html body .mini-app-98 :is(input, textarea)::placeholder {
+  color: #808080;
+}
+
+html body .mini-app-98 :is(button, input, select, textarea):disabled {
+  background-color: #c0c0c0;
+  color: #808080;
+  text-shadow: 1px 1px #fff;
+  opacity: 1;
+}
+
+html body .mini-app-98 input:is([type='checkbox'], [type='radio'], [type='range']) {
+  accent-color: #000080;
+}
+
+html body .mini-app-98 a {
+  color: #000080;
+}
+
+html body .mini-app-98 a:hover {
+  background-color: #000080;
+  color: #fff;
+}
+
+html body .mini-app-98 ::selection {
+  background: #000080;
+  color: #fff;
+}
+
+/* Monaco owns the positioning and appearance of its hidden input area. */
+html body .mini-app-98 .monaco-editor textarea {
+  box-shadow: none;
+  background: transparent;
+  color: transparent;
+  padding: 0;
+}
+
+html[data-embed='1'] body .mini-app-98-shell {
+  padding: 0;
+  background: #c0c0c0;
+}
+
+html[data-embed='1'] body .mini-app-98-window {
+  max-width: none;
+  padding: 0;
+  box-shadow: none;
+}
+
+html[data-embed='1'] body .mini-app-98-window > .title-bar {
+  display: none;
+}
+
+html[data-embed='1'] body .mini-app-98 .window-body {
+  margin: 0;
+}
+
+@media (max-width: 600px) {
+  html body .mini-app-98-shell {
+    padding: 8px;
+  }
+
+  html body .mini-app-98 .window-body {
+    margin: 4px;
+  }
+}

@@ -419,3 +419,8 @@
   padding-left: 1.4rem;
   line-height: 2;
 }
+
+/* Shared pressed state for the mini-app theme. */
+.tabBtnActive {
+  composes: mini-app-98-selected from global;
+}

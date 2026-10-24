@@ -350,3 +350,16 @@
     display: none;
   }
 }
+
+/* Shared pressed state for the mini-app theme. */
+.fontOptionActive {
+  composes: mini-app-98-selected from global;
+}
+
+.tabBtnActive {
+  composes: mini-app-98-selected from global;
+}
+
+.iconBtnActive {
+  composes: mini-app-98-selected from global;
+}

@@ -1,7 +1,7 @@
 import {useEffect, useRef, useState} from 'react';
 import type {ReactNode} from 'react';
 import clsx from 'clsx';
-import Translate from '@docusaurus/Translate';
+import Translate, {translate} from '@docusaurus/Translate';
 import {usePointerDrag} from './usePointerDrag';
 import styles from './desktop.module.css';
 
@@ -77,17 +77,9 @@ export function ConfirmDialog({
           <button
             type="button"
             className={clsx(styles.titleButton, styles.titleButtonClose)}
+            aria-label={translate({id: 'desktop.window.close', message: '閉じる'})}
             onClick={onCancel}
-          >
-            <svg viewBox="0 0 16 16" fill="none" aria-hidden="true">
-              <path
-                d="M4 4l8 8M12 4l-8 8"
-                stroke="currentColor"
-                strokeWidth="1.5"
-                strokeLinecap="round"
-              />
-            </svg>
-          </button>
+          />
         </div>
       </div>
       <div className={clsx(styles.windowBody, styles.confirmBody)}>

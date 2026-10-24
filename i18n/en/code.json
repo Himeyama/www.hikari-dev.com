@@ -458,13 +458,13 @@
     "message": "Chat with AI"
   },
   "chat.settings": {
-    "message": "Settings"
+    "message": "API key settings"
   },
   "chat.model.label": {
-    "message": "Model"
+    "message": "Model name"
   },
   "chat.apiKey.label": {
-    "message": "OpenAI API Key"
+    "message": "API key"
   },
   "chat.apiKey.placeholder": {
     "message": "sk-..."
@@ -473,16 +473,13 @@
     "message": "Save"
   },
   "chat.apiKey.show": {
-    "message": "Show"
-  },
-  "chat.apiKey.hide": {
-    "message": "Hide"
+    "message": "Show key"
   },
   "chat.apiKey.current": {
-    "message": "Saved:"
+    "message": "Current key:"
   },
   "chat.apiKey.note": {
-    "message": "Your API key is stored only in your browser's localStorage."
+    "message": "The API key is stored in this browser's localStorage."
   },
   "chat.reset": {
     "message": "Reset"
@@ -491,19 +488,19 @@
     "message": "Send"
   },
   "chat.input.placeholder": {
-    "message": "Send a message... (Ctrl+Enter to send)"
+    "message": "Enter a message..."
   },
   "chat.input.note": {
-    "message": "Ctrl+Enter to send. History resets when you close the page."
+    "message": "Enter to send, Shift + Enter for a new line. The conversation resets when you close the page."
   },
   "chat.error.noApiKey": {
-    "message": "Please set your OpenAI API key."
+    "message": "Set your API key."
   },
   "chat.welcome": {
-    "message": "Hello! Ask me anything."
+    "message": "Enter a question or a message."
   },
   "chat.welcome.noKey": {
-    "message": "Please set your API key in the settings above."
+    "message": "Set your API key in API key settings."
   },
   "chat.code.copy": {
     "message": "Copy"
@@ -1998,5 +1995,26 @@
   },
   "theme.fontSwitcher.articleSerif": {
     "message": "General"
+  },
+  "chat.model.placeholder": {
+    "message": "Enter a model ID"
+  },
+  "chat.input.label": {
+    "message": "Message"
+  },
+  "chat.thinking": {
+    "message": "Generating a response..."
+  },
+  "chat.error.noModel": {
+    "message": "Enter a model name."
+  },
+  "chat.endpoint.label": {
+    "message": "Custom endpoint"
+  },
+  "chat.endpoint.note": {
+    "message": "Base URL for an OpenAI-compatible API (e.g. https://example.com/v1). Leave blank to use OpenAI. Your API key and messages are sent to the saved endpoint."
+  },
+  "chat.endpoint.invalid": {
+    "message": "Enter a valid HTTP or HTTPS base URL."
   }
 }

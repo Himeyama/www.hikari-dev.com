@@ -9,6 +9,7 @@
 }
 
 .panel {
+  composes: window from global;
   display: flex;
   flex-direction: column;
   width: min(480px, 92vw);
@@ -21,6 +22,7 @@
 }
 
 .header {
+  composes: title-bar from global;
   padding: 0.7rem 1rem;
   border-bottom: 1px solid var(--ifm-color-emphasis-200);
   font-size: 0.9rem;
@@ -219,4 +221,38 @@
 .confirmBtn:disabled {
   opacity: 0.45;
   cursor: default;
+}
+
+:global(html body .mini-app-98) .backdrop {
+  background: rgb(0 0 0 / 25%);
+}
+
+:global(html body .mini-app-98) .header {
+  color: #fff;
+  padding: 5px 8px;
+}
+
+:global(html body .mini-app-98) .toolBtn {
+  min-width: 28px;
+  padding: 4px;
+}
+
+:global(html body .mini-app-98) .entry,
+:global(html body .mini-app-98) .entry:hover {
+  min-width: 0;
+  background: transparent;
+  border: 1px solid transparent;
+  box-shadow: none;
+  padding: 8px 4px;
+}
+
+:global(html body .mini-app-98) .entrySelected,
+:global(html body .mini-app-98) .entrySelected:hover {
+  background: #000080;
+  color: #fff;
+}
+
+:global(html body .mini-app-98) .entry:not(:disabled):active {
+  box-shadow: none;
+  text-shadow: none;
 }

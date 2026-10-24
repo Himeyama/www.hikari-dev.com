@@ -426,13 +426,13 @@
     "message": "與 AI 對話"
   },
   "chat.settings": {
-    "message": "設定"
+    "message": "API 金鑰設定"
   },
   "chat.model.label": {
-    "message": "模型"
+    "message": "模型名稱"
   },
   "chat.apiKey.label": {
-    "message": "OpenAI API 金鑰"
+    "message": "API 金鑰"
   },
   "chat.apiKey.placeholder": {
     "message": "sk-..."
@@ -441,16 +441,13 @@
     "message": "儲存"
   },
   "chat.apiKey.show": {
-    "message": "顯示"
-  },
-  "chat.apiKey.hide": {
-    "message": "隱藏"
+    "message": "顯示金鑰"
   },
   "chat.apiKey.current": {
-    "message": "已設定："
+    "message": "目前的金鑰:"
   },
   "chat.apiKey.note": {
-    "message": "API 金鑰僅儲存在您的瀏覽器 localStorage 中。"
+    "message": "API 金鑰儲存在此瀏覽器的 localStorage 中。"
   },
   "chat.reset": {
     "message": "重置"
@@ -459,19 +456,19 @@
     "message": "傳送"
   },
   "chat.input.placeholder": {
-    "message": "傳送訊息... (Ctrl+Enter 傳送)"
+    "message": "輸入訊息..."
   },
   "chat.input.note": {
-    "message": "Ctrl+Enter 傳送。關閉頁面後對話記錄會重置。"
+    "message": "按 Enter 傳送，Shift + Enter 換行。關閉頁面後對話會重設。"
   },
   "chat.error.noApiKey": {
-    "message": "請設定您的 OpenAI API 金鑰。"
+    "message": "請設定 API 金鑰。"
   },
   "chat.welcome": {
-    "message": "您好！請隨時提問。"
+    "message": "請輸入問題或訊息。"
   },
   "chat.welcome.noKey": {
-    "message": "請先在上方設定中填入 API 金鑰。"
+    "message": "請在 API 金鑰設定中設定 API 金鑰。"
   },
   "chat.code.copy": {
     "message": "複製"
@@ -1998,5 +1995,26 @@
   },
   "theme.fontSwitcher.articleSerif": {
     "message": "一般"
+  },
+  "chat.model.placeholder": {
+    "message": "輸入模型 ID"
+  },
+  "chat.input.label": {
+    "message": "訊息"
+  },
+  "chat.thinking": {
+    "message": "正在產生回覆..."
+  },
+  "chat.error.noModel": {
+    "message": "請輸入模型名稱。"
+  },
+  "chat.endpoint.label": {
+    "message": "自訂端點"
+  },
+  "chat.endpoint.note": {
+    "message": "OpenAI 相容 API 的基底 URL (例如: https://example.com/v1)。留空時使用 OpenAI。API 金鑰與訊息會傳送至已儲存的端點。"
+  },
+  "chat.endpoint.invalid": {
+    "message": "請輸入有效的 HTTP 或 HTTPS 基底 URL。"
   }
 }
