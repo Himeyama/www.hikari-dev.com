@@ -2013,5 +2013,20 @@
   },
   "doc.menu.view": {
     "message": "表示"
+  },
+  "doc.menu.settings": {
+    "message": "設定"
+  },
+  "doc.modelName": {
+    "message": "モデル名"
+  },
+  "doc.baseUrl": {
+    "message": "ベース URL"
+  },
+  "doc.baseUrl.invalid": {
+    "message": "有効な HTTP または HTTPS のベース URL を入力してください。"
+  },
+  "doc.apiKey": {
+    "message": "API キー"
   }
 }

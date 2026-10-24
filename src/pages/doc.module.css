@@ -130,7 +130,10 @@
   font-size: 0.78rem;
   max-width: 190px;
   transition: background 0.12s, border-color 0.12s;
+  list-style: none;
 }
+
+.fontTrigger::-webkit-details-marker { display: none; }
 
 .fontTrigger:hover {
   background: var(--ifm-color-emphasis-100);
@@ -359,6 +362,30 @@
 }
 .menuPopup .fontTrigger { max-width: none; width: 100%; }
 .menuPopup .fontMenu { left: 0; right: auto; }
+
+/* Font choices follow the flat menu appearance, including 98.css states. */
+:global(html body .mini-app-98) .menuPopup :is(.fontTrigger, .fontOption) {
+  min-height: 22px;
+  min-width: 0;
+  padding: 3px 12px;
+  border: 0;
+  border-radius: 0;
+  box-shadow: none;
+  text-shadow: none;
+  background: transparent;
+  color: #222;
+}
+:global(html body .mini-app-98) .menuPopup :is(.fontTrigger, .fontOption):is(:hover, :focus-visible) {
+  background: #000080;
+  color: #fff;
+  box-shadow: none;
+  text-shadow: none;
+}
+.fontMenu {
+  border-radius: 0;
+  padding: 3px;
+  background: #c0c0c0;
+}
 
 /* Infima が h1-h6 に font-family を直接指定するため、祖先の font-family 継承では上書きできない */
 .previewScroll h1,

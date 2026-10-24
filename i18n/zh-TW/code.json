@@ -2025,5 +2025,20 @@
   },
   "doc.menu.view": {
     "message": "檢視"
+  },
+  "doc.menu.settings": {
+    "message": "設定"
+  },
+  "doc.modelName": {
+    "message": "模型名稱"
+  },
+  "doc.baseUrl": {
+    "message": "基底 URL"
+  },
+  "doc.baseUrl.invalid": {
+    "message": "請輸入有效的 HTTP 或 HTTPS 基底 URL。"
+  },
+  "doc.apiKey": {
+    "message": "API 金鑰"
   }
 }

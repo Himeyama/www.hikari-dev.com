@@ -17,6 +17,7 @@ import {
   getFontOption,
   type FontOption,
 } from '../lib/doc/fonts';
+import {SettingsWindow} from '../components/DocChat/SettingsWindow';
 import {DocChatPanel} from '../components/DocChat/DocChatPanel';
 import styles from './doc.module.css';
 
@@ -294,7 +295,7 @@ function FontDropdown({
   onChange: (id: string) => void;
 }): ReactNode {
   const [open, setOpen] = useState(false);
-  const rootRef = useRef<HTMLDivElement>(null);
+  const rootRef = useRef<HTMLDetailsElement>(null);
   const current = getFontOption(value);
 
   useEffect(() => {
@@ -314,20 +315,19 @@ function FontDropdown({
   }, [open]);
 
   return (
-    <div className={styles.fontPicker} ref={rootRef}>
-      <button
-        type="button"
+    <details className={styles.fontPicker} ref={rootRef} open={open}
+      onToggle={(event) => setOpen(event.currentTarget.open)}>
+      <summary
         className={styles.fontTrigger}
-        onClick={() => setOpen((v) => !v)}
         title={translate({id: 'doc.font', message: 'フォント'})}
-        aria-haspopup="listbox"
+        aria-haspopup="menu"
         aria-expanded={open}
       >
         <span className={styles.fontTriggerLabel}>{renderFontLabel(current)}</span>
         <ChevronDownIcon />
-      </button>
+      </summary>
       {open && (
-        <div className={styles.fontMenu} role="listbox">
+        <div className={styles.fontMenu} role="menu" aria-label={translate({id: 'doc.font', message: 'フォント'})}>
           {FONT_CATEGORIES.map((category) => (
             <div key={category} className={styles.fontGroup}>
               <div className={styles.fontGroupLabel}>{FONT_CATEGORY_LABELS[category]}</div>
@@ -335,8 +335,8 @@ function FontDropdown({
                 <button
                   type="button"
                   key={f.id}
-                  role="option"
-                  aria-selected={f.id === value}
+                  role="menuitemradio"
+                  aria-checked={f.id === value}
                   className={`${styles.fontOption} ${f.id === value ? styles.fontOptionActive : ''}`}
                   onClick={() => {
                     onChange(f.id);
@@ -351,7 +351,7 @@ function FontDropdown({
           ))}
         </div>
       )}
-    </div>
+    </details>
   );
 }
 
@@ -381,6 +381,7 @@ function DocApp(): ReactNode {
   const [marks, setMarks] = useState({bold: false, italic: false, strike: false});
   const [hasSelection, setHasSelection] = useState(false);
   const [selectedText, setSelectedText] = useState('');
+  const [settingsOpen, setSettingsOpen] = useState(false);
   const [chatOpen, setChatOpenState] = useState(loadChatOpen);
   const [chatPct, setChatPct] = useState(() => (loadChatOpen() ? 20 : 30));
   const [chatDragging, setChatDragging] = useState(false);
@@ -701,6 +702,9 @@ function DocApp(): ReactNode {
             setChatOpen(!chatOpen);
           }}><Translate id="doc.aiChat">AI チャット</Translate></button>
         </DocMenu>
+        <DocMenu label={translate({id: 'doc.menu.settings', message: '設定'})}>
+          <button onClick={() => setSettingsOpen(true)}><Translate id="doc.apiSettings">API 設定</Translate></button>
+        </DocMenu>
         <input ref={fileInputRef} type="file" accept={IMPORT_ACCEPT} className={styles.hiddenFileInput}
           onChange={(e) => {
             const file = e.target.files?.[0];
@@ -708,6 +712,8 @@ function DocApp(): ReactNode {
             if (file) void importFile(file);
           }} />
       </div>
+
+      {settingsOpen && <SettingsWindow onClose={() => setSettingsOpen(false)} />}
 
       <div className={styles.body} ref={bodyRef}>
         <div className={styles.editorPane} style={{width: `${leftPct}%`}}>
@@ -771,6 +777,7 @@ function DocApp(): ReactNode {
             />
             <div className={styles.chatPane} style={{width: `${chatPct}%`}}>
               <DocChatPanel
+                onOpenSettings={() => setSettingsOpen(true)}
                 source={source}
                 selectedText={selectedText}
                 hasSelection={hasSelection}

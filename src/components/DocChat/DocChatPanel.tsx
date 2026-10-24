@@ -5,15 +5,12 @@ import Translate, {translate} from '@docusaurus/Translate';
 import {md} from '../../lib/doc/markdown-to-ooxml';
 import {
   buildContextMessages,
-  getModel,
+  loadBaseUrl,
   loadApiKey,
   loadModel,
-  saveModel,
   streamChat,
   type ChatMessageParam,
 } from '../../lib/doc/ai-chat';
-import {ApiKeyModal} from './ApiKeyModal';
-import {SettingsModal} from './SettingsModal';
 import styles from './styles.module.css';
 
 interface ChatMsg {
@@ -29,6 +26,7 @@ interface DocChatPanelProps {
   onApplyToSelection: (text: string) => void;
   onApplyToDocument: (text: string) => void;
   onClose: () => void;
+  onOpenSettings: () => void;
 }
 
 function ClearIcon(): ReactNode {
@@ -45,20 +43,6 @@ function ClearIcon(): ReactNode {
   );
 }
 
-function KeyIcon(): ReactNode {
-  return (
-    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true">
-      <circle cx="8" cy="15" r="4" stroke="currentColor" strokeWidth="1.6" />
-      <path
-        d="M11 12l8-8M17 4l2 2M14 7l2 2"
-        stroke="currentColor"
-        strokeWidth="1.6"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-      />
-    </svg>
-  );
-}
 
 function CloseIcon(): ReactNode {
   return (
@@ -149,14 +133,13 @@ export function DocChatPanel({
   onApplyToSelection,
   onApplyToDocument,
   onClose,
+  onOpenSettings,
 }: DocChatPanelProps): ReactNode {
   const [messages, setMessages] = useState<ChatMsg[]>([]);
   const [input, setInput] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const [streamingId, setStreamingId] = useState<string | null>(null);
   const [error, setError] = useState<string | null>(null);
-  const [model, setModel] = useState(() => loadModel());
-  const [modal, setModal] = useState<'none' | 'api' | 'model'>('none');
   const [copiedId, setCopiedId] = useState<string | null>(null);
 
   const historyRef = useRef<ChatMessageParam[]>([]);
@@ -171,10 +154,6 @@ export function DocChatPanel({
     messagesEndRef.current?.scrollIntoView({behavior: 'smooth'});
   }, [messages]);
 
-  const handleChangeModel = (m: string) => {
-    setModel(m);
-    saveModel(m);
-  };
 
   const handleSend = useCallback(async () => {
     const trimmed = input.trim();
@@ -188,10 +167,12 @@ export function DocChatPanel({
           message: 'API キーが未設定である。API 設定から入力する。',
         }),
       );
-      setModal('api');
+      onOpenSettings();
       return;
     }
 
+    const model = loadModel();
+    const baseURL = loadBaseUrl();
     const userId = nextId();
     const assistantId = nextId();
     setMessages((prev) => [
@@ -210,9 +191,10 @@ export function DocChatPanel({
     const startedAt = Date.now();
     try {
       // 毎回、最新の文書全体と選択範囲を文脈として先頭に付与する
-      const context = buildContextMessages(sourceRef.current, selectionRef.current);
+      const context = buildContextMessages(sourceRef.current, selectionRef.current, new URL(baseURL).hostname === 'openrouter.ai');
       const {text: accumulated, usage} = await streamChat({
         apiKey,
+        baseURL,
         model,
         messages: [...context, ...historyRef.current],
         onDelta: (text) =>
@@ -241,9 +223,10 @@ export function DocChatPanel({
       setIsLoading(false);
       setStreamingId(null);
     }
-  }, [input, isLoading, model]);
+  }, [input, isLoading, onOpenSettings]);
 
   const handleKeyDown = (e: KeyboardEvent<HTMLTextAreaElement>) => {
+    if (e.nativeEvent.isComposing) return;
     if (e.key === 'Enter' && !e.shiftKey) {
       e.preventDefault();
       void handleSend();
@@ -270,15 +253,7 @@ export function DocChatPanel({
           <span className={styles.headerTitle}>
             <Translate id="doc.aiChat">AI チャット</Translate>
           </span>
-          <button
-            type="button"
-            className={styles.modelBadge}
-            onClick={() => setModal('model')}
-            title={translate({id: 'doc.modelSettings', message: 'モデル設定'})}
-          >
-            <span className={styles.modelProvider}>{getModel(model).provider}</span>
-            <span className={styles.modelName}>{getModel(model).label}</span>
-          </button>
+
         </div>
         <div className={styles.headerActions}>
           <button
@@ -291,15 +266,7 @@ export function DocChatPanel({
           >
             <ClearIcon />
           </button>
-          <button
-            type="button"
-            className={styles.headerBtn}
-            onClick={() => setModal('api')}
-            title={translate({id: 'doc.apiSettings', message: 'API 設定'})}
-            aria-label={translate({id: 'doc.apiSettings', message: 'API 設定'})}
-          >
-            <KeyIcon />
-          </button>
+
           <button
             type="button"
             className={styles.headerBtn}
@@ -405,14 +372,6 @@ export function DocChatPanel({
         </button>
       </div>
 
-      {modal === 'api' && <ApiKeyModal onClose={() => setModal('none')} />}
-      {modal === 'model' && (
-        <SettingsModal
-          model={model}
-          onChangeModel={handleChangeModel}
-          onClose={() => setModal('none')}
-        />
-      )}
     </div>
   );
 }

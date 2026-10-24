@@ -2025,5 +2025,20 @@
   },
   "doc.menu.view": {
     "message": "View"
+  },
+  "doc.menu.settings": {
+    "message": "Settings"
+  },
+  "doc.modelName": {
+    "message": "Model name"
+  },
+  "doc.baseUrl": {
+    "message": "Base URL"
+  },
+  "doc.baseUrl.invalid": {
+    "message": "Enter a valid HTTP or HTTPS base URL."
+  },
+  "doc.apiKey": {
+    "message": "API key"
   }
 }
