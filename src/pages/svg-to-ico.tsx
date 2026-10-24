@@ -258,12 +258,6 @@ export default function SvgToIcoPage(): ReactNode {
         <Heading as="h1" className={styles.pageTitle}>
           <Translate id="svgIco.title">SVG を ICO に変換</Translate>
         </Heading>
-        <p className={styles.subtitle}>
-          <Translate id="svgIco.subtitle">
-            SVG 画像をドラッグ&ドロップすると ICO 形式に変換される。複数のサイズを選択すると 1
-            つの ICO ファイルにまとめて格納される。
-          </Translate>
-        </p>
 
         {/* Size selector */}
         <div className={styles.sizesRow}>
@@ -387,27 +381,6 @@ export default function SvgToIcoPage(): ReactNode {
         )}
 
         {/* Notes */}
-        <div className={styles.rules}>
-          <Heading as="h2" className={styles.rulesTitle}>
-            <Translate id="svgIco.notesTitle">このツールについて</Translate>
-          </Heading>
-          <ul className={styles.rulesList}>
-            <li>
-              <Translate id="svgIco.note1">
-                変換はブラウザ内で完結し、画像がサーバーに送信されることはない。
-              </Translate>
-            </li>
-            <li>
-              <Translate id="svgIco.note2">
-                サイズを複数選択すると、1 つの ICO ファイルに複数の解像度が格納される
-                (Windows のアイコン表示サイズに応じて自動的に選択される)。
-              </Translate>
-            </li>
-            <li>
-              <Translate id="svgIco.note3">複数の画像をまとめて変換できる。</Translate>
-            </li>
-          </ul>
-        </div>
       </div>
     </Layout>
   );

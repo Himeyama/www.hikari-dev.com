@@ -134,11 +134,6 @@ export default function NslookupPage(): ReactNode {
         <Heading as="h1" className={styles.pageTitle}>
           <Translate id="nslookup.title">nslookup (DNS 検索)</Translate>
         </Heading>
-        <p className={styles.subtitle}>
-          <Translate id="nslookup.subtitle">
-            ドメイン名を入力すると DNS レコード (A・AAAA・MX・TXT・NS・CNAME) を取得する。
-          </Translate>
-        </p>
 
         <form className={styles.form} onSubmit={lookup}>
           <input
@@ -168,28 +163,6 @@ export default function NslookupPage(): ReactNode {
           ))}
 
         {/* Notes */}
-        <div className={styles.rules}>
-          <Heading as="h2" className={styles.rulesTitle}>
-            <Translate id="nslookup.notesTitle">このツールについて</Translate>
-          </Heading>
-          <ul className={styles.rulesList}>
-            <li>
-              <Translate id="nslookup.note1">
-                検索は DNS over HTTPS (Cloudflare の 1.1.1.1) を使用してブラウザから直接行われ、サーバーには送信されない。
-              </Translate>
-            </li>
-            <li>
-              <Translate id="nslookup.note2">
-                A・AAAA・MX・TXT・NS・CNAME の 6 種類のレコードに対応する。
-              </Translate>
-            </li>
-            <li>
-              <Translate id="nslookup.note3">
-                DNS の変更は反映までに時間がかかる場合があり (TTL によるキャッシュ)、必ずしも最新の設定を反映しない。
-              </Translate>
-            </li>
-          </ul>
-        </div>
       </div>
     </Layout>
   );

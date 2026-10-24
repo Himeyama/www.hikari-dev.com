@@ -2004,5 +2004,14 @@
   },
   "chat.endpoint.invalid": {
     "message": "有効な HTTP または HTTPS のベース URL を入力してください。"
+  },
+  "doc.menu.file": {
+    "message": "ファイル"
+  },
+  "doc.menu.format": {
+    "message": "書式"
+  },
+  "doc.menu.view": {
+    "message": "表示"
   }
 }

@@ -147,11 +147,6 @@ export default function WhoisPage(): ReactNode {
         <Heading as="h1" className={styles.pageTitle}>
           <Translate id="whois.title">WHOIS 検索</Translate>
         </Heading>
-        <p className={styles.subtitle}>
-          <Translate id="whois.subtitle">
-            ドメイン名を入力すると WHOIS 情報 (登録者・ネームサーバー・有効期限など) を取得する。
-          </Translate>
-        </p>
 
         <form className={styles.form} onSubmit={lookup}>
           <input
@@ -205,28 +200,6 @@ export default function WhoisPage(): ReactNode {
         )}
 
         {/* Notes */}
-        <div className={styles.rules}>
-          <Heading as="h2" className={styles.rulesTitle}>
-            <Translate id="whois.notesTitle">このツールについて</Translate>
-          </Heading>
-          <ul className={styles.rulesList}>
-            <li>
-              <Translate id="whois.note1">
-                検索はサーバー経由で WHOIS プロトコル (ポート 43) を使用して行われる。入力したドメイン名以外の情報はサーバーに保存されない。
-              </Translate>
-            </li>
-            <li>
-              <Translate id="whois.note2">
-                レジストリと登録者情報を管理するレジストラの WHOIS サーバーが異なる場合、両方の結果が表示される。
-              </Translate>
-            </li>
-            <li>
-              <Translate id="whois.note3">
-                一部のドメインではプライバシー保護サービスにより登録者情報が匿名化されている。
-              </Translate>
-            </li>
-          </ul>
-        </div>
       </div>
     </Layout>
   );

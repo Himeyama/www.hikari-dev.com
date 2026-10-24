@@ -186,113 +186,6 @@ function rebuild(core: string, decos: Set<Deco>): string {
   return out;
 }
 
-function BoldIcon(): ReactNode {
-  return (
-    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true">
-      <path
-        d="M7 4.5h6a3.25 3.25 0 010 6.5H7zM7 11h6.75a3.25 3.25 0 010 6.5H7z"
-        stroke="currentColor"
-        strokeWidth="1.6"
-        strokeLinejoin="round"
-      />
-      <path d="M7 4.5v13" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" />
-    </svg>
-  );
-}
-
-function ItalicIcon(): ReactNode {
-  return (
-    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true">
-      <path
-        d="M10 5h6M8 19h6M14.5 5l-4 14"
-        stroke="currentColor"
-        strokeWidth="1.6"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-      />
-    </svg>
-  );
-}
-
-function StrikethroughIcon(): ReactNode {
-  return (
-    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true">
-      <path d="M5 12h14" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" />
-      <path
-        d="M16.5 7.5C15.5 6 13.9 5.3 12 5.3c-2.5 0-4.2 1.3-4.2 3.1 0 1.4 1 2.3 2.9 2.9M7.5 16.2c1 1.6 2.6 2.5 4.7 2.5 2.6 0 4.3-1.3 4.3-3.2 0-1-.4-1.8-1.2-2.3"
-        stroke="currentColor"
-        strokeWidth="1.6"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-      />
-    </svg>
-  );
-}
-
-function MarkdownDownloadIcon(): ReactNode {
-  return (
-    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true">
-      <rect x="2.5" y="6" width="19" height="12" rx="2" stroke="currentColor" strokeWidth="1.5" />
-      <path
-        d="M6 15V9l3 3 3-3v6"
-        stroke="currentColor"
-        strokeWidth="1.5"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-      />
-      <path
-        d="M17 9v4m0 0l-1.7-1.7M17 13l1.7-1.7"
-        stroke="currentColor"
-        strokeWidth="1.5"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-      />
-    </svg>
-  );
-}
-
-function DocxDownloadIcon(): ReactNode {
-  return (
-    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true">
-      <path
-        d="M6 3h8l4 4v14H6V3z"
-        stroke="currentColor"
-        strokeWidth="1.5"
-        strokeLinejoin="round"
-      />
-      <path d="M14 3v4h4" stroke="currentColor" strokeWidth="1.5" strokeLinejoin="round" />
-      <path
-        d="M12 10.5v5m0 0l-2-2m2 2l2-2"
-        stroke="currentColor"
-        strokeWidth="1.5"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-      />
-    </svg>
-  );
-}
-
-function LatexDownloadIcon(): ReactNode {
-  return (
-    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true">
-      <path
-        d="M6 3h8l4 4v14H6V3z"
-        stroke="currentColor"
-        strokeWidth="1.5"
-        strokeLinejoin="round"
-      />
-      <path d="M14 3v4h4" stroke="currentColor" strokeWidth="1.5" strokeLinejoin="round" />
-      <path
-        d="M8.4 11v3.4h1.9M12.1 11l2.2 3.4M14.3 11l-2.2 3.4"
-        stroke="currentColor"
-        strokeWidth="1.3"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-      />
-    </svg>
-  );
-}
-
 function ImportIcon(): ReactNode {
   return (
     <svg width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true">
@@ -302,25 +195,6 @@ function ImportIcon(): ReactNode {
         stroke="currentColor"
         strokeWidth="1.5"
         strokeLinecap="round"
-        strokeLinejoin="round"
-      />
-    </svg>
-  );
-}
-
-function AiChatIcon(): ReactNode {
-  return (
-    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true">
-      <path
-        d="M4 5.5h16v10H9l-4 3.5v-3.5H4z"
-        stroke="currentColor"
-        strokeWidth="1.5"
-        strokeLinejoin="round"
-      />
-      <path
-        d="M12 7.5l.9 2.1 2.1.9-2.1.9-.9 2.1-.9-2.1-2.1-.9 2.1-.9z"
-        stroke="currentColor"
-        strokeWidth="1.2"
         strokeLinejoin="round"
       />
     </svg>
@@ -363,6 +237,34 @@ function CheckIcon(): ReactNode {
         strokeLinejoin="round"
       />
     </svg>
+  );
+}
+
+function DocMenu({label, children}: {label: string; children: ReactNode}): ReactNode {
+  const ref = useRef<HTMLDetailsElement>(null);
+  useEffect(() => {
+    const close = (event: MouseEvent) => {
+      if (!ref.current?.contains(event.target as Node)) ref.current?.removeAttribute('open');
+    };
+    document.addEventListener('mousedown', close);
+    return () => document.removeEventListener('mousedown', close);
+  }, []);
+  return (
+    <details ref={ref} className={styles.menu} onKeyDown={(event) => {
+      if (event.key === 'Escape') {
+        event.stopPropagation();
+        ref.current?.removeAttribute('open');
+        ref.current?.querySelector('summary')?.focus();
+      }
+    }}>
+      <summary>{label}</summary>
+      <div className={styles.menuPopup} onClick={(event) => {
+        if ((event.target as HTMLElement).closest('button')?.parentElement === event.currentTarget) {
+          ref.current?.removeAttribute('open');
+          ref.current?.querySelector('summary')?.focus();
+        }
+      }}>{children}</div>
+    </details>
   );
 }
 
@@ -777,128 +679,34 @@ function DocApp(): ReactNode {
         </div>
       )}
       <div className={styles.menubar}>
-        <span className={styles.brand}>
-          <Translate id="doc.editorLabel">DOC</Translate>
-        </span>
-        <div className={styles.menuDivider} />
-        <button
-          className={`${styles.iconBtn} ${marks.bold ? styles.iconBtnActive : ''}`}
-          onClick={() => applyDeco('bold')}
-          disabled={!hasSelection}
-          title={translate({id: 'doc.bold', message: '太字'})}
-          aria-label={translate({id: 'doc.bold', message: '太字'})}
-        >
-          <BoldIcon />
-        </button>
-        <button
-          className={`${styles.iconBtn} ${marks.italic ? styles.iconBtnActive : ''}`}
-          onClick={() => applyDeco('italic')}
-          disabled={!hasSelection}
-          title={translate({id: 'doc.italic', message: '斜体'})}
-          aria-label={translate({id: 'doc.italic', message: '斜体'})}
-        >
-          <ItalicIcon />
-        </button>
-        <button
-          className={`${styles.iconBtn} ${marks.strike ? styles.iconBtnActive : ''}`}
-          onClick={() => applyDeco('strike')}
-          disabled={!hasSelection}
-          title={translate({id: 'doc.strikethrough', message: '取り消し線'})}
-          aria-label={translate({id: 'doc.strikethrough', message: '取り消し線'})}
-        >
-          <StrikethroughIcon />
-        </button>
-        <div className={styles.menuSpacer} />
-        <FontDropdown value={fontId} onChange={setFontId} />
-        <div className={styles.menuDivider} />
-        <div className={styles.tabs}>
-          <button
-            className={`${styles.tabBtn} ${tab === 'preview' ? styles.tabBtnActive : ''}`}
-            onClick={() => setTab('preview')}
-          >
-            <Translate id="doc.previewTab">プレビュー</Translate>
-          </button>
-          <button
-            className={`${styles.tabBtn} ${tab === 'ooxml' ? styles.tabBtnActive : ''}`}
-            onClick={() => setTab('ooxml')}
-          >
-            <Translate id="doc.ooxmlTab">OOXML</Translate>
-          </button>
-          <button
-            className={`${styles.tabBtn} ${tab === 'latex' ? styles.tabBtnActive : ''}`}
-            onClick={() => setTab('latex')}
-          >
-            <Translate id="doc.latexTab">LaTeX</Translate>
-          </button>
-        </div>
-        <div className={styles.menuDivider} />
-        <input
-          ref={fileInputRef}
-          type="file"
-          accept={IMPORT_ACCEPT}
-          className={styles.hiddenFileInput}
+        <DocMenu label={translate({id: 'doc.menu.file', message: 'ファイル'})}>
+          <button disabled={importing} onClick={() => fileInputRef.current?.click()}><Translate id="doc.import">インポート (.md, .markdown, .docx)</Translate></button>
+          <button onClick={downloadMarkdown}><Translate id="doc.downloadMd">Markdown をダウンロード</Translate></button>
+          <button disabled={downloading} onClick={downloadDocx}><Translate id="doc.downloadDocx">docx をダウンロード</Translate></button>
+          <button onClick={downloadLatex}><Translate id="doc.downloadTex">LaTeX (.tex) をダウンロード</Translate></button>
+        </DocMenu>
+        <DocMenu label={translate({id: 'doc.menu.format', message: '書式'})}>
+          <button disabled={!hasSelection} aria-pressed={marks.bold} onClick={() => applyDeco('bold')}><Translate id="doc.bold">太字</Translate></button>
+          <button disabled={!hasSelection} aria-pressed={marks.italic} onClick={() => applyDeco('italic')}><Translate id="doc.italic">斜体</Translate></button>
+          <button disabled={!hasSelection} aria-pressed={marks.strike} onClick={() => applyDeco('strike')}><Translate id="doc.strikethrough">取り消し線</Translate></button>
+          <FontDropdown value={fontId} onChange={setFontId} />
+        </DocMenu>
+        <DocMenu label={translate({id: 'doc.menu.view', message: '表示'})}>
+          <button aria-pressed={tab === 'preview'} onClick={() => setTab('preview')}><Translate id="doc.previewTab">プレビュー</Translate></button>
+          <button aria-pressed={tab === 'ooxml'} onClick={() => setTab('ooxml')}><Translate id="doc.ooxmlTab">OOXML</Translate></button>
+          <button aria-pressed={tab === 'latex'} onClick={() => setTab('latex')}><Translate id="doc.latexTab">LaTeX</Translate></button>
+          <button aria-pressed={chatOpen} onClick={() => {
+            setLeftPct(chatOpen ? 50 : 40);
+            setChatPct(20);
+            setChatOpen(!chatOpen);
+          }}><Translate id="doc.aiChat">AI チャット</Translate></button>
+        </DocMenu>
+        <input ref={fileInputRef} type="file" accept={IMPORT_ACCEPT} className={styles.hiddenFileInput}
           onChange={(e) => {
             const file = e.target.files?.[0];
             e.target.value = '';
             if (file) void importFile(file);
-          }}
-        />
-        <button
-          className={styles.iconBtn}
-          onClick={() => fileInputRef.current?.click()}
-          disabled={importing}
-          title={translate({id: 'doc.import', message: 'インポート (.md, .markdown, .docx)'})}
-          aria-label={translate({id: 'doc.import', message: 'インポート (.md, .markdown, .docx)'})}
-        >
-          <ImportIcon />
-        </button>
-        <div className={styles.menuDivider} />
-        <button
-          className={styles.iconBtn}
-          onClick={downloadMarkdown}
-          title={translate({id: 'doc.downloadMd', message: 'Markdown をダウンロード'})}
-          aria-label={translate({id: 'doc.downloadMd', message: 'Markdown をダウンロード'})}
-        >
-          <MarkdownDownloadIcon />
-        </button>
-        <button
-          className={styles.iconBtn}
-          onClick={downloadDocx}
-          disabled={downloading}
-          title={translate({id: 'doc.downloadDocx', message: 'docx をダウンロード'})}
-          aria-label={translate({id: 'doc.downloadDocx', message: 'docx をダウンロード'})}
-        >
-          <DocxDownloadIcon />
-        </button>
-        <button
-          className={styles.iconBtn}
-          onClick={downloadLatex}
-          title={translate({id: 'doc.downloadTex', message: 'LaTeX (.tex) をダウンロード'})}
-          aria-label={translate({id: 'doc.downloadTex', message: 'LaTeX (.tex) をダウンロード'})}
-        >
-          <LatexDownloadIcon />
-        </button>
-        <div className={styles.menuDivider} />
-        <button
-          className={`${styles.iconBtn} ${chatOpen ? styles.iconBtnActive : ''}`}
-          onClick={() =>
-            setChatOpen((v) => {
-              if (!v) {
-                // 開くときはエディター・プレビュー・チャットを 2:2:1 (40% / 40% / 20%) に整える
-                setLeftPct(40);
-                setChatPct(20);
-              } else {
-                // 閉じるときはエディターとプレビューを 1:1 (50% / 50%) に戻す
-                setLeftPct(50);
-              }
-              return !v;
-            })
-          }
-          title={translate({id: 'doc.aiChat', message: 'AI チャット'})}
-          aria-label={translate({id: 'doc.aiChat', message: 'AI チャット'})}
-        >
-          <AiChatIcon />
-        </button>
+          }} />
       </div>
 
       <div className={styles.body} ref={bodyRef}>

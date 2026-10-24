@@ -19,11 +19,6 @@ export default function MiniAppsPage(): ReactNode {
         <Heading as="h1" className={styles.pageTitle}>
           <Translate id="miniApps.pageTitle">ミニアプリ</Translate>
         </Heading>
-        <p className={styles.subtitle}>
-          <Translate id="miniApps.subtitle">
-            ブラウザ内で完結する小さなツール集。いずれもサーバーに内容を送信しない。
-          </Translate>
-        </p>
 
         <div className={styles.grid}>
           {MINI_APPS.map((app) => (

@@ -44,23 +44,10 @@ const defineHikariTheme: BeforeMount = (monaco) => {
 
 /** Keep Monaco's behavior and page-specific options; share only its appearance. */
 export default function HikariEditor({beforeMount, options, ...props}: EditorProps) {
-  const [fontFamily, setFontFamily] = useState('"MS Gothic", "ＭＳ ゴシック", monospace');
   const [fontSize, setFontSize] = useState(15);
 
   useEffect(() => {
-    const updateFont = () => {
-      const fontScope = document.querySelector('.mini-app-98') ?? document.documentElement;
-      setFontFamily(getComputedStyle(fontScope)
-        .getPropertyValue('--ifm-font-family-monospace').trim());
-      setFontSize(fontScope === document.documentElement ? 15 : 11);
-    };
-    updateFont();
-    const observer = new MutationObserver(updateFont);
-    observer.observe(document.documentElement, {
-      attributes: true,
-      attributeFilter: ['data-font'],
-    });
-    return () => observer.disconnect();
+    setFontSize(document.querySelector('.mini-app-98') ? 11 : 15);
   }, []);
 
   return (
@@ -71,7 +58,7 @@ export default function HikariEditor({beforeMount, options, ...props}: EditorPro
         defineHikariTheme(monaco);
         beforeMount?.(monaco);
       }}
-      options={{...options, fontFamily, fontSize}}
+      options={{...options, fontFamily: '"MS Gothic", "ＭＳ ゴシック", monospace', fontSize}}
     />
   );
 }

@@ -194,11 +194,6 @@ export default function WebpConverterPage(): ReactNode {
         <Heading as="h1" className={styles.pageTitle}>
           <Translate id="webp.title">画像を WebP に変換</Translate>
         </Heading>
-        <p className={styles.subtitle}>
-          <Translate id="webp.subtitle">
-            画像をドラッグ＆ドロップすると WebP 形式に変換される。すべてブラウザ内で処理され、画像はサーバーに送信されない。
-          </Translate>
-        </p>
 
         {/* Quality slider */}
         <div className={styles.qualityRow}>
@@ -338,26 +333,6 @@ export default function WebpConverterPage(): ReactNode {
         )}
 
         {/* Notes */}
-        <div className={styles.rules}>
-          <Heading as="h2" className={styles.rulesTitle}>
-            <Translate id="webp.notesTitle">このツールについて</Translate>
-          </Heading>
-          <ul className={styles.rulesList}>
-            <li>
-              <Translate id="webp.note1">
-                変換はブラウザ内で完結し、画像がサーバーに送信されることはない。
-              </Translate>
-            </li>
-            <li>
-              <Translate id="webp.note2">
-                画質スライダーで圧縮率を調整できる (値が低いほどファイルサイズが小さくなる)。
-              </Translate>
-            </li>
-            <li>
-              <Translate id="webp.note3">複数の画像をまとめて変換できる。</Translate>
-            </li>
-          </ul>
-        </div>
       </div>
     </Layout>
   );

@@ -163,39 +163,12 @@ export default function YamlJsonPage(): ReactNode {
         <Heading as="h1" className={styles.pageTitle}>
           <Translate id="yamlJson.title">YAML と JSON を相互変換</Translate>
         </Heading>
-        <p className={styles.subtitle}>
-          <Translate id="yamlJson.subtitle">
-            左側に入力すると右側に変換結果が表示される。変換はすべてブラウザ内で完結し、内容はサーバーに送信されない。
-          </Translate>
-        </p>
 
         <BrowserOnly fallback={<div className={styles.editorLoading}>Loading editor...</div>}>
           {() => <YamlJsonEditors />}
         </BrowserOnly>
 
         {/* Notes */}
-        <div className={styles.rules}>
-          <Heading as="h2" className={styles.rulesTitle}>
-            <Translate id="yamlJson.notesTitle">このツールについて</Translate>
-          </Heading>
-          <ul className={styles.rulesList}>
-            <li>
-              <Translate id="yamlJson.note1">
-                変換はブラウザ内で完結し、入力内容がサーバーに送信されることはない。
-              </Translate>
-            </li>
-            <li>
-              <Translate id="yamlJson.note2">
-                入れ替えボタンで YAML → JSON と JSON → YAML の変換方向を切り替えられる。
-              </Translate>
-            </li>
-            <li>
-              <Translate id="yamlJson.note3">
-                構文エラーがある場合は変換結果の下にエラー内容が表示される。
-              </Translate>
-            </li>
-          </ul>
-        </div>
       </div>
     </Layout>
   );

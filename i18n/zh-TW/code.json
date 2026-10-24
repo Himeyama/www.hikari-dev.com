@@ -2016,5 +2016,14 @@
   },
   "chat.endpoint.invalid": {
     "message": "請輸入有效的 HTTP 或 HTTPS 基底 URL。"
+  },
+  "doc.menu.file": {
+    "message": "檔案"
+  },
+  "doc.menu.format": {
+    "message": "格式"
+  },
+  "doc.menu.view": {
+    "message": "檢視"
   }
 }

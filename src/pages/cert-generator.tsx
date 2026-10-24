@@ -605,11 +605,6 @@ export default function CertGeneratorPage(): ReactNode {
         <Heading as="h1" className={styles.pageTitle}>
           <Translate id="certGen.title">証明書ジェネレーター</Translate>
         </Heading>
-        <p className={styles.subtitle}>
-          <Translate id="certGen.subtitle">
-            ルート CA 証明書とサーバー証明書 (オレオレ証明書) を生成する。すべての処理はブラウザ内で完結し、秘密鍵を含め内容はサーバーに送信されない。
-          </Translate>
-        </p>
 
         {/* ── Root CA ── */}
         <Heading as="h2" className={styles.sectionTitle}>
@@ -984,33 +979,6 @@ export default function CertGeneratorPage(): ReactNode {
         )}
 
         {/* Notes */}
-        <div className={styles.rules}>
-          <Heading as="h2" className={styles.rulesTitle}>
-            <Translate id="certGen.notesTitle">このツールについて</Translate>
-          </Heading>
-          <ul className={styles.rulesList}>
-            <li>
-              <Translate id="certGen.note1">
-                証明書の生成はすべてブラウザ内で完結し、秘密鍵を含め内容がサーバーに送信されることはない。
-              </Translate>
-            </li>
-            <li>
-              <Translate id="certGen.note2">
-                ページを再読み込みすると生成した鍵と証明書は失われるため、必要な場合はダウンロードして保存すること。
-              </Translate>
-            </li>
-            <li>
-              <Translate id="certGen.note3">
-                ルート CA で署名したサーバー証明書をブラウザや OS に信頼させるには、CA 証明書を信頼されたルート証明機関としてインポートする必要がある。
-              </Translate>
-            </li>
-            <li>
-              <Translate id="certGen.note4">
-                このツールで生成する証明書はローカル開発・検証用途を想定している。実運用環境では認証局が発行した正式な証明書を使用すること。
-              </Translate>
-            </li>
-          </ul>
-        </div>
       </div>
     </Layout>
   );

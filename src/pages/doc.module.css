@@ -295,6 +295,66 @@
   font-family: var(--doc-preview-font);
 }
 
+/* The mini-app chrome uses 11px; document headings retain their hierarchy. */
+:global(html body .mini-app-98) .previewScroll h1 { font-size: 28px !important; }
+:global(html body .mini-app-98) .previewScroll h2 { font-size: 23px !important; }
+:global(html body .mini-app-98) .previewScroll h3 { font-size: 19px !important; }
+:global(html body .mini-app-98) .previewScroll h4 { font-size: 16px !important; }
+:global(html body .mini-app-98) .previewScroll h5 { font-size: 14px !important; }
+:global(html body .mini-app-98) .previewScroll h6 { font-size: 12px !important; }
+:global(html body .mini-app-98) .previewScroll :is(h1, h2, h3, h4, h5, h6) * {
+  font-size: inherit !important;
+}
+
+.previewScroll {
+  background: #fff;
+  color: #222;
+  user-select: text;
+}
+
+.previewScroll blockquote { color: #555; border-left-color: #808080; }
+
+.menu { position: relative; }
+.menu > summary {
+  list-style: none;
+  padding: 4px 10px;
+  cursor: default;
+  white-space: nowrap;
+}
+.menu > summary::-webkit-details-marker { display: none; }
+.menu[open] > summary, .menu > summary:hover {
+  background: #000080;
+  color: #fff;
+}
+.menu > summary:focus-visible { outline: 1px dotted #000; }
+.menuPopup {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  z-index: 90;
+  min-width: 220px;
+  padding: 3px;
+  background: #c0c0c0;
+  box-shadow: inset 1px 1px #fff, inset -1px -1px #000, 2px 2px 0 #808080;
+}
+:global(html body .mini-app-98) .menuPopup > button {
+  display: block;
+  width: 100%;
+  text-align: left;
+  padding: 5px 12px;
+  border: 0;
+  box-shadow: none;
+  border-radius: 0;
+  background: transparent;
+  white-space: nowrap;
+}
+:global(html body .mini-app-98) .menuPopup > button:enabled:is(:hover, :focus-visible) {
+  background: #000080;
+  color: #fff;
+}
+.menuPopup .fontTrigger { max-width: none; width: 100%; }
+.menuPopup .fontMenu { left: 0; right: auto; }
+
 /* Infima が h1-h6 に font-family を直接指定するため、祖先の font-family 継承では上書きできない */
 .previewScroll h1,
 .previewScroll h2,

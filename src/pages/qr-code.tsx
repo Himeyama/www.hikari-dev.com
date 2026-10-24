@@ -320,11 +320,6 @@ export default function QrCodePage(): ReactNode {
         <Heading as="h1" className={styles.pageTitle}>
           <Translate id="qrCode.title">QR コード生成</Translate>
         </Heading>
-        <p className={styles.subtitle}>
-          <Translate id="qrCode.subtitle">
-            テキストを入力するか、ファイルをドロップして QR コードを生成する。生成はすべてブラウザ内で完結し、内容はサーバーに送信されない。
-          </Translate>
-        </p>
 
         <OptionsPanel options={options} onChange={setOptions} />
 
@@ -501,33 +496,6 @@ export default function QrCodePage(): ReactNode {
         )}
 
         {/* Notes */}
-        <div className={styles.rules}>
-          <Heading as="h2" className={styles.rulesTitle}>
-            <Translate id="qrCode.notesTitle">このツールについて</Translate>
-          </Heading>
-          <ul className={styles.rulesList}>
-            <li>
-              <Translate id="qrCode.note1">
-                生成はブラウザ内で完結し、入力内容やファイルがサーバーに送信されることはない。
-              </Translate>
-            </li>
-            <li>
-              <Translate id="qrCode.note2">
-                QR コードに格納できるデータ量には上限があり、バイナリの場合は最大 2,953 バイト (誤り訂正レベル L) である。
-              </Translate>
-            </li>
-            <li>
-              <Translate id="qrCode.note3">
-                誤り訂正レベルは L (7%) から H (30%) まで選べる。レベルを上げるほど汚れや欠けに強くなるが、格納できるデータ量は減る。
-              </Translate>
-            </li>
-            <li>
-              <Translate id="qrCode.note4">
-                ファイルは中身をそのままバイト列として埋め込む。読み取り側でファイルとして復元するにはバイナリ対応のリーダーが必要である。
-              </Translate>
-            </li>
-          </ul>
-        </div>
       </div>
     </Layout>
   );

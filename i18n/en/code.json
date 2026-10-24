@@ -2016,5 +2016,14 @@
   },
   "chat.endpoint.invalid": {
     "message": "Enter a valid HTTP or HTTPS base URL."
+  },
+  "doc.menu.file": {
+    "message": "File"
+  },
+  "doc.menu.format": {
+    "message": "Format"
+  },
+  "doc.menu.view": {
+    "message": "View"
   }
 }

@@ -767,11 +767,6 @@ export default function NightscapeFilterPage(): ReactNode {
         <Heading as="h1" className={styles.pageTitle}>
           <Translate id="nightscape.title">夜景美化フィルター</Translate>
         </Heading>
-        <p className={styles.subtitle}>
-          <Translate id="nightscape.subtitle">
-            夜景写真をドラッグ＆ドロップすると、黒を引き締め光源を強調した画像に加工される。すべてブラウザ内で処理され、画像はサーバーに送信されない。
-          </Translate>
-        </p>
 
         {/* Big preview */}
         <div className={styles.bigPreviewSection}>
@@ -1028,38 +1023,6 @@ export default function NightscapeFilterPage(): ReactNode {
         )}
 
         {/* Notes */}
-        <div className={styles.rules}>
-          <Heading as="h2" className={styles.rulesTitle}>
-            <Translate id="nightscape.notesTitle">このツールについて</Translate>
-          </Heading>
-          <ul className={styles.rulesList}>
-            <li>
-              <Translate id="nightscape.note1">
-                処理はブラウザ内で完結し、画像がサーバーに送信されることはない。
-              </Translate>
-            </li>
-            <li>
-              <Translate id="nightscape.note2">
-                黒の引き締め、光源の強調、夜空のクリア化、周辺減光などを組み合わせて夜景を美しく仕上げる。
-              </Translate>
-            </li>
-            <li>
-              <Translate id="nightscape.note3">
-                強度スライダーで効果の強さを調整できる (0% で加工なし、100% が標準)。
-              </Translate>
-            </li>
-            <li>
-              <Translate id="nightscape.note4">
-                ノイズ除去はスマートフォン写真などノイズの多い画像に有効。輝度は保持したまま色ノイズのみを軽減する。
-              </Translate>
-            </li>
-            <li>
-              <Translate id="nightscape.note5">
-                昼間の写真や室内写真、天体写真には適さない。夜景・街灯・都市夜景での使用を想定している。
-              </Translate>
-            </li>
-          </ul>
-        </div>
       </div>
     </Layout>
   );

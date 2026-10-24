@@ -248,11 +248,6 @@ export default function PasswordGeneratorPage(): ReactNode {
         <Heading as="h1" className={styles.pageTitle}>
           <Translate id="passwordGenerator.title">パスワード ジェネレーター</Translate>
         </Heading>
-        <p className={styles.subtitle}>
-          <Translate id="passwordGenerator.subtitle">
-            安全なパスフレーズやパスワードを生成する。
-          </Translate>
-        </p>
 
         <div className={styles.tabs}>
           <button
@@ -403,38 +398,6 @@ export default function PasswordGeneratorPage(): ReactNode {
           </div>
         )}
 
-        <div className={styles.rules}>
-          <Heading as="h2" className={styles.rulesTitle}>
-            <Translate id="passwordGenerator.tipsTitle">パスワードのポイント</Translate>
-          </Heading>
-          <ul className={styles.rulesList}>
-            <li>
-              <Translate id="passwordGenerator.tip1">
-                15 文字以上を目安にする。20 文字以上ならさらに安心。
-              </Translate>
-            </li>
-            <li>
-              <Translate id="passwordGenerator.tip2">
-                短くて複雑なパスワードより、長いパスフレーズのほうが強力。
-              </Translate>
-            </li>
-            <li>
-              <Translate id="passwordGenerator.tip3">
-                サービスごとに完全に別のパスワードを使う。1 つ漏えいすると、使い回している他のサービスまで突破される可能性がある。
-              </Translate>
-            </li>
-            <li>
-              <Translate id="passwordGenerator.tip4">
-                無関係な単語をいくつか組み合わせると、覚えやすく長いパスフレーズにできる。
-              </Translate>
-            </li>
-            <li>
-              <Translate id="passwordGenerator.tip5">
-                生成した文字列はブラウザ内でのみ処理され、サーバーには送信されない。
-              </Translate>
-            </li>
-          </ul>
-        </div>
       </div>
     </Layout>
   );

@@ -215,43 +215,11 @@ export default function VramCalculatorPage(): ReactNode {
         <Heading as="h1" className={styles.pageTitle}>
           <Translate id="vramCalculator.title">LLM VRAM 使用量計算</Translate>
         </Heading>
-        <p className={styles.subtitle}>
-          <Translate id="vramCalculator.subtitle">
-            パラメータ数と量子化方式を指定すると、推論に必要な VRAM 容量の目安を計算する。
-          </Translate>
-        </p>
 
         <BrowserOnly fallback={<div className={styles.editorLoading}>Loading...</div>}>
           {() => <VramCalculator />}
         </BrowserOnly>
 
-        <div className={styles.rules}>
-          <Heading as="h2" className={styles.rulesTitle}>
-            <Translate id="vramCalculator.notesTitle">このツールについて</Translate>
-          </Heading>
-          <ul className={styles.rulesList}>
-            <li>
-              <Translate id="vramCalculator.note1">
-                計算結果はモデルの重み容量を基にした概算値であり、実際の VRAM 使用量とは異なる場合がある。
-              </Translate>
-            </li>
-            <li>
-              <Translate id="vramCalculator.note2">
-                ビット数 / 重みは量子化方式のプリセットから選べるほか、既知の GGUF ファイルサイズなどに合わせて手動で調整できる。
-              </Translate>
-            </li>
-            <li>
-              <Translate id="vramCalculator.note3">
-                長いコンテキストで推論する場合、KV キャッシュの消費が大きくなるため実行時オーバーヘッドを高めに設定する。
-              </Translate>
-            </li>
-            <li>
-              <Translate id="vramCalculator.note4">
-                計算はすべてブラウザ内で完結し、入力内容がサーバーに送信されることはない。
-              </Translate>
-            </li>
-          </ul>
-        </div>
       </div>
     </Layout>
   );

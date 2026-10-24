@@ -262,10 +262,10 @@ html[data-font='ms-yahei'] article h6 {
   display: none;
 }
 
-/* Doc プレビューのコードブロック: highlight.js によるシンタックスハイライト (ANSI VGA パレット) */
+/* Doc プレビューのコードブロック: highlight.js によるシンタックスハイライト (ライト配色) */
 .doc-page-wrapper .hljs {
-  color: var(--hikari-white);
-  background: var(--hikari-black);
+  color: #222222;
+  background: #ffffff;
 }
 
 /* コードブロックのコピー ボタン (アイコンのみ、ホバーで表示) */
@@ -303,68 +303,68 @@ html[data-font='ms-yahei'] article h6 {
 }
 
 .doc-page-wrapper .doc-code-copy--done {
-  color: #55ff55;
+  color: #a31515;
   opacity: 1;
 }
 
 .doc-page-wrapper .hljs-comment,
 .doc-page-wrapper .hljs-quote {
-  color: #aaaaaa;
+  color: #008000;
   font-style: italic;
 }
 
 .doc-page-wrapper .hljs-keyword,
 .doc-page-wrapper .hljs-selector-tag,
 .doc-page-wrapper .hljs-literal {
-  color: #ff5555;
+  color: #0000ff;
 }
 
 .doc-page-wrapper .hljs-type,
 .doc-page-wrapper .hljs-built_in,
 .doc-page-wrapper .hljs-title.class_ {
-  color: #55ffff;
+  color: #267f99;
 }
 
 .doc-page-wrapper .hljs-string,
 .doc-page-wrapper .hljs-template-tag,
 .doc-page-wrapper .hljs-template-variable {
-  color: #55ff55;
+  color: #a31515;
 }
 
 .doc-page-wrapper .hljs-attr,
 .doc-page-wrapper .hljs-attribute {
-  color: #55ffff;
+  color: #b00000;
 }
 
 .doc-page-wrapper .hljs-number,
 .doc-page-wrapper .hljs-symbol,
 .doc-page-wrapper .hljs-bullet {
-  color: #55ff55;
+  color: #098658;
 }
 
 .doc-page-wrapper .hljs-title,
 .doc-page-wrapper .hljs-title.function_,
 .doc-page-wrapper .hljs-section {
-  color: #ffff55;
+  color: #795e26;
 }
 
 .doc-page-wrapper .hljs-variable,
 .doc-page-wrapper .hljs-name {
-  color: #ffffff;
+  color: #001080;
 }
 
 .doc-page-wrapper .hljs-tag {
-  color: #ff5555;
+  color: #0000ff;
 }
 
 .doc-page-wrapper .hljs-deletion {
-  color: #ff5555;
-  background: #000000;
+  color: #0000ff;
+  background: #ffffff;
 }
 
 .doc-page-wrapper .hljs-addition {
-  color: #55ff55;
-  background: #000000;
+  color: #a31515;
+  background: #ffffff;
 }
 
 .doc-page-wrapper .hljs-emphasis {

@@ -275,11 +275,6 @@ export default function HashPage(): ReactNode {
         <Heading as="h1" className={styles.pageTitle}>
           <Translate id="hash.title">ハッシュ値取得</Translate>
         </Heading>
-        <p className={styles.subtitle}>
-          <Translate id="hash.subtitle">
-            テキストを入力するか、ファイルをドロップしてハッシュ値を計算する。計算はすべてブラウザ内で完結し、内容はサーバーに送信されない。
-          </Translate>
-        </p>
 
         {/* ── Text hashing ── */}
         <Heading as="h2" className={styles.sectionTitle}>
@@ -360,29 +355,6 @@ export default function HashPage(): ReactNode {
         )}
 
         {/* Notes */}
-        <div className={styles.rules}>
-          <Heading as="h2" className={styles.rulesTitle}>
-            <Translate id="hash.notesTitle">このツールについて</Translate>
-          </Heading>
-          <ul className={styles.rulesList}>
-            <li>
-              <Translate id="hash.note1">
-                計算はブラウザ内で完結し、入力内容やファイルがサーバーに送信されることはない。
-              </Translate>
-            </li>
-            <li>
-              <Translate id="hash.note2">
-                SHA-1・SHA-256・SHA-384・SHA-512 に対応する。MD5 はブラウザ標準 API
-                (Web Crypto API) が対応しないため計算できない。
-              </Translate>
-            </li>
-            <li>
-              <Translate id="hash.note3">
-                ファイルの整合性を確認する場合は SHA-256 以上のアルゴリズムの使用が推奨される。
-              </Translate>
-            </li>
-          </ul>
-        </div>
       </div>
     </Layout>
   );

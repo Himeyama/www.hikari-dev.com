@@ -121,38 +121,11 @@ export default function TexPreviewPage(): ReactNode {
         <Heading as="h1" className={styles.pageTitle}>
           <Translate id="texPreview.title">TeX 数式プレビュー</Translate>
         </Heading>
-        <p className={styles.subtitle}>
-          <Translate id="texPreview.subtitle">
-            TeX 記法で数式を入力すると、リアルタイムでプレビューが表示される。空行区切りで複数の数式を入力できる。
-          </Translate>
-        </p>
 
         <BrowserOnly fallback={<div className={styles.editorLoading}>Loading editor...</div>}>
           {() => <TexPreviewEditor />}
         </BrowserOnly>
 
-        <div className={styles.rules}>
-          <Heading as="h2" className={styles.rulesTitle}>
-            <Translate id="texPreview.notesTitle">このツールについて</Translate>
-          </Heading>
-          <ul className={styles.rulesList}>
-            <li>
-              <Translate id="texPreview.note1">
-                数式のレンダリングには KaTeX を使用する。処理はすべてブラウザ内で完結し、入力内容がサーバーに送信されることはない。
-              </Translate>
-            </li>
-            <li>
-              <Translate id="texPreview.note2">
-                空行 (改行 2 つ以上) で区切ることで複数の数式をまとめて入力できる。
-              </Translate>
-            </li>
-            <li>
-              <Translate id="texPreview.note3">
-                構文エラーがある数式はプレビュー内にエラーメッセージとして表示される。
-              </Translate>
-            </li>
-          </ul>
-        </div>
       </div>
     </Layout>
   );

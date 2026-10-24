@@ -129,44 +129,12 @@ export default function TsvToMarkdownPage(): ReactNode {
         <Heading as="h1" className={styles.pageTitle}>
           <Translate id="tsvMarkdown.title">TSV→Markdown 表変換</Translate>
         </Heading>
-        <p className={styles.subtitle}>
-          <Translate id="tsvMarkdown.subtitle">
-            Excel からコピーしたセル範囲を左側に貼り付けると、右側に Markdown テーブルが表示される。変換はすべてブラウザ内で完結し、内容はサーバーに送信されない。
-          </Translate>
-        </p>
 
         <BrowserOnly fallback={<div className={styles.editorLoading}>Loading...</div>}>
           {() => <TsvToMarkdownEditors />}
         </BrowserOnly>
 
         {/* Notes */}
-        <div className={styles.rules}>
-          <Heading as="h2" className={styles.rulesTitle}>
-            <Translate id="tsvMarkdown.notesTitle">このツールについて</Translate>
-          </Heading>
-          <ul className={styles.rulesList}>
-            <li>
-              <Translate id="tsvMarkdown.note1">
-                Excel やスプレッドシートで選択したセル範囲をコピーし、そのまま貼り付けられる (タブ区切りテキストとして扱われる)。
-              </Translate>
-            </li>
-            <li>
-              <Translate id="tsvMarkdown.note2">
-                1 行目が見出し行として扱われる。
-              </Translate>
-            </li>
-            <li>
-              <Translate id="tsvMarkdown.note3">
-                セル内に `|` が含まれる場合は自動的にエスケープされる。
-              </Translate>
-            </li>
-            <li>
-              <Translate id="tsvMarkdown.note4">
-                変換はブラウザ内で完結し、入力内容がサーバーに送信されることはない。
-              </Translate>
-            </li>
-          </ul>
-        </div>
       </div>
     </Layout>
   );

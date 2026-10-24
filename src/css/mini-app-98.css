@@ -54,7 +54,7 @@ html body .mini-app-98 {
   --ifm-color-emphasis-1000: #000000;
   --ifm-code-background: #ffffff;
   --ifm-font-family-base: 'MS UI Gothic', sans-serif;
-  --ifm-font-family-monospace: 'MS UI Gothic', monospace;
+  --ifm-font-family-monospace: 'MS Gothic', 'ＭＳ ゴシック', monospace;
   font-family: 'MS UI Gothic', sans-serif;
   background: #c0c0c0;
   color: #222;
@@ -148,6 +148,18 @@ html body .mini-app-98 select {
 
 html body .mini-app-98 textarea {
   color: #222;
+}
+
+/* App chrome is not document content. Keep inputs and results selectable. */
+html body .mini-app-98 { user-select: none; }
+html body .mini-app-98 :is(label, legend, button, summary, .title-bar, [role='tab'], [class*='Label'], [class*='label'], [class*='Title'], [class*='title'], [class*='Header'], [class*='header']) {
+  user-select: none;
+}
+html body .mini-app-98 :is(input, textarea, [contenteditable='true'], .monaco-editor, .cm-editor, pre, code, td, output, .markdown, [role='log'], [class*='assistantContent'], [class*='userText'], [class*='Value']) {
+  user-select: text;
+}
+html body .mini-app-98 :is(textarea, .cm-content, .cm-gutters) {
+  font-family: 'MS Gothic', 'ＭＳ ゴシック', monospace;
 }
 
 html body .mini-app-98 :is(input, textarea)::placeholder {

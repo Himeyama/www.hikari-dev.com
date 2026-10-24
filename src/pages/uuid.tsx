@@ -79,9 +79,6 @@ export default function UuidPage(): ReactNode {
         <Heading as="h1" className={styles.pageTitle}>
           <Translate id="uuid.title">UUID ジェネレーター</Translate>
         </Heading>
-        <p className={styles.subtitle}>
-          <Translate id="uuid.subtitle">UUID (v4) を生成する。</Translate>
-        </p>
 
         <div className={styles.card}>
           <code className={styles.uuidText}>{uuid}</code>

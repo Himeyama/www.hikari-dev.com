@@ -361,11 +361,6 @@ export default function Base64Page(): ReactNode {
         <Heading as="h1" className={styles.pageTitle}>
           <Translate id="base64.title">Base64 変換</Translate>
         </Heading>
-        <p className={styles.subtitle}>
-          <Translate id="base64.subtitle">
-            テキストを入力するか、ファイルをドロップして Base64 に変換する。変換はすべてブラウザ内で完結し、内容はサーバーに送信されない。
-          </Translate>
-        </p>
 
         {/* ── Text encode/decode ── */}
         <Heading as="h2" className={styles.sectionTitle}>
@@ -456,33 +451,6 @@ export default function Base64Page(): ReactNode {
         )}
 
         {/* Notes */}
-        <div className={styles.rules}>
-          <Heading as="h2" className={styles.rulesTitle}>
-            <Translate id="base64.notesTitle">このツールについて</Translate>
-          </Heading>
-          <ul className={styles.rulesList}>
-            <li>
-              <Translate id="base64.note1">
-                変換はブラウザ内で完結し、入力内容やファイルがサーバーに送信されることはない。
-              </Translate>
-            </li>
-            <li>
-              <Translate id="base64.note2">
-                デコード時に data: URI をそのまま貼り付けると MIME タイプが自動で読み取られる。
-              </Translate>
-            </li>
-            <li>
-              <Translate id="base64.note3">
-                コピーした data: URI はブラウザのアドレスバーに貼り付けると直接表示できる。
-              </Translate>
-            </li>
-            <li>
-              <Translate id="base64.note4">
-                ファイルをドロップすると、そのファイルの Base64 と data: URI をコピーできる。
-              </Translate>
-            </li>
-          </ul>
-        </div>
       </div>
     </Layout>
   );
