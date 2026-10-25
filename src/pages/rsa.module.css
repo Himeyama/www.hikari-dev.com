@@ -1,0 +1,16 @@
+.page { max-width: 900px; margin: 2.5rem auto; padding: 0 1rem; }
+.intro { color: var(--ifm-color-emphasis-700); line-height: 1.9; }
+.section { margin: 1.5rem 0; padding: 1.5rem; border: 1px solid var(--ifm-color-emphasis-300); border-radius: 8px; background: var(--ifm-background-surface-color); }
+.section h2 { font-size: 1.35rem; }
+.controls { display: flex; flex-wrap: wrap; gap: 1rem; align-items: end; margin: 1rem 0; }
+.controls label { display: flex; flex-direction: column; gap: .4rem; font-weight: 600; }
+.controls input, .controls select { width: 10rem; padding: .5rem; color: var(--ifm-font-color-base); background: var(--ifm-background-color); border: 1px solid var(--ifm-color-emphasis-500); border-radius: 4px; }
+.formula { overflow-x: auto; padding: .35rem .5rem; margin: .6rem 0; background: var(--ifm-color-emphasis-100); border-radius: 4px; }
+.formula :global(.katex-display) { margin: .5rem 0; text-align: left; }
+.formula :global(.katex-display > .katex) { text-align: left; }
+.keys { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 1rem; }
+.keys > div { padding: .75rem; border-left: 3px solid var(--ifm-color-primary); min-width: 0; }
+.error { color: var(--ifm-color-danger-dark); }
+.result { font-size: 1.1rem; font-weight: 600; color: var(--ifm-color-primary); }
+.note { padding: 1rem; background: var(--ifm-color-emphasis-100); border-left: 3px solid var(--ifm-color-warning); }
+@media (max-width: 600px) { .section { padding: 1rem; } .keys { grid-template-columns: 1fr; } }

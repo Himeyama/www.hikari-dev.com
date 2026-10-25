@@ -93,6 +93,14 @@ export type MiniApp = {
 
 const RAW_MINI_APPS: Omit<MiniApp, 'id'>[] = [
   {
+    href: '/rsa',
+    Icon: LockIcon,
+    titleId: 'miniApps.rsa.title',
+    titleMessage: 'RSA 暗号のしくみ',
+    descriptionId: 'miniApps.rsa.description',
+    descriptionMessage: '小さい素数と数式で RSA の鍵生成・暗号化・復号を学ぶ。',
+  },
+  {
     href: '/prompt',
     Icon: PromptIcon,
     titleId: 'miniApps.prompt.title',

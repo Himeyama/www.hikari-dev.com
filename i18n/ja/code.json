@@ -2097,5 +2097,122 @@
   },
   "yamlJson.convert": {
     "message": "変換"
+  },
+  "rsa.working": {
+    "message": "繰り返し二乗法の途中計算"
+  },
+  "rsa.workingHelp": {
+    "message": "指数を 2 の累乗の和に分け、二乗するたびに余りを取る。選んだ余りを掛け合わせ、最後にもう一度余りを取る。"
+  },
+  "rsa.title": {
+    "message": "RSA 暗号のしくみ"
+  },
+  "rsa.description": {
+    "message": "小さい素数とリアルタイムの数式で、RSA の鍵生成・暗号化・復号を学ぶ。"
+  },
+  "rsa.intro": {
+    "message": "RSA は公開鍵暗号の 1 つである。公開鍵で暗号化し、対応する秘密鍵で復号する。2 つの素数の積は簡単に求められるが、大きな積から元の素数を求めることは難しい。この性質が安全性の基礎である。"
+  },
+  "rsa.toyNote": {
+    "message": "ここでは手計算用の小さい鍵と、パディングのない RSA を使用する。学習専用であり、実際の秘密情報の保護には使用できない。すべての計算はブラウザ内で行う。"
+  },
+  "rsa.step1": {
+    "message": "1. 素数と鍵の生成"
+  },
+  "rsa.primeHelp": {
+    "message": "3 から 19 の異なる素数 p、q をランダムに選ぶ。n は 2 つの素数の積、φ(n) は (p − 1)(q − 1) である。mod は割り算の余りを表す。"
+  },
+  "rsa.generate": {
+    "message": "素数を生成"
+  },
+  "rsa.exponentHelp": {
+    "message": "1 < e < φ(n) を満たし、φ(n) と互いに素である整数 e を選ぶ。d は ed を φ(n) で割った余りが 1 となる整数である。"
+  },
+  "rsa.exponent": {
+    "message": "公開指数 e"
+  },
+  "rsa.publicKey": {
+    "message": "公開鍵 (共有する値)"
+  },
+  "rsa.privateKey": {
+    "message": "秘密鍵 (秘密にする値)"
+  },
+  "rsa.privateHelp": {
+    "message": "p、q、φ(n) も秘密にする。実際の秘密鍵ファイルには、計算を高速化するため p、q なども含まれる。"
+  },
+  "rsa.step2": {
+    "message": "2. 公開鍵による暗号化"
+  },
+  "rsa.messageHelp": {
+    "message": "平文を 0 以上 n 未満の整数 m として入力する。ここでは文字の変換を省き、整数を直接暗号化する。入力や鍵の変更に合わせて式が更新される。"
+  },
+  "rsa.message": {
+    "message": "平文 m"
+  },
+  "rsa.invalidMessage": {
+    "message": "平文は表示範囲内の整数で入力すること。"
+  },
+  "rsa.step3": {
+    "message": "3. 秘密鍵による復号"
+  },
+  "rsa.decryptHelp": {
+    "message": "暗号文 c と秘密指数 d、公開鍵と共通の n を使う。公開指数 e は復号の計算には不要である。暗号文を変更して、復号結果の変化も確認できる。"
+  },
+  "rsa.cipher": {
+    "message": "暗号文 c"
+  },
+  "rsa.useCipher": {
+    "message": "暗号化結果を使用"
+  },
+  "rsa.match": {
+    "message": "復号結果は元の平文と一致する。"
+  },
+  "rsa.changed": {
+    "message": "別の暗号文の復号結果を表示中。"
+  },
+  "rsa.invalidCipher": {
+    "message": "暗号文は表示範囲内の整数で入力すること。"
+  },
+  "rsa.why": {
+    "message": "ed は φ(n) の倍数に 1 を足した値であるため、この鍵では暗号化してから復号すると元の整数に戻る。"
+  },
+  "rsa.step4": {
+    "message": "4. PEM 形式と OpenSSL コマンド"
+  },
+  "rsa.pemHelp": {
+    "message": "PEM は鍵のバイナリデータ (DER) を Base64 で表し、BEGIN/END 行で囲む形式である。以下は現在の学習用の鍵を実際に変換した結果であり、数値を変えると更新される。公開鍵は SPKI、秘密鍵は暗号化していない PKCS#8 形式である。"
+  },
+  "rsa.publicPem": {
+    "message": "学習用の公開鍵 PEM"
+  },
+  "rsa.privatePem": {
+    "message": "学習用の秘密鍵 PEM"
+  },
+  "rsa.commandHelp": {
+    "message": "以下は別の 2048 ビット鍵を新しく作成する OpenSSL 3 の例である。上の小さい鍵では OAEP を使用できない。実際の暗号化には OAEP (SHA-256) を使用する。2048 ビット鍵で暗号化できる平文は最大 190 バイトであり、長いデータには共通鍵暗号との組み合わせを使う。"
+  },
+  "rsa.generateCommand": {
+    "message": "鍵の作成と公開鍵の取り出し"
+  },
+  "rsa.fileHelp": {
+    "message": "平文を message.txt に保存してから、次のコマンドを順に実行する。private.pem は暗号化していない秘密鍵なので、厳重に管理する。"
+  },
+  "rsa.encryptCommand": {
+    "message": "公開鍵によるファイルの暗号化"
+  },
+  "rsa.decryptCommand": {
+    "message": "秘密鍵によるファイルの復号"
+  },
+  "rsa.outputHelp": {
+    "message": "decrypted.txt に元の平文が出力される。OAEP には乱数が使われるため、同じ平文でも暗号文は毎回変わる。"
+  },
+  "rsa.reference": {
+    "message": "OpenSSL 公式ドキュメント"
+  },
+  "miniApps.rsa.title": {
+    "message": "RSA 暗号のしくみ"
+  },
+  "miniApps.rsa.description": {
+    "message": "小さい素数と数式で RSA の鍵生成・暗号化・復号を学ぶ。"
   }
 }

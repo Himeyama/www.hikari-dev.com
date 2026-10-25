@@ -2109,5 +2109,122 @@
   },
   "yamlJson.convert": {
     "message": "Convert"
+  },
+  "rsa.working": {
+    "message": "Intermediate steps: repeated squaring"
+  },
+  "rsa.workingHelp": {
+    "message": "Split the exponent into a sum of powers of two, reducing modulo n after every square. Multiply the selected remainders and reduce once more."
+  },
+  "rsa.title": {
+    "message": "RSA explained"
+  },
+  "rsa.description": {
+    "message": "Learn RSA key generation, encryption, and decryption with small primes and live equations."
+  },
+  "rsa.intro": {
+    "message": "RSA is a public-key cryptosystem. A public key encrypts a message, and its corresponding private key decrypts it. Multiplying two primes is easy, but recovering the primes from a large product is difficult. This property underlies its security."
+  },
+  "rsa.toyNote": {
+    "message": "This demo uses small keys and RSA without padding for hand calculation. It is for learning only and cannot protect real secrets. All calculations run in your browser."
+  },
+  "rsa.step1": {
+    "message": "1. Generate primes and keys"
+  },
+  "rsa.primeHelp": {
+    "message": "Randomly choose distinct primes p and q from 3 through 19. n is their product, and φ(n) is (p − 1)(q − 1). mod denotes the remainder after division."
+  },
+  "rsa.generate": {
+    "message": "Generate primes"
+  },
+  "rsa.exponentHelp": {
+    "message": "Choose an integer e with 1 < e < φ(n) that is coprime to φ(n). d is an integer such that ed leaves a remainder of 1 when divided by φ(n)."
+  },
+  "rsa.exponent": {
+    "message": "Public exponent e"
+  },
+  "rsa.publicKey": {
+    "message": "Public key (share these values)"
+  },
+  "rsa.privateKey": {
+    "message": "Private key (keep these values secret)"
+  },
+  "rsa.privateHelp": {
+    "message": "Keep p, q, and φ(n) secret too. Real private-key files also include p, q, and other values to speed up computation."
+  },
+  "rsa.step2": {
+    "message": "2. Encrypt with the public key"
+  },
+  "rsa.messageHelp": {
+    "message": "Enter the plaintext as an integer m from 0 through n − 1. This demo encrypts integers directly, without converting text. Equations update as you change the input or keys."
+  },
+  "rsa.message": {
+    "message": "Plaintext m"
+  },
+  "rsa.invalidMessage": {
+    "message": "Enter a plaintext integer within the displayed range."
+  },
+  "rsa.step3": {
+    "message": "3. Decrypt with the private key"
+  },
+  "rsa.decryptHelp": {
+    "message": "Use ciphertext c, private exponent d, and n, which is shared with the public key. Public exponent e is not needed for decryption. You can edit the ciphertext to explore the result."
+  },
+  "rsa.cipher": {
+    "message": "Ciphertext c"
+  },
+  "rsa.useCipher": {
+    "message": "Use encryption result"
+  },
+  "rsa.match": {
+    "message": "The decrypted value matches the original plaintext."
+  },
+  "rsa.changed": {
+    "message": "Showing the decryption of a different ciphertext."
+  },
+  "rsa.invalidCipher": {
+    "message": "Enter a ciphertext integer within the displayed range."
+  },
+  "rsa.why": {
+    "message": "Because ed is a multiple of φ(n) plus 1, encrypting and then decrypting with these keys recovers the original integer."
+  },
+  "rsa.step4": {
+    "message": "4. PEM format and OpenSSL commands"
+  },
+  "rsa.pemHelp": {
+    "message": "PEM represents binary key data (DER) as Base64 wrapped in BEGIN/END lines. These are actual encodings of the current learning keys and update when the values change. The public key uses SPKI; the private key uses unencrypted PKCS#8."
+  },
+  "rsa.publicPem": {
+    "message": "Learning public key PEM"
+  },
+  "rsa.privatePem": {
+    "message": "Learning private key PEM"
+  },
+  "rsa.commandHelp": {
+    "message": "The OpenSSL 3 example below generates a separate 2048-bit key. The tiny keys above cannot use OAEP. Use OAEP (SHA-256) for real encryption. With a 2048-bit key, plaintext is limited to 190 bytes; combine RSA with symmetric encryption for longer data."
+  },
+  "rsa.generateCommand": {
+    "message": "Generate a key and extract its public key"
+  },
+  "rsa.fileHelp": {
+    "message": "Save the plaintext in message.txt, then run the following commands in order. private.pem is an unencrypted private key and must be kept secure."
+  },
+  "rsa.encryptCommand": {
+    "message": "Encrypt a file with the public key"
+  },
+  "rsa.decryptCommand": {
+    "message": "Decrypt a file with the private key"
+  },
+  "rsa.outputHelp": {
+    "message": "The original plaintext is written to decrypted.txt. OAEP uses randomness, so encrypting the same plaintext produces different ciphertext each time."
+  },
+  "rsa.reference": {
+    "message": "Official OpenSSL documentation"
+  },
+  "miniApps.rsa.title": {
+    "message": "RSA explained"
+  },
+  "miniApps.rsa.description": {
+    "message": "Learn RSA key generation, encryption, and decryption with small primes and live equations."
   }
 }

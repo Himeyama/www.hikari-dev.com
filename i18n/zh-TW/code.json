@@ -2109,5 +2109,122 @@
   },
   "yamlJson.convert": {
     "message": "轉換"
+  },
+  "rsa.working": {
+    "message": "平方求冪法的計算過程"
+  },
+  "rsa.workingHelp": {
+    "message": "將指數拆成 2 的冪次之和，每次平方後取餘數。將選取的餘數相乘，最後再取一次餘數。"
+  },
+  "rsa.title": {
+    "message": "RSA 加密原理"
+  },
+  "rsa.description": {
+    "message": "透過小質數與即時公式，學習 RSA 金鑰產生、加密與解密。"
+  },
+  "rsa.intro": {
+    "message": "RSA 是一種公開金鑰密碼系統。使用公鑰加密，再以對應的私鑰解密。兩個質數相乘很容易，但從很大的乘積找出原本的質數很困難。這項特性是其安全性的基礎。"
+  },
+  "rsa.toyNote": {
+    "message": "此示範使用適合手算的小金鑰及不含填充的 RSA，僅供學習，不能用來保護實際的機密資料。所有計算都在瀏覽器內進行。"
+  },
+  "rsa.step1": {
+    "message": "1. 產生質數與金鑰"
+  },
+  "rsa.primeHelp": {
+    "message": "從 3 到 19 隨機選出不同的質數 p 與 q。n 是兩者的乘積，φ(n) 為 (p − 1)(q − 1)。mod 表示除法的餘數。"
+  },
+  "rsa.generate": {
+    "message": "產生質數"
+  },
+  "rsa.exponentHelp": {
+    "message": "選擇滿足 1 < e < φ(n) 且與 φ(n) 互質的整數 e。d 是使 ed 除以 φ(n) 的餘數為 1 的整數。"
+  },
+  "rsa.exponent": {
+    "message": "公開指數 e"
+  },
+  "rsa.publicKey": {
+    "message": "公鑰 (可公開的值)"
+  },
+  "rsa.privateKey": {
+    "message": "私鑰 (必須保密的值)"
+  },
+  "rsa.privateHelp": {
+    "message": "p、q 與 φ(n) 也必須保密。實際的私鑰檔案還包含 p、q 等數值，以加快計算。"
+  },
+  "rsa.step2": {
+    "message": "2. 使用公鑰加密"
+  },
+  "rsa.messageHelp": {
+    "message": "將明文輸入為 0 到 n − 1 的整數 m。此處省略文字轉換，直接加密整數。輸入或金鑰變更時，公式會即時更新。"
+  },
+  "rsa.message": {
+    "message": "明文 m"
+  },
+  "rsa.invalidMessage": {
+    "message": "請輸入顯示範圍內的明文整數。"
+  },
+  "rsa.step3": {
+    "message": "3. 使用私鑰解密"
+  },
+  "rsa.decryptHelp": {
+    "message": "使用密文 c、私密指數 d，以及與公鑰共用的 n。解密計算不需要公開指數 e。也可以修改密文，觀察解密結果的變化。"
+  },
+  "rsa.cipher": {
+    "message": "密文 c"
+  },
+  "rsa.useCipher": {
+    "message": "使用加密結果"
+  },
+  "rsa.match": {
+    "message": "解密結果與原始明文一致。"
+  },
+  "rsa.changed": {
+    "message": "目前顯示其他密文的解密結果。"
+  },
+  "rsa.invalidCipher": {
+    "message": "請輸入顯示範圍內的密文整數。"
+  },
+  "rsa.why": {
+    "message": "由於 ed 等於 φ(n) 的倍數加上 1，因此使用這組金鑰先加密再解密，就能還原原始整數。"
+  },
+  "rsa.step4": {
+    "message": "4. PEM 格式與 OpenSSL 指令"
+  },
+  "rsa.pemHelp": {
+    "message": "PEM 將金鑰的二進位資料 (DER) 以 Base64 表示，並以 BEGIN/END 行包住。以下是目前學習用金鑰的實際轉換結果，會隨數值更新。公鑰採用 SPKI，私鑰採用未加密的 PKCS#8 格式。"
+  },
+  "rsa.publicPem": {
+    "message": "學習用公鑰 PEM"
+  },
+  "rsa.privatePem": {
+    "message": "學習用私鑰 PEM"
+  },
+  "rsa.commandHelp": {
+    "message": "以下 OpenSSL 3 範例會另外產生一組 2048 位元金鑰。上方的小金鑰無法使用 OAEP。實際加密應使用 OAEP (SHA-256)。2048 位元金鑰最多可加密 190 位元組的明文；較長的資料應搭配對稱式加密。"
+  },
+  "rsa.generateCommand": {
+    "message": "產生金鑰並匯出公鑰"
+  },
+  "rsa.fileHelp": {
+    "message": "先將明文儲存為 message.txt，再依序執行下列指令。private.pem 是未加密的私鑰，必須妥善保管。"
+  },
+  "rsa.encryptCommand": {
+    "message": "使用公鑰加密檔案"
+  },
+  "rsa.decryptCommand": {
+    "message": "使用私鑰解密檔案"
+  },
+  "rsa.outputHelp": {
+    "message": "原始明文會輸出至 decrypted.txt。OAEP 使用隨機值，因此相同明文每次加密都會產生不同的密文。"
+  },
+  "rsa.reference": {
+    "message": "OpenSSL 官方文件"
+  },
+  "miniApps.rsa.title": {
+    "message": "RSA 加密原理"
+  },
+  "miniApps.rsa.description": {
+    "message": "透過小質數與即時公式，學習 RSA 金鑰產生、加密與解密。"
   }
 }
