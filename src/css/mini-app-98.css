@@ -11,6 +11,16 @@ html body .mini-app-98 * {
   scrollbar-width: auto;
 }
 
+/* Scrollbar pseudo-elements do not inherit the shared square-corner rule. */
+html:root:has(.mini-app-98)::-webkit-scrollbar-thumb,
+html:root:has(.mini-app-98)::-webkit-scrollbar-track,
+html body .mini-app-98::-webkit-scrollbar-thumb,
+html body .mini-app-98::-webkit-scrollbar-track,
+html body .mini-app-98 *::-webkit-scrollbar-thumb,
+html body .mini-app-98 *::-webkit-scrollbar-track {
+  border-radius: 0 !important;
+}
+
 /* Match 98.css's window/control text size, overriding the site's 15px rule. */
 html:root body .mini-app-98,
 html:root body .mini-app-98 *,

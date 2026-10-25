@@ -2201,7 +2201,7 @@
     "message": "學習用私鑰 PEM"
   },
   "rsa.commandHelp": {
-    "message": "以下 OpenSSL 3 範例會另外產生一組 2048 位元金鑰。上方的小金鑰無法使用 OAEP。實際加密應使用 OAEP (SHA-256)。2048 位元金鑰最多可加密 190 位元組的明文；較長的資料應搭配對稱式加密。"
+    "message": "以下 OpenSSL 3 範例會另外產生一組 2048 位元金鑰，並使用 OAEP (SHA-256)。此金鑰大小最多可加密 190 位元組的明文；較長的資料應搭配對稱式加密。"
   },
   "rsa.generateCommand": {
     "message": "產生金鑰並匯出公鑰"
@@ -2226,5 +2226,107 @@
   },
   "miniApps.rsa.description": {
     "message": "透過小質數與即時公式，學習 RSA 金鑰產生、加密與解密。"
+  },
+  "rsa.notationTitle": {
+    "message": "公式符號說明"
+  },
+  "rsa.gcdHelp": {
+    "message": "gcd(a, b) 是 a 與 b 的最大公因數，也就是能同時整除兩者的最大正整數。例如，12 與 18 的最大公因數是 6。最大公因數為 1 的兩個數稱為「互質」，但這兩個數本身不一定是質數。"
+  },
+  "rsa.modHelp": {
+    "message": "a mod n 是 a 除以 n 的餘數。例如，17 除以 5 的商為 3、餘數為 2。RSA 使用大數冪次除以 n 的餘數，而非完整的冪次值。"
+  },
+  "rsa.congruenceHelp": {
+    "message": "a ≡ b (mod n) 表示 a 與 b 分別除以 n 時，餘數相同。例如，17 與 2 除以 5 的餘數都是 2。"
+  },
+  "rsa.textExample": {
+    "message": "你好，RSA!"
+  },
+  "rsa.secureContext": {
+    "message": "RSA-OAEP 需要 HTTPS 或 localhost，以及支援 Web Crypto API 的瀏覽器。"
+  },
+  "rsa.keyError": {
+    "message": "金鑰產生失敗，請再試一次。"
+  },
+  "rsa.textError": {
+    "message": "加密或解密失敗，請產生金鑰後再試一次。"
+  },
+  "rsa.textStep1": {
+    "message": "1. 產生文字用金鑰"
+  },
+  "rsa.textKeyHelp": {
+    "message": "產生 2048 位元 RSA 金鑰，搭配 OAEP (SHA-256、MGF1-SHA-256 與空標籤)。手算用的小金鑰沒有足夠空間容納 OAEP。金鑰與明文只在瀏覽器內處理。"
+  },
+  "rsa.generatingKeys": {
+    "message": "正在產生金鑰..."
+  },
+  "rsa.generateTextKeys": {
+    "message": "產生 2048 位元金鑰"
+  },
+  "rsa.actualKeys": {
+    "message": "實際的 p、q、n、e、d"
+  },
+  "rsa.needKeys": {
+    "message": "產生金鑰後，輸入的文字會自動加密與解密。"
+  },
+  "rsa.textMessage": {
+    "message": "明文文字 M"
+  },
+  "rsa.bytes": {
+    "message": "位元組"
+  },
+  "rsa.textTooLong": {
+    "message": "請輸入不超過 190 個 UTF-8 位元組的文字。中文字、日文字與表情符號每個字元會使用多個位元組。"
+  },
+  "rsa.oaepHelp": {
+    "message": "將文字轉為 UTF-8 位元組序列 M，再以 OAEP 產生 256 位元組的編碼資料 EM。OAEP 並非單純補零，而是使用雜湊與 32 位元組的隨機種子。將 EM 轉為整數 m 後使用 RSA 加密。相同文字每次加密都會產生不同的密文。"
+  },
+  "rsa.paddingHelp": {
+    "message": "PS 是 OAEP 內部的零位元組序列。將它與空標籤的雜湊 (32 位元組)、分隔符號 (1 位元組) 及 M 合併，再以隨機種子衍生的 MGF1 遮罩處理。EM 由開頭的 1 位元組、遮罩後的種子 (32 位元組) 與遮罩後的資料 (223 位元組) 組成。"
+  },
+  "rsa.encryptAgain": {
+    "message": "使用新的隨機種子加密"
+  },
+  "rsa.processingText": {
+    "message": "正在加密與解密..."
+  },
+  "rsa.cipherBase64": {
+    "message": "密文 c (Base64，256 位元組)"
+  },
+  "rsa.actualEncryption": {
+    "message": "代入實際數值的加密公式與位元組序列"
+  },
+  "rsa.utf8Hex": {
+    "message": "UTF-8 明文 (十六進位)"
+  },
+  "rsa.oaepHex": {
+    "message": "OAEP 編碼資料 EM (十六進位)"
+  },
+  "rsa.textDecryptHelp": {
+    "message": "使用私密指數 d 與 n，從密文 c 還原整數 m。將其轉回 256 位元組的 EM，驗證並移除 OAEP 後，再以 UTF-8 解碼還原文字。解密計算不需要公開指數 e。"
+  },
+  "rsa.recoveredText": {
+    "message": "解密後的文字"
+  },
+  "rsa.textMatch": {
+    "message": "解密後的文字與原始明文一致。"
+  },
+  "rsa.actualDecryption": {
+    "message": "代入實際數值的解密公式"
+  },
+  "rsa.textPem": {
+    "message": "文字用金鑰的 PEM 格式"
+  },
+  "rsa.textPemHelp": {
+    "message": "以下是此文字加密與解密所使用的公鑰 (SPKI) 與私鑰 (未加密的 PKCS#8)。重新產生金鑰後內容會改變。此教學會顯示私鑰，因此請勿用來保護實際的機密資料。"
+  },
+  "rsa.inputMode": {
+    "message": "輸入模式"
+  },
+  "rsa.textMode": {
+    "message": "文字 (RSA-OAEP)"
+  },
+  "rsa.numberMode": {
+    "message": "數值 (手算)"
   }
 }

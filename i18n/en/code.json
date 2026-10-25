@@ -2201,7 +2201,7 @@
     "message": "Learning private key PEM"
   },
   "rsa.commandHelp": {
-    "message": "The OpenSSL 3 example below generates a separate 2048-bit key. The tiny keys above cannot use OAEP. Use OAEP (SHA-256) for real encryption. With a 2048-bit key, plaintext is limited to 190 bytes; combine RSA with symmetric encryption for longer data."
+    "message": "The OpenSSL 3 example below generates a separate 2048-bit key and uses OAEP (SHA-256). Plaintext is limited to 190 bytes with this key size; combine RSA with symmetric encryption for longer data."
   },
   "rsa.generateCommand": {
     "message": "Generate a key and extract its public key"
@@ -2226,5 +2226,107 @@
   },
   "miniApps.rsa.description": {
     "message": "Learn RSA key generation, encryption, and decryption with small primes and live equations."
+  },
+  "rsa.notationTitle": {
+    "message": "Reading the equations"
+  },
+  "rsa.gcdHelp": {
+    "message": "gcd(a, b) is the greatest common divisor of a and b: the largest positive integer that divides both without a remainder. For example, the greatest common divisor of 12 and 18 is 6. Two numbers whose greatest common divisor is 1 are called coprime. The numbers themselves do not have to be prime."
+  },
+  "rsa.modHelp": {
+    "message": "a mod n is the remainder when a is divided by n. For example, dividing 17 by 5 gives a quotient of 3 and a remainder of 2. RSA uses the remainder modulo n rather than the full value of a large power."
+  },
+  "rsa.congruenceHelp": {
+    "message": "a ≡ b (mod n) means that a and b leave the same remainder when divided by n. For example, 17 and 2 both leave a remainder of 2 when divided by 5."
+  },
+  "rsa.textExample": {
+    "message": "Hello, RSA!"
+  },
+  "rsa.secureContext": {
+    "message": "RSA-OAEP requires HTTPS or localhost and a browser that supports the Web Crypto API."
+  },
+  "rsa.keyError": {
+    "message": "Key generation failed. Try again."
+  },
+  "rsa.textError": {
+    "message": "Encryption or decryption failed. Generate a key and try again."
+  },
+  "rsa.textStep1": {
+    "message": "1. Generate keys for text"
+  },
+  "rsa.textKeyHelp": {
+    "message": "Generate a 2048-bit RSA key for OAEP (SHA-256, MGF1-SHA-256, and an empty label). The small hand-calculation keys have insufficient space for OAEP. Keys and plaintext stay in your browser."
+  },
+  "rsa.generatingKeys": {
+    "message": "Generating keys..."
+  },
+  "rsa.generateTextKeys": {
+    "message": "Generate 2048-bit keys"
+  },
+  "rsa.actualKeys": {
+    "message": "Actual p, q, n, e, and d"
+  },
+  "rsa.needKeys": {
+    "message": "Generate keys to automatically encrypt and decrypt the text you enter."
+  },
+  "rsa.textMessage": {
+    "message": "Plaintext M"
+  },
+  "rsa.bytes": {
+    "message": "bytes"
+  },
+  "rsa.textTooLong": {
+    "message": "Enter at most 190 UTF-8 bytes. Japanese characters and emoji take multiple bytes per character."
+  },
+  "rsa.oaepHelp": {
+    "message": "Encode the text as UTF-8 bytes M, then use OAEP to produce a 256-byte encoded message EM. OAEP uses a hash and a 32-byte random seed rather than simply adding zeros. Convert EM to integer m and encrypt it with RSA. The same text produces different ciphertext each time."
+  },
+  "rsa.paddingHelp": {
+    "message": "PS is the zero-filled string inside OAEP. Combine it with the empty-label hash (32 bytes), a delimiter (1 byte), and M, then apply an MGF1 mask derived from the random seed. EM consists of a leading byte, the masked seed (32 bytes), and masked data (223 bytes)."
+  },
+  "rsa.encryptAgain": {
+    "message": "Encrypt with a new random seed"
+  },
+  "rsa.processingText": {
+    "message": "Encrypting and decrypting..."
+  },
+  "rsa.cipherBase64": {
+    "message": "Ciphertext c (Base64, 256 bytes)"
+  },
+  "rsa.actualEncryption": {
+    "message": "Encryption equation with actual values and bytes"
+  },
+  "rsa.utf8Hex": {
+    "message": "UTF-8 plaintext (hexadecimal)"
+  },
+  "rsa.oaepHex": {
+    "message": "OAEP encoded message EM (hexadecimal)"
+  },
+  "rsa.textDecryptHelp": {
+    "message": "Recover integer m from ciphertext c using private exponent d and n. Convert it back to a 256-byte EM, validate and remove OAEP, then decode UTF-8 to recover the text. Public exponent e is not needed for decryption."
+  },
+  "rsa.recoveredText": {
+    "message": "Decrypted text"
+  },
+  "rsa.textMatch": {
+    "message": "The decrypted text matches the original plaintext."
+  },
+  "rsa.actualDecryption": {
+    "message": "Decryption equation with actual values"
+  },
+  "rsa.textPem": {
+    "message": "PEM keys for text encryption"
+  },
+  "rsa.textPemHelp": {
+    "message": "These are the public key (SPKI) and private key (unencrypted PKCS#8) used for this text. Regenerating keys changes them. Since this lesson displays the private key, do not use it to protect real secrets."
+  },
+  "rsa.inputMode": {
+    "message": "Input mode"
+  },
+  "rsa.textMode": {
+    "message": "Text (RSA-OAEP)"
+  },
+  "rsa.numberMode": {
+    "message": "Numbers (hand calculation)"
   }
 }

@@ -7,6 +7,7 @@ import katex from 'katex';
 import 'katex/dist/katex.min.css';
 import {PRIMES, gcd, inverse, powerSteps, learningPem} from '@site/src/lib/rsa-learning';
 import styles from './rsa.module.css';
+import RsaTextDemo from '@site/src/components/RsaTextDemo';
 
 function Formula({tex}: {tex: string}): ReactNode {
   return <div className={styles.formula} dangerouslySetInnerHTML={{__html: katex.renderToString(tex, {displayMode: true, throwOnError: false, trust: false})}} />;
@@ -27,6 +28,7 @@ function Working({base, exponent, modulus}: {base: number; exponent: number; mod
 }
 
 export default function RsaPage(): ReactNode {
+  const [mode, setMode] = useState('text');
   const [primes, setPrimes] = useState<[number, number]>([5, 11]);
   const [exponent, setExponent] = useState<number | null>(null);
   const [message, setMessage] = useState('7');
@@ -59,8 +61,20 @@ export default function RsaPage(): ReactNode {
     <main className={styles.page}>
       <Heading as="h1"><Translate id="rsa.title">RSA 暗号のしくみ</Translate></Heading>
       <p className={styles.intro}><Translate id="rsa.intro">RSA は公開鍵暗号の 1 つである。公開鍵で暗号化し、対応する秘密鍵で復号する。2 つの素数の積は簡単に求められるが、大きな積から元の素数を求めることは難しい。この性質が安全性の基礎である。</Translate></p>
-      <p className={styles.note}><Translate id="rsa.toyNote">ここでは手計算用の小さい鍵と、パディングのない RSA を使用する。学習専用であり、実際の秘密情報の保護には使用できない。すべての計算はブラウザ内で行う。</Translate></p>
+      <div className={styles.controls}><label><Translate id="rsa.inputMode">入力モード</Translate><select value={mode} onChange={(event) => setMode(event.target.value)}><option value="text"><Translate id="rsa.textMode">テキスト (RSA-OAEP)</Translate></option><option value="number"><Translate id="rsa.numberMode">数値 (手計算)</Translate></option></select></label></div>
+      {mode === 'number' && <p className={styles.note}><Translate id="rsa.toyNote">ここでは手計算用の小さい鍵と、パディングのない RSA を使用する。学習専用であり、実際の秘密情報の保護には使用できない。すべての計算はブラウザ内で行う。</Translate></p>}
 
+      <section className={styles.section}>
+        <Heading as="h2"><Translate id="rsa.notationTitle">数式の読み方</Translate></Heading>
+        <p><Translate id="rsa.gcdHelp">gcd(a, b) は a と b の最大公約数である。両方を割り切れる正の整数のうち、最も大きい値を表す。例えば 12 と 18 の最大公約数は 6 である。最大公約数が 1 の場合、2 つの数は「互いに素」である。各数が素数である必要はない。</Translate></p>
+        <Formula tex={String.raw`\gcd(12,18) = 6, \qquad \gcd(3,40) = 1`} />
+        <p><Translate id="rsa.modHelp">a mod n は a を n で割った余りである。例えば 17 を 5 で割ると、商が 3、余りが 2 になる。RSA では大きな累乗の値そのものではなく、n で割った余りを使う。</Translate></p>
+        <Formula tex={String.raw`17 = 3 \times 5 + 2, \qquad 17 \bmod 5 = 2`} />
+        <p><Translate id="rsa.congruenceHelp">a ≡ b (mod n) は、a と b をそれぞれ n で割った余りが同じであることを表す。例えば 17 と 2 は、どちらも 5 で割った余りが 2 である。</Translate></p>
+        <Formula tex={String.raw`17 \equiv 2 \pmod 5`} />
+      </section>
+
+      {mode === 'text' ? <RsaTextDemo Formula={Formula} /> : <>
       <section className={styles.section}>
         <Heading as="h2"><Translate id="rsa.step1">1. 素数と鍵の生成</Translate></Heading>
         <p><Translate id="rsa.primeHelp">3 から 19 の異なる素数 p、q をランダムに選ぶ。n は 2 つの素数の積、φ(n) は (p − 1)(q − 1) である。mod は割り算の余りを表す。</Translate></p>
@@ -97,15 +111,18 @@ export default function RsaPage(): ReactNode {
         <p><Translate id="rsa.why">ed は φ(n) の倍数に 1 を足した値であるため、この鍵では暗号化してから復号すると元の整数に戻る。</Translate></p>
         <Formula tex={`ed \\equiv 1 \\pmod{\\varphi(n)}, \\qquad (m^e)^d \\equiv m \\pmod n`} />
       </section>
+      </>}
 
       <section className={styles.section}>
         <Heading as="h2"><Translate id="rsa.step4">4. PEM 形式と OpenSSL コマンド</Translate></Heading>
+        {mode === 'number' && <>
         <p><Translate id="rsa.pemHelp">PEM は鍵のバイナリデータ (DER) を Base64 で表し、BEGIN/END 行で囲む形式である。以下は現在の学習用の鍵を実際に変換した結果であり、数値を変えると更新される。公開鍵は SPKI、秘密鍵は暗号化していない PKCS#8 形式である。</Translate></p>
         <Heading as="h3"><Translate id="rsa.publicPem">学習用の公開鍵 PEM</Translate></Heading>
         <CodeBlock language="text">{pem.publicKey}</CodeBlock>
         <Heading as="h3"><Translate id="rsa.privatePem">学習用の秘密鍵 PEM</Translate></Heading>
         <CodeBlock language="text">{pem.privateKey}</CodeBlock>
-        <p className={styles.note}><Translate id="rsa.commandHelp">以下は別の 2048 ビット鍵を新しく作成する OpenSSL 3 の例である。上の小さい鍵では OAEP を使用できない。実際の暗号化には OAEP (SHA-256) を使用する。2048 ビット鍵で暗号化できる平文は最大 190 バイトであり、長いデータには共通鍵暗号との組み合わせを使う。</Translate></p>
+        </>}
+        <p className={styles.note}><Translate id="rsa.commandHelp">以下は別の 2048 ビット鍵を新しく作成する OpenSSL 3 の例である。OAEP (SHA-256) を使用する。2048 ビット鍵で暗号化できる平文は最大 190 バイトであり、長いデータには共通鍵暗号との組み合わせを使う。</Translate></p>
         <Heading as="h3"><Translate id="rsa.generateCommand">鍵の作成と公開鍵の取り出し</Translate></Heading>
         <CodeBlock language="bash">{'openssl genpkey -algorithm RSA -pkeyopt rsa_keygen_bits:2048 -out private.pem\nopenssl pkey -in private.pem -pubout -out public.pem'}</CodeBlock>
         <p><Translate id="rsa.fileHelp">平文を message.txt に保存してから、次のコマンドを順に実行する。private.pem は暗号化していない秘密鍵なので、厳重に管理する。</Translate></p>

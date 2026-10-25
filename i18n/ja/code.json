@@ -2189,7 +2189,7 @@
     "message": "学習用の秘密鍵 PEM"
   },
   "rsa.commandHelp": {
-    "message": "以下は別の 2048 ビット鍵を新しく作成する OpenSSL 3 の例である。上の小さい鍵では OAEP を使用できない。実際の暗号化には OAEP (SHA-256) を使用する。2048 ビット鍵で暗号化できる平文は最大 190 バイトであり、長いデータには共通鍵暗号との組み合わせを使う。"
+    "message": "以下は別の 2048 ビット鍵を新しく作成する OpenSSL 3 の例である。OAEP (SHA-256) を使用する。2048 ビット鍵で暗号化できる平文は最大 190 バイトであり、長いデータには共通鍵暗号との組み合わせを使う。"
   },
   "rsa.generateCommand": {
     "message": "鍵の作成と公開鍵の取り出し"
@@ -2214,5 +2214,107 @@
   },
   "miniApps.rsa.description": {
     "message": "小さい素数と数式で RSA の鍵生成・暗号化・復号を学ぶ。"
+  },
+  "rsa.notationTitle": {
+    "message": "数式の読み方"
+  },
+  "rsa.gcdHelp": {
+    "message": "gcd(a, b) は a と b の最大公約数である。両方を割り切れる正の整数のうち、最も大きい値を表す。例えば 12 と 18 の最大公約数は 6 である。最大公約数が 1 の場合、2 つの数は「互いに素」である。各数が素数である必要はない。"
+  },
+  "rsa.modHelp": {
+    "message": "a mod n は a を n で割った余りである。例えば 17 を 5 で割ると、商が 3、余りが 2 になる。RSA では大きな累乗の値そのものではなく、n で割った余りを使う。"
+  },
+  "rsa.congruenceHelp": {
+    "message": "a ≡ b (mod n) は、a と b をそれぞれ n で割った余りが同じであることを表す。例えば 17 と 2 は、どちらも 5 で割った余りが 2 である。"
+  },
+  "rsa.textExample": {
+    "message": "こんにちは、RSA!"
+  },
+  "rsa.secureContext": {
+    "message": "RSA-OAEP には HTTPS または localhost と Web Crypto API に対応したブラウザが必要である。"
+  },
+  "rsa.keyError": {
+    "message": "鍵の生成に失敗した。もう一度試すこと。"
+  },
+  "rsa.textError": {
+    "message": "暗号化または復号に失敗した。鍵を生成してもう一度試すこと。"
+  },
+  "rsa.textStep1": {
+    "message": "1. テキスト用の鍵の生成"
+  },
+  "rsa.textKeyHelp": {
+    "message": "OAEP (SHA-256、MGF1-SHA-256、空のラベル) を使うため、2048 ビットの RSA 鍵を生成する。手計算用の小さい鍵では、OAEP に必要な領域が足りない。鍵と平文はブラウザ内だけで扱う。"
+  },
+  "rsa.generatingKeys": {
+    "message": "鍵の生成中..."
+  },
+  "rsa.generateTextKeys": {
+    "message": "2048 ビット鍵の生成"
+  },
+  "rsa.actualKeys": {
+    "message": "実際の p・q・n・e・d"
+  },
+  "rsa.needKeys": {
+    "message": "鍵を生成すると、入力したテキストの暗号化・復号が自動で行われる。"
+  },
+  "rsa.textMessage": {
+    "message": "平文テキスト M"
+  },
+  "rsa.bytes": {
+    "message": "バイト"
+  },
+  "rsa.textTooLong": {
+    "message": "UTF-8 で 190 バイト以内のテキストを入力すること。日本語や絵文字は 1 文字で複数バイトを使う。"
+  },
+  "rsa.oaepHelp": {
+    "message": "テキストを UTF-8 のバイト列 M に変換し、OAEP で 256 バイトの符号化データ EM にする。OAEP は単なるゼロ埋めではなく、ハッシュと 32 バイトの乱数を使う。EM を整数 m として RSA で暗号化する。同じテキストでも、暗号文は毎回変わる。"
+  },
+  "rsa.paddingHelp": {
+    "message": "PS は OAEP 内部のゼロ列である。空ラベルのハッシュ (32 バイト)、区切り (1 バイト)、M と合わせたデータを、乱数から作る MGF1 のマスクで処理する。先頭の 1 バイト、マスク済みの乱数 (32 バイト)、マスク済みのデータ (223 バイト) で EM が構成される。"
+  },
+  "rsa.encryptAgain": {
+    "message": "新しい乱数で暗号化"
+  },
+  "rsa.processingText": {
+    "message": "暗号化・復号の計算中..."
+  },
+  "rsa.cipherBase64": {
+    "message": "暗号文 c (Base64、256 バイト)"
+  },
+  "rsa.actualEncryption": {
+    "message": "数値を代入した暗号化の式とバイト列"
+  },
+  "rsa.utf8Hex": {
+    "message": "UTF-8 の平文 (16 進数)"
+  },
+  "rsa.oaepHex": {
+    "message": "OAEP の符号化データ EM (16 進数)"
+  },
+  "rsa.textDecryptHelp": {
+    "message": "暗号文 c に秘密指数 d と n を使って整数 m を復元する。256 バイトの EM に戻した後、OAEP を検証して取り除き、UTF-8 として元のテキストに戻す。公開指数 e は復号の計算には不要である。"
+  },
+  "rsa.recoveredText": {
+    "message": "復号したテキスト"
+  },
+  "rsa.textMatch": {
+    "message": "復号したテキストは元の平文と一致する。"
+  },
+  "rsa.actualDecryption": {
+    "message": "数値を代入した復号の式"
+  },
+  "rsa.textPem": {
+    "message": "テキスト用の鍵の PEM 形式"
+  },
+  "rsa.textPemHelp": {
+    "message": "このテキストの暗号化・復号に使った公開鍵 (SPKI) と秘密鍵 (暗号化していない PKCS#8) である。鍵を生成し直すと内容が変わる。学習用に秘密鍵を表示するため、実際の秘密情報の保護には使わないこと。"
+  },
+  "rsa.inputMode": {
+    "message": "入力モード"
+  },
+  "rsa.textMode": {
+    "message": "テキスト (RSA-OAEP)"
+  },
+  "rsa.numberMode": {
+    "message": "数値 (手計算)"
   }
 }

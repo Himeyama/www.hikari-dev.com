@@ -13,4 +13,6 @@
 .error { color: var(--ifm-color-danger-dark); }
 .result { font-size: 1.1rem; font-weight: 600; color: var(--ifm-color-primary); }
 .note { padding: 1rem; background: var(--ifm-color-emphasis-100); border-left: 3px solid var(--ifm-color-warning); }
+.textLabel { display: block; font-weight: 600; margin: .75rem 0 .4rem; }
+.textarea { display: block; width: 100%; resize: vertical; padding: .65rem; font: inherit; background: var(--ifm-background-color); color: var(--ifm-font-color-base); }
 @media (max-width: 600px) { .section { padding: 1rem; } .keys { grid-template-columns: 1fr; } }
