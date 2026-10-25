@@ -191,8 +191,12 @@ html body .mini-app-98 ::selection {
   color: #fff;
 }
 
-/* Monaco owns the positioning and appearance of its hidden input area. */
-html body .mini-app-98 .monaco-editor textarea {
+/* Monaco owns its hidden textarea and EditContext input, including focus decoration. */
+html body .mini-app-98 .monaco-editor :is(textarea, .native-edit-context),
+html body .mini-app-98 .monaco-editor :is(textarea, .native-edit-context):focus-visible {
+  outline: none !important;
+  border: 0;
+  min-height: 0;
   box-shadow: none;
   background: transparent;
   color: transparent;

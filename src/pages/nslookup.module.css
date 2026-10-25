@@ -52,6 +52,14 @@
   transition: opacity 0.12s;
 }
 
+:global(html body .mini-app-98) .submitBtn {
+  height: 23px;
+  min-height: 23px;
+  padding: 2px 12px;
+  line-height: normal;
+  align-self: center;
+}
+
 .submitBtn:hover:not(:disabled) {
   opacity: 0.85;
 }

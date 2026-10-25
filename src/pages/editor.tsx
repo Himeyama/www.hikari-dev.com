@@ -352,16 +352,6 @@ function EditorApp(): ReactNode {
         <button type="button" className={styles.menuBtn} onClick={(e) => openMenu('settings', e)}>
           <Translate id="editor.menu.settings">設定</Translate>
         </button>
-        <div className={styles.spacer} />
-        <button
-          type="button"
-          className={styles.saveBtn}
-          disabled={!dirty || (autosave && !!path)}
-          onClick={save}
-        >
-          {dirty && <span className={styles.dirtyDot} aria-hidden="true">●</span>}
-          <Translate id="editor.save">保存</Translate>
-        </button>
       </div>
       <div className={styles.editorWrap}>
         <Editor

@@ -2091,5 +2091,11 @@
   },
   "prompt.optionsHelp": {
     "message": "アプリ起動: ./base64、./chat など (Tab で補完)\n表示: ls -alh --color=auto、ls -ltr、ls -R、cat -n/-b/-s/-A\n出力: echo -e \"hello\\nworld\"、echo -ne \"hello\\tworld\"、echo -E\n検索: grep -E/-F/-w/-x/-o、集計: wc -l/-w/-c/-m/-L\n先頭・末尾: head/tail -n 5、-n5、--lines=5、-c 10\n並べ替え: sort -n/-r/-u/-f/-b。-- 以降はファイル名として扱う。"
+  },
+  "base64.convert": {
+    "message": "変換"
+  },
+  "yamlJson.convert": {
+    "message": "変換"
   }
 }

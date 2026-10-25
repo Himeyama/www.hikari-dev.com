@@ -22,6 +22,7 @@ const EDITOR_OPTIONS = {
   tabSize: 2,
   automaticLayout: true,
   wordWrap: 'on' as const,
+  renderLineHighlight: 'none' as const,
 };
 
 type Direction = 'yaml-to-json' | 'json-to-yaml';
@@ -114,9 +115,9 @@ function YamlJsonEditors(): ReactNode {
           <button
             className={styles.swapBtn}
             onClick={swapDirection}
-            aria-label={translate({id: 'yamlJson.swap', message: '変換方向を入れ替える'})}
+            title={translate({id: 'yamlJson.swap', message: '変換方向を入れ替える'})}
           >
-            ⇄
+            <Translate id="yamlJson.convert">変換</Translate>
           </button>
         </div>
 

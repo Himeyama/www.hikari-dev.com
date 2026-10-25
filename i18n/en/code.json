@@ -2103,5 +2103,11 @@
   },
   "prompt.optionsHelp": {
     "message": "Launch apps: ./base64, ./chat, etc. (Tab to complete)\nDisplay: ls -alh --color=auto, ls -ltr, ls -R, cat -n/-b/-s/-A\nOutput: echo -e \"hello\\nworld\", echo -ne \"hello\\tworld\", echo -E\nSearch: grep -E/-F/-w/-x/-o; counts: wc -l/-w/-c/-m/-L\nFirst/last: head/tail -n 5, -n5, --lines=5, -c 10\nSort: sort -n/-r/-u/-f/-b. Arguments after -- are treated as filenames."
+  },
+  "base64.convert": {
+    "message": "Convert"
+  },
+  "yamlJson.convert": {
+    "message": "Convert"
   }
 }

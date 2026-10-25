@@ -2103,5 +2103,11 @@
   },
   "prompt.optionsHelp": {
     "message": "啟動應用程式: ./base64、./chat 等 (Tab 自動完成)\n顯示: ls -alh --color=auto、ls -ltr、ls -R、cat -n/-b/-s/-A\n輸出: echo -e \"hello\\nworld\"、echo -ne \"hello\\tworld\"、echo -E\n搜尋: grep -E/-F/-w/-x/-o、計數: wc -l/-w/-c/-m/-L\n開頭與結尾: head/tail -n 5、-n5、--lines=5、-c 10\n排序: sort -n/-r/-u/-f/-b。-- 之後的引數會視為檔名。"
+  },
+  "base64.convert": {
+    "message": "轉換"
+  },
+  "yamlJson.convert": {
+    "message": "轉換"
   }
 }

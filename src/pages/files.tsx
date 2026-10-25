@@ -363,16 +363,6 @@ function FilesApp(): ReactNode {
           }}
           onBlur={() => setAddress(path)}
         />
-        <button type="button" className={styles.toolBtn} onClick={newFolder}>
-          <span className={styles.toolBtnLabel}>
-            <Translate id="files.newFolder">新しいフォルダー</Translate>
-          </span>
-        </button>
-        <button type="button" className={styles.toolBtn} onClick={newFile}>
-          <span className={styles.toolBtnLabel}>
-            <Translate id="files.newFile">新しいファイル</Translate>
-          </span>
-        </button>
       </div>
 
       <div

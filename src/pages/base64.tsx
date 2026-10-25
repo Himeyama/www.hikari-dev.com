@@ -26,6 +26,7 @@ const EDITOR_OPTIONS = {
   tabSize: 2,
   automaticLayout: true,
   wordWrap: 'on' as const,
+  renderLineHighlight: 'none' as const,
 };
 
 function formatBytes(bytes: number): string {
@@ -219,9 +220,9 @@ function Base64TextEditors(): ReactNode {
           <button
             className={styles.swapBtn}
             onClick={swapDirection}
-            aria-label={translate({id: 'base64.swap', message: '変換方向を入れ替える'})}
+            title={translate({id: 'base64.swap', message: '変換方向を入れ替える'})}
           >
-            ⇄
+            <Translate id="base64.convert">変換</Translate>
           </button>
         </div>
 
