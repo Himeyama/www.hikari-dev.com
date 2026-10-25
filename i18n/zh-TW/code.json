@@ -2046,5 +2046,62 @@
   },
   "doc.chatReset": {
     "message": "重設 AI 聊天"
+  },
+  "prompt.title": {
+    "message": "命令提示字元"
+  },
+  "prompt.description": {
+    "message": "在 MS Gothic 終端機中使用 Unix 風格指令。"
+  },
+  "prompt.input": {
+    "message": "指令輸入"
+  },
+  "prompt.loadError": {
+    "message": "無法載入終端機。請重新載入頁面。"
+  },
+  "prompt.error.missing": {
+    "message": "找不到檔案或目錄"
+  },
+  "prompt.error.directory": {
+    "message": "請確認目錄類型或遞迴選項"
+  },
+  "prompt.error.file": {
+    "message": "需要文字檔案"
+  },
+  "prompt.error.exists": {
+    "message": "同名檔案或目錄已存在"
+  },
+  "prompt.error.arguments": {
+    "message": "引數不足或格式錯誤"
+  },
+  "prompt.error.syntax": {
+    "message": "引號或運算子的語法錯誤"
+  },
+  "prompt.error.unknown": {
+    "message": "找不到指令。輸入 help 查看清單"
+  },
+  "prompt.error.unsupported": {
+    "message": "不支援此操作"
+  },
+  "prompt.error.protected": {
+    "message": "無法操作根目錄、目前目錄，或移至來源的子目錄"
+  },
+  "prompt.error.empty": {
+    "message": "目錄不是空的"
+  },
+  "prompt.help": {
+    "message": "瀏覽器中的 Unix 風格 Shell，與檔案總管及編輯器共用虛擬檔案。\n檔案操作: ls [-al], cd, mkdir [-p], touch, cat, cp [-r], mv, rm [-rf], rmdir, tree, find [path] [-name pattern] [-type f|d]\n文字處理: grep [-ivnc], head/tail [-n count], wc [-lwc], sort [-nru], uniq [-cd], cut -d delimiter -f 1,2, tr [-d] set1 [set2]\n管線: |、重新導向: > / >> / <、依序執行: ;、單引號 / 雙引號、萬用字元: * / ?\n↑↓: 歷程記錄、Tab: 自動完成、←→ / Home / End: 編輯、Ctrl+C: 取消輸入、Ctrl+L: 清除畫面\n範例: echo \"hello world\" > hello.txt; cat hello.txt | tr a-z A-Z\n不支援執行實際作業系統指令、網路連線及安裝套件。cp 支援文字檔案與資料夾。"
+  },
+  "miniApps.prompt.title": {
+    "message": "命令提示字元"
+  },
+  "miniApps.prompt.description": {
+    "message": "在 MS Gothic 終端機中使用 Unix 風格指令。"
+  },
+  "prompt.scrollback": {
+    "message": "終端機捲動"
+  },
+  "prompt.optionsHelp": {
+    "message": "啟動應用程式: ./base64、./chat 等 (Tab 自動完成)\n顯示: ls -alh --color=auto、ls -ltr、ls -R、cat -n/-b/-s/-A\n輸出: echo -e \"hello\\nworld\"、echo -ne \"hello\\tworld\"、echo -E\n搜尋: grep -E/-F/-w/-x/-o、計數: wc -l/-w/-c/-m/-L\n開頭與結尾: head/tail -n 5、-n5、--lines=5、-c 10\n排序: sort -n/-r/-u/-f/-b。-- 之後的引數會視為檔名。"
   }
 }

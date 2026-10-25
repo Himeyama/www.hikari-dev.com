@@ -1,5 +1,5 @@
 import type {ReactNode} from 'react';
-import {createUtilityIcon} from './UtilityIcon';
+import {createSystemIcon, createUtilityIcon} from './UtilityIcon';
 
 const ImageIcon = createUtilityIcon(0);
 
@@ -35,17 +35,9 @@ const GpuIcon = createUtilityIcon(15);
 
 const DocIcon = createUtilityIcon(13);
 
-const FolderIcon = createUtilityIcon(1, 'windows-98-desktop.png', 26);
-
-function FileIcon(): ReactNode {
-  return (
-    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" aria-hidden="true">
-      <path d="M6 3h8l4 4v14H6V3z" fill="#F8FAFC" stroke="#CBD5E1" strokeWidth="1" />
-      <path d="M14 3v4h4" fill="#E2E8F0" stroke="#CBD5E1" strokeWidth="1" strokeLinejoin="round" />
-      <path d="M8 12h8M8 15.5h6" stroke="#60A5FA" strokeWidth="1.4" strokeLinecap="round" />
-    </svg>
-  );
-}
+const FolderIcon = createSystemIcon(125, 146, 444, 417);
+const FileIcon = createSystemIcon(770, 133, 340, 430);
+const PromptIcon = createSystemIcon(105, 678, 477, 443);
 
 const EditorIcon = createUtilityIcon(2, 'windows-98-desktop.png', 26);
 
@@ -100,6 +92,14 @@ export type MiniApp = {
 };
 
 const RAW_MINI_APPS: Omit<MiniApp, 'id'>[] = [
+  {
+    href: '/prompt',
+    Icon: PromptIcon,
+    titleId: 'miniApps.prompt.title',
+    titleMessage: 'プロンプト',
+    descriptionId: 'miniApps.prompt.description',
+    descriptionMessage: 'MS Gothic のターミナルで Unix 風コマンドを使用する。',
+  },
   {
     href: '/webp-converter',
     Icon: ImageIcon,

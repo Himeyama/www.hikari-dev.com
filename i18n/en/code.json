@@ -2046,5 +2046,62 @@
   },
   "doc.chatReset": {
     "message": "Reset AI chat"
+  },
+  "prompt.title": {
+    "message": "Prompt"
+  },
+  "prompt.description": {
+    "message": "Use Unix-like commands in an MS Gothic terminal."
+  },
+  "prompt.input": {
+    "message": "Command input"
+  },
+  "prompt.loadError": {
+    "message": "Unable to load the terminal. Reload the page."
+  },
+  "prompt.error.missing": {
+    "message": "No such file or directory"
+  },
+  "prompt.error.directory": {
+    "message": "Check the directory type or recursive option"
+  },
+  "prompt.error.file": {
+    "message": "A text file is required"
+  },
+  "prompt.error.exists": {
+    "message": "A file or directory with this name already exists"
+  },
+  "prompt.error.arguments": {
+    "message": "Missing or invalid arguments"
+  },
+  "prompt.error.syntax": {
+    "message": "Invalid quote or operator syntax"
+  },
+  "prompt.error.unknown": {
+    "message": "Command not found. Type help to list commands"
+  },
+  "prompt.error.unsupported": {
+    "message": "This operation is not supported"
+  },
+  "prompt.error.protected": {
+    "message": "Cannot operate on root, the current directory, or a descendant of the source"
+  },
+  "prompt.error.empty": {
+    "message": "Directory is not empty"
+  },
+  "prompt.help": {
+    "message": "A Unix-like browser shell sharing virtual files with Files and Editor.\nFiles: ls [-al], cd, mkdir [-p], touch, cat, cp [-r], mv, rm [-rf], rmdir, tree, find [path] [-name pattern] [-type f|d]\nText: grep [-ivnc], head/tail [-n count], wc [-lwc], sort [-nru], uniq [-cd], cut -d delimiter -f 1,2, tr [-d] set1 [set2]\nPipes: |, redirection: > / >> / <, sequential commands: ;, single/double quotes, wildcards: * / ?\nUp/Down: history, Tab: completion, Left/Right / Home / End: edit, Ctrl+C: cancel input, Ctrl+L: clear screen\nExample: echo \"hello world\" > hello.txt; cat hello.txt | tr a-z A-Z\nNative OS commands, network connections, and package installation are not supported. cp supports text files and folders."
+  },
+  "miniApps.prompt.title": {
+    "message": "Prompt"
+  },
+  "miniApps.prompt.description": {
+    "message": "Use Unix-like commands in an MS Gothic terminal."
+  },
+  "prompt.scrollback": {
+    "message": "Terminal scrollback"
+  },
+  "prompt.optionsHelp": {
+    "message": "Launch apps: ./base64, ./chat, etc. (Tab to complete)\nDisplay: ls -alh --color=auto, ls -ltr, ls -R, cat -n/-b/-s/-A\nOutput: echo -e \"hello\\nworld\", echo -ne \"hello\\tworld\", echo -E\nSearch: grep -E/-F/-w/-x/-o; counts: wc -l/-w/-c/-m/-L\nFirst/last: head/tail -n 5, -n5, --lines=5, -c 10\nSort: sort -n/-r/-u/-f/-b. Arguments after -- are treated as filenames."
   }
 }

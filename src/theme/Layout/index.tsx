@@ -22,7 +22,7 @@ export default function Layout(props: Props) {
   const {i18n} = useDocusaurusContext();
   const {pathname} = useLocation();
   const localPath = pathname.replace(/^\/(en|zh-TW)(?=\/|$)/, '').replace(/\/$/, '') || '/';
-  const isMiniApp = localPath === '/mini-apps' || LAUNCHABLES.some((app) => app.href === localPath);
+  const isMiniApp = localPath !== '/prompt' && (localPath === '/mini-apps' || LAUNCHABLES.some((app) => app.href === localPath));
   const desc =
     DESCRIPTIONS[i18n.currentLocale as keyof typeof DESCRIPTIONS] ??
     DESCRIPTIONS.ja;

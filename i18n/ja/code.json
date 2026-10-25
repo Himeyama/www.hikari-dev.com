@@ -2034,5 +2034,62 @@
   },
   "doc.chatReset": {
     "message": "AI チャットをリセット"
+  },
+  "prompt.error.missing": {
+    "message": "ファイルまたはディレクトリが存在しない"
+  },
+  "prompt.error.directory": {
+    "message": "ディレクトリの種類または再帰オプションを確認すること"
+  },
+  "prompt.error.file": {
+    "message": "テキスト ファイルが必要である"
+  },
+  "prompt.error.exists": {
+    "message": "同名のファイルまたはディレクトリが存在する"
+  },
+  "prompt.error.arguments": {
+    "message": "引数が不足しているか、形式が正しくない"
+  },
+  "prompt.error.syntax": {
+    "message": "引用符または演算子の構文が正しくない"
+  },
+  "prompt.error.unknown": {
+    "message": "コマンドが見つからない。help で一覧を確認できる"
+  },
+  "prompt.error.unsupported": {
+    "message": "この操作には対応していない"
+  },
+  "prompt.error.protected": {
+    "message": "ルート、現在のディレクトリ、自分自身の配下への操作はできない"
+  },
+  "prompt.error.empty": {
+    "message": "ディレクトリが空ではない"
+  },
+  "prompt.help": {
+    "message": "ブラウザ内の Unix 風シェル。ファイルとエディタで使う仮想ファイルを共有する。\nファイル操作: ls [-al], cd, mkdir [-p], touch, cat, cp [-r], mv, rm [-rf], rmdir, tree, find [path] [-name pattern] [-type f|d]\nテキスト処理: grep [-ivnc], head/tail [-n count], wc [-lwc], sort [-nru], uniq [-cd], cut -d delimiter -f 1,2, tr [-d] set1 [set2]\nパイプ: |、リダイレクト: > / >> / <、連続実行: ;、引用符: 単一 / 二重、ワイルドカード: * / ?\n↑↓: 履歴、Tab: 補完、←→ / Home / End: 編集、Ctrl+C: 入力の中止、Ctrl+L: 画面の消去\n例: echo \"hello world\" > hello.txt; cat hello.txt | tr a-z A-Z\n実際の OS のコマンド、ネットワーク接続、パッケージのインストールには対応していない。cp はテキスト ファイルとフォルダーに対応する。"
+  },
+  "prompt.input": {
+    "message": "コマンド入力"
+  },
+  "prompt.loadError": {
+    "message": "ターミナルを読み込めない。ページを再読み込みすること。"
+  },
+  "prompt.title": {
+    "message": "プロンプト"
+  },
+  "prompt.description": {
+    "message": "MS Gothic のターミナルで Unix 風コマンドを使用する。"
+  },
+  "miniApps.prompt.title": {
+    "message": "プロンプト"
+  },
+  "miniApps.prompt.description": {
+    "message": "MS Gothic のターミナルで Unix 風コマンドを使用する。"
+  },
+  "prompt.scrollback": {
+    "message": "ターミナルのスクロール"
+  },
+  "prompt.optionsHelp": {
+    "message": "アプリ起動: ./base64、./chat など (Tab で補完)\n表示: ls -alh --color=auto、ls -ltr、ls -R、cat -n/-b/-s/-A\n出力: echo -e \"hello\\nworld\"、echo -ne \"hello\\tworld\"、echo -E\n検索: grep -E/-F/-w/-x/-o、集計: wc -l/-w/-c/-m/-L\n先頭・末尾: head/tail -n 5、-n5、--lines=5、-c 10\n並べ替え: sort -n/-r/-u/-f/-b。-- 以降はファイル名として扱う。"
   }
 }

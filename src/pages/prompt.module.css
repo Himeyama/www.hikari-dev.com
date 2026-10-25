@@ -1,0 +1,68 @@
+.app {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  height: 100dvh;
+  min-height: 0;
+  margin: 0;
+  padding: 0;
+}
+
+.terminal {
+  flex: 1;
+  min-height: 0;
+  min-width: 0;
+  display: flex;
+  overflow: hidden;
+  padding: 0;
+  background: #0c0c0c;
+  border: 2px inset #c0c0c0;
+}
+
+.terminal :global(.xterm) {height: 100%;}
+.terminalHost {flex: 1; min-width: 0; min-height: 0; padding: 2px 0 0 2px; overflow: hidden;}
+.terminal :global(.xterm-scrollable-element > .scrollbar) {opacity: 0 !important; pointer-events: none !important;}
+.scrollRail {flex: 0 0 17px; width: 17px; overflow-y: scroll; overflow-x: hidden; background: #c0c0c0; scrollbar-color: auto; scrollbar-width: auto;}
+.scrollRail > div {width: 1px;}
+.scrollRail::-webkit-scrollbar {width: 17px;}
+.scrollRail::-webkit-scrollbar-track {background: repeating-conic-gradient(#c0c0c0 0% 25%, #fff 0% 50%) 0 0 / 2px 2px;}
+.scrollRail::-webkit-scrollbar-thumb {background: #c0c0c0; border: 1px solid; border-color: #fff #000 #000 #fff; box-shadow: inset 1px 1px #dfdfdf, inset -1px -1px #808080;}
+.scrollRail::-webkit-scrollbar-button:single-button {display: block; height: 17px; background-color: #c0c0c0; border: 1px solid; border-color: #fff #000 #000 #fff; background-repeat: no-repeat; background-position: center;}
+.scrollRail::-webkit-scrollbar-button:single-button:vertical:decrement {background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='7' height='4'%3E%3Cpath d='M0 4 3.5 0 7 4'/%3E%3C/svg%3E");}
+.scrollRail::-webkit-scrollbar-button:single-button:vertical:increment {background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='7' height='4'%3E%3Cpath d='m0 0 3.5 4L7 0'/%3E%3C/svg%3E");}
+.scrollRail::-webkit-scrollbar-button:single-button:active {border-color: #808080;}
+/* Override the mini-app theme's important 11px UI font, including xterm's measuring nodes. */
+:global(html:root body .mini-app-98) .terminal,
+:global(html:root body .mini-app-98) .terminal * {
+  font-family: 'MS Gothic', 'ＭＳ ゴシック', monospace !important;
+  font-size: 16px !important;
+}
+.terminal :global(.xterm-helper-textarea) {
+  min-width: 0 !important;
+  min-height: 0 !important;
+  padding: 0 !important;
+  border: 0 !important;
+  box-shadow: none !important;
+  font-family: 'MS Gothic', 'ＭＳ ゴシック', monospace !important;
+}
+
+:global(html[data-embed='1']) .app {
+  height: 100dvh;
+  min-height: 0;
+  margin: 0;
+  padding: 0;
+}
+
+.workspace {
+  position: relative;
+  flex: 1;
+  height: calc(100dvh - var(--ifm-navbar-height));
+  overflow: hidden;
+  background: #008080 !important;
+  --desktop-taskbar-h: 32px;
+}
+.workspace :global(.window) {border-radius: 0;}
+.workspace.workspace :global(.title-bar) {height: 22px; min-height: 22px; padding: 2px 3px; cursor: move;}
+.workspace.workspace :global(.title-bar-controls) {margin-left: auto; gap: 2px;}
+.taskbar {position: absolute; bottom: 0; left: 0; right: 0; height: 32px; display: flex; align-items: center; gap: 4px; padding: 3px; background: #c0c0c0; box-shadow: inset 0 1px #fff; z-index: 2147483647;}
+.taskbar button {max-width: 160px; overflow: hidden; white-space: nowrap; text-overflow: ellipsis;}
