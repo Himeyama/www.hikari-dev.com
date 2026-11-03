@@ -1,7 +1,7 @@
 import JSZip from 'jszip';
 import forge from 'node-forge';
 
-export const CHUNK = 768;
+export const CHUNK = 384;
 export type Manifest = {id: string; size: number; count: number; hash: string; test: boolean};
 export function bytes(n: number): string {
   const units = ['B', 'KiB', 'MiB', 'GiB', 'TiB'];

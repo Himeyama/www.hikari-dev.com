@@ -97,15 +97,19 @@ function App() {
     return () => document.removeEventListener('visibilitychange', hidden);
   }, [running]);
   const draw = async (value: string, token: number, previous?: string) => {
-    // Render offscreen so an asynchronous QR encoder never exposes a half-drawn frame.
+    // Keep the guide QR large; data frames show the previous and current codes together.
     const buffer = document.createElement('canvas');
-    const left = document.createElement('canvas');
-    const right = document.createElement('canvas');
-    const options = {width: 640, margin: 4, version: 40, errorCorrectionLevel: 'M' as const};
-    await Promise.all([QRCode.toCanvas(left, previous ?? value, options), QRCode.toCanvas(right, value, options)]);
-    buffer.width = 1280; buffer.height = 640;
-    buffer.getContext('2d')?.drawImage(left, 0, 0);
-    buffer.getContext('2d')?.drawImage(right, 640, 0);
+    const options = {width: 640, margin: 4, errorCorrectionLevel: 'M' as const};
+    if (previous === undefined) {
+      await QRCode.toCanvas(buffer, value, options);
+    } else {
+      const left = document.createElement('canvas');
+      const right = document.createElement('canvas');
+      await Promise.all([QRCode.toCanvas(left, previous, options), QRCode.toCanvas(right, value, options)]);
+      buffer.width = 1280; buffer.height = 640;
+      buffer.getContext('2d')?.drawImage(left, 0, 0);
+      buffer.getContext('2d')?.drawImage(right, 640, 0);
+    }
     if (generation.current === token && canvas.current) {
       canvas.current.width = buffer.width; canvas.current.height = buffer.height;
       canvas.current.getContext('2d')?.drawImage(buffer, 0, 0);
@@ -210,6 +214,7 @@ function App() {
             if (p.id !== m.id) continue;
             if (p.index === -1) {if (state!.next === 0) last = performance.now(); continue;}
             if (p.index === -2) {if (state!.next === m.count) await finish(); continue;}
+            if (p.index > state!.next + 1) {await fail(); return;}
             if (p.index > state!.next) continue;
             const data = state!.accept(p.index, p.value);
             if (!data) continue;
