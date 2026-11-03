@@ -2357,7 +2357,7 @@
     "message": "正在建立 ZIP"
   },
   "mochidashi.ready": {
-    "message": "在手機上開始接收並掃描此設定 QR 碼。手機顯示等待中後，按下開始傳送。"
+    "message": "將手機相機對準此 QR 碼，開始錄影後再開始傳送。"
   },
   "mochidashi.start": {
     "message": "開始傳送"
@@ -2366,7 +2366,7 @@
     "message": "停止"
   },
   "mochidashi.camera": {
-    "message": "開啟相機接收"
+    "message": "開始錄影"
   },
   "mochidashi.waiting": {
     "message": "已確認設定 QR 碼，等待開始傳送。"
@@ -2411,7 +2411,7 @@
     "message": "已停止。若要重新開始，請重新準備傳送。"
   },
   "mochidashi.note": {
-    "message": "請先透過測試調整速度。傳送僅執行一次，遺漏時須從頭開始。接收時請保持頁面開啟。連續 15 秒無法讀取影格也會結束接收。容量取決於裝置可用空間。ZIP 內的檔案會置於編號資料夾，以保留同名檔案。"
+    "message": "開始傳送前，請先錄下引導 QR 碼。錄影及分析期間請保持頁面開啟。降低傳送速度可減少遺漏的畫面。錄影會使用裝置的暫存空間。"
   },
   "mochidashi.estimate": {
     "message": "傳送容量 / 預估時間 (分鐘)"
@@ -2433,5 +2433,14 @@
   },
   "mochidashi.fileCount": {
     "message": "{count} 個檔案"
+  },
+  "mochidashi.recordEnd": {
+    "message": "結束錄影並開始分析"
+  },
+  "mochidashi.recording": {
+    "message": "錄影中。電腦傳送結束後，請結束錄影。"
+  },
+  "mochidashi.analyzing": {
+    "message": "正在分析影片，請保持頁面開啟。"
   }
 }

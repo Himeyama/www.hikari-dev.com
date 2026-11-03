@@ -2357,7 +2357,7 @@
     "message": "Creating ZIP"
   },
   "mochidashi.ready": {
-    "message": "Start receiving on your phone and scan this setup QR code. When the phone says it is waiting, press Start sending."
+    "message": "Point the phone camera at this QR code, start recording, then start sending."
   },
   "mochidashi.start": {
     "message": "Start sending"
@@ -2366,7 +2366,7 @@
     "message": "Stop"
   },
   "mochidashi.camera": {
-    "message": "Start camera receiver"
+    "message": "Start recording"
   },
   "mochidashi.waiting": {
     "message": "Setup QR confirmed. Waiting for the sender."
@@ -2411,7 +2411,7 @@
     "message": "Stopped. Prepare a new transfer to start again."
   },
   "mochidashi.note": {
-    "message": "Test and adjust the speed first. Transfers run once; missing frames require restarting. Keep the receiver open. Reception also ends after 15 seconds without a readable frame. Capacity depends on available device storage. Files are placed in numbered ZIP folders to preserve duplicate names."
+    "message": "Record the guide QR code before starting the transfer. Keep the page open while recording and analyzing. A slower transfer reduces missed frames. Recording uses temporary device storage."
   },
   "mochidashi.estimate": {
     "message": "Transfer size / Estimated time (minutes)"
@@ -2433,5 +2433,14 @@
   },
   "mochidashi.fileCount": {
     "message": "{count} file(s)"
+  },
+  "mochidashi.recordEnd": {
+    "message": "Stop recording and analyze"
+  },
+  "mochidashi.recording": {
+    "message": "Recording. Stop recording after the computer finishes sending."
+  },
+  "mochidashi.analyzing": {
+    "message": "Analyzing the video. Keep this page open."
   }
 }

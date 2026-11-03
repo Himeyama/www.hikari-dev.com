@@ -20,10 +20,13 @@ function labels() {
     speed: translate({id: 'mochidashi.speed', message: '切り替え速度 (フレーム/秒)'}),
     prepare: translate({id: 'mochidashi.prepare', message: '転送準備'}),
     preparing: translate({id: 'mochidashi.preparing', message: 'ZIP 作成中'}),
-    ready: translate({id: 'mochidashi.ready', message: 'スマホで受信を開始し、この案内 QR を読み取る。スマホに待機中と表示されたら、送信開始を押す。'}),
+    ready: translate({id: 'mochidashi.ready', message: 'スマホのカメラでこの案内 QR を映して撮影を開始し、送信開始を押す。'}),
     start: translate({id: 'mochidashi.start', message: '送信開始'}),
     stop: translate({id: 'mochidashi.stop', message: '停止'}),
-    camera: translate({id: 'mochidashi.camera', message: 'カメラで受信開始'}),
+    camera: translate({id: 'mochidashi.camera', message: '撮影開始'}),
+    recordEnd: translate({id: 'mochidashi.recordEnd', message: '撮影終了・解析開始'}),
+    recording: translate({id: 'mochidashi.recording', message: '撮影中。パソコン側の送信終了後に撮影を終了する。'}),
+    analyzing: translate({id: 'mochidashi.analyzing', message: '動画を解析中。画面を開いたまま待つ。'}),
     waiting: translate({id: 'mochidashi.waiting', message: '案内 QR を確認済み。送信開始待機中。'}),
     scanning: translate({id: 'mochidashi.scanning', message: 'パソコンの案内 QR をカメラに映す。'}),
     sending: translate({id: 'mochidashi.sending', message: '送信中'}),
@@ -39,7 +42,7 @@ function labels() {
     error: translate({id: 'mochidashi.error', message: '処理に失敗した。空き容量とカメラの許可を確認し、HTTPS の Android Chrome で開く。ZIP の合計容量は 4 GiB 未満、ファイル数は 65,534 個以下が必要である。'}),
     unsupported: translate({id: 'mochidashi.unsupported', message: 'この環境は QR 読み取りまたはブラウザ内の一時保存に対応していない。Android Chrome を使用する。'}),
     stopped: translate({id: 'mochidashi.stopped', message: '停止済み。再開する場合は転送準備からやり直す。'}),
-    note: translate({id: 'mochidashi.note', message: '最初にテストで速度を調節する。転送は 1 回限りで、欠落時は最初からやり直す。受信中は画面を開いたままにする。15 秒間読み取れない場合も終了する。容量は端末の空き容量に依存する。ZIP 内は同名ファイルの上書きを防ぐため番号別フォルダーになる。'}),
+    note: translate({id: 'mochidashi.note', message: '送信前に案内 QR を撮影する。撮影と解析の間は画面を開いたままにする。速度を下げるとフレームの欠落を減らせる。動画は端末の一時領域を使用する。'}),
     estimate: translate({id: 'mochidashi.estimate', message: '転送容量 / 推定時間 (分)'}),
   };
 }
@@ -52,7 +55,7 @@ function App() {
   const [mode, setMode] = useState<'send' | 'receive'>('send');
   const [files, setFiles] = useState<File[]>([]);
   const [test, setTest] = useState(false);
-  const [fps, setFps] = useState(25);
+  const [fps, setFps] = useState(5);
   const [busy, setBusy] = useState(false);
   const [running, setRunning] = useState(false);
   const [status, setStatus] = useState('');
@@ -71,6 +74,7 @@ function App() {
   const source = useRef<Awaited<ReturnType<typeof prepare>> | null>(null);
   const receiver = useRef<{temp: Awaited<ReturnType<typeof temporary>>; writer: FileSystemWritableFileStream} | null>(null);
   const download = useRef('');
+  const recorder = useRef<MediaRecorder | null>(null);
   const timer = useRef<ReturnType<typeof setTimeout> | null>(null);
   const cameraOff = () => {stream.current?.getTracks().forEach(t => t.stop()); stream.current = null;};
   const releaseReceiver = async () => {
@@ -78,7 +82,7 @@ function App() {
     if (current) {await current.writer.abort().catch(() => {}); await current.temp.remove();}
   };
   const stop = () => {
-    generation.current++; cameraOff();
+    generation.current++; if (recorder.current?.state === 'recording') recorder.current.stop(); cameraOff();
     if (timer.current) clearTimeout(timer.current);
     void releaseReceiver();
     setRunning(false); setBusy(false); setStatus(l.stopped); setMeta(null);
@@ -147,7 +151,6 @@ function App() {
     let started = 0;
     let m: Manifest | null = null;
     let state: Reception | null = null;
-    let last = performance.now();
     const fail = async () => {
       if (token !== generation.current) return;
       generation.current++; cameraOff(); await releaseReceiver(); setRunning(false); setStatus(l.failed);
@@ -180,41 +183,63 @@ function App() {
       const camera = await navigator.mediaDevices.getUserMedia({audio: false, video: {facingMode: {ideal: 'environment'}, width: {ideal: 1920}, height: {ideal: 1080}}});
       if (token !== generation.current) {camera.getTracks().forEach(t => t.stop()); return;}
       stream.current = camera; video.current!.srcObject = camera; await video.current!.play();
-      const scan = async () => {
-        if (token !== generation.current) return;
-        try {
-          for (const result of await detector.detect(video.current!)) {
-            if (token !== generation.current) return;
-            const p = parse(result.rawValue);
-            if (!p) continue;
-            if (!m) {
-              if (p.index !== -1) {await fail(); return;}
-              m = manifest(p.value, p.id); state = new Reception(m); setMeta(m);
-              if (!m.test) {
-                const temp = await temporary(); const writer = await temp.handle.createWritable();
-                if (token !== generation.current) {await writer.abort(); await temp.remove(); return;}
-                receiver.current = {temp, writer};
-              }
-              last = performance.now(); setStatus(l.waiting); continue;
-            }
-            if (p.id !== m.id) continue;
-            if (p.index === -1) {if (state!.next === 0) last = performance.now(); continue;}
-            if (p.index === -2) {await finish(); return;}
-            const data = state!.accept(p.index, p.value);
-            if (!data) continue;
-            if (!started) started = performance.now();
-            setLost(state!.missing);
-            if (receiver.current) await receiver.current.writer.write(data);
-            if (token !== generation.current) return;
-            last = performance.now(); setCount(state!.received); setTransferred(state!.receivedBytes); setStatus(l.receiving);
-            setElapsed(state!.received > 1 ? (performance.now() - started) / 1000 : 0);
-            if (state!.next === m.count) {await finish(); return;}
-          }
-          if (m && performance.now() - last > 15000) {await fail(); return;}
-          if (token === generation.current) timer.current = setTimeout(() => void scan(), 10);
-        } catch {setLost(state?.missing ?? 0); await fail();}
+      const recording = await temporary();
+      const videoWriter = await recording.handle.createWritable();
+      const media = new MediaRecorder(camera);
+      recorder.current = media;
+      let writes = Promise.resolve();
+      media.ondataavailable = event => {
+        if (event.data.size) writes = writes.then(() => videoWriter.write(event.data));
       };
-      void scan();
+      media.onstop = () => void (async () => {
+        try {
+          await writes; await videoWriter.close(); cameraOff(); recorder.current = null;
+          if (token !== generation.current) return;
+          setStatus(l.analyzing);
+          const file = await recording.handle.getFile();
+          const playback = document.createElement('video');
+          const videoUrl = URL.createObjectURL(file);
+          try {
+            playback.preload = 'auto'; playback.muted = true; playback.src = videoUrl;
+            await new Promise<void>((resolve, reject) => {
+              playback.onloadedmetadata = () => resolve(); playback.onerror = () => reject(Error('video'));
+            });
+            for (let time = 0; time < playback.duration && token === generation.current; time += 1 / 60) {
+              await new Promise<void>((resolve, reject) => {
+                playback.onseeked = () => resolve(); playback.onerror = () => reject(Error('seek'));
+                playback.currentTime = Math.min(time + 0.001, playback.duration - 0.001);
+              });
+              for (const result of await detector.detect(playback)) {
+                let p: ReturnType<typeof parse>;
+                try {p = parse(result.rawValue);} catch {continue;}
+                if (!p) continue;
+                if (!m) {
+                  if (p.index !== -1) continue;
+                  m = manifest(p.value, p.id); state = new Reception(m); setMeta(m);
+                  if (!m.test) {
+                    const temp = await temporary(); const writer = await temp.handle.createWritable();
+                    if (token !== generation.current) {await writer.abort(); await temp.remove(); return;}
+                    receiver.current = {temp, writer};
+                  }
+                  continue;
+                }
+                if (p.id !== m.id || p.index === -1) continue;
+                if (p.index === -2) {await finish(); return;}
+                const data = state!.accept(p.index, p.value);
+                if (!data) continue;
+                if (!started) started = performance.now();
+                if (receiver.current) await receiver.current.writer.write(data);
+                setLost(state!.missing); setCount(state!.received); setTransferred(state!.receivedBytes);
+                setElapsed((performance.now() - started) / 1000);
+                if (state!.next === m.count) {await finish(); return;}
+              }
+            }
+            if (token === generation.current) await fail();
+          } finally {URL.revokeObjectURL(videoUrl);}
+        } catch {await fail();}
+        finally {await recording.remove();}
+      })();
+      media.start(1000); setStatus(l.recording);
     } catch {
       if (token === generation.current) {cameraOff(); await releaseReceiver(); setRunning(false); setStatus(l.error);}
     }
@@ -241,7 +266,7 @@ function App() {
       <canvas ref={canvas} className={styles.qr} hidden={!meta} />
       {meta && <p>{l.estimate}: {bytes(meta.size)} / {(meta.count / fps / 60).toFixed(1)}</p>}
     </> : <>
-      <div className={styles.actions}><button onClick={() => void receive()} disabled={running}>{l.camera}</button><button onClick={stop} disabled={!running}>{l.stop}</button></div>
+      <div className={styles.actions}><button onClick={() => void receive()} disabled={running}>{l.camera}</button><button onClick={() => recorder.current?.stop()} disabled={!running}>{l.recordEnd}</button><button onClick={stop} disabled={!running}>{l.stop}</button></div>
       <video ref={video} muted playsInline className={styles.video} />
     </>}
     <p role="status" aria-live="polite">{status}</p>
