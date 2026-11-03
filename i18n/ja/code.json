@@ -2342,7 +2342,7 @@
     "message": "転送準備"
   },
   "mochidashi.preparing": {
-    "message": "ZIP 作成中"
+    "message": "転送データと QR コードを準備中"
   },
   "mochidashi.ready": {
     "message": "スマホで受信を開始し、この案内 QR を読み取る。スマホに待機中と表示されたら、送信開始を押す。"

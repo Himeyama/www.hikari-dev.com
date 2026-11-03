@@ -2354,7 +2354,7 @@
     "message": "Prepare transfer"
   },
   "mochidashi.preparing": {
-    "message": "Creating ZIP"
+    "message": "Preparing transfer data and QR codes"
   },
   "mochidashi.ready": {
     "message": "Start receiving on your phone and scan this setup QR code. When the phone says it is waiting, press Start sending."

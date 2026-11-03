@@ -19,7 +19,7 @@ function labels() {
     test: translate({id: 'mochidashi.test', message: 'テストモード (60 フレーム)'}),
     speed: translate({id: 'mochidashi.speed', message: '切り替え速度 (フレーム/秒)'}),
     prepare: translate({id: 'mochidashi.prepare', message: '転送準備'}),
-    preparing: translate({id: 'mochidashi.preparing', message: 'ZIP 作成中'}),
+    preparing: translate({id: 'mochidashi.preparing', message: '転送データと QR コードを準備中'}),
     ready: translate({id: 'mochidashi.ready', message: 'スマホで受信を開始し、この案内 QR を読み取る。スマホに待機中と表示されたら、送信開始を押す。'}),
     start: translate({id: 'mochidashi.start', message: '送信開始'}),
     stop: translate({id: 'mochidashi.stop', message: '停止'}),
@@ -44,7 +44,7 @@ function labels() {
   };
 }
 
-type Detector = {detect(source: HTMLVideoElement): Promise<{rawValue: string}[]>};
+type Detector = {detect(source: HTMLVideoElement | HTMLCanvasElement): Promise<{rawValue: string}[]>};
 type DetectorClass = {new(options: {formats: string[]}): Detector; getSupportedFormats(): Promise<string[]>};
 
 function App() {
@@ -52,7 +52,7 @@ function App() {
   const [mode, setMode] = useState<'send' | 'receive'>('send');
   const [files, setFiles] = useState<File[]>([]);
   const [test, setTest] = useState(false);
-  const [fps, setFps] = useState(5);
+  const [fps, setFps] = useState(20);
   const [busy, setBusy] = useState(false);
   const [running, setRunning] = useState(false);
   const [status, setStatus] = useState('');
@@ -69,6 +69,7 @@ function App() {
   const generation = useRef(0);
   const stream = useRef<MediaStream | null>(null);
   const source = useRef<Awaited<ReturnType<typeof prepare>> | null>(null);
+  const frames = useRef<{file: File; remove: () => Promise<void>} | null>(null);
   const receiver = useRef<{temp: Awaited<ReturnType<typeof temporary>>; writer: FileSystemWritableFileStream} | null>(null);
   const download = useRef('');
   const timer = useRef<ReturnType<typeof setTimeout> | null>(null);
@@ -83,11 +84,12 @@ function App() {
     void releaseReceiver();
     setRunning(false); setBusy(false); setStatus(l.stopped); setMeta(null);
     const previous = source.current; source.current = null; void previous?.remove();
+    const oldFrames = frames.current; frames.current = null; void oldFrames?.remove();
     if (download.current) URL.revokeObjectURL(download.current);
     download.current = ''; setUrl('');
   };
   useEffect(() => () => {
-    generation.current++; cameraOff(); void releaseReceiver(); void source.current?.remove();
+    generation.current++; cameraOff(); void releaseReceiver(); void source.current?.remove(); void frames.current?.remove();
     if (timer.current) clearTimeout(timer.current);
     if (download.current) URL.revokeObjectURL(download.current);
   }, []);
@@ -96,22 +98,37 @@ function App() {
     document.addEventListener('visibilitychange', hidden);
     return () => document.removeEventListener('visibilitychange', hidden);
   }, [running]);
-  const draw = async (value: string, token: number, previous?: string) => {
-    // Keep both QR positions fixed throughout the transfer.
+  const rendered = useRef<{key: string; canvas: HTMLCanvasElement}[]>([]);
+  const draw = async (values: string[], token: number, previous?: string[], earliest = 0) => {
     const buffer = document.createElement('canvas');
-    const right = document.createElement('canvas');
-    const options = {width: 640, margin: 4, errorCorrectionLevel: 'M' as const};
-    await QRCode.toCanvas(right, value, options);
     buffer.width = 1280; buffer.height = 640;
     const context = buffer.getContext('2d');
     if (!context) throw Error('canvas');
     context.fillStyle = 'white'; context.fillRect(0, 0, buffer.width, buffer.height);
-    if (previous !== undefined) {
-      const left = document.createElement('canvas');
-      await QRCode.toCanvas(left, previous, options);
-      context.drawImage(left, 0, 0);
-    }
-    context.drawImage(right, 640, 0);
+    const render = async (packets: string[], x: number) => {
+      const key = JSON.stringify(packets);
+      const cached = rendered.current.find(item => item.key === key);
+      if (cached) {context.drawImage(cached.canvas, x, 0); return;}
+      const layers = await Promise.all([0, 1, 2].map(async channel => {
+        const layer = document.createElement('canvas');
+        await QRCode.toCanvas(layer, packets[channel] ?? packets[0], {width: 640, margin: 4, version: 40, errorCorrectionLevel: 'M'});
+        return layer.getContext('2d')!.getImageData(0, 0, 640, 640).data;
+      }));
+      const image = context.createImageData(640, 640);
+      for (let i = 0; i < image.data.length; i += 4) {
+        image.data[i] = layers[0][i]; image.data[i + 1] = layers[1][i];
+        image.data[i + 2] = layers[2][i]; image.data[i + 3] = 255;
+      }
+      const result = document.createElement('canvas');
+      result.width = 640; result.height = 640;
+      result.getContext('2d')!.putImageData(image, 0, 0);
+      rendered.current = [...rendered.current.filter(item => item.key !== key), {key, canvas: result}].slice(-2);
+      context.drawImage(result, x, 0);
+    };
+    await render(values, 640);
+    if (previous) await render(previous, 0);
+    const delay = earliest - performance.now();
+    if (delay > 0) await new Promise(resolve => setTimeout(resolve, delay));
     if (generation.current === token && canvas.current) {
       canvas.current.width = buffer.width; canvas.current.height = buffer.height;
       canvas.current.getContext('2d')?.drawImage(buffer, 0, 0);
@@ -123,8 +140,29 @@ function App() {
     try {
       const prepared = await prepare(files, test, n => {if (token === generation.current) setPercent(n);}, () => token !== generation.current);
       if (token !== generation.current) {await prepared.remove(); return;}
-      source.current = prepared; setMeta(prepared.meta);
-      await draw(packet(prepared.meta.id, -1, JSON.stringify(prepared.meta)), token);
+      source.current = prepared;
+      const storage = await temporary();
+      const writer = await storage.handle.createWritable();
+      try {
+        const frameCount = Math.ceil(prepared.meta.count / 3);
+        for (let frame = 0; frame < frameCount; frame++) {
+          if (token !== generation.current) throw Error('cancelled');
+          const modules = new Uint8Array(177 * 177);
+          for (let channel = 0; channel < 3; channel++) {
+            const index = Math.min(frame * 3 + channel, prepared.meta.count - 1);
+            const chunk = new Uint8Array(await prepared.file.slice(index * CHUNK, (index + 1) * CHUNK).arrayBuffer());
+            const qr = QRCode.create(packet(prepared.meta.id, index, btoa(binary(chunk))), {version: 40, errorCorrectionLevel: 'M'});
+            for (let j = 0; j < modules.length; j++) if (qr.modules.data[j]) modules[j] |= 1 << channel;
+          }
+          await writer.write(modules);
+          setPercent(Math.round((frame + 1) / frameCount * 100));
+        }
+        await writer.close();
+        if (token !== generation.current) {await storage.remove(); return;}
+        frames.current = {...storage, file: await storage.handle.getFile()};
+      } catch (error) {await writer.abort().catch(() => {}); await storage.remove(); throw error;}
+      setMeta(prepared.meta);
+      await draw([packet(prepared.meta.id, -1, JSON.stringify(prepared.meta))], token);
       setStatus(l.ready);
     } catch {if (token === generation.current) setStatus(l.error);}
     finally {if (token === generation.current) setBusy(false);}
@@ -136,21 +174,47 @@ function App() {
     const started = performance.now();
     setRunning(true); setStatus(l.sending); setCount(0); setTransferred(0); setElapsed(0);
     try {
-      let previous = packet(prepared.meta.id, -1, JSON.stringify(prepared.meta));
-      for (let i = 0; i < prepared.meta.count; i++) {
-        const chunk = new Uint8Array(await prepared.file.slice(i * CHUNK, (i + 1) * CHUNK).arrayBuffer());
+      const frameFile = frames.current?.file;
+      if (!frameFile || !canvas.current) throw Error('frames');
+      const display = canvas.current;
+      const context = display.getContext('2d');
+      if (!context) throw Error('canvas');
+      const previous = document.createElement('canvas');
+      previous.width = 640; previous.height = 640;
+      const previousContext = previous.getContext('2d')!;
+      previousContext.drawImage(display, 640, 0, 640, 640, 0, 0, 640, 640);
+      const square = document.createElement('canvas');
+      square.width = 185; square.height = 185;
+      const squareContext = square.getContext('2d')!;
+      let nextDisplay = 0;
+      const frameCount = Math.ceil(prepared.meta.count / 3);
+      for (let frame = 0; frame < frameCount; frame++) {
+        const modules = new Uint8Array(await frameFile.slice(frame * 177 * 177, (frame + 1) * 177 * 177).arrayBuffer());
+        if (modules.length !== 177 * 177) throw Error('frame');
+        const image = squareContext.createImageData(185, 185);
+        image.data.fill(255);
+        for (let y = 0; y < 177; y++) for (let x = 0; x < 177; x++) {
+          const bits = modules[y * 177 + x]; const offset = ((y + 4) * 185 + x + 4) * 4;
+          image.data[offset] = bits & 1 ? 0 : 255;
+          image.data[offset + 1] = bits & 2 ? 0 : 255;
+          image.data[offset + 2] = bits & 4 ? 0 : 255;
+        }
+        squareContext.putImageData(image, 0, 0);
+        const delay = nextDisplay - performance.now();
+        if (delay > 0) await new Promise(resolve => setTimeout(resolve, delay));
         if (token !== generation.current) return;
-        const current = packet(prepared.meta.id, i, btoa(binary(chunk)));
-        await draw(current, token, previous);
-        previous = current;
-        if (token !== generation.current) return;
-        setCount(i + 1);
-        setTransferred(Math.min((i + 1) * CHUNK, prepared.meta.size));
+        context.imageSmoothingEnabled = false;
+        context.drawImage(previous, 0, 0);
+        context.drawImage(square, 640, 0, 640, 640);
+        previousContext.clearRect(0, 0, 640, 640);
+        previousContext.imageSmoothingEnabled = false;
+        previousContext.drawImage(square, 0, 0, 640, 640);
+        nextDisplay = performance.now() + 1000 / fps;
+        setCount(Math.min((frame + 1) * 3, prepared.meta.count));
+        setTransferred(Math.min((frame + 1) * 3 * CHUNK, prepared.meta.size));
         setElapsed((performance.now() - started) / 1000);
-        await new Promise(resolve => setTimeout(resolve, 1000 / fps));
       }
       if (token !== generation.current) return;
-      await draw(packet(prepared.meta.id, -2, 'end'), token, previous);
       setStatus(l.sent); setRunning(false);
     } catch {if (token === generation.current) {setRunning(false); setStatus(l.error);}}
   };
@@ -198,7 +262,24 @@ function App() {
       const scan = async () => {
         if (token !== generation.current) return;
         try {
-          const packets = (await detector.detect(video.current!)).flatMap(result => {
+          const frame = document.createElement('canvas');
+          frame.width = video.current!.videoWidth; frame.height = video.current!.videoHeight;
+          const ctx = frame.getContext('2d', {willReadFrequently: true});
+          if (!ctx || !frame.width || !frame.height) throw Error('camera frame');
+          ctx.drawImage(video.current!, 0, 0);
+          const original = ctx.getImageData(0, 0, frame.width, frame.height);
+          const results: {rawValue: string}[] = [];
+          for (let channel = 0; channel < 3; channel++) {
+            const separated = ctx.createImageData(frame.width, frame.height);
+            for (let i = 0; i < original.data.length; i += 4) {
+              const value = original.data[i + channel];
+              separated.data[i] = value; separated.data[i + 1] = value;
+              separated.data[i + 2] = value; separated.data[i + 3] = 255;
+            }
+            ctx.putImageData(separated, 0, 0);
+            results.push(...await detector.detect(frame));
+          }
+          const packets = results.flatMap(result => {
             try {const parsed = parse(result.rawValue); return parsed ? [parsed] : [];} catch {return [];}
           }).sort((a, b) => (a.index === -2 ? Infinity : a.index) - (b.index === -2 ? Infinity : b.index));
           for (const p of packets) {
@@ -216,7 +297,6 @@ function App() {
             if (p.id !== m.id) continue;
             if (p.index === -1) {if (state!.next === 0) last = performance.now(); continue;}
             if (p.index === -2) {if (state!.next === m.count) await finish(); continue;}
-            if (p.index > state!.next + 1) {await fail(); return;}
             if (p.index > state!.next) continue;
             const data = state!.accept(p.index, p.value);
             if (!data) continue;
@@ -257,10 +337,10 @@ function App() {
         <button onClick={stop} disabled={!busy && !running && !meta}>{l.stop}</button></div>
       {busy && <progress max={100} value={percent} />}
       <canvas ref={canvas} className={styles.qr} hidden={!meta} />
-      {meta && <p>{l.estimate}: {bytes(meta.size)} / {(meta.count / fps / 60).toFixed(1)}</p>}
+      {meta && <p>{l.estimate}: {bytes(meta.size)} / {(Math.ceil(meta.count / 3) / fps / 60).toFixed(1)}</p>}
     </> : <>
       <div className={styles.actions}><button onClick={() => void receive()} disabled={running}>{l.camera}</button><button onClick={stop} disabled={!running}>{l.stop}</button></div>
-      {url && <p><a className="button button--primary" href={url} download="mochidashi.zip">{l.download}</a></p>}
+      {url && <div className={styles.actions}><button type="button" onClick={() => {const link = document.createElement('a'); link.href = url; link.download = 'mochidashi.zip'; link.click();}}>{l.download}</button></div>}
       <video ref={video} muted playsInline className={styles.video} />
     </>}
     <p role="status" aria-live="polite">{status}</p>

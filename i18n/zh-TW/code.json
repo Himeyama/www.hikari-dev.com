@@ -2354,7 +2354,7 @@
     "message": "準備傳送"
   },
   "mochidashi.preparing": {
-    "message": "正在建立 ZIP"
+    "message": "正在準備傳送資料與 QR 碼"
   },
   "mochidashi.ready": {
     "message": "在手機上開始接收並掃描此設定 QR 碼。手機顯示等待中後，按下開始傳送。"
