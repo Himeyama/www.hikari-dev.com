@@ -111,7 +111,7 @@ function App() {
       if (cached) {context.drawImage(cached.canvas, x, 0); return;}
       const layers = await Promise.all([0, 1, 2].map(async channel => {
         const layer = document.createElement('canvas');
-        await QRCode.toCanvas(layer, packets[channel] ?? packets[0], {width: 640, margin: 4, version: 40, errorCorrectionLevel: 'M'});
+        await QRCode.toCanvas(layer, packets[channel] ?? packets[0], {width: 640, margin: 4, errorCorrectionLevel: 'M'});
         return layer.getContext('2d')!.getImageData(0, 0, 640, 640).data;
       }));
       const image = context.createImageData(640, 640);
