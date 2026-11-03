@@ -2384,7 +2384,7 @@
     "message": "SHA-256 matched. File verified."
   },
   "mochidashi.testing": {
-    "message": "One test pass completed. Waiting for the next pass. Files cannot be saved in test mode. Stop transmission to change the speed."
+    "message": "One test pass completed. Received frames are retained, and later passes fill in missing frames. Files cannot be saved in test mode."
   },
   "mochidashi.missing": {
     "message": "Unreceived frames"

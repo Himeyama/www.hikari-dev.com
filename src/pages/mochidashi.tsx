@@ -32,7 +32,7 @@ function labels() {
     symbolCount: translate({id: 'mochidashi.symbolCount', message: '受信 QR 数'}),
     verifying: translate({id: 'mochidashi.verifying', message: '受信完了。ファイルを検証中。'}),
     verified: translate({id: 'mochidashi.verified', message: 'SHA-256 一致。ファイルの検証完了。'}),
-    testing: translate({id: 'mochidashi.testing', message: 'テスト 1 周完了。次の周の開始待ち。テストモードではファイルを保存できない。速度を変える場合は停止する。'}),
+    testing: translate({id: 'mochidashi.testing', message: 'テスト 1 周完了。受信済みのフレームを保持し、次の周で未受信分を補う。テストモードではファイルを保存できない。'}),
     missing: translate({id: 'mochidashi.missing', message: '未受信フレーム'}),
     rate: translate({id: 'mochidashi.rate', message: '受信率'}),
     transferSpeed: translate({id: 'mochidashi.transferSpeed', message: '転送速度'}),
@@ -330,14 +330,13 @@ function App() {
             if (p.id !== m.id) continue;
             if (p.index === -1) {
               if (m.test && testFinished) {
-                state = new Reception(m); testFinished = false; started = 0;
-                setCount(0); setTransferred(0); setElapsed(0); setLost(m.count); setStatus(l.waiting);
+                testFinished = false;
+                setStatus(state!.received ? l.receiving : l.waiting);
               }
               if (state!.received === 0) last = performance.now();
               continue;
             }
             if (p.index === -2) {if (m.test && !testFinished) await finish(); continue;}
-            if (testFinished) continue;
             last = performance.now();
             if (!started) started = performance.now();
             if (state instanceof RaptorReception) {
@@ -347,6 +346,7 @@ function App() {
             } else {
               const data = state!.accept(p.index, p.value);
               if (!data) continue;
+              testFinished = false;
             }
             setLost(state!.missing);
             if (token !== generation.current) return;

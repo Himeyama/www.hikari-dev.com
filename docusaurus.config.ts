@@ -179,6 +179,7 @@ const config: Config = {
   clientModules: ['./src/clientModules/gtag.js', './src/clientModules/embedMode.ts'],
 
   plugins: [
+    './plugins/mochidashi-raptorq.cjs',
     './plugins/mini-app-98.cjs',
     './plugins/recent-blog-posts.js',
     './plugins/ga-ranking.js',

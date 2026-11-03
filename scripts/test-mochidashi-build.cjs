@@ -1,4 +1,4 @@
-// Exercise the emitted browser codec and its real asset URL for each locale.
+// Exercise the emitted browser codec without any separate WASM asset to deploy.
 const assert = require('node:assert/strict');
 const fs = require('node:fs');
 const path = require('node:path');
@@ -18,12 +18,10 @@ const vm = require('node:vm');
       Uint8Array, ArrayBuffer, DataView, FinalizationRegistry,
       fetch: async value => {
         const url = new URL(value);
-        assert.equal(url.origin, 'https://mochidashi.test');
-        assert.ok(url.pathname.startsWith(prefix));
-        const relative = url.pathname.slice(prefix.length);
-        assert.match(relative, /^[a-f0-9]+\.wasm$/);
+        assert.equal(url.protocol, 'data:', 'WASM must be embedded; a separate production asset previously returned 404');
+        assert.match(url.href, /^data:application\/wasm;base64,/);
         assetRequests++;
-        return new Response(fs.readFileSync(path.join(root, relative)), {headers: {'Content-Type': 'application/wasm'}});
+        return new Response(Buffer.from(url.href.split(',')[1], 'base64'), {headers: {'Content-Type': 'application/wasm'}});
       },
     });
     const modules = Object.assign({}, ...self.webpackChunkwebsite.map(chunk => chunk[1]));
@@ -58,6 +56,6 @@ const vm = require('node:vm');
       assert.deepEqual(Buffer.from(output), Buffer.from(data));
     } finally {decoder.free();}
     for (const name of ['README.txt', 'raptorqr-MIT.txt', 'Apache-2.0.txt']) assert.ok(fs.existsSync(path.join(root, 'licenses/mochidashi', name)));
-    console.log(`${locale || 'ja'}: bundled RaptorQ, local WASM asset loading, missing-symbol recovery and notices passed.`);
+    console.log(`${locale || 'ja'}: embedded RaptorQ WASM, missing-symbol recovery and notices passed.`);
   }
 })().catch(error => {console.error(error); process.exitCode = 1;});

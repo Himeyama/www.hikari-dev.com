@@ -47,6 +47,12 @@ jobs:
         env:
           GA_CREDENTIALS: ${{ secrets.GA_CREDENTIALS }}
       
+      - name: Verify optical file transfer
+        run: |
+          node scripts/test-mochidashi.cjs
+          node scripts/test-mochidashi-playback.cjs
+          node scripts/test-mochidashi-build.cjs
+
       - name: Deploy to Cloudflare Pages
         run: pnpm dlx wrangler pages deploy build --project-name=www-hikari-dev-com --branch=docusaurus
         env:
