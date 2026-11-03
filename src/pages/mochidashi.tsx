@@ -234,10 +234,35 @@ function App() {
       const camera = await navigator.mediaDevices.getUserMedia({audio: false, video: {facingMode: {ideal: 'environment'}, width: {ideal: 1920}, height: {ideal: 1080}}});
       if (token !== generation.current) {camera.getTracks().forEach(t => t.stop()); return;}
       stream.current = camera; video.current!.srcObject = camera; await video.current!.play();
+      const snapshot = document.createElement('canvas');
+      const crop = document.createElement('canvas');
       const scan = async () => {
         if (token !== generation.current) return;
         try {
-          const results = await detector.detect(video.current!);
+          const cameraVideo = video.current!;
+          if (!cameraVideo.videoWidth || !cameraVideo.videoHeight || cameraVideo.readyState < 2) {
+            timer.current = setTimeout(() => void scan(), 100); return;
+          }
+          // Detect a frozen frame so all crops belong to the same transmission step.
+          snapshot.width = cameraVideo.videoWidth; snapshot.height = cameraVideo.videoHeight;
+          const context = snapshot.getContext('2d');
+          if (!context) throw Error('canvas');
+          context.drawImage(cameraVideo, 0, 0);
+          const results = await detector.detect(snapshot);
+          // Some native detectors struggle with several dense QR codes in one image.
+          // Overlapping crops isolate them without requiring exact camera alignment.
+          if (m || !results.length) {
+            const width = Math.ceil(snapshot.width * 0.6);
+            const height = Math.ceil(snapshot.height * 0.6);
+            crop.width = width; crop.height = height;
+            const cropContext = crop.getContext('2d');
+            if (!cropContext) throw Error('canvas');
+            for (const [x, y] of [[0, 0], [snapshot.width - width, 0], [0, snapshot.height - height], [snapshot.width - width, snapshot.height - height]]) {
+              if (token !== generation.current) return;
+              cropContext.drawImage(snapshot, x, y, width, height, 0, 0, width, height);
+              results.push(...await detector.detect(crop));
+            }
+          }
           const packets = results.flatMap(result => {
             try {const parsed = parse(result.rawValue); return parsed ? [parsed] : [];} catch {return [];}
           }).sort((a, b) => (a.index === -2 ? Infinity : a.index) - (b.index === -2 ? Infinity : b.index));
