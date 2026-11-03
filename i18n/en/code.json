@@ -2328,5 +2328,110 @@
   },
   "rsa.numberMode": {
     "message": "Numbers (hand calculation)"
+  },
+  "mochidashi.title": {
+    "message": "Mochidashi-kun"
+  },
+  "mochidashi.intro": {
+    "message": "Compress multiple files into a ZIP and transfer them from a computer to a phone using QR codes. File contents are never sent to a server."
+  },
+  "mochidashi.send": {
+    "message": "Send (computer)"
+  },
+  "mochidashi.receive": {
+    "message": "Receive (Android Chrome)"
+  },
+  "mochidashi.files": {
+    "message": "Select files (multiple allowed)"
+  },
+  "mochidashi.test": {
+    "message": "Test mode (60 frames)"
+  },
+  "mochidashi.speed": {
+    "message": "Switching speed (frames/second)"
+  },
+  "mochidashi.prepare": {
+    "message": "Prepare transfer"
+  },
+  "mochidashi.preparing": {
+    "message": "Creating ZIP"
+  },
+  "mochidashi.ready": {
+    "message": "Start receiving on your phone and scan this setup QR code. When the phone says it is waiting, press Start sending."
+  },
+  "mochidashi.start": {
+    "message": "Start sending"
+  },
+  "mochidashi.stop": {
+    "message": "Stop"
+  },
+  "mochidashi.camera": {
+    "message": "Start camera receiver"
+  },
+  "mochidashi.waiting": {
+    "message": "Setup QR confirmed. Waiting for the sender."
+  },
+  "mochidashi.scanning": {
+    "message": "Point the camera at the setup QR on your computer."
+  },
+  "mochidashi.sending": {
+    "message": "Sending"
+  },
+  "mochidashi.receiving": {
+    "message": "Receiving"
+  },
+  "mochidashi.sent": {
+    "message": "Sending finished. Check the verification result on your phone."
+  },
+  "mochidashi.verified": {
+    "message": "SHA-256 matched. File verified."
+  },
+  "mochidashi.testing": {
+    "message": "Test finished. If frames were missed, lower the speed on the computer and test again."
+  },
+  "mochidashi.missing": {
+    "message": "Missing frames"
+  },
+  "mochidashi.rate": {
+    "message": "Reception rate"
+  },
+  "mochidashi.download": {
+    "message": "Save ZIP"
+  },
+  "mochidashi.failed": {
+    "message": "Reception ended because a frame was missed, damaged, or interrupted. Stop the sender, lower the speed, and prepare a new transfer."
+  },
+  "mochidashi.error": {
+    "message": "Operation failed. Check free storage and camera permission, and use Android Chrome over HTTPS. ZIP input must total less than 4 GiB with no more than 65,534 files."
+  },
+  "mochidashi.unsupported": {
+    "message": "This environment does not support QR scanning or browser temporary storage. Use Android Chrome."
+  },
+  "mochidashi.stopped": {
+    "message": "Stopped. Prepare a new transfer to start again."
+  },
+  "mochidashi.note": {
+    "message": "Test and adjust the speed first. Transfers run once; missing frames require restarting. Keep the receiver open. Reception also ends after 15 seconds without a readable frame. Capacity depends on available device storage. Files are placed in numbered ZIP folders to preserve duplicate names."
+  },
+  "mochidashi.estimate": {
+    "message": "Transfer size / Estimated time (minutes)"
+  },
+  "miniApps.mochidashi.title": {
+    "message": "Mochidashi-kun"
+  },
+  "miniApps.mochidashi.description": {
+    "message": "Compress multiple files into a ZIP and transfer them to a phone using QR codes."
+  },
+  "mochidashi.transferSpeed": {
+    "message": "Transfer speed"
+  },
+  "mochidashi.chooseFiles": {
+    "message": "Choose files"
+  },
+  "mochidashi.noFiles": {
+    "message": "No files selected"
+  },
+  "mochidashi.fileCount": {
+    "message": "{count} file(s)"
   }
 }

@@ -2328,5 +2328,110 @@
   },
   "rsa.numberMode": {
     "message": "數值 (手算)"
+  },
+  "mochidashi.title": {
+    "message": "もちだしくん"
+  },
+  "mochidashi.intro": {
+    "message": "將多個檔案壓縮為 ZIP，透過 QR 碼從電腦傳送至手機。檔案內容不會傳送至伺服器。"
+  },
+  "mochidashi.send": {
+    "message": "傳送 (電腦)"
+  },
+  "mochidashi.receive": {
+    "message": "接收 (Android Chrome)"
+  },
+  "mochidashi.files": {
+    "message": "選取檔案 (可多選)"
+  },
+  "mochidashi.test": {
+    "message": "測試模式 (60 個影格)"
+  },
+  "mochidashi.speed": {
+    "message": "切換速度 (影格/秒)"
+  },
+  "mochidashi.prepare": {
+    "message": "準備傳送"
+  },
+  "mochidashi.preparing": {
+    "message": "正在建立 ZIP"
+  },
+  "mochidashi.ready": {
+    "message": "在手機上開始接收並掃描此設定 QR 碼。手機顯示等待中後，按下開始傳送。"
+  },
+  "mochidashi.start": {
+    "message": "開始傳送"
+  },
+  "mochidashi.stop": {
+    "message": "停止"
+  },
+  "mochidashi.camera": {
+    "message": "開啟相機接收"
+  },
+  "mochidashi.waiting": {
+    "message": "已確認設定 QR 碼，等待開始傳送。"
+  },
+  "mochidashi.scanning": {
+    "message": "將相機對準電腦上的設定 QR 碼。"
+  },
+  "mochidashi.sending": {
+    "message": "傳送中"
+  },
+  "mochidashi.receiving": {
+    "message": "接收中"
+  },
+  "mochidashi.sent": {
+    "message": "傳送結束。請確認手機上的驗證結果。"
+  },
+  "mochidashi.verified": {
+    "message": "SHA-256 相符，檔案驗證完成。"
+  },
+  "mochidashi.testing": {
+    "message": "測試結束。若有遺漏影格，請降低電腦端的速度後重新測試。"
+  },
+  "mochidashi.missing": {
+    "message": "遺漏影格"
+  },
+  "mochidashi.rate": {
+    "message": "接收率"
+  },
+  "mochidashi.download": {
+    "message": "儲存 ZIP"
+  },
+  "mochidashi.failed": {
+    "message": "偵測到影格遺漏、損毀或中斷，已結束接收。請停止電腦端的傳送，降低速度後重新準備傳送。"
+  },
+  "mochidashi.error": {
+    "message": "處理失敗。請確認可用儲存空間與相機權限，並透過 HTTPS 使用 Android Chrome。ZIP 輸入總容量須小於 4 GiB，且檔案數不得超過 65,534 個。"
+  },
+  "mochidashi.unsupported": {
+    "message": "此環境不支援 QR 碼掃描或瀏覽器暫存空間。請使用 Android Chrome。"
+  },
+  "mochidashi.stopped": {
+    "message": "已停止。若要重新開始，請重新準備傳送。"
+  },
+  "mochidashi.note": {
+    "message": "請先透過測試調整速度。傳送僅執行一次，遺漏時須從頭開始。接收時請保持頁面開啟。連續 15 秒無法讀取影格也會結束接收。容量取決於裝置可用空間。ZIP 內的檔案會置於編號資料夾，以保留同名檔案。"
+  },
+  "mochidashi.estimate": {
+    "message": "傳送容量 / 預估時間 (分鐘)"
+  },
+  "miniApps.mochidashi.title": {
+    "message": "もちだしくん"
+  },
+  "miniApps.mochidashi.description": {
+    "message": "將多個檔案壓縮為 ZIP，透過 QR 碼傳送至手機。"
+  },
+  "mochidashi.transferSpeed": {
+    "message": "傳輸速度"
+  },
+  "mochidashi.chooseFiles": {
+    "message": "選擇檔案"
+  },
+  "mochidashi.noFiles": {
+    "message": "尚未選擇檔案"
+  },
+  "mochidashi.fileCount": {
+    "message": "{count} 個檔案"
   }
 }

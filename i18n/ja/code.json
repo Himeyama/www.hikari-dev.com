@@ -2316,5 +2316,110 @@
   },
   "rsa.numberMode": {
     "message": "数値 (手計算)"
+  },
+  "mochidashi.title": {
+    "message": "もちだしくん"
+  },
+  "mochidashi.intro": {
+    "message": "複数ファイルを ZIP に圧縮し、QR コードでパソコンからスマホへ転送する。ファイルはサーバーへ送信されない。"
+  },
+  "mochidashi.send": {
+    "message": "送信 (パソコン)"
+  },
+  "mochidashi.receive": {
+    "message": "受信 (Android Chrome)"
+  },
+  "mochidashi.files": {
+    "message": "ファイル選択 (複数可)"
+  },
+  "mochidashi.test": {
+    "message": "テストモード (60 フレーム)"
+  },
+  "mochidashi.speed": {
+    "message": "切り替え速度 (フレーム/秒)"
+  },
+  "mochidashi.prepare": {
+    "message": "転送準備"
+  },
+  "mochidashi.preparing": {
+    "message": "ZIP 作成中"
+  },
+  "mochidashi.ready": {
+    "message": "スマホで受信を開始し、この案内 QR を読み取る。スマホに待機中と表示されたら、送信開始を押す。"
+  },
+  "mochidashi.start": {
+    "message": "送信開始"
+  },
+  "mochidashi.stop": {
+    "message": "停止"
+  },
+  "mochidashi.camera": {
+    "message": "カメラで受信開始"
+  },
+  "mochidashi.waiting": {
+    "message": "案内 QR を確認済み。送信開始待機中。"
+  },
+  "mochidashi.scanning": {
+    "message": "パソコンの案内 QR をカメラに映す。"
+  },
+  "mochidashi.sending": {
+    "message": "送信中"
+  },
+  "mochidashi.receiving": {
+    "message": "受信中"
+  },
+  "mochidashi.sent": {
+    "message": "送信終了。スマホ側の検証結果を確認する。"
+  },
+  "mochidashi.verified": {
+    "message": "SHA-256 一致。ファイルの検証完了。"
+  },
+  "mochidashi.testing": {
+    "message": "テスト終了。欠落がある場合はパソコン側の速度を下げて、もう一度テストする。"
+  },
+  "mochidashi.missing": {
+    "message": "欠落フレーム"
+  },
+  "mochidashi.rate": {
+    "message": "受信率"
+  },
+  "mochidashi.download": {
+    "message": "ZIP を保存"
+  },
+  "mochidashi.failed": {
+    "message": "欠落・破損・中断を検知したため受信を終了した。パソコン側を停止し、速度を下げて転送準備からやり直す。"
+  },
+  "mochidashi.error": {
+    "message": "処理に失敗した。空き容量とカメラの許可を確認し、HTTPS の Android Chrome で開く。ZIP の合計容量は 4 GiB 未満、ファイル数は 65,534 個以下が必要である。"
+  },
+  "mochidashi.unsupported": {
+    "message": "この環境は QR 読み取りまたはブラウザ内の一時保存に対応していない。Android Chrome を使用する。"
+  },
+  "mochidashi.stopped": {
+    "message": "停止済み。再開する場合は転送準備からやり直す。"
+  },
+  "mochidashi.note": {
+    "message": "最初にテストで速度を調節する。転送は 1 回限りで、欠落時は最初からやり直す。受信中は画面を開いたままにする。15 秒間読み取れない場合も終了する。容量は端末の空き容量に依存する。ZIP 内は同名ファイルの上書きを防ぐため番号別フォルダーになる。"
+  },
+  "mochidashi.estimate": {
+    "message": "転送容量 / 推定時間 (分)"
+  },
+  "miniApps.mochidashi.title": {
+    "message": "もちだしくん"
+  },
+  "miniApps.mochidashi.description": {
+    "message": "複数ファイルを ZIP に圧縮し、QR コードでスマホへ転送する。"
+  },
+  "mochidashi.transferSpeed": {
+    "message": "転送速度"
+  },
+  "mochidashi.chooseFiles": {
+    "message": "ファイルの選択"
+  },
+  "mochidashi.noFiles": {
+    "message": "ファイルが選択されていない"
+  },
+  "mochidashi.fileCount": {
+    "message": "{count} ファイル"
   }
 }

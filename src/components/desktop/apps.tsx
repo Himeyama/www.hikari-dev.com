@@ -93,6 +93,14 @@ export type MiniApp = {
 
 const RAW_MINI_APPS: Omit<MiniApp, 'id'>[] = [
   {
+    href: '/mochidashi',
+    Icon: QrIcon,
+    titleId: 'miniApps.mochidashi.title',
+    titleMessage: 'もちだしくん',
+    descriptionId: 'miniApps.mochidashi.description',
+    descriptionMessage: '複数ファイルを ZIP に圧縮し、QR コードでスマホへ転送する。',
+  },
+  {
     href: '/rsa',
     Icon: LockIcon,
     titleId: 'miniApps.rsa.title',

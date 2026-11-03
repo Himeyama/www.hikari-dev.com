@@ -24,3 +24,6 @@ workers/.dev.vars
 
 # OGP フォントキャッシュ (node scripts/generate-ogp.js で自動ダウンロード)
 /scripts/fonts/
+
+.claude/
+.docusaurus-build-check/
