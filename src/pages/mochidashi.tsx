@@ -28,12 +28,11 @@ function labels() {
     scanning: translate({id: 'mochidashi.scanning', message: 'パソコンの案内 QR をカメラに映す。'}),
     sending: translate({id: 'mochidashi.sending', message: '送信中'}),
     receiving: translate({id: 'mochidashi.receiving', message: '受信中'}),
-    sent: translate({id: 'mochidashi.sent', message: 'テスト送信終了。スマホ側の受信率を確認する。'}),
     repeating: translate({id: 'mochidashi.repeating', message: '復元用データを含めて繰り返し送信中。スマホで検証が完了したら停止する。'}),
     symbolCount: translate({id: 'mochidashi.symbolCount', message: '受信 QR 数'}),
     verifying: translate({id: 'mochidashi.verifying', message: '受信完了。ファイルを検証中。'}),
     verified: translate({id: 'mochidashi.verified', message: 'SHA-256 一致。ファイルの検証完了。'}),
-    testing: translate({id: 'mochidashi.testing', message: 'テスト終了。テストモードではファイルを保存できない。欠落がある場合は速度を下げて、もう一度テストする。'}),
+    testing: translate({id: 'mochidashi.testing', message: 'テスト 1 周完了。次の周の開始待ち。テストモードではファイルを保存できない。速度を変える場合は停止する。'}),
     missing: translate({id: 'mochidashi.missing', message: '未受信フレーム'}),
     rate: translate({id: 'mochidashi.rate', message: '受信率'}),
     transferSpeed: translate({id: 'mochidashi.transferSpeed', message: '転送速度'}),
@@ -181,7 +180,9 @@ function App() {
       let nextDisplay = 0;
       const total = transportCount(prepared.meta);
       const frameCount = Math.ceil(total / 2);
-      do {
+      while (token === generation.current) {
+        setCount(0); setTransferred(0); setElapsed(0);
+        setStatus(prepared.meta.test ? l.sending : l.repeating);
         const started = performance.now();
         for (let frame = 0; frame < frameCount; frame++) {
           const modules = new Uint8Array(await frameFile.slice(frame * moduleCount * moduleCount, (frame + 1) * moduleCount * moduleCount).arrayBuffer());
@@ -215,12 +216,17 @@ function App() {
         if (token !== generation.current) return;
         if (prepared.meta.test) {
           await drawGuide(packet(prepared.meta.id, -2, ''), token);
-        } else {
-          setStatus(l.repeating);
+          setStatus(l.testing);
+          // Give the receiver time to display this pass's result, then resynchronise.
+          await new Promise(resolve => setTimeout(resolve, 1500));
+          if (token !== generation.current) return;
+          await drawGuide(packet(prepared.meta.id, -1, JSON.stringify(prepared.meta)), token);
+          await new Promise(resolve => setTimeout(resolve, 1500));
+          if (token !== generation.current) return;
+          previousContext.clearRect(0, 0, 640, 1280);
+          previousContext.drawImage(display, 640, 0, 640, 1280, 0, 0, 640, 1280);
         }
-      } while (!prepared.meta.test && token === generation.current);
-      if (token !== generation.current) return;
-      setStatus(l.sent); setRunning(false);
+      }
     } catch {if (token === generation.current) {setRunning(false); setStatus(l.error);}}
   };
   const receive = async () => {
@@ -231,6 +237,7 @@ function App() {
     let started = 0;
     let m: Manifest | null = null;
     let state: Reception | RaptorReception | null = null;
+    let testFinished = false;
     let last = performance.now();
     const fail = async () => {
       if (token !== generation.current) return;
@@ -241,6 +248,8 @@ function App() {
       state!.finish(); setLost(state!.missing);
       if (m.test) {
         setStatus(l.testing);
+        testFinished = true;
+        return;
       } else {
         setStatus(l.verifying);
         await recovery.current?.dispose(); recovery.current = null;
@@ -319,8 +328,16 @@ function App() {
               last = performance.now(); setLost(m.count); setStatus(l.waiting); continue;
             }
             if (p.id !== m.id) continue;
-            if (p.index === -1) {if (state!.received === 0) last = performance.now(); continue;}
-            if (p.index === -2) {if (m.test) {await finish(); return;} continue;}
+            if (p.index === -1) {
+              if (m.test && testFinished) {
+                state = new Reception(m); testFinished = false; started = 0;
+                setCount(0); setTransferred(0); setElapsed(0); setLost(m.count); setStatus(l.waiting);
+              }
+              if (state!.received === 0) last = performance.now();
+              continue;
+            }
+            if (p.index === -2) {if (m.test && !testFinished) await finish(); continue;}
+            if (testFinished) continue;
             last = performance.now();
             if (!started) started = performance.now();
             if (state instanceof RaptorReception) {
@@ -337,7 +354,10 @@ function App() {
             setElapsed(state!.received > 1 ? (performance.now() - started) / 1000 : 0);
             if (!m.test && state!.receivedBytes === m.size) {await finish(); return;}
           }
-          if (m && performance.now() - last > 15000) {if (m.test) await finish(); else await fail(); return;}
+          if (m && performance.now() - last > 15000) {
+            if (m.test) {if (!testFinished) await finish(); last = performance.now();}
+            else {await fail(); return;}
+          }
           if (token === generation.current) timer.current = setTimeout(() => void scan(), 10);
         } catch {setLost(state?.missing ?? 0); await fail();}
       };

@@ -2368,14 +2368,11 @@
   "mochidashi.receiving": {
     "message": "受信中"
   },
-  "mochidashi.sent": {
-    "message": "テスト送信終了。スマホ側の受信率を確認する。"
-  },
   "mochidashi.verified": {
     "message": "SHA-256 一致。ファイルの検証完了。"
   },
   "mochidashi.testing": {
-    "message": "テスト終了。テストモードではファイルを保存できない。欠落がある場合は速度を下げて、もう一度テストする。"
+    "message": "テスト 1 周完了。次の周の開始待ち。テストモードではファイルを保存できない。速度を変える場合は停止する。"
   },
   "mochidashi.missing": {
     "message": "未受信フレーム"

@@ -2380,14 +2380,11 @@
   "mochidashi.receiving": {
     "message": "Receiving"
   },
-  "mochidashi.sent": {
-    "message": "Test transmission finished. Check the reception rate on your phone."
-  },
   "mochidashi.verified": {
     "message": "SHA-256 matched. File verified."
   },
   "mochidashi.testing": {
-    "message": "Test complete. Test mode does not produce a downloadable file. If frames are missing, lower the speed and test again."
+    "message": "One test pass completed. Waiting for the next pass. Files cannot be saved in test mode. Stop transmission to change the speed."
   },
   "mochidashi.missing": {
     "message": "Unreceived frames"
