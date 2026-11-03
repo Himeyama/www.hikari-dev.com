@@ -2387,7 +2387,7 @@
     "message": "SHA-256 相符，檔案驗證完成。"
   },
   "mochidashi.testing": {
-    "message": "測試結束。若有遺漏影格，請降低電腦端的速度後重新測試。"
+    "message": "測試結束。測試模式不會產生可下載的檔案。如有遺漏畫面，請降低速度並重新測試。"
   },
   "mochidashi.missing": {
     "message": "遺漏影格"

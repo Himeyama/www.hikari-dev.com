@@ -30,7 +30,7 @@ function labels() {
     receiving: translate({id: 'mochidashi.receiving', message: '受信中'}),
     sent: translate({id: 'mochidashi.sent', message: '送信終了。スマホ側の検証結果を確認する。'}),
     verified: translate({id: 'mochidashi.verified', message: 'SHA-256 一致。ファイルの検証完了。'}),
-    testing: translate({id: 'mochidashi.testing', message: 'テスト終了。欠落がある場合はパソコン側の速度を下げて、もう一度テストする。'}),
+    testing: translate({id: 'mochidashi.testing', message: 'テスト終了。テストモードではファイルを保存できない。欠落がある場合は速度を下げて、もう一度テストする。'}),
     missing: translate({id: 'mochidashi.missing', message: '欠落フレーム'}),
     rate: translate({id: 'mochidashi.rate', message: '受信率'}),
     transferSpeed: translate({id: 'mochidashi.transferSpeed', message: '転送速度'}),
@@ -97,19 +97,21 @@ function App() {
     return () => document.removeEventListener('visibilitychange', hidden);
   }, [running]);
   const draw = async (value: string, token: number, previous?: string) => {
-    // Keep the guide QR large; data frames show the previous and current codes together.
+    // Keep both QR positions fixed throughout the transfer.
     const buffer = document.createElement('canvas');
+    const right = document.createElement('canvas');
     const options = {width: 640, margin: 4, errorCorrectionLevel: 'M' as const};
-    if (previous === undefined) {
-      await QRCode.toCanvas(buffer, value, options);
-    } else {
+    await QRCode.toCanvas(right, value, options);
+    buffer.width = 1280; buffer.height = 640;
+    const context = buffer.getContext('2d');
+    if (!context) throw Error('canvas');
+    context.fillStyle = 'white'; context.fillRect(0, 0, buffer.width, buffer.height);
+    if (previous !== undefined) {
       const left = document.createElement('canvas');
-      const right = document.createElement('canvas');
-      await Promise.all([QRCode.toCanvas(left, previous, options), QRCode.toCanvas(right, value, options)]);
-      buffer.width = 1280; buffer.height = 640;
-      buffer.getContext('2d')?.drawImage(left, 0, 0);
-      buffer.getContext('2d')?.drawImage(right, 640, 0);
+      await QRCode.toCanvas(left, previous, options);
+      context.drawImage(left, 0, 0);
     }
+    context.drawImage(right, 640, 0);
     if (generation.current === token && canvas.current) {
       canvas.current.width = buffer.width; canvas.current.height = buffer.height;
       canvas.current.getContext('2d')?.drawImage(buffer, 0, 0);
@@ -258,6 +260,7 @@ function App() {
       {meta && <p>{l.estimate}: {bytes(meta.size)} / {(meta.count / fps / 60).toFixed(1)}</p>}
     </> : <>
       <div className={styles.actions}><button onClick={() => void receive()} disabled={running}>{l.camera}</button><button onClick={stop} disabled={!running}>{l.stop}</button></div>
+      {url && <p><a className="button button--primary" href={url} download="mochidashi.zip">{l.download}</a></p>}
       <video ref={video} muted playsInline className={styles.video} />
     </>}
     <p role="status" aria-live="polite">{status}</p>
@@ -266,7 +269,6 @@ function App() {
       {elapsed > 0 && <p>{l.transferSpeed}: {bytes((mode === 'receive' ? Math.max(0, transferred - CHUNK) : transferred) / elapsed)}/s</p>}
       {mode === 'receive' && <p>{l.missing}: {lost} · {l.rate}: {(count / Math.max(1, count + lost) * 100).toFixed(1)}%</p>}
       <p className={styles.hash}>SHA-256: <code>{meta.hash}</code></p></>}
-    {url && <a className="button button--primary" href={url} download="mochidashi.zip">{l.download}</a>}
     <p className={styles.note}>{l.note}</p>
   </main>;
 }

@@ -2387,7 +2387,7 @@
     "message": "SHA-256 matched. File verified."
   },
   "mochidashi.testing": {
-    "message": "Test finished. If frames were missed, lower the speed on the computer and test again."
+    "message": "Test complete. Test mode does not produce a downloadable file. If frames are missing, lower the speed and test again."
   },
   "mochidashi.missing": {
     "message": "Missing frames"
