@@ -89,7 +89,7 @@ export async function prepare(files: File[], test: boolean, progress: (n: number
       files.forEach((file, i) => zip.file(`${i + 1}/${file.name}`, file));
       await new Promise<void>((resolve, reject) => {
         let writing = Promise.resolve();
-        const stream = zip.generateInternalStream({type: 'uint8array', compression: 'DEFLATE', compressionOptions: {level: 9}, streamFiles: true});
+        const stream = zip.generateInternalStream({type: 'uint8array', compression: 'DEFLATE', compressionOptions: {level: 1}, streamFiles: true});
         stream.on('data', (data: Uint8Array, meta: {percent: number}) => {
           stream.pause();
           if (cancelled()) {reject(Error('cancelled')); return;}
