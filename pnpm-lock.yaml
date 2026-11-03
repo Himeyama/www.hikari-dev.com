@@ -65,6 +65,9 @@ importers:
       '@radix-ui/react-tooltip':
         specifier: ^1.2.8
         version: 1.2.8(@types/react@19.2.14)(react-dom@19.2.4(react@19.2.4))(react@19.2.4)
+      '@raptorqr/raptorq-wasm':
+        specifier: 0.1.1
+        version: 0.1.1
       '@xterm/addon-fit':
         specifier: ^0.11.0
         version: 0.11.0
@@ -2425,6 +2428,9 @@ packages:
 
   '@radix-ui/rect@1.1.1':
     resolution: {integrity: sha512-HPwpGIzkl28mWyZqG52jiqDJ12waP11Pa1lGoiyUkIEuMLBP0oeK/C89esbXrxsky5we7dfd8U58nm0SgAWpVw==}
+
+  '@raptorqr/raptorq-wasm@0.1.1':
+    resolution: {integrity: sha512-u+HRTSDeN/SbFWfSnXKDPdAJXsncJsELuFMG+UyndmXsbZe+5l4cYtsrrzWTOB2k/cowjG9dXztSQ6CIW+XLsA==}
 
   '@resvg/resvg-js-android-arm-eabi@2.6.2':
     resolution: {integrity: sha512-FrJibrAk6v29eabIPgcTUMPXiEz8ssrAk7TXxsiZzww9UTQ1Z5KAbFJs+Z0Ez+VZTYgnE5IQJqBcoSiMebtPHA==}
@@ -10554,6 +10560,8 @@ snapshots:
       '@types/react': 19.2.14
 
   '@radix-ui/rect@1.1.1': {}
+
+  '@raptorqr/raptorq-wasm@0.1.1': {}
 
   '@resvg/resvg-js-android-arm-eabi@2.6.2':
     optional: true

@@ -2411,10 +2411,10 @@
     "message": "Stopped. Prepare a new transfer to start again."
   },
   "mochidashi.note": {
-    "message": "Adjust the speed with a test first. Normal transfers repeat to fill in missing data. Stop the sender when verification is complete on your phone. Keep this page visible while receiving. Reception ends if no frames can be read for 15 seconds. Capacity depends on available device storage. Files are placed in numbered ZIP folders to prevent duplicate names from overwriting each other."
+    "message": "Adjust the speed with a test first. Normal transfers use RaptorQ repair data to recover missed frames. Reception progress shows the amount of restored data. Incomplete blocks continue receiving on subsequent passes. Stop the sender when verification is complete on your phone. Keep this page visible while receiving. Reception ends if no frames can be read for 15 seconds. Capacity depends on available device storage. Files are placed in numbered ZIP folders to prevent duplicate names from overwriting each other."
   },
   "mochidashi.estimate": {
-    "message": "Transfer size / Estimated minutes per pass (excluding missed frames)"
+    "message": "Transfer size / Estimated minutes per pass including repair data"
   },
   "miniApps.mochidashi.title": {
     "message": "Mochidashi-kun"
@@ -2435,9 +2435,12 @@
     "message": "{count} file(s)"
   },
   "mochidashi.repeating": {
-    "message": "Repeating transmission. Stop when verification is complete on your phone."
+    "message": "Repeating transmission with repair data. Stop when verification is complete on your phone."
   },
   "mochidashi.verifying": {
     "message": "Reception complete. Verifying the file."
+  },
+  "mochidashi.symbolCount": {
+    "message": "Received QR codes"
   }
 }

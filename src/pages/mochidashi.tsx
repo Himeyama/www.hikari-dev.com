@@ -3,7 +3,7 @@ import Layout from '@theme/Layout';
 import BrowserOnly from '@docusaurus/BrowserOnly';
 import {translate} from '@docusaurus/Translate';
 import QRCode from 'qrcode';
-import {binary, bytes, CHUNK, Reception, manifest, packet, parse, prepare, temporary, verify, type Manifest} from '../lib/mochidashi';
+import {binary, bytes, CHUNK, RAPTOR_PACKET_SIZE, Reception, RaptorReception, manifest, packet, parse, prepare, symbols, temporary, transportCount, verify, type Manifest} from '../lib/mochidashi';
 import styles from './mochidashi.module.css';
 
 function labels() {
@@ -29,7 +29,8 @@ function labels() {
     sending: translate({id: 'mochidashi.sending', message: '送信中'}),
     receiving: translate({id: 'mochidashi.receiving', message: '受信中'}),
     sent: translate({id: 'mochidashi.sent', message: 'テスト送信終了。スマホ側の受信率を確認する。'}),
-    repeating: translate({id: 'mochidashi.repeating', message: '繰り返し送信中。スマホで検証が完了したら停止する。'}),
+    repeating: translate({id: 'mochidashi.repeating', message: '復元用データを含めて繰り返し送信中。スマホで検証が完了したら停止する。'}),
+    symbolCount: translate({id: 'mochidashi.symbolCount', message: '受信 QR 数'}),
     verifying: translate({id: 'mochidashi.verifying', message: '受信完了。ファイルを検証中。'}),
     verified: translate({id: 'mochidashi.verified', message: 'SHA-256 一致。ファイルの検証完了。'}),
     testing: translate({id: 'mochidashi.testing', message: 'テスト終了。テストモードではファイルを保存できない。欠落がある場合は速度を下げて、もう一度テストする。'}),
@@ -41,8 +42,8 @@ function labels() {
     error: translate({id: 'mochidashi.error', message: '処理に失敗した。空き容量とカメラの許可を確認し、HTTPS の Android Chrome で開く。ZIP の合計容量は 4 GiB 未満、ファイル数は 65,534 個以下が必要である。'}),
     unsupported: translate({id: 'mochidashi.unsupported', message: 'この環境は QR 読み取りまたはブラウザ内の一時保存に対応していない。Android Chrome を使用する。'}),
     stopped: translate({id: 'mochidashi.stopped', message: '停止済み。再開する場合は転送準備からやり直す。'}),
-    note: translate({id: 'mochidashi.note', message: '最初にテストで速度を調節する。通常転送は繰り返し送信し、未受信分を補完する。スマホで検証が完了したらパソコン側を停止する。受信中は画面を開いたままにする。15 秒間読み取れない場合は終了する。容量は端末の空き容量に依存する。ZIP 内は同名ファイルの上書きを防ぐため番号別フォルダーになる。'}),
-    estimate: translate({id: 'mochidashi.estimate', message: '転送容量 / 1 周の推定時間 (分、読み取り漏れを除く)'}),
+    note: translate({id: 'mochidashi.note', message: '最初にテストで速度を調節する。通常転送では RaptorQ の復元用データで読み取り漏れを補う。受信の進捗は復元済みの容量を示す。復元できない区画は次の周回でも受信を続ける。スマホで検証が完了したらパソコン側を停止する。受信中は画面を開いたままにする。15 秒間読み取れない場合は終了する。容量は端末の空き容量に依存する。ZIP 内は同名ファイルの上書きを防ぐため番号別フォルダーになる。'}),
+    estimate: translate({id: 'mochidashi.estimate', message: '転送容量 / 復元用データを含む 1 周の推定時間 (分)'}),
   };
 }
 
@@ -73,11 +74,14 @@ function App() {
   const source = useRef<Awaited<ReturnType<typeof prepare>> | null>(null);
   const frames = useRef<{file: File; modules: number; remove: () => Promise<void>} | null>(null);
   const receiver = useRef<{temp: Awaited<ReturnType<typeof temporary>>; writer: FileSystemWritableFileStream} | null>(null);
+  const recovery = useRef<RaptorReception | null>(null);
   const download = useRef('');
   const timer = useRef<ReturnType<typeof setTimeout> | null>(null);
   const cameraOff = () => {stream.current?.getTracks().forEach(t => t.stop()); stream.current = null;};
   const releaseReceiver = async () => {
     const current = receiver.current; receiver.current = null;
+    const previous = recovery.current; recovery.current = null;
+    await previous?.dispose().catch(() => {});
     if (current) {await current.writer.abort().catch(() => {}); await current.temp.remove();}
   };
   const stop = () => {
@@ -121,23 +125,29 @@ function App() {
       const storage = await temporary();
       const writer = await storage.handle.createWritable();
       try {
-        const frameCount = Math.ceil(prepared.meta.count / 2);
+        const total = transportCount(prepared.meta);
+        const frameCount = Math.ceil(total / 2);
         // Pick one version that fits even the longest full-sized packet.
-        const sample = packet(prepared.meta.id, prepared.meta.count - 1, 'a'.repeat(Math.ceil(CHUNK / 3) * 4));
+        const sample = packet(prepared.meta.id, total - 1, 'a'.repeat(Math.ceil((test ? CHUNK : RAPTOR_PACKET_SIZE) / 3) * 4));
         const version = QRCode.create(sample, {errorCorrectionLevel: 'M'}).version;
         const moduleCount = version * 4 + 17;
-        for (let frame = 0; frame < frameCount; frame++) {
-          if (token !== generation.current) throw Error('cancelled');
-          const modules = new Uint8Array(moduleCount * moduleCount);
-          for (let channel = 0; channel < 2; channel++) {
-            const index = Math.min(frame * 2 + channel, prepared.meta.count - 1);
-            const chunk = new Uint8Array(await prepared.file.slice(index * CHUNK, (index + 1) * CHUNK).arrayBuffer());
-            const qr = QRCode.create(packet(prepared.meta.id, index, btoa(binary(chunk))), {version, errorCorrectionLevel: 'M'});
-            for (let j = 0; j < modules.length; j++) if (qr.modules.data[j]) modules[j] |= 1 << channel;
+        const iterator = symbols(prepared.file, prepared.meta, () => token !== generation.current);
+        let previous: {index: number; data: Uint8Array} | undefined;
+        try {
+          for (let frame = 0; frame < frameCount; frame++) {
+            if (token !== generation.current) throw Error('cancelled');
+            const modules = new Uint8Array(moduleCount * moduleCount);
+            for (let channel = 0; channel < 2; channel++) {
+              const next = await iterator.next();
+              if (!next.done) previous = next.value;
+              if (!previous) throw Error('symbols');
+              const qr = QRCode.create(packet(prepared.meta.id, previous.index, btoa(binary(previous.data))), {version, errorCorrectionLevel: 'M'});
+              for (let j = 0; j < modules.length; j++) if (qr.modules.data[j]) modules[j] |= 1 << channel;
+            }
+            await writer.write(modules);
+            setPercent(Math.round((frame + 1) / frameCount * 100));
           }
-          await writer.write(modules);
-          setPercent(Math.round((frame + 1) / frameCount * 100));
-        }
+        } finally {await iterator.return(undefined);}
         await writer.close();
         if (token !== generation.current) {await storage.remove(); return;}
         frames.current = {...storage, modules: moduleCount, file: await storage.handle.getFile()};
@@ -169,7 +179,8 @@ function App() {
       square.width = side; square.height = side;
       const squareContext = square.getContext('2d')!;
       let nextDisplay = 0;
-      const frameCount = Math.ceil(prepared.meta.count / 2);
+      const total = transportCount(prepared.meta);
+      const frameCount = Math.ceil(total / 2);
       do {
         const started = performance.now();
         for (let frame = 0; frame < frameCount; frame++) {
@@ -194,8 +205,9 @@ function App() {
             previousContext.drawImage(square, 0, channel * 640, 640, 640);
           }
           nextDisplay = performance.now() + 1000 / fps;
-          setCount(Math.min((frame + 1) * 2, prepared.meta.count));
-          setTransferred(Math.min((frame + 1) * 2 * CHUNK, prepared.meta.size));
+          const emitted = Math.min((frame + 1) * 2, total);
+          setCount(emitted);
+          setTransferred(Math.round(prepared.meta.size * emitted / total));
           setElapsed((performance.now() - started) / 1000);
         }
         // Leave the final data frame visible before showing the end marker.
@@ -218,7 +230,7 @@ function App() {
     setRunning(true); setStatus(l.scanning); setElapsed(0);
     let started = 0;
     let m: Manifest | null = null;
-    let state: Reception | null = null;
+    let state: Reception | RaptorReception | null = null;
     let last = performance.now();
     const fail = async () => {
       if (token !== generation.current) return;
@@ -231,6 +243,7 @@ function App() {
         setStatus(l.testing);
       } else {
         setStatus(l.verifying);
+        await recovery.current?.dispose(); recovery.current = null;
         const storage = receiver.current!;
         await storage.writer.close();
         const file = await storage.temp.handle.getFile();
@@ -290,7 +303,14 @@ function App() {
             if (token !== generation.current) return;
             if (!m) {
               if (p.index !== -1) continue;
-              m = manifest(p.value, p.id); state = new Reception(m); setMeta(m);
+              m = manifest(p.value, p.id);
+              if (m.test) state = new Reception(m);
+              else {
+                const decoder = await RaptorReception.create(m);
+                if (token !== generation.current) {await decoder.dispose(); return;}
+                recovery.current = decoder; state = decoder;
+              }
+              setMeta(m);
               if (!m.test) {
                 const temp = await temporary(); const writer = await temp.handle.createWritable();
                 if (token !== generation.current) {await writer.abort(); await temp.remove(); return;}
@@ -302,15 +322,20 @@ function App() {
             if (p.index === -1) {if (state!.received === 0) last = performance.now(); continue;}
             if (p.index === -2) {if (m.test) {await finish(); return;} continue;}
             last = performance.now();
-            const data = state!.accept(p.index, p.value);
-            if (!data) continue;
             if (!started) started = performance.now();
+            if (state instanceof RaptorReception) {
+              const block = await state.accept(p.index, p.value);
+              if (token !== generation.current) return;
+              if (block && receiver.current) await receiver.current.writer.write({type: 'write', position: block.position, data: block.data});
+            } else {
+              const data = state!.accept(p.index, p.value);
+              if (!data) continue;
+            }
             setLost(state!.missing);
-            if (receiver.current) await receiver.current.writer.write({type: 'write', position: p.index * CHUNK, data});
             if (token !== generation.current) return;
             last = performance.now(); setCount(state!.received); setTransferred(state!.receivedBytes); setStatus(l.receiving);
             setElapsed(state!.received > 1 ? (performance.now() - started) / 1000 : 0);
-            if (!m.test && state!.received === m.count) {await finish(); return;}
+            if (!m.test && state!.receivedBytes === m.size) {await finish(); return;}
           }
           if (m && performance.now() - last > 15000) {if (m.test) await finish(); else await fail(); return;}
           if (token === generation.current) timer.current = setTimeout(() => void scan(), 10);
@@ -341,17 +366,18 @@ function App() {
         <button onClick={stop} disabled={!busy && !running && !meta}>{l.stop}</button></div>
       {busy && <progress max={100} value={percent} />}
       <canvas ref={canvas} className={styles.qr} hidden={!meta} />
-      {meta && <p>{l.estimate}: {bytes(meta.size)} / {(Math.ceil(meta.count / 2) / fps / 60).toFixed(1)}</p>}
+      {meta && <p>{l.estimate}: {bytes(meta.size)} / {(Math.ceil(transportCount(meta) / 2) / fps / 60).toFixed(1)}</p>}
     </> : <>
       <div className={styles.actions}><button onClick={() => void receive()} disabled={running}>{l.camera}</button><button onClick={stop} disabled={!running}>{l.stop}</button></div>
       {url && <div className={styles.actions}><button type="button" onClick={() => {const link = document.createElement('a'); link.href = url; link.download = 'mochidashi.zip'; link.click();}}>{l.download}</button></div>}
       <video ref={video} muted playsInline className={styles.video} />
     </>}
     <p role="status" aria-live="polite">{status}</p>
-    {meta && <><progress aria-label={mode === 'send' ? l.sending : l.receiving} max={meta.count} value={count} />
-      <p>{bytes(transferred)} / {bytes(meta.size)} ({(transferred / 1048576).toFixed(2)} MiB) · {count} / {meta.count} · {(count / meta.count * 100).toFixed(1)}%</p>
+    {meta && <><progress aria-label={mode === 'send' ? l.sending : l.receiving} max={meta.size} value={transferred} />
+      <p>{bytes(transferred)} / {bytes(meta.size)} ({(transferred / 1048576).toFixed(2)} MiB) · {(transferred / meta.size * 100).toFixed(1)}%</p>
       {elapsed > 0 && <p>{l.transferSpeed}: {bytes((mode === 'receive' ? Math.max(0, transferred - CHUNK) : transferred) / elapsed)}/s</p>}
-      {mode === 'receive' && <p>{l.missing}: {lost} · {l.rate}: {(count / meta.count * 100).toFixed(1)}%</p>}
+      {mode === 'receive' && <p>{l.symbolCount}: {count}</p>}
+      {mode === 'receive' && meta.test && <p>{l.missing}: {lost} · {l.rate}: {(count / meta.count * 100).toFixed(1)}%</p>}
       <p className={styles.hash}>SHA-256: <code>{meta.hash}</code></p></>}
     <p className={styles.note}>{l.note}</p>
   </main>;
