@@ -36,35 +36,39 @@ export function parse(value: string): {id: string; index: number; value: string}
 }
 export function manifest(value: string, id: string): Manifest {
   const m = JSON.parse(value) as Manifest;
-  if (m.id !== id || !Number.isSafeInteger(m.size) || m.size < 1 || !Number.isSafeInteger(m.count) || m.count !== Math.ceil(m.size / CHUNK) || typeof m.test !== 'boolean' || !/^[a-f0-9]{64}$/.test(m.hash)) throw Error('manifest');
+  if (m.id !== id || !Number.isSafeInteger(m.size) || m.size < 1 || m.size >= 0xffffffff || !Number.isSafeInteger(m.count) || m.count !== Math.ceil(m.size / CHUNK) || typeof m.test !== 'boolean' || !/^[a-f0-9]{64}$/.test(m.hash)) throw Error('manifest');
   return m;
 }
 export function digest() { return forge.md.sha256.create(); }
 export class Reception {
-  next = 0;
   received = 0;
   receivedBytes = 0;
-  missing = 0;
-  private hash = digest();
-  constructor(readonly meta: Manifest) {}
+  private seen: Uint8Array;
+  constructor(readonly meta: Manifest) {this.seen = new Uint8Array(Math.ceil(meta.count / 8));}
+  get missing(): number {return this.meta.count - this.received;}
   accept(index: number, value: string): Uint8Array<ArrayBuffer> | null {
-    if (index < this.next) return null;
     if (!Number.isSafeInteger(index) || index < 0 || index >= this.meta.count) throw Error('index');
-    if (index !== this.next && !this.meta.test) {this.missing += index - this.next; throw Error('missing');}
+    if (this.seen[index >>> 3] & (1 << (index & 7))) return null;
     const raw = atob(value);
     if (raw.length !== Math.min(CHUNK, this.meta.size - index * CHUNK) || btoa(raw) !== value) throw Error('length');
-    this.missing += index - this.next;
-    this.next = index + 1;
+    this.seen[index >>> 3] |= 1 << (index & 7);
     this.received++;
     this.receivedBytes += raw.length;
-    this.hash.update(raw);
     return Uint8Array.from(raw, c => c.charCodeAt(0));
   }
   finish(): void {
-    this.missing += this.meta.count - this.next;
-    this.next = this.meta.count;
-    if ((!this.meta.test && this.missing) || (!this.missing && this.hash.digest().toHex() !== this.meta.hash)) throw Error('integrity');
+    if (!this.meta.test && this.missing) throw Error('integrity');
   }
+}
+// Hash the completed file in order, without keeping out-of-order chunks in memory.
+export async function verify(file: Blob, expected: string, cancelled: () => boolean = () => false): Promise<void> {
+  const hash = digest();
+  for (let offset = 0; offset < file.size; offset += 1048576) {
+    if (cancelled()) throw Error('cancelled');
+    hash.update(binary(new Uint8Array(await file.slice(offset, offset + 1048576).arrayBuffer())));
+  }
+  if (cancelled()) throw Error('cancelled');
+  if (hash.digest().toHex() !== expected) throw Error('integrity');
 }
 export async function temporary() {
   const root = await navigator.storage.getDirectory();

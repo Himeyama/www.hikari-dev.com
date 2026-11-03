@@ -14,7 +14,7 @@ loaded.filename = filename; loaded.paths = module.paths;
 loaded._compile(ts.transpileModule(fs.readFileSync(filename, 'utf8'), {
   compilerOptions: {module: ts.ModuleKind.CommonJS, target: ts.ScriptTarget.ES2022, esModuleInterop: true},
 }).outputText, filename);
-const {CHUNK, binary, bytes, checksum, packet, parse, manifest, Reception, prepare} = loaded.exports;
+const {CHUNK, binary, bytes, checksum, packet, parse, manifest, Reception, prepare, verify} = loaded.exports;
 const id = crypto.randomUUID();
 const payload = crypto.randomBytes(CHUNK * 3 + 17);
 const meta = {id, size: payload.length, count: 4, hash: crypto.createHash('sha256').update(payload).digest('hex'), test: false};
@@ -40,12 +40,13 @@ reception.finish();
 assert.deepEqual(Buffer.concat(output), payload);
 const missing = new Reception(meta);
 missing.accept(0, frames[0]);
-assert.throws(() => missing.accept(2, frames[2]), /missing/);
-assert.equal(missing.missing, 1);
+missing.accept(2, frames[2]);
+assert.equal(missing.missing, 2);
+assert.equal(missing.accept(2, frames[2]), null);
+missing.accept(3, frames[3]); missing.accept(1, frames[1]);
+missing.finish(); assert.equal(missing.missing, 0);
 const truncated = new Reception(meta);
 truncated.accept(0, frames[0]); assert.throws(() => truncated.finish(), /integrity/);
-const corrupted = new Reception({...meta, hash: '0'.repeat(64)});
-frames.forEach((f, i) => corrupted.accept(i, f)); assert.throws(() => corrupted.finish(), /integrity/);
 assert.throws(() => new Reception(meta).accept(0, 'YQ=='), /length/);
 assert.throws(() => new Reception(meta).accept(4, frames[0]), /index/);
 const test = new Reception({...meta, test: true});
@@ -63,6 +64,21 @@ Object.defineProperty(navigator, 'storage', {value: {getDirectory: async () => (
   }, removeEntry: async name => {entries.delete(name);},
 })}});
 (async () => {
+  // Simulate missing the first and a middle packet, then filling holes on replay.
+  const replay = new Reception(meta);
+  const disk = Buffer.alloc(payload.length);
+  for (const i of [2, 3, 2, 0, 1, 3]) {
+    const chunk = replay.accept(i, frames[i]);
+    if (chunk) disk.set(chunk, i * CHUNK);
+  }
+  replay.finish(); assert.equal(replay.received, 4);
+  assert.deepEqual(disk, payload);
+  await verify(new Blob([disk]), meta.hash);
+  await assert.rejects(() => verify(new Blob([disk]), '0'.repeat(64)), /integrity/);
+  await assert.rejects(() => verify(new Blob([disk]), meta.hash, () => true), /cancelled/);
+  const emptyTest = new Reception({...meta, test: true});
+  emptyTest.finish(); assert.equal(emptyTest.missing, meta.count);
+  assert.throws(() => manifest(JSON.stringify({...meta, size: 0xffffffff, count: Math.ceil(0xffffffff / CHUNK)}), id));
   const files = [Buffer.from('first file'), Buffer.from('second file')];
   files.forEach(file => {file.name = 'same.txt'; file.size = file.length;});
   const prepared = await prepare(files, false, () => {});
@@ -73,6 +89,9 @@ Object.defineProperty(navigator, 'storage', {value: {getDirectory: async () => (
   assert.equal(await zip.file('2/same.txt').async('string'), 'second file');
   assert.ok(QRCode.create(packet(id, -1, JSON.stringify(meta)), {errorCorrectionLevel: 'M'}).modules.size <= 177);
   assert.ok(QRCode.create(packet(id, Number.MAX_SAFE_INTEGER, frames[0]), {errorCorrectionLevel: 'M'}).modules.size <= 177);
+  const version = QRCode.create(packet(id, meta.count - 1, 'a'.repeat(512)), {errorCorrectionLevel: 'M'}).version;
+  assert.ok(version < 40);
+  frames.forEach((f, i) => assert.doesNotThrow(() => QRCode.create(packet(id, i, f), {version, errorCorrectionLevel: 'M'})));
   await prepared.remove(); assert.equal(entries.size, 0);
   await assert.rejects(() => prepare(files, false, () => {}, () => true), /cancelled/);
   assert.equal(entries.size, 0);

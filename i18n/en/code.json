@@ -2381,7 +2381,7 @@
     "message": "Receiving"
   },
   "mochidashi.sent": {
-    "message": "Sending finished. Check the verification result on your phone."
+    "message": "Test transmission finished. Check the reception rate on your phone."
   },
   "mochidashi.verified": {
     "message": "SHA-256 matched. File verified."
@@ -2390,7 +2390,7 @@
     "message": "Test complete. Test mode does not produce a downloadable file. If frames are missing, lower the speed and test again."
   },
   "mochidashi.missing": {
-    "message": "Missing frames"
+    "message": "Unreceived frames"
   },
   "mochidashi.rate": {
     "message": "Reception rate"
@@ -2399,7 +2399,7 @@
     "message": "Save ZIP"
   },
   "mochidashi.failed": {
-    "message": "Reception ended because a frame was missed, damaged, or interrupted. Stop the sender, lower the speed, and prepare a new transfer."
+    "message": "Reception ended because of corruption, interruption, or no readable frames for 15 seconds. Stop the sender, lower the speed, and prepare the transfer again."
   },
   "mochidashi.error": {
     "message": "Operation failed. Check free storage and camera permission, and use Android Chrome over HTTPS. ZIP input must total less than 4 GiB with no more than 65,534 files."
@@ -2411,10 +2411,10 @@
     "message": "Stopped. Prepare a new transfer to start again."
   },
   "mochidashi.note": {
-    "message": "Test and adjust the speed first. Transfers run once; missing frames require restarting. Keep the receiver open. Reception also ends after 15 seconds without a readable frame. Capacity depends on available device storage. Files are placed in numbered ZIP folders to preserve duplicate names."
+    "message": "Adjust the speed with a test first. Normal transfers repeat to fill in missing data. Stop the sender when verification is complete on your phone. Keep this page visible while receiving. Reception ends if no frames can be read for 15 seconds. Capacity depends on available device storage. Files are placed in numbered ZIP folders to prevent duplicate names from overwriting each other."
   },
   "mochidashi.estimate": {
-    "message": "Transfer size / Estimated time (minutes)"
+    "message": "Transfer size / Estimated minutes per pass (excluding missed frames)"
   },
   "miniApps.mochidashi.title": {
     "message": "Mochidashi-kun"
@@ -2433,5 +2433,11 @@
   },
   "mochidashi.fileCount": {
     "message": "{count} file(s)"
+  },
+  "mochidashi.repeating": {
+    "message": "Repeating transmission. Stop when verification is complete on your phone."
+  },
+  "mochidashi.verifying": {
+    "message": "Reception complete. Verifying the file."
   }
 }

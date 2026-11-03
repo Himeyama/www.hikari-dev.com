@@ -3,7 +3,7 @@ import Layout from '@theme/Layout';
 import BrowserOnly from '@docusaurus/BrowserOnly';
 import {translate} from '@docusaurus/Translate';
 import QRCode from 'qrcode';
-import {binary, bytes, CHUNK, Reception, manifest, packet, parse, prepare, temporary, type Manifest} from '../lib/mochidashi';
+import {binary, bytes, CHUNK, Reception, manifest, packet, parse, prepare, temporary, verify, type Manifest} from '../lib/mochidashi';
 import styles from './mochidashi.module.css';
 
 function labels() {
@@ -28,19 +28,21 @@ function labels() {
     scanning: translate({id: 'mochidashi.scanning', message: 'パソコンの案内 QR をカメラに映す。'}),
     sending: translate({id: 'mochidashi.sending', message: '送信中'}),
     receiving: translate({id: 'mochidashi.receiving', message: '受信中'}),
-    sent: translate({id: 'mochidashi.sent', message: '送信終了。スマホ側の検証結果を確認する。'}),
+    sent: translate({id: 'mochidashi.sent', message: 'テスト送信終了。スマホ側の受信率を確認する。'}),
+    repeating: translate({id: 'mochidashi.repeating', message: '繰り返し送信中。スマホで検証が完了したら停止する。'}),
+    verifying: translate({id: 'mochidashi.verifying', message: '受信完了。ファイルを検証中。'}),
     verified: translate({id: 'mochidashi.verified', message: 'SHA-256 一致。ファイルの検証完了。'}),
     testing: translate({id: 'mochidashi.testing', message: 'テスト終了。テストモードではファイルを保存できない。欠落がある場合は速度を下げて、もう一度テストする。'}),
-    missing: translate({id: 'mochidashi.missing', message: '欠落フレーム'}),
+    missing: translate({id: 'mochidashi.missing', message: '未受信フレーム'}),
     rate: translate({id: 'mochidashi.rate', message: '受信率'}),
     transferSpeed: translate({id: 'mochidashi.transferSpeed', message: '転送速度'}),
     download: translate({id: 'mochidashi.download', message: 'ZIP を保存'}),
-    failed: translate({id: 'mochidashi.failed', message: '欠落・破損・中断を検知したため受信を終了した。パソコン側を停止し、速度を下げて転送準備からやり直す。'}),
+    failed: translate({id: 'mochidashi.failed', message: '破損・中断、または 15 秒間読み取れなかったため受信を終了した。パソコン側を停止し、速度を下げて転送準備からやり直す。'}),
     error: translate({id: 'mochidashi.error', message: '処理に失敗した。空き容量とカメラの許可を確認し、HTTPS の Android Chrome で開く。ZIP の合計容量は 4 GiB 未満、ファイル数は 65,534 個以下が必要である。'}),
     unsupported: translate({id: 'mochidashi.unsupported', message: 'この環境は QR 読み取りまたはブラウザ内の一時保存に対応していない。Android Chrome を使用する。'}),
     stopped: translate({id: 'mochidashi.stopped', message: '停止済み。再開する場合は転送準備からやり直す。'}),
-    note: translate({id: 'mochidashi.note', message: '最初にテストで速度を調節する。転送は 1 回限りで、欠落時は最初からやり直す。受信中は画面を開いたままにする。15 秒間読み取れない場合も終了する。容量は端末の空き容量に依存する。ZIP 内は同名ファイルの上書きを防ぐため番号別フォルダーになる。'}),
-    estimate: translate({id: 'mochidashi.estimate', message: '転送容量 / 推定時間 (分)'}),
+    note: translate({id: 'mochidashi.note', message: '最初にテストで速度を調節する。通常転送は繰り返し送信し、未受信分を補完する。スマホで検証が完了したらパソコン側を停止する。受信中は画面を開いたままにする。15 秒間読み取れない場合は終了する。容量は端末の空き容量に依存する。ZIP 内は同名ファイルの上書きを防ぐため番号別フォルダーになる。'}),
+    estimate: translate({id: 'mochidashi.estimate', message: '転送容量 / 1 周の推定時間 (分、読み取り漏れを除く)'}),
   };
 }
 
@@ -69,7 +71,7 @@ function App() {
   const generation = useRef(0);
   const stream = useRef<MediaStream | null>(null);
   const source = useRef<Awaited<ReturnType<typeof prepare>> | null>(null);
-  const frames = useRef<{file: File; remove: () => Promise<void>} | null>(null);
+  const frames = useRef<{file: File; modules: number; remove: () => Promise<void>} | null>(null);
   const receiver = useRef<{temp: Awaited<ReturnType<typeof temporary>>; writer: FileSystemWritableFileStream} | null>(null);
   const download = useRef('');
   const timer = useRef<ReturnType<typeof setTimeout> | null>(null);
@@ -120,13 +122,17 @@ function App() {
       const writer = await storage.handle.createWritable();
       try {
         const frameCount = Math.ceil(prepared.meta.count / 2);
+        // Pick one version that fits even the longest full-sized packet.
+        const sample = packet(prepared.meta.id, prepared.meta.count - 1, 'a'.repeat(Math.ceil(CHUNK / 3) * 4));
+        const version = QRCode.create(sample, {errorCorrectionLevel: 'M'}).version;
+        const moduleCount = version * 4 + 17;
         for (let frame = 0; frame < frameCount; frame++) {
           if (token !== generation.current) throw Error('cancelled');
-          const modules = new Uint8Array(177 * 177);
+          const modules = new Uint8Array(moduleCount * moduleCount);
           for (let channel = 0; channel < 2; channel++) {
             const index = Math.min(frame * 2 + channel, prepared.meta.count - 1);
             const chunk = new Uint8Array(await prepared.file.slice(index * CHUNK, (index + 1) * CHUNK).arrayBuffer());
-            const qr = QRCode.create(packet(prepared.meta.id, index, btoa(binary(chunk))), {version: 40, errorCorrectionLevel: 'M'});
+            const qr = QRCode.create(packet(prepared.meta.id, index, btoa(binary(chunk))), {version, errorCorrectionLevel: 'M'});
             for (let j = 0; j < modules.length; j++) if (qr.modules.data[j]) modules[j] |= 1 << channel;
           }
           await writer.write(modules);
@@ -134,7 +140,7 @@ function App() {
         }
         await writer.close();
         if (token !== generation.current) {await storage.remove(); return;}
-        frames.current = {...storage, file: await storage.handle.getFile()};
+        frames.current = {...storage, modules: moduleCount, file: await storage.handle.getFile()};
       } catch (error) {await writer.abort().catch(() => {}); await storage.remove(); throw error;}
       setMeta(prepared.meta);
       await drawGuide(packet(prepared.meta.id, -1, JSON.stringify(prepared.meta)), token);
@@ -146,7 +152,6 @@ function App() {
     const prepared = source.current;
     if (!prepared) return;
     const token = ++generation.current;
-    const started = performance.now();
     setRunning(true); setStatus(l.sending); setCount(0); setTransferred(0); setElapsed(0);
     try {
       const frameFile = frames.current?.file;
@@ -159,36 +164,49 @@ function App() {
       const previousContext = previous.getContext('2d')!;
       previousContext.drawImage(display, 640, 0, 640, 1280, 0, 0, 640, 1280);
       const square = document.createElement('canvas');
-      square.width = 185; square.height = 185;
+      const moduleCount = frames.current!.modules;
+      const side = moduleCount + 8;
+      square.width = side; square.height = side;
       const squareContext = square.getContext('2d')!;
       let nextDisplay = 0;
       const frameCount = Math.ceil(prepared.meta.count / 2);
-      for (let frame = 0; frame < frameCount; frame++) {
-        const modules = new Uint8Array(await frameFile.slice(frame * 177 * 177, (frame + 1) * 177 * 177).arrayBuffer());
-        if (modules.length !== 177 * 177) throw Error('frame');
-        const delay = nextDisplay - performance.now();
-        if (delay > 0) await new Promise(resolve => setTimeout(resolve, delay));
-        if (token !== generation.current) return;
-        context.imageSmoothingEnabled = false;
-        context.drawImage(previous, 0, 0);
-        for (let channel = 0; channel < 2; channel++) {
-          const image = squareContext.createImageData(185, 185);
-          image.data.fill(255);
-          for (let y = 0; y < 177; y++) for (let x = 0; x < 177; x++) {
-            const dark = modules[y * 177 + x] & (1 << channel);
-            const offset = ((y + 4) * 185 + x + 4) * 4;
-            image.data[offset] = image.data[offset + 1] = image.data[offset + 2] = dark ? 0 : 255;
+      do {
+        const started = performance.now();
+        for (let frame = 0; frame < frameCount; frame++) {
+          const modules = new Uint8Array(await frameFile.slice(frame * moduleCount * moduleCount, (frame + 1) * moduleCount * moduleCount).arrayBuffer());
+          if (modules.length !== moduleCount * moduleCount) throw Error('frame');
+          const delay = nextDisplay - performance.now();
+          if (delay > 0) await new Promise(resolve => setTimeout(resolve, delay));
+          if (token !== generation.current) return;
+          context.imageSmoothingEnabled = false;
+          context.drawImage(previous, 0, 0);
+          for (let channel = 0; channel < 2; channel++) {
+            const image = squareContext.createImageData(side, side);
+            image.data.fill(255);
+            for (let y = 0; y < moduleCount; y++) for (let x = 0; x < moduleCount; x++) {
+              const dark = modules[y * moduleCount + x] & (1 << channel);
+              const offset = ((y + 4) * side + x + 4) * 4;
+              image.data[offset] = image.data[offset + 1] = image.data[offset + 2] = dark ? 0 : 255;
+            }
+            squareContext.putImageData(image, 0, 0);
+            context.drawImage(square, 640, channel * 640, 640, 640);
+            previousContext.imageSmoothingEnabled = false;
+            previousContext.drawImage(square, 0, channel * 640, 640, 640);
           }
-          squareContext.putImageData(image, 0, 0);
-          context.drawImage(square, 640, channel * 640, 640, 640);
-          previousContext.imageSmoothingEnabled = false;
-          previousContext.drawImage(square, 0, channel * 640, 640, 640);
+          nextDisplay = performance.now() + 1000 / fps;
+          setCount(Math.min((frame + 1) * 2, prepared.meta.count));
+          setTransferred(Math.min((frame + 1) * 2 * CHUNK, prepared.meta.size));
+          setElapsed((performance.now() - started) / 1000);
         }
-        nextDisplay = performance.now() + 1000 / fps;
-        setCount(Math.min((frame + 1) * 2, prepared.meta.count));
-        setTransferred(Math.min((frame + 1) * 2 * CHUNK, prepared.meta.size));
-        setElapsed((performance.now() - started) / 1000);
-      }
+        // Leave the final data frame visible before showing the end marker.
+        await new Promise(resolve => setTimeout(resolve, 1000 / fps));
+        if (token !== generation.current) return;
+        if (prepared.meta.test) {
+          await drawGuide(packet(prepared.meta.id, -2, ''), token);
+        } else {
+          setStatus(l.repeating);
+        }
+      } while (!prepared.meta.test && token === generation.current);
       if (token !== generation.current) return;
       setStatus(l.sent); setRunning(false);
     } catch {if (token === generation.current) {setRunning(false); setStatus(l.error);}}
@@ -212,9 +230,11 @@ function App() {
       if (m.test) {
         setStatus(l.testing);
       } else {
+        setStatus(l.verifying);
         const storage = receiver.current!;
         await storage.writer.close();
         const file = await storage.temp.handle.getFile();
+        await verify(file, m.hash, () => token !== generation.current);
         if (token !== generation.current) {await storage.temp.remove(); return;}
         download.current = URL.createObjectURL(file); setUrl(download.current);
         // Keep the backing file until the download URL is released or the page closes.
@@ -276,23 +296,23 @@ function App() {
                 if (token !== generation.current) {await writer.abort(); await temp.remove(); return;}
                 receiver.current = {temp, writer};
               }
-              last = performance.now(); setStatus(l.waiting); continue;
+              last = performance.now(); setLost(m.count); setStatus(l.waiting); continue;
             }
             if (p.id !== m.id) continue;
-            if (p.index === -1) {if (state!.next === 0) last = performance.now(); continue;}
-            if (p.index === -2) {if (state!.next === m.count) await finish(); continue;}
-            if (p.index > state!.next) continue;
+            if (p.index === -1) {if (state!.received === 0) last = performance.now(); continue;}
+            if (p.index === -2) {if (m.test) {await finish(); return;} continue;}
+            last = performance.now();
             const data = state!.accept(p.index, p.value);
             if (!data) continue;
             if (!started) started = performance.now();
             setLost(state!.missing);
-            if (receiver.current) await receiver.current.writer.write(data);
+            if (receiver.current) await receiver.current.writer.write({type: 'write', position: p.index * CHUNK, data});
             if (token !== generation.current) return;
             last = performance.now(); setCount(state!.received); setTransferred(state!.receivedBytes); setStatus(l.receiving);
             setElapsed(state!.received > 1 ? (performance.now() - started) / 1000 : 0);
-            if (state!.next === m.count) {await finish(); return;}
+            if (!m.test && state!.received === m.count) {await finish(); return;}
           }
-          if (m && performance.now() - last > 15000) {await fail(); return;}
+          if (m && performance.now() - last > 15000) {if (m.test) await finish(); else await fail(); return;}
           if (token === generation.current) timer.current = setTimeout(() => void scan(), 10);
         } catch {setLost(state?.missing ?? 0); await fail();}
       };
@@ -331,7 +351,7 @@ function App() {
     {meta && <><progress aria-label={mode === 'send' ? l.sending : l.receiving} max={meta.count} value={count} />
       <p>{bytes(transferred)} / {bytes(meta.size)} ({(transferred / 1048576).toFixed(2)} MiB) · {count} / {meta.count} · {(count / meta.count * 100).toFixed(1)}%</p>
       {elapsed > 0 && <p>{l.transferSpeed}: {bytes((mode === 'receive' ? Math.max(0, transferred - CHUNK) : transferred) / elapsed)}/s</p>}
-      {mode === 'receive' && <p>{l.missing}: {lost} · {l.rate}: {(count / Math.max(1, count + lost) * 100).toFixed(1)}%</p>}
+      {mode === 'receive' && <p>{l.missing}: {lost} · {l.rate}: {(count / meta.count * 100).toFixed(1)}%</p>}
       <p className={styles.hash}>SHA-256: <code>{meta.hash}</code></p></>}
     <p className={styles.note}>{l.note}</p>
   </main>;
